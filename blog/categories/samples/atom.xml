@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Samples | Performance Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/blog/categories/samples/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-01-27T19:03:01+08:00</updated>
+  <updated>2014-01-27T19:18:26+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -21,7 +21,7 @@
     <content type="html"><![CDATA[<h3>这是用 octpress + github 写的第一篇博客</h3>
 
 <p>用<code>markdown</code>写作是一个让人很爽快的事情。之前在 cnblogs 时也是特意找了几个
-<code>markdown</code>。偶然的机会，在<a href="http://kumu-linux.github.io">枯木君</a>的博客中了解到可以用
+<code>markdown</code>插件。偶然的机会，在<a href="http://kumu-linux.github.io">枯木君</a>的博客中了解到可以用
 github 来搭建一个完美支持<code>markdown</code>的博客。</p>
 
 <p>这一篇就作为测试<code>octpress</code>的效果用。</p>
