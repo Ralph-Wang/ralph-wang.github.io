@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Samples | Test Notes By _漏斗]]></title>
+  <title><![CDATA[Category: samples | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/blog/categories/samples/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-02-03T21:56:05+08:00</updated>
+  <updated>2014-02-04T00:09:10+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[用 Markdown 写作]]></title>
+    <title type="html"><![CDATA[用 markdown 写作]]></title>
     <link href="http://Ralph-Wang.github.io/blog/2014/01/27/yong-markdown-xie-zuo/"/>
     <updated>2014-01-27T18:14:13+08:00</updated>
     <id>http://Ralph-Wang.github.io/blog/2014/01/27/yong-markdown-xie-zuo</id>
