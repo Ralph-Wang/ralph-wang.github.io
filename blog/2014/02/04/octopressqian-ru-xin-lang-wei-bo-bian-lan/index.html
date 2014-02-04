@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Test Notes By _漏斗</title>
+  <title>octopress嵌入新浪微博边栏 - Test Notes By _漏斗</title>
   <meta name="author" content="_漏斗">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://Ralph-Wang.github.io">
+  <link rel="canonical" href="http://Ralph-Wang.github.io/blog/2014/02/04/octopressqian-ru-xin-lang-wei-bo-bian-lan">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -90,15 +90,13 @@
 </nav>
   <div class="container">
     <div class="row-fluid">
-      <div class="span8">
-  
-  
-  
-    <article>
       
+<article class="hentry span8" role="article">
+
+  
   <header class="page-header">
     
-      <h1 class="entry-title"><a href="/blog/2014/02/04/octopressqian-ru-xin-lang-wei-bo-bian-lan/">Octopress嵌入新浪微博边栏</a></h1>
+      <h1 class="entry-title">Octopress嵌入新浪微博边栏</h1>
     
     
       <p class="meta">
@@ -116,14 +114,14 @@
 
 <time datetime="2014-02-04T18:26:31+08:00" pubdate data-updated="true">Feb 4<span>th</span>, 2014</time>
         
-         | <a href="/blog/2014/02/04/octopressqian-ru-xin-lang-wei-bo-bian-lan/#disqus_thread">Comments</a>
+         | <a href="#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>更换<a href="http://github.com/bkutil/bootstrap-theme"><code>boottrap-theme</code></a>后，边栏只有<strong>最近发表</strong>和<strong>文章分类</strong>两项内容显得有点寒碜。于是想着添加个新浪微博的边栏试试</p>
+<div class="entry-content"><p>更换<a href="http://github.com/bkutil/bootstrap-theme"><code>boottrap-theme</code></a>后，边栏只有<strong>最近发表</strong>和<strong>文章分类</strong>两项内容显得有点寒碜。于是想着添加个新浪微博的边栏试试</p>
 
 <h4>使用微博秀服务</h4>
 
@@ -292,22 +290,16 @@
 </span></code></pre></td></tr></table></div></figure>
 
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header class="page-header">
-    
-      <h1 class="entry-title"><a href="/blog/2014/01/27/yong-markdown-xie-zuo/">用 Markdown 写作</a></h1>
-    
-    
-      <p class="meta">
-        
+  
+
+<span class="byline author vcard">Posted by <span class="fn">_漏斗</span></span>
+
+      
 
 
 
@@ -319,35 +311,38 @@
   
 
 
-<time datetime="2014-01-27T18:14:13+08:00" pubdate data-updated="true">Jan 27<span>th</span>, 2014</time>
-        
-         | <a href="/blog/2014/01/27/yong-markdown-xie-zuo/#disqus_thread">Comments</a>
-        
-      </p>
+<time datetime="2014-02-04T18:26:31+08:00" pubdate data-updated="true">Feb 4<span>th</span>, 2014</time>
+      
+
+
+    </p>
     
-  </header>
-
-
-  <div class="entry-content"><h3>这是用 octpress + github 写的第一篇博客</h3>
-
-<p>用<code>markdown</code>写作是一个让人很爽快的事情。之前在 cnblogs 时也是特意找了几个
-<code>markdown</code>插件。偶然的机会，在<a href="http://kumu-linux.github.io">枯木君</a>的博客中了解到可以用
-github 来搭建一个完美支持<code>markdown</code>的博客。</p>
-
-<p>这一篇就作为测试<code>octpress</code>的效果用。</p>
+      <div class="sharing">
+  
+  
+  
 </div>
-  
-  
 
-
-    </article>
-  
-  <ul class="pager">
     
-    <li><a href="/blog/archives">Blog Archives</a></li>
     
-  </ul>
+    <section>
+      <h1>Comments</h1>
+      <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
+    </section>
+    
+    <ul class="pager">
+      
+      <li class="previous"><a class="basic-alignment left"
+        href="/blog/2014/01/27/yong-markdown-xie-zuo/" title="Previous Post:
+        用 markdown 写作">&laquo; 用 markdown 写作</a></li>
+      
+      <li><a href="/blog/archives">Blog Archives</a></li>
+      
+    </ul>
+  </footer>
+</article>
+
 <aside class="sidebar-nav span4">
   
     
@@ -391,6 +386,7 @@ github 来搭建一个完美支持<code>markdown</code>的博客。</p>
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo" class="page-footer"><hr>
@@ -406,7 +402,10 @@ github 来搭建一个完美支持<code>markdown</code>的博客。</p>
       var disqus_shortname = 'ralph-github-blog';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://Ralph-Wang.github.io/blog/2014/02/04/octopressqian-ru-xin-lang-wei-bo-bian-lan/';
+        var disqus_url = 'http://Ralph-Wang.github.io/blog/2014/02/04/octopressqian-ru-xin-lang-wei-bo-bian-lan/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
