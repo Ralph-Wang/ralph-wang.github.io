@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>关于_漏斗 - Test Notes By _漏斗</title>
+  <title>octopress首页只显示摘要 - Test Notes By _漏斗</title>
   <meta name="author" content="_漏斗">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://Ralph-Wang.github.io/about-me">
+  <link rel="canonical" href="http://Ralph-Wang.github.io/blog/2014/02/06/octopressshou-ye-zhi-xian-shi-zhai-yao">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -113,50 +113,110 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol +
   <div class="container">
     <div class="row-fluid">
       
-<article role="article" class="span8">
+  <article class="hentry span8" role="article">
+    
+    
+  <header class="">
+    
+      <h1 class="entry-title">Octopress首页只显示摘要</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
 
   
-  <header class="page-header">
-    <h1 class="entry-title">关于_漏斗</h1>
-    <p class="meta">
 
 
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-01-30T15:13:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2014</time></p>
+<time datetime="2014-02-06T00:30:36+08:00" pubdate data-updated="true">Feb 6<span>th</span>, 2014</time>
+        
+      </p>
+    
   </header>
-  
-  <p>测试小兵一枚  <br/>
-常年不务正业，学习各种开发相关的知识  <br/>
-目前会的东西:</p>
+
+
+<div class="entry-content"><p>上一篇博客比较长，发现首页居然照样显示了全文</p>
+
+<p>于时查找了下如何只显示摘要</p>
+
+<!--more-->
+
+
+<p>实现方式很简单:</p>
 
 <ul>
-<li>开发语言 : Java, Python, NodeJS, HTML &hellip;</li>
-<li>数据库   : MySQL, MongoDB, SQL Server &hellip;</li>
-<li>持续集成 : Jenkins &hellip;</li>
-<li>测试工具 : Seleinum(Python) , QTP, LR &hellip;</li>
+<li><p>在博客文档中添加<code>&lt;!--more--&gt;</code>即可</p></li>
+<li><p>添加之后，首页文章后会添加一个<code>read on</code>链接，指向文章页面</p></li>
+<li><p>并且只有<code>&lt;!--more--&gt;</code>前的内容人显示到首页</p></li>
 </ul>
 
 
-<p>所谓没有程序员不会的, 只有还没学的</p>
+<p>像这样</p>
 
-<h3>博客目的</h3>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>上一篇博客比较长，发现首页居然照样显示了全文
+</span><span class='line'>
+</span><span class='line'>于时查找了下如何只显示摘要
+</span><span class='line'>&lt;!--more--&gt;
+</span><span class='line'>实现方式很简单:
+</span><span class='line'>
+</span><span class='line'>* 在博客文档中添加`&lt;!--more--&gt;`即可
+</span><span class='line'>
+</span><span class='line'>* 添加之后，首页文章后会添加一个`read on`链接，指向文章页面
+</span><span class='line'>
+</span><span class='line'>* 并且只有`&lt;!--more--&gt;`前的内容人显示到首页</span></code></pre></td></tr></table></div></figure>
 
-<p>记录一些学习和工作上的笔记，心得.  <br/>
-在写作过程中也能更好的整理自己的思路.</p>
 
-  
+<h4>　懒人做法</h4>
+
+<p>修改<code>Rakefile</code>，使写新文章时自动添加一个<code>&lt;!--more--&gt;</code></p>
+
+<figure class='code'><figcaption><span>Rakefile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;date: </span><span class="si">#{</span><span class="no">Time</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-%d %H:%M:%S %z&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;comments: true&quot;</span>
+</span><span class='line'><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;categories: &quot;</span>
+</span><span class='line'><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;---&quot;</span>
+</span><span class='line'><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;&lt;!--more--&gt;&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+<hr />
+
     <footer>
       <p class="meta">
-        
-        
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">_漏斗</span></span>
+
+      
 
 
 
@@ -168,10 +228,27 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol +
   
 
 
-<time datetime="2014-01-30T15:13:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2014</time>
-        
+<time datetime="2014-02-06T00:30:36+08:00" pubdate data-updated="true">Feb 6<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/octopress/'>octopress</a>
+  
+</span>
+
+
       </p>
       
+      <ul class="pager">
+        
+        <li class="previous"><a class="basic-alignment left"
+          href="/blog/2014/02/04/octopressqian-ru-xin-lang-wei-bo-bian-lan/" title="Previous Post:
+          octopress嵌入新浪微博边栏">&laquo; octopress嵌入新浪微博边栏</a></li>
+        
+        <li><a href="/blog/archives">Blog Archives</a></li>
+        
+        
         <div class="sharing">
   
   
@@ -200,14 +277,13 @@ src="http://v2.uyan.cc/code/uyan.js?uid=1891593"></script>
   
 </div>
 
-      
-      
+        
+      </ul>
     </footer>
+  </article>
   
-</article>
-
-<aside class="sidebar-nav span4">
-  
+  <aside class="sidebar-nav span4">
+    
     
 <section class="well">
   <ul id="weibo" class="nav nav-list">
@@ -251,9 +327,9 @@ src="http://v2.uyan.cc/code/uyan.js?uid=1891593"></script>
   </ul>
 </section>
 
+    
+  </aside>
   
-</aside>
-
 
     </div>
   </div>

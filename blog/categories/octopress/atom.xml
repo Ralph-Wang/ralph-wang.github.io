@@ -4,7 +4,7 @@
   <title><![CDATA[分类:octopress | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-02-04T23:16:37+08:00</updated>
+  <updated>2014-02-06T01:04:39+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -14,11 +14,72 @@
 
   
   <entry>
+    <title type="html"><![CDATA[octopress首页只显示摘要]]></title>
+    <link href="http://Ralph-Wang.github.io/blog/2014/02/06/octopressshou-ye-zhi-xian-shi-zhai-yao/"/>
+    <updated>2014-02-06T00:30:36+08:00</updated>
+    <id>http://Ralph-Wang.github.io/blog/2014/02/06/octopressshou-ye-zhi-xian-shi-zhai-yao</id>
+    <content type="html"><![CDATA[<p>上一篇博客比较长，发现首页居然照样显示了全文</p>
+
+<p>于时查找了下如何只显示摘要</p>
+
+<!--more-->
+
+
+<p>实现方式很简单:</p>
+
+<ul>
+<li><p>在博客文档中添加<code>&lt;!--more--&gt;</code>即可</p></li>
+<li><p>添加之后，首页文章后会添加一个<code>read on</code>链接，指向文章页面</p></li>
+<li><p>并且只有<code>&lt;!--more--&gt;</code>前的内容人显示到首页</p></li>
+</ul>
+
+
+<p>像这样
+```
+上一篇博客比较长，发现首页居然照样显示了全文</p>
+
+<p>于时查找了下如何只显示摘要</p>
+
+<!--more-->
+
+
+<p>实现方式很简单:</p>
+
+<ul>
+<li><p>在博客文档中添加<code>&lt;!--more--&gt;</code>即可</p></li>
+<li><p>添加之后，首页文章后会添加一个<code>read on</code>链接，指向文章页面</p></li>
+<li><p>并且只有<code>&lt;!--more--&gt;</code>前的内容人显示到首页
+```</p></li>
+</ul>
+
+
+<h4>　懒人做法</h4>
+
+<p>修改<code>Rakefile</code>，使写新文章时自动添加一个<code>&lt;!--more--&gt;</code>
+```ruby Rakefile</p>
+
+<pre><code>post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M:%S %z')}"
+post.puts "comments: true"
+post.puts "categories: "
+post.puts "---"
+post.puts ""
+post.puts ""
+post.puts "&lt;!--more--&gt;"
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[octopress嵌入新浪微博边栏]]></title>
     <link href="http://Ralph-Wang.github.io/blog/2014/02/04/octopressqian-ru-xin-lang-wei-bo-bian-lan/"/>
     <updated>2014-02-04T18:26:31+08:00</updated>
     <id>http://Ralph-Wang.github.io/blog/2014/02/04/octopressqian-ru-xin-lang-wei-bo-bian-lan</id>
     <content type="html"><![CDATA[<p>更换<a href="http://github.com/bkutil/bootstrap-theme"><code>boottrap-theme</code></a>后，边栏只有<strong>最近发表</strong>和<strong>文章分类</strong>两项内容显得有点寒碜。于是想着添加个新浪微博的边栏试试</p>
+
+<!--more-->
+
 
 <h4>使用微博秀服务</h4>
 

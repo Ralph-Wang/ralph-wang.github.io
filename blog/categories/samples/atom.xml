@@ -4,7 +4,7 @@
   <title><![CDATA[分类:samples | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/blog/categories/samples/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-02-04T23:16:37+08:00</updated>
+  <updated>2014-02-06T01:04:39+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -18,7 +18,10 @@
     <link href="http://Ralph-Wang.github.io/blog/2014/01/27/yong-markdown-xie-zuo/"/>
     <updated>2014-01-27T18:14:13+08:00</updated>
     <id>http://Ralph-Wang.github.io/blog/2014/01/27/yong-markdown-xie-zuo</id>
-    <content type="html"><![CDATA[<h3>这是用 octpress + github 写的第一篇博客</h3>
+    <content type="html"><![CDATA[<!--more-->
+
+
+<p><strong>这是用 octpress + github 写的第一篇博客</strong></p>
 
 <p>用<code>markdown</code>写作是一个让人很爽快的事情。之前在 cnblogs 时也是特意找了几个
 <code>markdown</code>插件。偶然的机会，在<a href="http://kumu-linux.github.io">枯木君</a>的博客中了解到可以用
