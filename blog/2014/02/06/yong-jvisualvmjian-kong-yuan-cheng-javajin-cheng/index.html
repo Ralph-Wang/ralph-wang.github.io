@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>分类:samples - Test Notes By _漏斗</title>
+  <title>用jvisualvm监控远程java进程 - Test Notes By _漏斗</title>
   <meta name="author" content="_漏斗">
 
   
-  <meta name="description" content="Category: samples">
+  <meta name="description" content="">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://Ralph-Wang.github.ioblog/categories/samples">
+  <link rel="canonical" href="http://Ralph-Wang.github.io/blog/2014/02/06/yong-jvisualvmjian-kong-yuan-cheng-javajin-cheng">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -113,42 +113,167 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol +
   <div class="container">
     <div class="row-fluid">
       
-<article role="article" class="span8">
+  <article class="hentry span8" role="article">
+    
+    
+  <header class="">
+    
+      <h1 class="entry-title">用jvisualvm监控远程java进程</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
 
   
-  <header class="page-header">
-    <h1 class="entry-title">分类:samples</h1>
+
+
+<time datetime="2014-02-06T21:48:26+08:00" pubdate data-updated="true">Feb 6<span>th</span>, 2014</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p><strong>jvisualvm</strong>是从<strong>jdk1.6</strong>开始添加到JDK包中的图形化监控工具。</p>
 
-  
-  <h1>2014</h1>
+<p>开启后可以自动监控本机运行中的java进程。</p>
 
-<article>
-  <div class="well">
+<p>另外，<strong>jvisualvm</strong>它还可以监控远程机器上java进程的运行状态。</p>
 
-<h2><a href="/blog/2014/01/27/yong-markdown-xie-zuo/">用 markdown 写作</a></h2>
-<time datetime="2014-01-27T18:14:13+08:00" pubdate><span class='month'>Jan</span> <span class='day'>27</span> <span class='year'>2014</span></time>
+<p>不过，监控远程机器需要在被监控机器上做一些配置：</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/samples/'>samples</a></span>
-</footer>
+<!--more-->
 
+
+<h4>1. 安装JDK</h4>
+
+<p>这一步不多说了</p>
+
+<h4>2. 配置/etc/hosts</h4>
+
+<p>要让<strong>jvisualvm</strong>成功连接到被监控机器上，需要在/etc/hosts文件中将被监控机的主机名绑定到被监控机的IP地址。</p>
+
+<p>通过<code>hostname</code>命令可以获得主机名</p>
+
+<figure class='code'><figcaption><span>/etc/hosts</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>192.168.192.132 Ralph.Wang
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>hostname -i</code>返回实际的IP地址即绑定成功。</p>
+
+<p>注：<strong>CentOS</strong>中的/etc/hosts默认是没有绑定主机名的IP的，直接添加即可</p>
+
+<h4>3. 运行jstatd</h4>
+
+<p>运行<code>jstatd</code>之前，我们需要配置一个安全策略文件,如下</p>
+
+<div><script src='https://gist.github.com/8844076.js?file=jstatd.all.policy'></script>
+<noscript><pre><code>grant codebase &quot;file:${java.home}/../lib/tools.jar&quot; {
+   permission java.security.AllPermission;
+};
+</code></pre></noscript></div>
+
+
+<p>运行<code>jstatd</code>时需要用<code>-J-Djava.security.policy</code>参数指定策略文件</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>jstatd -J-Djava.security.policy<span class="o">=</span>jstatd.all.policy<span class="o">=</span>./jstatd.all.policy
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>4.在jvisualvm中添加远程机</h3>
+
+<p><code>文件</code>&ndash;><code>添加远程主机</code> 输入IP地址即可。</p>
+
+<p>下面是示例图
+<img src="/blogimgs/jvisualvm-remote.png" alt="jvisualvm监控示例" /></p>
 </div>
 
-</article>
+<hr />
 
+    <footer>
+      <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">_漏斗</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-06T21:48:26+08:00" pubdate data-updated="true">Feb 6<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/java/'>java</a>
+  
+</span>
+
+
+      </p>
+      
+      <ul class="pager">
+        
+        <li class="previous"><a class="basic-alignment left"
+          href="/blog/2014/02/06/octopressshou-ye-zhi-xian-shi-zhai-yao/" title="Previous Post:
+          octopress首页只显示摘要">&laquo; octopress首页只显示摘要</a></li>
+        
+        <li><a href="/blog/archives">Blog Archives</a></li>
+        
+        
+        <div class="sharing">
+  
+  
+  
+  
+    <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <span class="jiathis_txt">分享到：</span>
+  <a class="jiathis_button_icons_1"></a>
+  <a class="jiathis_button_icons_2"></a>
+  <a class="jiathis_button_icons_3"></a>
+  <a class="jiathis_button_icons_4"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis
+    jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript"
+src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript"
+src="http://v2.uyan.cc/code/uyan.js?uid=1891593"></script>
+<!-- UY END -->
+
+  
 </div>
 
+        
+      </ul>
+    </footer>
+  </article>
   
-</article>
-
-<aside class="sidebar-nav span4">
-  
+  <aside class="sidebar-nav span4">
+    
     
 <section class="well">
   <ul id="weibo" class="nav nav-list">
@@ -197,9 +322,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol +
   </ul>
 </section>
 
+    
+  </aside>
   
-</aside>
-
 
     </div>
   </div>
