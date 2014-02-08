@@ -4,7 +4,7 @@
   <title><![CDATA[分类:java | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-02-07T18:25:00+08:00</updated>
+  <updated>2014-02-08T12:08:47+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,306 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[java线程状态]]></title>
+    <link href="http://Ralph-Wang.github.io/blog/2014/02/08/javaxian-cheng-zhuang-tai/"/>
+    <updated>2014-02-08T11:07:52+08:00</updated>
+    <id>http://Ralph-Wang.github.io/blog/2014/02/08/javaxian-cheng-zhuang-tai</id>
+    <content type="html"><![CDATA[<p>监控 Java 线程时，首先要关注的就是线程的运行状态。</p>
+
+<p>一般来说，Java 线程有 6 种状态：
+1. NEW
+2. RUNNABLE
+3. WAITING &amp; TIMED_WAITING
+4. SLEEP
+5. BLOCK
+6. TERMINATED</p>
+
+<p>下面，用代码示例一下各个状态</p>
+
+<!--more-->
+
+
+<h3>1. NEW &amp; TERMINATED</h3>
+
+<p>这两个状态比较特殊，分别出现在线程<strong>运行之前</strong>和线程<strong>运行之后</strong>。</p>
+
+<p>这里所说的<strong>运行</strong>指调用线程的<code>start()</code>方法。</p>
+
+<p>代码：
+<div><script src='https://gist.github.com/8839097.js?file=NT.java'></script>
+<noscript><pre><code>public class NT {
+  public static void main(String[] args) {
+    Thread t = new Thread();
+    System.out.println(t.getState());
+    t.start(); // call start to start the thread
+    try {
+      Thread.sleep(1 * 1000L);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    System.out.println(t.getState());
+  }
+}/* output:
+NEW
+TERMINDATED
+*///:~
+</code></pre></noscript></div>
+</p>
+
+<p>虽然没有重写<code>run</code>方法，线程会很快结束。但如果在<code>start()</code>后直接调用<code>getState()</code>的话，仍然会返回<strong>RUNNABLE</strong>，所以耐心的等上一秒吧。</p>
+
+<h3>2. RUNNABLE</h3>
+
+<p>我们开线程的目的就是要让它跑起来，所以这个状态可以说是线程的主要状态。</p>
+
+<p>它表示线程正如我们预期的一样正在运行。</p>
+
+<p>代码：
+<div><script src='https://gist.github.com/8839123.js?file=Runnable.java'></script>
+<noscript><pre><code>public class Runnable {
+  public static void main(String[] args) {
+    Thread t = new Thread(){
+      @Override
+      public void run() {
+        for (;true;) {
+          System.out.println(&quot;running&quot;);
+        }
+      }
+    };
+    t.setName(&quot;runnable&quot;);
+    t.start();
+  }
+}/* output:
+running
+running
+running
+...
+*///:~
+</code></pre></noscript></div>
+</p>
+
+<p>运行时，程序会在标准输出里不断输出 <strong>running</strong>。</p>
+
+<p>下面是用 <strong>jvisualvm</strong> 监控到的情况：</p>
+
+<p><img src="/blogimgs/status-runnable.png" alt="running" /></p>
+
+<p>图中的 <strong>runnable</strong> 线程就是我们在代码中启动的线程。</p>
+
+<h3>3. SLEEP</h3>
+
+<p><strong>休眠</strong>状态下，线程不能被唤醒；必须等到休眠时间结束线程才能回到可执行状态。</p>
+
+<p>让线程进入状态需要调用<code>Thread</code>类的<code>sleep</code>方法。调用时指定好需要休眠的时间，线程就可以美美的睡上一觉了。</p>
+
+<p>代码：
+<div><script src='https://gist.github.com/8875811.js?file=Sleep.java'></script>
+<noscript><pre><code>public class Sleep {
+  public static void main(String[] args) {
+    Thread t = new Thread() {
+      @Override
+      public void run() {
+        for (;true;) {
+          System.out.println(&quot;here&quot;);
+          try {
+            Thread.sleep(30 * 1000L);
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        }
+      }
+    };
+    
+    t.setName(&quot;sleep&quot;);
+    t.start();
+  }/* output:
+  here
+  here
+  ...
+  *///:~
+}
+</code></pre></noscript></div>
+</p>
+
+<p><strong>jvisualvm</strong> 中的情况：</p>
+
+<p><img src="/blogimgs/status-sleep.png" alt="sleep" /></p>
+
+<p>注：如果用<strong>线程 dump</strong> 查看，会发现 sleep 线程标示的是 <strong>TIMED_WATING</strong></p>
+
+<h3>4.WAITING &amp; TIMED_WAITING</h3>
+
+<p>和休眠类似，等待状态下的线程也没有在运行。但是等待下的线程可以随时被唤醒。</p>
+
+<p><strong>WAITING</strong> 和 <strong>TIMED_WAITING</strong> 都是调用<code>wait</code>方法后的状态。区别在于 <strong>WATING</strong> 没有指定时间，除非被唤醒，否则会一直等下去。而 <strong>TIMED_WAITING</strong>　因为指定了时间，即使不被唤醒，也会在指定时间到达之后回到可执行状态。</p>
+
+<p>代码：
+<div><script src='https://gist.github.com/8839194.js?file=TimedWait.java'></script>
+<noscript><pre><code>public class TimedWait {
+  public static void main(String[] args) {
+    final Object lock = new Object();
+    // customer
+    Thread t1 = new Thread() {
+      @Override
+      public void run() {
+        int i = 0;
+        for (;true;) {
+          synchronized(lock) {
+            try {
+              System.out.println(&quot;wait&quot;);
+              lock.wait(20 * 1000L); //wait 20 seconds
+            } catch (InterruptedException e) {
+              e.printStackTrace();
+            }
+          }
+          System.out.println(&quot;t1: &quot; + i++);
+        }
+      }
+    };
+
+    // producer
+    Thread t2 = new Thread() {
+      @Override
+      public void run() {
+        for (;true;) {
+          synchronized(lock) {
+            for(int i = 0; i &lt; 150000; i++) {
+              System.out.println(&quot;t2: &quot; + i);
+            }
+            lock.notifyAll();
+            try {
+              lock.wait(2 * 1000L); // wait 2 seconds;
+            } catch (InterruptedException e) {
+              e.printStackTrace();
+            }
+          }
+        }
+      }
+    };
+
+    t1.setName(&quot;t1&quot;);
+    t2.setName(&quot;t2&quot;);
+
+    t1.start();
+    t2.start();
+  }
+}/* output:
+t2: 0
+t2: 1
+...
+t2: 14999
+t1: 0
+wait
+t2: 0
+t2: 1
+...
+*///:~
+</code></pre></noscript></div>
+</p>
+
+<p><strong>jvisualvm</strong> 中的情况：</p>
+
+<p><img src="/blogimgs/status-wait.png" alt="waiting" /></p>
+
+<p><strong>线程 dump</strong> 中的情况：</p>
+
+<p><img src="/blogimgs/status-timedwait.png" alt="timed_wating" /></p>
+
+<h3>5.BLOCK</h3>
+
+<p>在线程中，可以使用 <code>sychronized</code> 关键字锁住某些资源，以保证其它线程不能同时访问。如果这时其它线程需要这个资源，就会进入<strong>阻塞</strong>状态。</p>
+
+<p>如果，两个线程同时需要对方锁住的资源，而这些资源又不能被释放，那就会形成死锁。</p>
+
+<p>这里就用死锁来示例<strong>阻塞</strong>状态</p>
+
+<p>代码：
+<div><script src='https://gist.github.com/8839167.js?file=DeadBlock.java'></script>
+<noscript><pre><code>
+public class DeadBlock {
+  public static void main(String[] args) {
+    Knife k = new Knife();
+    Hammer h = new Hammer();
+    Worker worker = new Worker(k, h, &quot;worker&quot;);
+    Handler handler = new Handler(k, h, &quot;handler&quot;);
+    worker.start();
+    handler.start();
+  }
+}/* output:
+I'm worker and using knife.
+I'm handler and using hammer.
+*///:~
+
+class Worker extends Thread {
+  Knife knife;
+  Hammer hammer;
+  String name;
+  /** constructor */
+  public Worker(Knife k, Hammer h, String n) {
+    this.knife = k;
+    this.hammer = h;
+    this.name = n;
+  }
+
+  public void run() {
+    synchronized(knife){
+      try {
+        System.out.println(&quot;I'm &quot; + this.name + &quot; and using knife.&quot;);
+        Thread.sleep(2);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+
+      synchronized(hammer){
+        System.out.println(&quot;I'm &quot; + this.name + &quot;, I need hammer&quot;);
+      }
+    }
+  }
+}
+
+class Handler extends Thread {
+  Knife knife;
+  Hammer hammer;
+  String name;
+  /** constructor */
+  public Handler(Knife k, Hammer h, String n) {
+    this.knife = k;
+    this.hammer = h;
+    this.name = n;
+  }
+
+  public void run() {
+    synchronized(hammer){
+      try {
+        System.out.println(&quot;I'm &quot; + this.name + &quot; and using hammer.&quot;);
+        Thread.sleep(2);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+
+      synchronized(knife){
+        System.out.println(&quot;I'm &quot; + this.name + &quot;, I need knife&quot;);
+      }
+    }
+  }
+}
+/** Knife */
+class Knife {
+}
+
+/** Hammer */
+class Hammer {
+}
+</code></pre></noscript></div>
+</p>
+
+<p><strong>jvisualvm</strong> 中的情况：</p>
+
+<p><img src="/blogimgs/status-block.png" alt="deadBlock" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[用jvisualvm监控远程java进程]]></title>

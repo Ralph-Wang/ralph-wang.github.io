@@ -1,0 +1,598 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>java线程状态 - Test Notes By _漏斗</title>
+  <meta name="author" content="_漏斗">
+
+  
+  <meta name="description" content="">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Ralph-Wang.github.io/blog/2014/02/08/javaxian-cheng-zhuang-tai">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/syntax/syntax.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <style type="text/css">
+    body {
+      padding-bottom: 40px;
+    }
+    h1 {
+      margin-bottom: 15px;
+    }
+    img {
+      max-width: 100%;
+    }
+    .sharing, .meta, .pager {
+      margin: 20px 0px 20px 0px;
+    }
+    .page-footer p {
+      text-align: center;
+    }
+  </style>
+  <script src="/javascripts/libs/jquery.js"></script>
+  <script src="/javascripts/libs/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/bootstrap.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Test Notes By _漏斗" type="application/atom+xml">
+  
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47787507-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+  
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : "
+    http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol +
+      "hm.baidu.com/h.js%3Faf7f2e40fdeaea8b30e44d6df8cbfbc9'
+      type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+</head>
+
+<body   >
+  <nav role="navigation"><div class="navbar navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+      <a class="brand" href="/">Test Notes By _漏斗</a>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+  <!--<li><a href="/">首页</a></li>-->
+  <li><a href="/blog/archives">文章列表</a></li>
+  <li><a href="/about-me">关于我</a></li>
+</ul>
+
+
+        <ul class="nav pull-right" data-subscription="rss">
+          <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+          
+        </ul>
+
+        
+          <form class="pull-right navbar-search" action="http://google.com/search" method="get">
+            <fieldset role="search">
+              <input type="hidden" name="q" value="site:Ralph-Wang.github.io" />
+              <input class="search-query" type="text" name="q" results="0" placeholder="Search"/>
+            </fieldset>
+          </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+</nav>
+  <div class="container">
+    <div class="row-fluid">
+      
+  <article class="hentry span8" role="article">
+    
+    
+  <header class="">
+    
+      <h1 class="entry-title">Java线程状态</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-08T11:07:52+08:00" pubdate data-updated="true">Feb 8<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>监控 Java 线程时，首先要关注的就是线程的运行状态。</p>
+
+<p>一般来说，Java 线程有 6 种状态：
+1. NEW
+2. RUNNABLE
+3. WAITING &amp; TIMED_WAITING
+4. SLEEP
+5. BLOCK
+6. TERMINATED</p>
+
+<p>下面，用代码示例一下各个状态</p>
+
+<!--more-->
+
+
+<h3>1. NEW &amp; TERMINATED</h3>
+
+<p>这两个状态比较特殊，分别出现在线程<strong>运行之前</strong>和线程<strong>运行之后</strong>。</p>
+
+<p>这里所说的<strong>运行</strong>指调用线程的<code>start()</code>方法。</p>
+
+<p>代码：</p>
+
+<div><script src='https://gist.github.com/8839097.js?file=NT.java'></script>
+<noscript><pre><code>public class NT {
+  public static void main(String[] args) {
+    Thread t = new Thread();
+    System.out.println(t.getState());
+    t.start(); // call start to start the thread
+    try {
+      Thread.sleep(1 * 1000L);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    System.out.println(t.getState());
+  }
+}/* output:
+NEW
+TERMINDATED
+*///:~
+</code></pre></noscript></div>
+
+
+<p>虽然没有重写<code>run</code>方法，线程会很快结束。但如果在<code>start()</code>后直接调用<code>getState()</code>的话，仍然会返回<strong>RUNNABLE</strong>，所以耐心的等上一秒吧。</p>
+
+<h3>2. RUNNABLE</h3>
+
+<p>我们开线程的目的就是要让它跑起来，所以这个状态可以说是线程的主要状态。</p>
+
+<p>它表示线程正如我们预期的一样正在运行。</p>
+
+<p>代码：</p>
+
+<div><script src='https://gist.github.com/8839123.js?file=Runnable.java'></script>
+<noscript><pre><code>public class Runnable {
+  public static void main(String[] args) {
+    Thread t = new Thread(){
+      @Override
+      public void run() {
+        for (;true;) {
+          System.out.println(&quot;running&quot;);
+        }
+      }
+    };
+    t.setName(&quot;runnable&quot;);
+    t.start();
+  }
+}/* output:
+running
+running
+running
+...
+*///:~
+</code></pre></noscript></div>
+
+
+<p>运行时，程序会在标准输出里不断输出 <strong>running</strong>。</p>
+
+<p>下面是用 <strong>jvisualvm</strong> 监控到的情况：</p>
+
+<p><img src="/blogimgs/status-runnable.png" alt="running" /></p>
+
+<p>图中的 <strong>runnable</strong> 线程就是我们在代码中启动的线程。</p>
+
+<h3>3. SLEEP</h3>
+
+<p><strong>休眠</strong>状态下，线程不能被唤醒；必须等到休眠时间结束线程才能回到可执行状态。</p>
+
+<p>让线程进入状态需要调用<code>Thread</code>类的<code>sleep</code>方法。调用时指定好需要休眠的时间，线程就可以美美的睡上一觉了。</p>
+
+<p>代码：</p>
+
+<div><script src='https://gist.github.com/8875811.js?file=Sleep.java'></script>
+<noscript><pre><code>public class Sleep {
+  public static void main(String[] args) {
+    Thread t = new Thread() {
+      @Override
+      public void run() {
+        for (;true;) {
+          System.out.println(&quot;here&quot;);
+          try {
+            Thread.sleep(30 * 1000L);
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        }
+      }
+    };
+    
+    t.setName(&quot;sleep&quot;);
+    t.start();
+  }/* output:
+  here
+  here
+  ...
+  *///:~
+}
+</code></pre></noscript></div>
+
+
+<p><strong>jvisualvm</strong> 中的情况：</p>
+
+<p><img src="/blogimgs/status-sleep.png" alt="sleep" /></p>
+
+<p>注：如果用<strong>线程 dump</strong> 查看，会发现 sleep 线程标示的是 <strong>TIMED_WATING</strong></p>
+
+<h3>4.WAITING &amp; TIMED_WAITING</h3>
+
+<p>和休眠类似，等待状态下的线程也没有在运行。但是等待下的线程可以随时被唤醒。</p>
+
+<p><strong>WAITING</strong> 和 <strong>TIMED_WAITING</strong> 都是调用<code>wait</code>方法后的状态。区别在于 <strong>WATING</strong> 没有指定时间，除非被唤醒，否则会一直等下去。而 <strong>TIMED_WAITING</strong>　因为指定了时间，即使不被唤醒，也会在指定时间到达之后回到可执行状态。</p>
+
+<p>代码：</p>
+
+<div><script src='https://gist.github.com/8839194.js?file=TimedWait.java'></script>
+<noscript><pre><code>public class TimedWait {
+  public static void main(String[] args) {
+    final Object lock = new Object();
+    // customer
+    Thread t1 = new Thread() {
+      @Override
+      public void run() {
+        int i = 0;
+        for (;true;) {
+          synchronized(lock) {
+            try {
+              System.out.println(&quot;wait&quot;);
+              lock.wait(20 * 1000L); //wait 20 seconds
+            } catch (InterruptedException e) {
+              e.printStackTrace();
+            }
+          }
+          System.out.println(&quot;t1: &quot; + i++);
+        }
+      }
+    };
+
+    // producer
+    Thread t2 = new Thread() {
+      @Override
+      public void run() {
+        for (;true;) {
+          synchronized(lock) {
+            for(int i = 0; i &lt; 150000; i++) {
+              System.out.println(&quot;t2: &quot; + i);
+            }
+            lock.notifyAll();
+            try {
+              lock.wait(2 * 1000L); // wait 2 seconds;
+            } catch (InterruptedException e) {
+              e.printStackTrace();
+            }
+          }
+        }
+      }
+    };
+
+    t1.setName(&quot;t1&quot;);
+    t2.setName(&quot;t2&quot;);
+
+    t1.start();
+    t2.start();
+  }
+}/* output:
+t2: 0
+t2: 1
+...
+t2: 14999
+t1: 0
+wait
+t2: 0
+t2: 1
+...
+*///:~
+</code></pre></noscript></div>
+
+
+<p><strong>jvisualvm</strong> 中的情况：</p>
+
+<p><img src="/blogimgs/status-wait.png" alt="waiting" /></p>
+
+<p><strong>线程 dump</strong> 中的情况：</p>
+
+<p><img src="/blogimgs/status-timedwait.png" alt="timed_wating" /></p>
+
+<h3>5.BLOCK</h3>
+
+<p>在线程中，可以使用 <code>sychronized</code> 关键字锁住某些资源，以保证其它线程不能同时访问。如果这时其它线程需要这个资源，就会进入<strong>阻塞</strong>状态。</p>
+
+<p>如果，两个线程同时需要对方锁住的资源，而这些资源又不能被释放，那就会形成死锁。</p>
+
+<p>这里就用死锁来示例<strong>阻塞</strong>状态</p>
+
+<p>代码：</p>
+
+<div><script src='https://gist.github.com/8839167.js?file=DeadBlock.java'></script>
+<noscript><pre><code>
+public class DeadBlock {
+  public static void main(String[] args) {
+    Knife k = new Knife();
+    Hammer h = new Hammer();
+    Worker worker = new Worker(k, h, &quot;worker&quot;);
+    Handler handler = new Handler(k, h, &quot;handler&quot;);
+    worker.start();
+    handler.start();
+  }
+}/* output:
+I'm worker and using knife.
+I'm handler and using hammer.
+*///:~
+
+class Worker extends Thread {
+  Knife knife;
+  Hammer hammer;
+  String name;
+  /** constructor */
+  public Worker(Knife k, Hammer h, String n) {
+    this.knife = k;
+    this.hammer = h;
+    this.name = n;
+  }
+
+  public void run() {
+    synchronized(knife){
+      try {
+        System.out.println(&quot;I'm &quot; + this.name + &quot; and using knife.&quot;);
+        Thread.sleep(2);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+
+      synchronized(hammer){
+        System.out.println(&quot;I'm &quot; + this.name + &quot;, I need hammer&quot;);
+      }
+    }
+  }
+}
+
+class Handler extends Thread {
+  Knife knife;
+  Hammer hammer;
+  String name;
+  /** constructor */
+  public Handler(Knife k, Hammer h, String n) {
+    this.knife = k;
+    this.hammer = h;
+    this.name = n;
+  }
+
+  public void run() {
+    synchronized(hammer){
+      try {
+        System.out.println(&quot;I'm &quot; + this.name + &quot; and using hammer.&quot;);
+        Thread.sleep(2);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+
+      synchronized(knife){
+        System.out.println(&quot;I'm &quot; + this.name + &quot;, I need knife&quot;);
+      }
+    }
+  }
+}
+/** Knife */
+class Knife {
+}
+
+/** Hammer */
+class Hammer {
+}
+</code></pre></noscript></div>
+
+
+<p><strong>jvisualvm</strong> 中的情况：</p>
+
+<p><img src="/blogimgs/status-block.png" alt="deadBlock" /></p>
+</div>
+
+<hr />
+
+    <footer>
+      <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">_漏斗</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-08T11:07:52+08:00" pubdate data-updated="true">Feb 8<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/java/'>java</a>
+  
+</span>
+
+
+      </p>
+      
+      <ul class="pager">
+        
+        <li class="previous"><a class="basic-alignment left"
+          href="/blog/2014/02/06/yong-jvisualvmjian-kong-yuan-cheng-javajin-cheng/" title="Previous Post:
+          用jvisualvm监控远程java进程">&laquo; 用jvisualvm监控远程java进程</a></li>
+        
+        <li><a href="/blog/archives">Blog Archives</a></li>
+        
+        
+        <div class="sharing">
+  
+  
+  
+  
+<!-- Baidu Share BEGIN -->
+<div class="bdsharebuttonbox"><a href="#" class="bds_more"
+    data-cmd="more">分享到：</a><a href="#" class="bds_qzone"
+    data-cmd="qzone" title="分享到QQ空间">QQ空间</a><a href="#"
+    class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a><a
+    href="#" class="bds_tqq" data-cmd="tqq"
+    title="分享到腾讯微博">腾讯微博</a><a href="#" class="bds_renren"
+    data-cmd="renren" title="分享到人人网">人人网</a><a href="#"
+    class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new
+Date()/36e5)];</script>
+<!-- Baidu Share END -->
+
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript"
+src="http://v2.uyan.cc/code/uyan.js?uid=1891593"></script>
+<!-- UY END -->
+
+
+</div>
+
+        
+      </ul>
+    </footer>
+  </article>
+  
+  <aside class="sidebar-nav span4">
+    
+    
+<section class="well">
+  <ul id="weibo" class="nav nav-list">
+    <li class="nav-header">微博</li>
+    <li>
+    <iframe 
+      width="100%"
+      height="500"
+      frameborder="0"
+      scrolling="no"
+      src="http://service.weibo.com/widget/widget_blog.php?uid=1854716251&height=500&skin=wd_02&showpic=1"
+      ></iframe>
+    </li>
+  </ul>
+</section>
+
+<section class="well">
+    <ul id="categories" class="nav nav-list">
+      <li class="nav-header">文章分类</li>
+      <li class='category'><a href='/blog/categories/java/'>java (2)</a></li>
+<li class='category'><a href='/blog/categories/octopress/'>octopress (2)</a></li>
+<li class='category'><a href='/blog/categories/samples/'>samples (1)</a></li>
+
+    </ul>
+</section>
+<section class="well">
+  <ul id="recent_posts" class="nav nav-list">
+    <li class="nav-header">最近发表</li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/08/javaxian-cheng-zhuang-tai/">java线程状态</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/06/yong-jvisualvmjian-kong-yuan-cheng-javajin-cheng/">用jvisualvm监控远程java进程</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/06/octopressshou-ye-zhi-xian-shi-zhai-yao/">octopress首页只显示摘要</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/04/octopressqian-ru-xin-lang-wei-bo-bian-lan/">octopress嵌入新浪微博边栏</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/27/yong-markdown-xie-zuo/">用 markdown 写作</a>
+      </li>
+    
+  </ul>
+</section>
+
+    
+  </aside>
+  
+
+    </div>
+  </div>
+  <footer role="contentinfo" class="page-footer"><hr>
+<p>
+  Copyright &copy; 2014 - _漏斗 -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
