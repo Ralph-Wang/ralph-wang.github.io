@@ -4,7 +4,7 @@
   <title><![CDATA[Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-02-14T20:22:26+08:00</updated>
+  <updated>2014-02-14T23:57:57+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,71 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[为 octopress 添加 Tag 功能]]></title>
+    <link href="http://Ralph-Wang.github.io/blog/2014/02/14/wei-octopresstian-jia-taggong-neng/"/>
+    <updated>2014-02-14T21:00:00+08:00</updated>
+    <id>http://Ralph-Wang.github.io/blog/2014/02/14/wei-octopresstian-jia-taggong-neng</id>
+    <content type="html"><![CDATA[<p>对于博客文章来讲, 除了<strong>类别</strong>外, 另一个重要的标识属性便是<strong>标签</strong></p>
+
+<!--more-->
+
+
+<p>诚如 <code>alswlx</code> 在 <a href="http://blog.log4d.com/2012/05/tag-cloud/"><strong>给 octopress 加上标签功能</strong></a> 描述的那样, <strong>分类</strong>和<strong>标签</strong>分别代表了<strong>有序</strong>/<strong>无序</strong>两种不同的知识归纳方法. <em>一篇文章只会属于一个分类, 但可以同时拥有多个标签</em>.</p>
+
+<p>而原生的 octopress 却不支持标签功能, 所以, 有必要为它添加上这个功能</p>
+
+<p>我选择的解决方案来自:
+<a href="http://codemacro.com/2012/07/18/add-tag-to-octopress/"><strong>为octopress添加tag Cloud</strong></a></p>
+
+<p>里面涉及到的两个插件都是 <code>robbyedwards</code> 写的, github 仓库附在下面:</p>
+
+<p><a href="https://github.com/robbyedwards/octopress-tag-pages">tag_pages</a></p>
+
+<p><a href="https://github.com/robbyedwards/octopress-tag-cloud">tag_cloud</a></p>
+
+<p>clone 这两个项目, 得到两个相同的目录结构:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>.
+</span><span class='line'>|--plugins
+</span><span class='line'>|--source
+</span><span class='line'>|--CHANGELOG.md
+</span><span class='line'>|--README.md</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果你用的是 octopress 原生的主题, 那么直接复制这两个文件夹到 octopress
+目录下即可.</p>
+
+<p>如果是自定义主题的话需要做一些修改一下, source 目录下的各个 <code>html</code>
+文件来适应你的主题. 既然都玩上自定义主题了,
+这里我就是赘述各个文件的修改方法了.</p>
+
+<p>如果你和我一样使用的是 <a href="https://github.com/kAworu/octostrap3">octostrap3</a>,
+可以参考一下我的配置 <a href="https://github.com/Ralph-Wang/octo_source">octo-source</a></p>
+
+<p>配置好之后, 在文章中添加标签了.</p>
+
+<p>使用方法就是在文章的头部配置部分添加 tags 属性即可.</p>
+
+<p>如下:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>-----
+</span><span class='line'>tags: [octopress, 扩展, asides]
+</span><span class='line'>categories: octopress
+</span><span class='line'>----</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[联想接龙]]></title>
