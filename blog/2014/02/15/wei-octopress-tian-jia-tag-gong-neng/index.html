@@ -4,10 +4,10 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>标签: asides - Test Notes By _漏斗</title>
+  <title>为 Octopress 添加 Tag 功能 - Test Notes By _漏斗</title>
   <meta name="author" content="_漏斗">
 
-  <meta name="description" content="Tag: asides">
+  
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -16,7 +16,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://Ralph-Wang.github.iotags/asides">
+  <link rel="canonical" href="http://Ralph-Wang.github.io/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="Test Notes By _漏斗" type="application/atom+xml">
 
@@ -98,45 +98,128 @@
         <div id="content">
           <div class="row">
   <div class="page-content col-md-8">
-    <article role="article">
+    <article class="hentry" role="article">
       
-        <header class="page-header">
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-02-15T00:09:14+08:00" pubdate data-updated="true">Feb 15<span>th</span>, 2014</time>
+        
+      </p>
+    
+    
+    <h1 class="entry-title">
+        为 Octopress 添加 Tag 功能
+        
+    </h1>
+    
+  </header>
+
+
+<div class="entry-content clearfix"><p>对于博客文章来讲, 除了类别外, 另一个重要的标识属性便是<strong>标签</strong>.</p>
+
+<!--more-->
+
+
+<p>诚如 <code>alswlx</code> 在 <a href="http://blog.log4d.com/2012/05/tag-cloud/">给 octopress 加上标签功能</a>
+描述的那样:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>分类 和 标签 分别代表了 有序/无序 两种不同的知识归纳方法.
+</span><span class='line'>一篇文章只会属于一个分类, 但可以同时拥有多个标签.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>而原生的 octopress 却不支持标签功能, 所以, 有必要为它添加上这个功能</p>
+
+<p>我选择的解决方案来自:</p>
+
+<p><a href="http://codemacro.com/2012/07/18/add-tag-to-octopress/">为octopress添加tag
+Cloud</a></p>
+
+<p>里面涉及到的两个插件都是 robbyedwards 写的, github 仓库附在下面:</p>
+
+<p><a href="https://github.com/robbyedwards/octopress-tag-pages">tag_pages</a></p>
+
+<p><a href="https://github.com/robbyedwards/octopress-tag-cloud">tag_cloud</a></p>
+
+<p>clone 这两个项目, 得到两个相同的目录结构:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>.
+</span><span class='line'>|--plugins
+</span><span class='line'>|--source
+</span><span class='line'>|--CHANGELOG.md
+</span><span class='line'>|--README.md</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果你用的是 octopress 原生的主题, 那么直接复制这两个文件夹到 octopress
+目录下即可.</p>
+
+<p>如果是自定义主题的话需要做一些修改一下, <code>source</code> 目录下的各个 <code>html</code>
+文件来适应你的主题. 既然都玩上自定义主题了,
+这里我就是赘述各个文件的修改方法了.</p>
+
+<p>如果你和我一样使用的是 <a href="https://github.com/kAworu/octostrap3">octostrap3</a>, 可以参考一下我的配置
+<a href="https://github.com/Ralph-Wang/octo-source">octo-source</a></p>
+
+<p>配置好之后, 在文章中添加标签了.</p>
+
+<p>使用方法就是在文章的头部配置部分添加 tags 属性即可.</p>
+
+<p>如下:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>-----
+</span><span class='line'>tags: [octopress, 扩展, asides]
+</span><span class='line'>categories: octopress
+</span><span class='line'>----</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+      <footer>
+        <p class="meta text-muted">
           
+  
+
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard">Posted by <span class="fn">_漏斗</span></span>
+
           
-            <h1 class="entry-title">
-              标签: Asides
-              
-            </h1>
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-02-15T00:09:14+08:00" pubdate data-updated="true">Feb 15<span>th</span>, 2014</time>
           
-        </header>
-      
-      <div class="entry-content">
-        <div id="blog-archives" class="tag">
-
-
-
-  
-  <h2>2014</h2>
-
-<article>
-  
-<h1><a href="/blog/2014/02/14/wei-octopresstian-jia-taggong-neng/">为 octopress 添加 Tag 功能</a></h1>
-<p class="meta text-muted">
-  
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-02-14T21:00:00+08:00" pubdate data-updated="true">Feb 14<span>th</span>, 2014</time>
-  
 
 <span class="glyphicon glyphicon-folder-open"></span>&nbsp;
 <span class="categories">
@@ -146,32 +229,74 @@
 </span>
 
 
-  
+          
 
 <span class="glyphicon glyphicon-tags"></span>&nbsp;
 <span class="tags">
     
-    <a class='tag' href='/tags/asides/'>asides</a>, <a class='tag' href='/tags/octopress/'>octopress</a>, <a class='tag' href='/tags/kuo-zhan/'>扩展</a>
+    <a class='tag' href='/tags/octopress/'>octopress</a>, <a class='tag' href='/tags/kuo-zhan/'>扩展</a>, <a class='tag' href='/tags/bian-lan/'>边栏</a>
     
 </span>
 
 
-</p>
+        </p>
+        
+          <ul class="meta text-muted pager">
+            
+            <li class="previous"><a href="/blog/2014/02/11/lian-xiang-jie-long/" title="Previous Post: 联想接龙">&laquo; 联想接龙</a></li>
+            
+            
+          </ul>
+        
+        
+          <div class="sharing">
+  
+  
+  
+  
+<!-- Baidu Share BEGIN -->
+<div class="bdsharebuttonbox"><a href="#" class="bds_more"
+    data-cmd="more">分享到：</a><a href="#" class="bds_qzone"
+    data-cmd="qzone" title="分享到QQ空间">QQ空间</a><a href="#"
+    class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a><a
+    href="#" class="bds_tqq" data-cmd="tqq"
+    title="分享到腾讯微博">腾讯微博</a><a href="#" class="bds_renren"
+    data-cmd="renren" title="分享到人人网">人人网</a><a href="#"
+    class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new
+Date()/36e5)];</script>
+<!-- Baidu Share END -->
 
-</article>
+
+<!-- Duoshuo Comment BEGIN -->
+<div class="ds-thread" data-form-position="top" data-order="asc" data-limit=15 ></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"ralph-wang"};
+(function() {
+ var ds = document.createElement('script');
+ ds.type = 'text/javascript';ds.async = true;
+ ds.src = 'http://static.duoshuo.com/embed.js';
+ ds.charset = 'UTF-8';
+ (document.getElementsByTagName('head')[0] 
+  ||
+  document.getElementsByTagName('body')[0]).appendChild(ds);
+ })();
+</script>
+<!-- Duoshuo Comment END -->
+
 
 </div>
 
-      </div>
-      
+        
+      </footer>
     </article>
     
   </div>
 
   
-    <aside class="sidebar col-md-4">
+  <aside class="sidebar col-md-4">
+    
       
-        
 <section class="panel panel-default clearfix">
   <iframe 
     width="100%"
@@ -189,7 +314,7 @@
   
   <div id="recent_posts" class="list-group">
     
-    <a class="list-group-item " href="/blog/2014/02/14/wei-octopresstian-jia-taggong-neng/">为 Octopress 添加 Tag 功能</a>
+    <a class="list-group-item active" href="/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng/">为 Octopress 添加 Tag 功能</a>
     
     <a class="list-group-item " href="/blog/2014/02/11/lian-xiang-jie-long/">联想接龙</a>
     
@@ -238,11 +363,11 @@
 <a style="font-size: 170%" href="/tags/jvm/">jvm</a>
 <a style="font-size: 250%" href="/tags/octopress/">octopress</a>
 <a style="font-size: 170%" href="/tags/kuo-zhan/">扩展</a>
-<a style="font-size: 90%" href="/tags/chai-xiang/">拆箱</a>
 <a style="font-size: 90%" href="/tags/zhai-yao/">摘要</a>
 <a style="font-size: 90%" href="/tags/shu-ju-lei-xing/">数据类型</a>
 <a style="font-size: 90%" href="/tags/jian-kong/">监控</a>
 <a style="font-size: 90%" href="/tags/zhuang-xiang/">装箱</a>
+<a style="font-size: 170%" href="/tags/bian-lan/">边栏</a>
 
         </ul>
     </div>
@@ -266,8 +391,8 @@
 </section>
 
 
-      
-    </aside>
+    
+  </aside>
   
 </div>
 
