@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>LR 关联之 Alfresco - Test Notes By _漏斗</title>
+  <meta name="author" content="_漏斗">
+
+  <meta name="description" content="LoadRunner 开发 Alfresco 创建用户脚本实例, 遇到的关联问题及解决思路">
+  <meta name="keywords" content="LoadRunner, 性能测试, 性能, 关联, 参数化, Headers, urlEncode, LR">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Ralph-Wang.github.io/blog/2014/02/18/lr-guan-lian-zhi-alfresco">
+  <link href="/favicon.png" type="image/png" rel="icon">
+  <link href="/atom.xml" rel="alternate" title="Test Notes By _漏斗" type="application/atom+xml">
+
+  <link href="/assets/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+
+</head>
+
+  <body   >
+    <div id="wrap">
+      <header role="banner">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Test Notes By _漏斗</a>
+        </div>
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li >
+                    <a href="/">首页</a>
+                </li>
+                <li >
+                    <a href="/blog/archives">文章列表</a>
+                </li>
+                <li >
+                    <a href="/about-me">关于我</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="subscribe-rss" href="/atom.xml" title="subscribe via RSS">
+                        <span class="visible-xs">RSS</span>
+                        <img class="hidden-xs" src="/images/rss.png" alt="RSS">
+                    </a>
+                </li>
+                
+            </ul>
+            
+                <form class="search navbar-form navbar-right" action="http://google.com/search" method="GET">
+                    <input type="hidden" name="q" value="site:Ralph-Wang.github.io">
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="q" placeholder="Search">
+                    </div>
+                </form>
+            
+        </div>
+    </div>
+</nav>
+
+
+      </header>
+      <div id="main" class="container">
+        <div id="content">
+          <div class="row">
+  <div class="page-content col-md-8">
+    <article class="hentry" role="article">
+      
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-02-18T00:39:11+08:00" pubdate data-updated="true">Feb 18<span>th</span>, 2014</time>
+        
+      </p>
+    
+    
+    <h1 class="entry-title">
+        LR 关联之 Alfresco
+        
+    </h1>
+    
+  </header>
+
+
+<div class="entry-content clearfix"><p>遇到一个比较特别的关联的例子.</p>
+
+<!--more-->
+
+
+<p>项目是 <a href="http://www.alfresco.com">Alfresco</a>.
+需要开发的脚本业务是管理员新增用户.</p>
+
+<h3>问题</h3>
+
+<p>录制后, 本以为简单参数化一下, 就可以成功运行, 但却发现运行时最后一步提交状态码为 500.
+运行失败.
+<img src="/blogimgs/alfresco-errmsg.png" title="Err Msg" alt="Error Message" /></p>
+
+<p>本以为是系统出了什么毛病, 于是去手工操作业务, 却发现一切正常.</p>
+
+<p>再去翻看 LoadRunner 的 Test Result. 发现了好东西.
+<img src="/blogimgs/alfresco-500page.png" title="500 Page" alt="Test Result" /></p>
+
+<p>虽然是 500 状态码, 但仍然返回的页面仍是 Alfresco 的页面, 如上图.</p>
+
+<h3>分析</h3>
+
+<p>说明系统验证了某些提交信息, 这些提交信息不合法, 人为返回了 500 错误.</p>
+
+<p>所以我们需要关联这些信息.</p>
+
+<p>关联的第一步需要找到那些信息是系统需要验证的, 如果有开发配合, 问一嘴就好了.</p>
+
+<p>没有开发配合的话, 就得我们自己找了. 就像现在.</p>
+
+<p>我们先来看请求发出的信息. 首先从请求体里面找</p>
+
+<p>请求体是 <code>json</code> 格式的, 如下</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">{</span>   <span class="s2">&quot;userName&quot;</span><span class="o">:</span><span class="s2">&quot;www2&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;password&quot;</span><span class="o">:</span><span class="s2">&quot;www2&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;firstName&quot;</span><span class="o">:</span><span class="s2">&quot;www2&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;lastName&quot;</span><span class="o">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;email&quot;</span><span class="o">:</span><span class="s2">&quot;www2@www.com&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;disableAccount&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;quota&quot;</span><span class="o">:</span><span class="mi">127893619</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;groups&quot;</span><span class="o">:</span><span class="p">[]</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>userName</code> 是用户名, <code>password</code> 是用户密码, <code>firstName</code> 是名字, <code>lastName</code>
+是姓氏, <code>email</code> 是邮箱, <code>disableAccount</code> 是禁用选项, <code>quota</code> 是分配容量, <code>groups</code> 是用户所在组</p>
+
+<p>呃&hellip; 每个 key 都有对应的表单字段. 看来需要关联的验证信息并不在请求体中.</p>
+
+<p>那就只有看看请求头了.</p>
+
+<p><img src="/blogimgs/alfresco-lr.png" title="Lr Log" alt="LR Log" /></p>
+
+<p>这里发现了一个嫌疑犯: <code>Alfresco-CSRFToken</code></p>
+
+<p>看名字, 应该是用来防止 <code>CSRF</code> 攻击的. 应该是它没错.</p>
+
+<p>我们再用 <code>Fiddler</code> 来看下新请求里, 这个值是否发生了变化.</p>
+
+<p><img src="/blogimgs/alfresco-fiddler.png" title="Fiddler" alt="Fiddler" /></p>
+
+<p>嗯, 果然发生了变化. 这下没错了, 它就是我们需要关联的对象.</p>
+
+<p>然后, 我们找到系统是什么时候把这个信息发送给我们的.</p>
+
+<p>依次查看各个请求后发现, 在进入用户管理页面时, 返回的请求头里有如下信息</p>
+
+<p><img src="/blogimgs/alfresco-tocor.png" title="To Correlations" alt="To Correlations" /></p>
+
+<p>由于信息中的特殊符号被 <code>URL编码</code> 了, 导致在前后两个请求中看上去有些不一样.
+不过我们可以确认, 这里就是关联参数的来源</p>
+
+<h3>解决方案</h3>
+
+<p>添加以下代码</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">web_reg_save_param</span><span class="p">(</span><span class="s">&quot;token&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;LB=CSRFToken=&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;RB=;&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;Search=Headers&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="n">LAST</span><span class="p">);</span>
+</span><span class='line'><span class="p">...</span>
+</span><span class='line'><span class="c1">// user requests codes</span>
+</span><span class='line'><span class="p">...</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">web_add_header</span><span class="p">(</span><span class="s">&quot;Alfresco-CSRFToken&quot;</span><span class="p">,</span> <span class="n">url_decode</span><span class="p">(</span><span class="n">lr_eval_string</span><span class="p">(</span><span class="s">&quot;{token}&quot;</span><span class="p">)));</span>
+</span><span class='line'><span class="p">...</span>
+</span><span class='line'><span class="c1">// submit requests codes</span>
+</span><span class='line'><span class="p">...</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>由于不能直接在请求中添加请求头信息, 所以我们需要调用 <code>web_add_header</code>
+函数来添加.</p>
+
+<p>因为直接从关联出来的值是 <code>URL编码</code> 的, 所以需要进行解码.
+就是 <code>url_decode</code> 函数的作用了. 这个函数并不是 LR 自带的函数,
+所以需要自行添加. 源代码见<a href="http://www.51testing.com/html/96/n-832896.html">这里</a></p>
+
+<hr />
+
+<p>关于 url 编码问题, 后来又找到一个 LoadRunner 原生的解决方案如下:</p>
+
+<p><a href="http://blog.csdn.net/womengdoushizhongguo/article/details/8517598">http://blog.csdn.net/womengdoushizhongguo/article/details/8517598</a></p>
+
+<p>新增的代码可以修改为</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">web_reg_save_param</span><span class="p">(</span><span class="s">&quot;token&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;LB=CSRFToken=&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;RB=;&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;Search=Headers&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="n">LAST</span><span class="p">);</span>
+</span><span class='line'><span class="p">...</span>
+</span><span class='line'><span class="c1">// user requests codes</span>
+</span><span class='line'><span class="p">...</span>
+</span><span class='line'><span class="n">lr_convert_string_encoding</span><span class="p">(</span><span class="n">lr_eval_string</span><span class="p">(</span><span class="s">&quot;{token}&quot;</span><span class="p">),</span><span class="n">LR_ENC_SYSTEM_LOCALE</span><span class="p">,</span>
+</span><span class='line'>      <span class="n">LR_ENC_UTF8</span> <span class="p">,</span> <span class="s">&quot;token&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="n">web_convert_param</span><span class="p">(</span><span class="s">&quot;token&quot;</span><span class="p">,</span> <span class="s">&quot;SourceEncoding=URL&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;TargetEncoding=PLAIN&quot;</span><span class="p">,</span><span class="n">LAST</span> <span class="p">);</span>
+</span><span class='line'><span class="n">lr_convert_string_encoding</span><span class="p">(</span><span class="n">lr_eval_string</span><span class="p">(</span><span class="s">&quot;{token}&quot;</span><span class="p">),</span><span class="n">LR_ENC_UTF8</span>
+</span><span class='line'>      <span class="p">,</span> <span class="n">LR_ENC_SYSTEM_LOCALE</span><span class="p">,</span> <span class="s">&quot;token&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">web_add_header</span><span class="p">(</span><span class="s">&quot;Alfresco-CSRFToken&quot;</span><span class="p">,</span> <span class="n">lr_eval_string</span><span class="p">(</span><span class="s">&quot;{token}&quot;</span><span class="p">));</span>
+</span><span class='line'><span class="p">...</span>
+</span><span class='line'><span class="c1">// submit requests codes</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+
+      <footer>
+        <p class="meta text-muted">
+          
+  
+
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard">Posted by <span class="fn">_漏斗</span></span>
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-02-18T00:39:11+08:00" pubdate data-updated="true">Feb 18<span>th</span>, 2014</time>
+          
+
+<span class="glyphicon glyphicon-folder-open"></span>&nbsp;
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/loadrunner/'>LoadRunner</a>
+  
+</span>
+
+
+          
+
+<span class="glyphicon glyphicon-tags"></span>&nbsp;
+<span class="tags">
+    
+    <a class='tag' href='/tags/loadrunner/'>LoadRunner</a>, <a class='tag' href='/tags/guan-lian/'>关联</a>, <a class='tag' href='/tags/xing-neng-ce-shi/'>性能测试</a>, <a class='tag' href='/tags/jiao-ben-kai-fa/'>脚本开发</a>
+    
+</span>
+
+
+        </p>
+        
+          <ul class="meta text-muted pager">
+            
+            <li class="previous"><a href="/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng/" title="Previous Post: 为 Octopress 添加 Tag 功能">&laquo; 为 Octopress 添加 Tag 功能</a></li>
+            
+            
+          </ul>
+        
+        
+          <div class="sharing">
+  
+  
+  
+  
+<!-- Baidu Share BEGIN -->
+<div class="bdsharebuttonbox"><a href="#" class="bds_more"
+    data-cmd="more">分享到：</a><a href="#" class="bds_qzone"
+    data-cmd="qzone" title="分享到QQ空间">QQ空间</a><a href="#"
+    class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a><a
+    href="#" class="bds_tqq" data-cmd="tqq"
+    title="分享到腾讯微博">腾讯微博</a><a href="#" class="bds_renren"
+    data-cmd="renren" title="分享到人人网">人人网</a><a href="#"
+    class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new
+Date()/36e5)];</script>
+<!-- Baidu Share END -->
+
+
+<!-- Duoshuo Comment BEGIN -->
+<div class="ds-thread" data-form-position="top" data-order="asc" data-limit=15 ></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"ralph-wang"};
+(function() {
+ var ds = document.createElement('script');
+ ds.type = 'text/javascript';ds.async = true;
+ ds.src = 'http://static.duoshuo.com/embed.js';
+ ds.charset = 'UTF-8';
+ (document.getElementsByTagName('head')[0] 
+  ||
+  document.getElementsByTagName('body')[0]).appendChild(ds);
+ })();
+</script>
+<!-- Duoshuo Comment END -->
+
+
+</div>
+
+        
+      </footer>
+    </article>
+    
+  </div>
+
+  
+  <aside class="sidebar col-md-4">
+    
+      
+<section class="panel panel-default clearfix">
+  <iframe 
+    width="100%"
+    height="500"
+    frameborder="0"
+    scrolling="no"
+    src="http://v.t.sina.com.cn/widget/widget_blog.php?uid=1854716251&height=500&skin=wd_02&showpic=1"
+    ></iframe>
+</section>
+
+<section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">最近发表</h3>
+  </div>
+  
+  <div id="recent_posts" class="list-group">
+    
+    <a class="list-group-item active" href="/blog/2014/02/18/lr-guan-lian-zhi-alfresco/">LR 关联之 Alfresco</a>
+    
+    <a class="list-group-item " href="/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng/">为 Octopress 添加 Tag 功能</a>
+    
+    <a class="list-group-item " href="/blog/2014/02/11/lian-xiang-jie-long/">联想接龙</a>
+    
+    <a class="list-group-item " href="/blog/2014/02/09/javazhi-boxinghe-unboxing/">Java之Boxing和Unboxing</a>
+    
+    <a class="list-group-item " href="/blog/2014/02/08/javaxian-cheng-zhuang-tai/">Java线程状态</a>
+    
+  </div>
+</section>
+<section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">文章分类</h3>
+  </div>
+  <div class="list-group">
+    
+    
+    <a class="list-group-item " href="/blog/categories/octopress/index.html">
+      <span class="badge">4</span>
+      octopress
+    </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/java/index.html">
+      <span class="badge">3</span>
+      java
+    </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/思维导图/index.html">
+      <span class="badge">1</span>
+      思维导图
+    </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/loadrunner/index.html">
+      <span class="badge">1</span>
+      LoadRunner
+    </a>
+    
+  </div>
+</section>
+<section class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">标签</h3>
+    </div>
+    <ul class="tag-cloud" style="padding-left:10px">
+        <a style="font-size: 100%" href="/tags/jiao-ben-kai-fa/">脚本开发</a>
+<a style="font-size: 225%" href="/tags/jvisualvm/">jvisualvm</a>
+<a style="font-size: 100%" href="/tags/loadrunner/">LoadRunner</a>
+<a style="font-size: 225%" href="/tags/bian-lan/">边栏</a>
+<a style="font-size: 225%" href="/tags/kuo-zhan/">扩展</a>
+<a style="font-size: 225%" href="/tags/jvm/">jvm</a>
+<a style="font-size: 100%" href="/tags/zhai-yao/">摘要</a>
+<a style="font-size: 100%" href="/tags/si-wei-dao-tu/">思维导图</a>
+<a style="font-size: 100%" href="/tags/shu-ju-lei-xing/">数据类型</a>
+<a style="font-size: 100%" href="/tags/chai-xiang/">拆箱</a>
+
+    </ul>
+</section>
+
+<section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">最新评论</h3>
+  </div>
+  <div id="recent_comments" class="list-group">
+    <ul class="ds-recent-comments"
+      data-num-items="10"
+      data-show-avatars="1"
+      data-show-time="1"
+      data-show-title="1"
+      data-show-admin="1"
+      data-excerpt-length="70"
+      style="padding-left:20px"
+      ></ul>
+  </div>
+</section>
+
+
+<section class="panel panel-default clearfix">
+    <div class="panel-heading">
+        <h3 class="panel-title">豆瓣</h3>
+    </div>
+    <div style="padding-left:40px">
+        <script type="text/javascript" src="http://www.douban.com/service/badge/ralph_ld/?selection=random&amp;picsize=small&amp;show=collection&amp;n=9&amp;cat=book&amp;columns=3&amp;hideself=on"></script>
+    </div>
+</section>
+
+
+    
+  </aside>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+    <footer role="contentinfo"><div class="container">
+    <p class="text-muted credits">
+  Copyright &copy; 2014 - _漏斗<br>
+  <small>
+      <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>,
+      <span class="credit">customized with <a href="https://github.com/kAworu/octostrap3">octostrap3</a></span>.
+  </small>
+</p>
+
+</div>
+</footer>
+    <script src="/assets/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+<script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47787507-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : "
+    http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol +
+      "hm.baidu.com/h.js%3Faf7f2e40fdeaea8b30e44d6df8cbfbc9'
+      type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

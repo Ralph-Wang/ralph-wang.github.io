@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[标签: 性能测试 | Test Notes By _漏斗]]></title>
+  <link href="http://Ralph-Wang.github.io/tags/xing-neng-ce-shi/atom.xml" rel="self"/>
+  <link href="http://Ralph-Wang.github.io/"/>
+  <updated>2014-02-18T02:00:42+08:00</updated>
+  <id>http://Ralph-Wang.github.io/</id>
+  <author>
+    <name><![CDATA[_漏斗]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[LR 关联之 Alfresco]]></title>
+    <link href="http://Ralph-Wang.github.io/blog/2014/02/18/lr-guan-lian-zhi-alfresco/"/>
+    <updated>2014-02-18T00:39:11+08:00</updated>
+    <id>http://Ralph-Wang.github.io/blog/2014/02/18/lr-guan-lian-zhi-alfresco</id>
+    <content type="html"><![CDATA[<p>遇到一个比较特别的关联的例子.</p>
+
+<!--more-->
+
+
+<p>项目是 <a href="http://www.alfresco.com">Alfresco</a>.
+需要开发的脚本业务是管理员新增用户.</p>
+
+<h3>问题</h3>
+
+<p>录制后, 本以为简单参数化一下, 就可以成功运行, 但却发现运行时最后一步提交状态码为 500.
+运行失败.
+<img src="/blogimgs/alfresco-errmsg.png" title="Err Msg" alt="Error Message" /></p>
+
+<p>本以为是系统出了什么毛病, 于是去手工操作业务, 却发现一切正常.</p>
+
+<p>再去翻看 LoadRunner 的 Test Result. 发现了好东西.
+<img src="/blogimgs/alfresco-500page.png" title="500 Page" alt="Test Result" /></p>
+
+<p>虽然是 500 状态码, 但仍然返回的页面仍是 Alfresco 的页面, 如上图.</p>
+
+<h3>分析</h3>
+
+<p>说明系统验证了某些提交信息, 这些提交信息不合法, 人为返回了 500 错误.</p>
+
+<p>所以我们需要关联这些信息.</p>
+
+<p>关联的第一步需要找到那些信息是系统需要验证的, 如果有开发配合, 问一嘴就好了.</p>
+
+<p>没有开发配合的话, 就得我们自己找了. 就像现在.</p>
+
+<p>我们先来看请求发出的信息. 首先从请求体里面找</p>
+
+<p>请求体是 <code>json</code> 格式的, 如下
+```javascript
+{   &ldquo;userName&rdquo;:&ldquo;www2&rdquo;,</p>
+
+<pre><code>"password":"www2",
+"firstName":"www2",
+"lastName":"",
+"email":"www2@www.com",
+"disableAccount":false,
+"quota":127893619,
+"groups":[]
+</code></pre>
+
+<p>}
+<code>``
+</code>userName<code>是用户名,</code>password<code>是用户密码,</code>firstName<code>是名字,</code>lastName<code>
+是姓氏,</code>email<code>是邮箱,</code>disableAccount<code>是禁用选项,</code>quota<code>是分配容量,</code>groups` 是用户所在组</p>
+
+<p>呃&hellip; 每个 key 都有对应的表单字段. 看来需要关联的验证信息并不在请求体中.</p>
+
+<p>那就只有看看请求头了.</p>
+
+<p><img src="/blogimgs/alfresco-lr.png" title="Lr Log" alt="LR Log" /></p>
+
+<p>这里发现了一个嫌疑犯: <code>Alfresco-CSRFToken</code></p>
+
+<p>看名字, 应该是用来防止 <code>CSRF</code> 攻击的. 应该是它没错.</p>
+
+<p>我们再用 <code>Fiddler</code> 来看下新请求里, 这个值是否发生了变化.</p>
+
+<p><img src="/blogimgs/alfresco-fiddler.png" title="Fiddler" alt="Fiddler" /></p>
+
+<p>嗯, 果然发生了变化. 这下没错了, 它就是我们需要关联的对象.</p>
+
+<p>然后, 我们找到系统是什么时候把这个信息发送给我们的.</p>
+
+<p>依次查看各个请求后发现, 在进入用户管理页面时, 返回的请求头里有如下信息</p>
+
+<p><img src="/blogimgs/alfresco-tocor.png" title="To Correlations" alt="To Correlations" /></p>
+
+<p>由于信息中的特殊符号被 <code>URL编码</code> 了, 导致在前后两个请求中看上去有些不一样.
+不过我们可以确认, 这里就是关联参数的来源</p>
+
+<h3>解决方案</h3>
+
+<p>添加以下代码
+```c
+web_reg_save_param(&ldquo;token&rdquo;,</p>
+
+<pre><code>    "LB=CSRFToken=",
+    "RB=;",
+    "Search=Headers",
+    LAST);
+</code></pre>
+
+<p>&hellip;
+// user requests codes
+&hellip;</p>
+
+<p>web_add_header(&ldquo;Alfresco-CSRFToken&rdquo;, url_decode(lr_eval_string(&ldquo;{token}&rdquo;)));
+&hellip;
+// submit requests codes
+&hellip;
+<code>``
+由于不能直接在请求中添加请求头信息, 所以我们需要调用</code>web_add_header`
+函数来添加.</p>
+
+<p>因为直接从关联出来的值是 <code>URL编码</code> 的, 所以需要进行解码.
+就是 <code>url_decode</code> 函数的作用了. 这个函数并不是 LR 自带的函数,
+所以需要自行添加. 源代码见<a href="http://www.51testing.com/html/96/n-832896.html">这里</a></p>
+
+<hr />
+
+<p>关于 url 编码问题, 后来又找到一个 LoadRunner 原生的解决方案如下:</p>
+
+<p><a href="http://blog.csdn.net/womengdoushizhongguo/article/details/8517598">http://blog.csdn.net/womengdoushizhongguo/article/details/8517598</a></p>
+
+<p>新增的代码可以修改为
+```c
+web_reg_save_param(&ldquo;token&rdquo;,</p>
+
+<pre><code>    "LB=CSRFToken=",
+    "RB=;",
+    "Search=Headers",
+    LAST);
+</code></pre>
+
+<p>&hellip;
+// user requests codes
+&hellip;
+lr_convert_string_encoding(lr_eval_string(&ldquo;{token}&rdquo;),LR_ENC_SYSTEM_LOCALE,</p>
+
+<pre><code>    LR_ENC_UTF8 , "token"); 
+</code></pre>
+
+<p>web_convert_param(&ldquo;token&rdquo;, &ldquo;SourceEncoding=URL&rdquo;,</p>
+
+<pre><code>    "TargetEncoding=PLAIN",LAST );
+</code></pre>
+
+<p>lr_convert_string_encoding(lr_eval_string(&ldquo;{token}&rdquo;),LR_ENC_UTF8</p>
+
+<pre><code>    , LR_ENC_SYSTEM_LOCALE, "token");
+</code></pre>
+
+<p>web_add_header(&ldquo;Alfresco-CSRFToken&rdquo;, lr_eval_string(&ldquo;{token}&rdquo;));
+&hellip;
+// submit requests codes
+```</p>
+]]></content>
+  </entry>
+  
+</feed>
