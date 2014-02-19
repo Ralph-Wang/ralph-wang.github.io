@@ -4,7 +4,7 @@
   <title><![CDATA[标签: 脚本开发 | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/tags/jiao-ben-kai-fa/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-02-19T10:52:15+08:00</updated>
+  <updated>2014-02-19T11:21:36+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -99,6 +99,12 @@
 
 <p>由于信息中的特殊符号被 <code>URL编码</code> 了, 导致在前后两个请求中看上去有些不一样.
 通过解码我们可以确认, 这里就是关联参数的来源</p>
+
+<p>```javascript
+decodeURIComponent(&lsquo;NPizHL2EuHsHN6VMml0sAfezFhPQmT5fynjkx%2fkqP88%3d&rsquo;)</p>
+
+<p>// output: NPizHL2EuHsHN6VMml0sAfezFhPQmT5fynjkx/kqP88=
+```</p>
 
 <h3>解决方案</h3>
 
