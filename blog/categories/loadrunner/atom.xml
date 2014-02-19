@@ -4,7 +4,7 @@
   <title><![CDATA[分类: LoadRunner | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/blog/categories/loadrunner/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-02-19T11:21:36+08:00</updated>
+  <updated>2014-02-19T11:28:37+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -28,11 +28,11 @@
 
 <h3>问题</h3>
 
-<p>录制后, 原本以为简单参数化一下就可以成功运行, 但却发现运行时最后一步提交请求时, 返回的状态码为 500.</p>
+<p>录制后, 简单参数化一下运行, 发现最后一步提交数据时, 返回的状态码为 500.</p>
 
 <p><img src="/blogimgs/alfresco-errmsg.png" title="Err Msg" alt="Error Message" /></p>
 
-<p>本以为是系统出了什么毛病, 于是去手工操作业务, 却发现一切正常.</p>
+<p>会不会是系统出了什么毛病? 于是去手工操作业务, 却发现一切正常.</p>
 
 <p>再去翻看 LoadRunner 的 Test Result. 发现了好东西.</p>
 
