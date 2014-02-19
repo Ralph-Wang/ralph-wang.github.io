@@ -4,7 +4,7 @@
   <title><![CDATA[标签: 性能测试 | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/tags/xing-neng-ce-shi/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-02-19T10:37:27+08:00</updated>
+  <updated>2014-02-19T10:42:07+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -121,12 +121,15 @@ web_reg_save_param(&ldquo;token&rdquo;,</p>
 // submit requests codes
 &hellip;
 <code>``
-由于不能直接在请求中添加请求头信息, 所以我们需要调用</code>web_add_header`
+TIPS:
+* 由于不能直接在请求中添加请求头信息, 所以我们需要调用</code>web_add_header`
 函数来添加.</p>
 
-<p>因为系统发送过来的 <code>token</code> 是 <code>URL编码</code> 的字符串, 而提交新增时发送回去的是解码过的. 所以我们在添加 header 时需要进行解码.</p>
+<ul>
+<li><p>因为系统发送过来的 <code>token</code> 是 <code>URL编码</code> 的字符串, 而提交新增时发送回去的是解码过的. 所以我们在添加 header 时需要进行解码.</p></li>
+<li><p>这就是 <code>url_decode</code> 函数的作用了. 这个函数并不是 LR 自带的函数, 所以需要自行添加. 源代码见<a href="http://www.51testing.com/html/96/n-832896.html">这里</a></p></li>
+</ul>
 
-<p>这就是 <code>url_decode</code> 函数的作用了. 这个函数并不是 LR 自带的函数, 所以需要自行添加. 源代码见<a href="http://www.51testing.com/html/96/n-832896.html">这里</a></p>
 
 <hr />
 
