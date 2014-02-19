@@ -4,7 +4,7 @@
   <title><![CDATA[标签: LoadRunner | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/tags/loadrunner/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-02-18T19:05:21+08:00</updated>
+  <updated>2014-02-19T10:37:27+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -24,28 +24,34 @@
 
 
 <p>项目是 <a href="http://www.alfresco.com">Alfresco</a>.
-需要开发的脚本业务是管理员新增用户.</p>
+需要开发的脚本业务: 管理员新增用户.</p>
 
 <h3>问题</h3>
 
-<p>录制后, 本以为简单参数化一下, 就可以成功运行, 但却发现运行时最后一步提交状态码为 500.
-运行失败.
-<img src="/blogimgs/alfresco-errmsg.png" title="Err Msg" alt="Error Message" /></p>
+<p>录制后, 原本以为简单参数化一下就可以成功运行, 但却发现运行时最后一步提交请求时, 返回的状态码为 500.</p>
+
+<p><img src="/blogimgs/alfresco-errmsg.png" title="Err Msg" alt="Error Message" /></p>
 
 <p>本以为是系统出了什么毛病, 于是去手工操作业务, 却发现一切正常.</p>
 
-<p>再去翻看 LoadRunner 的 Test Result. 发现了好东西.
-<img src="/blogimgs/alfresco-500page.png" title="500 Page" alt="Test Result" /></p>
+<p>再去翻看 LoadRunner 的 Test Result. 发现了好东西.</p>
 
-<p>虽然是 500 状态码, 但仍然返回的页面仍是 Alfresco 的页面, 如上图.</p>
+<p><img src="/blogimgs/alfresco-500page.png" title="500 Page" alt="Test Result" /></p>
+
+<p>如上图, 虽然是虽然请求返回的状态码是 500, 但返回页面仍是 Alfresco 的页面,</p>
 
 <h3>分析</h3>
 
-<p>说明系统验证了某些提交信息, 这些提交信息不合法, 人为返回了 500 错误.</p>
+<p>状态码 500, 返回页面为系统页面. 这说明 500 的状态码是系统主动返回的.</p>
 
-<p>所以我们需要关联这些信息.</p>
+<p>一般来说, 这种情况都是系统需要验证了某些提交信息,
+而这些信息是由前面的某个请求返回的. 回放时这些信息发生了变化, 导致请求失败.</p>
 
-<p>关联的第一步需要找到那些信息是系统需要验证的, 如果有开发配合, 问一嘴就好了.</p>
+<p>我们需要关联这些信息来保证请求的合法性.</p>
+
+<hr />
+
+<p>首先我们需要找到哪些信息是系统要验证的, 如果有开发配合, 问一嘴就好了.</p>
 
 <p>没有开发配合的话, 就得我们自己找了. 就像现在.</p>
 
@@ -83,16 +89,16 @@
 
 <p><img src="/blogimgs/alfresco-fiddler.png" title="Fiddler" alt="Fiddler" /></p>
 
-<p>嗯, 果然发生了变化. 这下没错了, 它就是我们需要关联的对象.</p>
+<p>果然发生了变化. 这下没错了, 它就是我们需要关联的对象.</p>
 
-<p>然后, 我们找到系统是什么时候把这个信息发送给我们的.</p>
+<p>然后, 我们要找到系统是什么时候把这个信息发送给我们的.</p>
 
 <p>依次查看各个请求后发现, 在进入用户管理页面时, 返回的请求头里有如下信息</p>
 
 <p><img src="/blogimgs/alfresco-tocor.png" title="To Correlations" alt="To Correlations" /></p>
 
 <p>由于信息中的特殊符号被 <code>URL编码</code> 了, 导致在前后两个请求中看上去有些不一样.
-不过我们可以确认, 这里就是关联参数的来源</p>
+通过解码我们可以确认, 这里就是关联参数的来源</p>
 
 <h3>解决方案</h3>
 
@@ -118,9 +124,9 @@ web_reg_save_param(&ldquo;token&rdquo;,</p>
 由于不能直接在请求中添加请求头信息, 所以我们需要调用</code>web_add_header`
 函数来添加.</p>
 
-<p>因为直接从关联出来的值是 <code>URL编码</code> 的, 所以需要进行解码.
-就是 <code>url_decode</code> 函数的作用了. 这个函数并不是 LR 自带的函数,
-所以需要自行添加. 源代码见<a href="http://www.51testing.com/html/96/n-832896.html">这里</a></p>
+<p>因为系统发送过来的 <code>token</code> 是 <code>URL编码</code> 的字符串, 而提交新增时发送回去的是解码过的. 所以我们在添加 header 时需要进行解码.</p>
+
+<p>这就是 <code>url_decode</code> 函数的作用了. 这个函数并不是 LR 自带的函数, 所以需要自行添加. 源代码见<a href="http://www.51testing.com/html/96/n-832896.html">这里</a></p>
 
 <hr />
 
@@ -128,7 +134,7 @@ web_reg_save_param(&ldquo;token&rdquo;,</p>
 
 <p><a href="http://blog.csdn.net/womengdoushizhongguo/article/details/8517598">http://blog.csdn.net/womengdoushizhongguo/article/details/8517598</a></p>
 
-<p>新增的代码可以修改为
+<p>于是, 新增的代码可以修改为
 ```c
 web_reg_save_param(&ldquo;token&rdquo;,</p>
 
