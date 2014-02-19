@@ -277,10 +277,6 @@
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
 </pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">web_reg_save_param</span><span class="p">(</span><span class="s">&quot;token&quot;</span><span class="p">,</span>
 </span><span class='line'>      <span class="s">&quot;LB=CSRFToken=&quot;</span><span class="p">,</span>
 </span><span class='line'>      <span class="s">&quot;RB=;&quot;</span><span class="p">,</span>
@@ -289,14 +285,10 @@
 </span><span class='line'><span class="p">...</span>
 </span><span class='line'><span class="c1">// user requests codes</span>
 </span><span class='line'><span class="p">...</span>
-</span><span class='line'><span class="n">lr_convert_string_encoding</span><span class="p">(</span><span class="n">lr_eval_string</span><span class="p">(</span><span class="s">&quot;{token}&quot;</span><span class="p">),</span><span class="n">LR_ENC_SYSTEM_LOCALE</span><span class="p">,</span>
-</span><span class='line'>      <span class="n">LR_ENC_UTF8</span> <span class="p">,</span> <span class="s">&quot;token&quot;</span><span class="p">);</span>
-</span><span class='line'><span class="n">web_convert_param</span><span class="p">(</span><span class="s">&quot;token&quot;</span><span class="p">,</span> <span class="s">&quot;SourceEncoding=URL&quot;</span><span class="p">,</span>
-</span><span class='line'>      <span class="s">&quot;TargetEncoding=PLAIN&quot;</span><span class="p">,</span><span class="n">LAST</span> <span class="p">);</span>
-</span><span class='line'><span class="n">lr_convert_string_encoding</span><span class="p">(</span><span class="n">lr_eval_string</span><span class="p">(</span><span class="s">&quot;{token}&quot;</span><span class="p">),</span><span class="n">LR_ENC_UTF8</span>
-</span><span class='line'>      <span class="p">,</span> <span class="n">LR_ENC_SYSTEM_LOCALE</span><span class="p">,</span> <span class="s">&quot;token&quot;</span><span class="p">);</span>
 </span><span class='line'>
+</span><span class='line'><span class="n">web_convert_param</span><span class="p">(</span><span class="s">&quot;token&quot;</span><span class="p">,</span> <span class="s">&quot;SourceEncoding=URL&quot;</span><span class="p">,</span> <span class="s">&quot;TargetEncoding=PLAIN&quot;</span><span class="p">,</span><span class="n">LAST</span> <span class="p">);</span>
 </span><span class='line'><span class="n">web_add_header</span><span class="p">(</span><span class="s">&quot;Alfresco-CSRFToken&quot;</span><span class="p">,</span> <span class="n">lr_eval_string</span><span class="p">(</span><span class="s">&quot;{token}&quot;</span><span class="p">));</span>
+</span><span class='line'>
 </span><span class='line'><span class="p">...</span>
 </span><span class='line'><span class="c1">// submit requests codes</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -472,16 +464,16 @@ var duoshuoQuery = {short_name:"ralph-wang"};
         <h3 class="panel-title">Tag Clouds</h3>
     </div>
     <ul class="tag-cloud" style="padding-left:10px">
-        <a style="font-size: 100%" href="/tags/jiao-ben-kai-fa/">脚本开发</a>
+        <a style="font-size: 100%" href="/tags/chai-xiang/">拆箱</a>
+<a style="font-size: 350%" href="/tags/octopress/">octopress</a>
+<a style="font-size: 100%" href="/tags/loadrunner/">LoadRunner</a>
+<a style="font-size: 225%" href="/tags/bian-lan/">边栏</a>
+<a style="font-size: 100%" href="/tags/shu-ju-lei-xing/">数据类型</a>
 <a style="font-size: 100%" href="/tags/si-wei-dao-tu/">思维导图</a>
 <a style="font-size: 100%" href="/tags/xiang-xiang-li/">想象力</a>
-<a style="font-size: 100%" href="/tags/xian-cheng/">线程</a>
-<a style="font-size: 100%" href="/tags/zhai-yao/">摘要</a>
-<a style="font-size: 225%" href="/tags/jvisualvm/">jvisualvm</a>
-<a style="font-size: 100%" href="/tags/loadrunner/">LoadRunner</a>
-<a style="font-size: 225%" href="/tags/kuo-zhan/">扩展</a>
-<a style="font-size: 225%" href="/tags/bian-lan/">边栏</a>
-<a style="font-size: 225%" href="/tags/jvm/">jvm</a>
+<a style="font-size: 100%" href="/tags/init/">init</a>
+<a style="font-size: 100%" href="/tags/guan-lian/">关联</a>
+<a style="font-size: 100%" href="/tags/jian-kong/">监控</a>
 
     </ul>
 </section>

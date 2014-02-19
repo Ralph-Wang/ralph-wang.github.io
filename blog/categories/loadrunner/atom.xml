@@ -4,7 +4,7 @@
   <title><![CDATA[分类: LoadRunner | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/blog/categories/loadrunner/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-02-19T14:21:42+08:00</updated>
+  <updated>2014-02-19T18:50:12+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -154,24 +154,12 @@ web_reg_save_param(&ldquo;token&rdquo;,</p>
 
 <p>&hellip;
 // user requests codes
-&hellip;
-lr_convert_string_encoding(lr_eval_string(&ldquo;{token}&rdquo;),LR_ENC_SYSTEM_LOCALE,</p>
+&hellip;</p>
 
-<pre><code>    LR_ENC_UTF8 , "token"); 
-</code></pre>
+<p>web_convert_param(&ldquo;token&rdquo;, &ldquo;SourceEncoding=URL&rdquo;, &ldquo;TargetEncoding=PLAIN&rdquo;,LAST );
+web_add_header(&ldquo;Alfresco-CSRFToken&rdquo;, lr_eval_string(&ldquo;{token}&rdquo;));</p>
 
-<p>web_convert_param(&ldquo;token&rdquo;, &ldquo;SourceEncoding=URL&rdquo;,</p>
-
-<pre><code>    "TargetEncoding=PLAIN",LAST );
-</code></pre>
-
-<p>lr_convert_string_encoding(lr_eval_string(&ldquo;{token}&rdquo;),LR_ENC_UTF8</p>
-
-<pre><code>    , LR_ENC_SYSTEM_LOCALE, "token");
-</code></pre>
-
-<p>web_add_header(&ldquo;Alfresco-CSRFToken&rdquo;, lr_eval_string(&ldquo;{token}&rdquo;));
-&hellip;
+<p>&hellip;
 // submit requests codes
 ```</p>
 ]]></content>
