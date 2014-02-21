@@ -4,7 +4,7 @@
   <title><![CDATA[Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-02-19T18:50:12+08:00</updated>
+  <updated>2014-02-21T22:23:15+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -803,7 +803,7 @@ class Hammer {
 <p>运行<code>jstatd</code>时需要用<code>-J-Djava.security.policy</code>参数指定策略文件</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>jstatd -J-Djava.security.policy<span class="o">=</span>jstatd.all.policy<span class="o">=</span>./jstatd.all.policy
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>jstatd -J-Djava.security.policy<span class="o">=</span>jstatd.all.policy
 </span></code></pre></td></tr></table></div></figure>
 
 

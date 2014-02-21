@@ -4,7 +4,7 @@
   <title><![CDATA[标签: jvisualvm | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/tags/jvisualvm/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-02-19T18:50:12+08:00</updated>
+  <updated>2014-02-21T22:23:15+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -362,7 +362,7 @@ class Hammer {
 
 <p>运行<code>jstatd</code>时需要用<code>-J-Djava.security.policy</code>参数指定策略文件
 <code>bash
-jstatd -J-Djava.security.policy=jstatd.all.policy=./jstatd.all.policy
+jstatd -J-Djava.security.policy=jstatd.all.policy
 </code></p>
 
 <h3>4.在jvisualvm中添加远程机</h3>
