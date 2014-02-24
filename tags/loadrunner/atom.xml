@@ -4,7 +4,7 @@
   <title><![CDATA[标签: LoadRunner | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/tags/loadrunner/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-02-21T22:23:15+08:00</updated>
+  <updated>2014-02-24T14:06:40+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -162,6 +162,16 @@ web_add_header(&ldquo;Alfresco-CSRFToken&rdquo;, lr_eval_string(&ldquo;{token}&r
 <p>&hellip;
 // submit requests codes
 ```</p>
+
+<h2>02.24 更新</h2>
+
+<hr />
+
+<hr />
+
+<p>再往深了想一下, 如果前端通过某种自定义的算法加密的验证信息再返回系统.</p>
+
+<p>那没有开发配合, 这脚本还真没法完成了.</p>
 ]]></content>
   </entry>
   
