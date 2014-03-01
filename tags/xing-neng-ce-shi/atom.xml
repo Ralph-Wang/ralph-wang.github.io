@@ -4,7 +4,7 @@
   <title><![CDATA[标签: 性能测试 | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/xing-neng-ce-shi/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-02-25T18:00:46+08:00</updated>
+  <updated>2014-03-01T11:26:11+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -38,7 +38,7 @@
 
 <p><img src="/blogimgs/alfresco-500page.png" title="500 Page" alt="Test Result" /></p>
 
-<p>如上图, 虽然是虽然请求返回的状态码是 500, 但返回页面仍是 Alfresco 的页面,</p>
+<p>如上图, 虽然请求返回的状态码是 500, 但返回页面仍是 Alfresco 的页面,</p>
 
 <h3>分析</h3>
 
