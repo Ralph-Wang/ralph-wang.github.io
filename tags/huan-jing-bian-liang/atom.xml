@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[标签: 环境变量 | Test Notes By _漏斗]]></title>
+  <link href="http://Ralph-Wang.github.io//tags/huan-jing-bian-liang/atom.xml" rel="self"/>
+  <link href="http://Ralph-Wang.github.io/"/>
+  <updated>2014-03-06T15:11:34+08:00</updated>
+  <id>http://Ralph-Wang.github.io/</id>
+  <author>
+    <name><![CDATA[_漏斗]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[用 awk 查看 PATH 环境变量]]></title>
+    <link href="http://Ralph-Wang.github.io/blog/2014/03/06/yong-awk-cha-kan-path-huan-jing-bian-liang/"/>
+    <updated>2014-03-06T14:18:22+08:00</updated>
+    <id>http://Ralph-Wang.github.io/blog/2014/03/06/yong-awk-cha-kan-path-huan-jing-bian-liang</id>
+    <content type="html"><![CDATA[<!--more-->
+
+
+<p>查看 PATH 环境变量是件痛苦的事情.</p>
+
+<p>用 <code>echo</code> 直接显示时, 输出只有一行, 查看起来很费神</p>
+
+<p>如下图
+<code>bash
+$echo $PATH
+</code></p>
+
+<p><img src="/blogimgs/path-normal.png" alt="path normal" /></p>
+
+<p>看 <code>awk</code> 用法时, 记得可以用 <code>RS</code> 变量修改行标识, 于是试试</p>
+
+<p><code>bash
+$echo $PATH | awk 'BEGIN {RS=":"} {print $0}'
+</code></p>
+
+<p><img src="/blogimgs/path-withawk.png" alt="path with awk" /></p>
+
+<p>确实清晰不少.</p>
+]]></content>
+  </entry>
+  
+</feed>
