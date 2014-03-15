@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[分类: nodejs | Test Notes By _漏斗]]></title>
+  <link href="http://Ralph-Wang.github.io//blog/categories/nodejs/atom.xml" rel="self"/>
+  <link href="http://Ralph-Wang.github.io/"/>
+  <updated>2014-03-15T22:30:05+08:00</updated>
+  <id>http://Ralph-Wang.github.io/</id>
+  <author>
+    <name><![CDATA[_漏斗]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[nodejs Buffer性能优势]]></title>
+    <link href="http://Ralph-Wang.github.io/blog/2014/03/15/nodejs-bufferxing-neng-you-shi/"/>
+    <updated>2014-03-15T21:24:23+08:00</updated>
+    <id>http://Ralph-Wang.github.io/blog/2014/03/15/nodejs-bufferxing-neng-you-shi</id>
+    <content type="html"><![CDATA[<p>最近在读朴大神的 <code>深入浅出 Nodejs</code>, 其中不乏性能相关话题.</p>
+
+<p>这里选一个出来做个测试</p>
+
+<!--more-->
+
+
+<h2>准备</h2>
+
+<p>在 Buffer 一章中, 有这么一个测试.</p>
+
+<p>在 Web 服务中, 使用 Buffer 进行数据传输, 效率要比直接使用字符串快.</p>
+
+<p>光看结果还是不太信服, 于是来做个验证.</p>
+
+<p>先上源码:
+```javascript server1.js
+var http = require(&lsquo;http&rsquo;);</p>
+
+<p>var size = 10 * 1024; // 10K</p>
+
+<p>var helloworld = &lsquo;&rsquo;;
+for (var i = 0; i &lt; size; i++) {</p>
+
+<pre><code>helloworld += 'a';
+</code></pre>
+
+<p>}</p>
+
+<p>http.createServer(function (req, res) {</p>
+
+<pre><code>res.writeHead(200);
+res.end(helloworld);
+</code></pre>
+
+<p>}).listen(8888);
+```</p>
+
+<p>```javascript server2.js
+var http = require(&lsquo;http&rsquo;);</p>
+
+<p>var size = 10 * 1024; // 10K</p>
+
+<p>var helloworld = &lsquo;&rsquo;;
+for (var i = 0; i &lt; size; i++) {</p>
+
+<pre><code>helloworld += 'a';
+</code></pre>
+
+<p>}</p>
+
+<p>helloworld = new Buffer(helloworld); // 改用 Buffer 进行传输</p>
+
+<p>http.createServer(function (req, res) {</p>
+
+<pre><code>res.writeHead(200);
+res.end(helloworld);
+</code></pre>
+
+<p>}).listen(8888);
+```</p>
+
+<p>server1 和 server2 的差别就只有那一句 <code>helloworld = new Buffer(helloworld)</code>.</p>
+
+<p>现在分别启动 server1 和 server2</p>
+
+<p>并用 ab 测试, 同时将结果分别保存到 res1.txt 和 res2.txt
+<code>bash
+ab -c 200 -t http://100 10.161.130.110:8888/ &gt; res1.txt
+ab -c 200 -t http://100 10.161.130.110:8888/ &gt; res2.txt
+</code></p>
+
+<h2>测试结果</h2>
+
+<p>比较一下测试结果</p>
+
+<p><img src="/blogimgs/node-buffer-perf.png" alt="node-buffer-perf" /></p>
+
+<p>可以看到, 使用 Buffer 后 QPS 和传输率确实有一定提升.</p>
+
+<h2>CPU 利用率</h2>
+
+<p>监控两次测试的 CPU 使用情况并统计: (统计时, 取 CPU 平稳的 6 次结果并计算用户态 CPU 平均值)</p>
+
+<p><img src="/blogimgs/node-buffer-cpu.png" alt="node-buffer-cpu" /></p>
+
+<p>两次测试中, CPU 利用率均达到了 100%, 但不使用 Buffer 时, 用户态的 CPU 更高一些.</p>
+
+<p>高出来这一部分, 应该就是进行额外的 Buffer/String 转换消耗掉的.</p>
+]]></content>
+  </entry>
+  
+</feed>

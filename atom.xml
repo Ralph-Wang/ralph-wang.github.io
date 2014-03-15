@@ -4,7 +4,7 @@
   <title><![CDATA[Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-03-06T15:11:34+08:00</updated>
+  <updated>2014-03-15T22:30:05+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,125 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[nodejs Buffer性能优势]]></title>
+    <link href="http://Ralph-Wang.github.io/blog/2014/03/15/nodejs-bufferxing-neng-you-shi/"/>
+    <updated>2014-03-15T21:24:23+08:00</updated>
+    <id>http://Ralph-Wang.github.io/blog/2014/03/15/nodejs-bufferxing-neng-you-shi</id>
+    <content type="html"><![CDATA[<p>最近在读朴大神的 <code>深入浅出 Nodejs</code>, 其中不乏性能相关话题.</p>
+
+<p>这里选一个出来做个测试</p>
+
+<!--more-->
+
+
+<h2>准备</h2>
+
+<p>在 Buffer 一章中, 有这么一个测试.</p>
+
+<p>在 Web 服务中, 使用 Buffer 进行数据传输, 效率要比直接使用字符串快.</p>
+
+<p>光看结果还是不太信服, 于是来做个验证.</p>
+
+<p>先上源码:</p>
+
+<figure class='code'><figcaption><span>server1.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">size</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">;</span> <span class="c1">// 10K</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">helloworld</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">size</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">helloworld</span> <span class="o">+=</span> <span class="s1">&#39;a&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">helloworld</span><span class="p">);</span>
+</span><span class='line'><span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8888</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>server2.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">size</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">;</span> <span class="c1">// 10K</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">helloworld</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">size</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">helloworld</span> <span class="o">+=</span> <span class="s1">&#39;a&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">helloworld</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Buffer</span><span class="p">(</span><span class="nx">helloworld</span><span class="p">);</span> <span class="c1">// 改用 Buffer 进行传输</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">helloworld</span><span class="p">);</span>
+</span><span class='line'><span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8888</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>server1 和 server2 的差别就只有那一句 <code>helloworld = new Buffer(helloworld)</code>.</p>
+
+<p>现在分别启动 server1 和 server2</p>
+
+<p>并用 ab 测试, 同时将结果分别保存到 res1.txt 和 res2.txt</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>ab -c 200 -t http://100 10.161.130.110:8888/ &gt; res1.txt
+</span><span class='line'>ab -c 200 -t http://100 10.161.130.110:8888/ &gt; res2.txt
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>测试结果</h2>
+
+<p>比较一下测试结果</p>
+
+<p><img src="http://Ralph-Wang.github.io/blogimgs/node-buffer-perf.png" alt="node-buffer-perf" /></p>
+
+<p>可以看到, 使用 Buffer 后 QPS 和传输率确实有一定提升.</p>
+
+<h2>CPU 利用率</h2>
+
+<p>监控两次测试的 CPU 使用情况并统计: (统计时, 取 CPU 平稳的 6 次结果并计算用户态 CPU 平均值)</p>
+
+<p><img src="http://Ralph-Wang.github.io/blogimgs/node-buffer-cpu.png" alt="node-buffer-cpu" /></p>
+
+<p>两次测试中, CPU 利用率均达到了 100%, 但不使用 Buffer 时, 用户态的 CPU 更高一些.</p>
+
+<p>高出来这一部分, 应该就是进行额外的 Buffer/String 转换消耗掉的.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[用 awk 查看 PATH 环境变量]]></title>
