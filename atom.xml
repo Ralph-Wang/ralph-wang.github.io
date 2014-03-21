@@ -4,7 +4,7 @@
   <title><![CDATA[Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-03-21T17:57:54+08:00</updated>
+  <updated>2014-03-21T21:57:09+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -201,8 +201,6 @@ create</p></blockquote>
 <p>先来看看没有使用索引时的执行计划是个什么样子.</p>
 
 <p>使用 explain 命令可以获得 MySQL 中 SQL 语句的执行计划.</p>
-
-<p>先来看一下没有使用索引时, 执行计划是什么样的.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>

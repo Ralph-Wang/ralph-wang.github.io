@@ -4,7 +4,7 @@
   <title><![CDATA[标签: RDBMS, | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/rdbms/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-03-21T17:57:54+08:00</updated>
+  <updated>2014-03-21T21:57:09+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -163,8 +163,7 @@ db.tbl.dropIndex('value_1');
 
 <p>使用 explain 命令可以获得 MySQL 中 SQL 语句的执行计划.</p>
 
-<p>先来看一下没有使用索引时, 执行计划是什么样的.
-<code>mysql
+<p><code>mysql
 mysql&gt; explain select * from tbl where value = 1;
 | id | select_type | table | type | possible_keys | key  | key_len | ref  | rows | Extra       |
 |  1 | SIMPLE      | tbl   | ALL  | NULL          | NULL | NULL    | NULL | 5    | Using where |
