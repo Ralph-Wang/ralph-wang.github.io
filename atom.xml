@@ -4,7 +4,7 @@
   <title><![CDATA[Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-03-16T14:12:25+08:00</updated>
+  <updated>2014-03-21T17:56:11+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,423 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[索引功能比较 MySQL 与 MongoDB]]></title>
+    <link href="http://Ralph-Wang.github.io/blog/2014/03/21/suo-yin-gong-neng-bi-jiao-mysql-yu-mongodb/"/>
+    <updated>2014-03-21T10:37:08+08:00</updated>
+    <id>http://Ralph-Wang.github.io/blog/2014/03/21/suo-yin-gong-neng-bi-jiao-mysql-yu-mongodb</id>
+    <content type="html"><![CDATA[<p>索引是影响数据库性能的重要元素.</p>
+
+<p>这里比较一下 MySQL 与 MongoDB 中索引的基本使用, 也算复习一下这个数据库中的基本概念</p>
+
+<!--more-->
+
+
+<blockquote><p><em>注: MongoDB 的操作以其自带 mongoshell 为准, 不同语言的 api 操作(传参, 调用)可能会有一些差别</em></p></blockquote>
+
+<h2>准备</h2>
+
+<p>索引总是建立在字段上的, 所以我们这里做准备一张简单的表, 并做一些简单的数据.</p>
+
+<p>MySQL 怎么建表, 插数据就不多说了</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='mysql'><span class='line'><span class="c1">-- 建表</span>
+</span><span class='line'><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="nf">tbl</span> <span class="p">(</span>
+</span><span class='line'>  <span class="n">id</span> <span class="kt">int</span><span class="p">,</span>
+</span><span class='line'>  <span class="n">value</span> <span class="kt">int</span><span class="p">,</span>
+</span><span class='line'>  <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+</span><span class='line'><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">-- 插入5条极简数据</span>
+</span><span class='line'><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">tbl</span> <span class="k">VALUES</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>MongoDB 不需要显式的创建 集合 (Collection, 与 MySQL 中表是同一级概念)
+所以直接插入数据.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span> <span class="nx">_id</span> <span class="o">:</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">value</span> <span class="o">:</span> <span class="nx">v</span> <span class="p">});</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>索引的 CRD</h2>
+
+<h3>创建索引.</h3>
+
+<p>MySQL 创建索引的方式很多, 可以在建表同时直接创建. 也可以在建表后再补.</p>
+
+<p>如果是在建表同时创建, 需要将上面的建表语句修改一下</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='mysql'><span class='line'><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="nf">tbl</span> <span class="p">(</span>
+</span><span class='line'>  <span class="n">id</span> <span class="kt">int</span><span class="p">,</span>
+</span><span class='line'>  <span class="n">value</span> <span class="kt">int</span><span class="p">,</span>
+</span><span class='line'>  <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">(</span><span class="n">id</span><span class="p">),</span> <span class="c1">-- 创建主键索引</span>
+</span><span class='line'>  <span class="k">KEY</span> <span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="c1">-- 创建一般索引</span>
+</span><span class='line'><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>建表后则用 <code>ALTER TABLE</code> 或 <code>CREATE INDEX</code> 创建</p>
+
+<p>下面两种方式均可以在 tbl 表的 value 字段上创建一个名为 idx_value 的索引.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='mysql'><span class='line'><span class="c1">-- ALFTER TABLE 式</span>
+</span><span class='line'><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">tbl</span> <span class="k">ADD</span> <span class="k">KEY</span> <span class="nf">idx_value</span> <span class="p">(</span><span class="n">value</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">-- CREATE INDEX 式</span>
+</span><span class='line'><span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">idx_value</span> <span class="k">ON</span> <span class="nf">tbl</span> <span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>MongoDB 则只留出了一个 createIndex 的接口来创建索引</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">createIndex</span><span class="p">({</span><span class="nx">value</span> <span class="o">:</span> <span class="mi">1</span><span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>另外要注意的是, MongoDB 允许在暂时不存在的集合或不存在的字段上添加索引.</p>
+
+<p>如果集合名或字段字敲错了, mongoshell 可不会报错.</p>
+
+<p>在 mongoshell 中有一个助手方法, <code>ensureIndex</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&gt;</span><span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">ensureIndex</span>
+</span><span class='line'><span class="kd">function</span> <span class="p">(</span> <span class="nx">keys</span> <span class="p">,</span> <span class="nx">options</span> <span class="p">){</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">createIndex</span><span class="p">(</span><span class="nx">keys</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">err</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getDB</span><span class="p">().</span><span class="nx">getLastErrorObj</span><span class="p">();</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="nx">err</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="c1">// nothing returned on success</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可以看到, 其实 <code>ensureIndex</code> 仍然通过调用 <code>createIndex</code> 来完成索引创建</p>
+
+<blockquote><p>其实像 nodejs 或 python 中 MongoDB 的建立索引的接口名称都使用的 ensure. 而不是
+create</p></blockquote>
+
+<h3>查看已有索引.</h3>
+
+<p>MySQL 使用 <code>show index</code> 命令即可查看, 同时可以使用 where 子句进行过滤</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='mysql'><span class='line'><span class="k">SHOW</span> <span class="k">INDEX</span> <span class="k">FROM</span> <span class="n">tbl</span> <span class="k">WHERE</span> <span class="n">KEY_NAME</span> <span class="o">=</span> <span class="s1">&#39;idx_value&#39;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>MongoDB 则不能进行条件过滤, 只能使用 <code>getIndexes</code> 查看所有的索引信息.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">getIndexes</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>删除索引.</h3>
+
+<p>在 MySQL 中删除索引时, 和创建一样可以用 <code>ALTER TABLE</code> 或 <code>DROP INDEX</code> 两种方法</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='mysql'><span class='line'><span class="c1">-- ALTER TABLE 式</span>
+</span><span class='line'><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">tbl</span> <span class="k">DROP</span> <span class="k">INDEX</span> <span class="n">idx_value</span><span class="p">;</span>
+</span><span class='line'><span class="c1">-- DROP INDEX 式</span>
+</span><span class='line'><span class="k">DROP</span> <span class="k">INDEX</span> <span class="n">idx_value</span> <span class="k">ON</span> <span class="n">tbl</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>而 MongoDB 则是允许用 <code>dropIndexes</code> 一次性删除全部索引, 也可以用 <code>dropIndex</code>
+删除指定索引</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// 删除全部索引</span>
+</span><span class='line'><span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">dropIndexes</span><span class="p">();</span>
+</span><span class='line'><span class="c1">// 通过索引字段删除指定索引</span>
+</span><span class='line'><span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">dropIndex</span><span class="p">({</span> <span class="nx">value</span> <span class="o">:</span> <span class="mi">1</span><span class="p">});</span>
+</span><span class='line'><span class="c1">// 通过索引名称删除指定索引</span>
+</span><span class='line'><span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">dropIndex</span><span class="p">(</span><span class="s1">&#39;value_1&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>索引在执行计划中的表现</h2>
+
+<h3>没有使用索引的情况</h3>
+
+<p>先来看看没有使用索引时的执行计划是个什么样子.</p>
+
+<p>使用 explain 命令可以获得 MySQL 中 SQL 语句的执行计划.</p>
+
+<p>先来看一下没有使用索引时, 执行计划是什么样的.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='mysql'><span class='line'><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">explain</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">tbl</span> <span class="k">where</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'><span class="o">|</span> <span class="n">id</span> <span class="o">|</span> <span class="n">select_type</span> <span class="o">|</span> <span class="k">table</span> <span class="o">|</span> <span class="n">type</span> <span class="o">|</span> <span class="n">possible_keys</span> <span class="o">|</span> <span class="k">key</span>  <span class="o">|</span> <span class="n">key_len</span> <span class="o">|</span> <span class="n">ref</span>  <span class="o">|</span> <span class="n">rows</span> <span class="o">|</span> <span class="n">Extra</span>       <span class="o">|</span>
+</span><span class='line'><span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="n">SIMPLE</span>      <span class="o">|</span> <span class="n">tbl</span>   <span class="o">|</span> <span class="k">ALL</span>  <span class="o">|</span> <span class="no">NULL</span>          <span class="o">|</span> <span class="no">NULL</span> <span class="o">|</span> <span class="no">NULL</span>    <span class="o">|</span> <span class="no">NULL</span> <span class="o">|</span> <span class="mi">5</span>    <span class="o">|</span> <span class="k">Using</span> <span class="k">where</span> <span class="o">|</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>type 字段中的 <code>ALL</code> 就表示了这次查询是全表扫描, 而 key_len 字段则明确的告诉我们没有使用索引</p>
+
+<blockquote><p><em>不能相信 key 字段, 因为可能这样: create index `NULL` on tbl(value)</em></p></blockquote>
+
+<p>类似的,MongoDB允许使用 <code>explain</code> 方法获取查询的执行计划</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&gt;</span><span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nx">value</span> <span class="o">:</span> <span class="mi">1</span><span class="p">}).</span><span class="nx">explain</span><span class="p">();</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="s2">&quot;cursor&quot;</span> <span class="o">:</span> <span class="s2">&quot;BasicCursor&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;isMultiKey&quot;</span> <span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;n&quot;</span> <span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;nscannedObjects&quot;</span> <span class="o">:</span> <span class="mi">5</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;nscanned&quot;</span> <span class="o">:</span> <span class="mi">5</span>
+</span><span class='line'>  <span class="c1">// ... 一些其它字段</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中 <code>cursor</code> 的值为 <code>BasicCursor</code>, 已经说明这次查询没有使用索引</p>
+
+<h3>一般情况</h3>
+
+<p>现在, 把索引建立起来, 看看相同查询的执行计划.</p>
+
+<p>MySQL 使用索引查询时的执行计划</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='mysql'><span class='line'><span class="o">|</span> <span class="n">id</span> <span class="o">|</span> <span class="n">select_type</span> <span class="o">|</span> <span class="k">table</span> <span class="o">|</span> <span class="n">type</span> <span class="o">|</span> <span class="n">possible_keys</span> <span class="o">|</span> <span class="k">key</span>       <span class="o">|</span> <span class="n">key_len</span> <span class="o">|</span> <span class="n">ref</span>   <span class="o">|</span> <span class="n">rows</span> <span class="o">|</span> <span class="n">Extra</span>       <span class="o">|</span>
+</span><span class='line'><span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="n">SIMPLE</span>      <span class="o">|</span> <span class="n">tbl</span>   <span class="o">|</span> <span class="n">ref</span>  <span class="o">|</span> <span class="n">idx_value</span>     <span class="o">|</span> <span class="n">idx_value</span> <span class="o">|</span> <span class="mi">5</span>       <span class="o">|</span> <span class="n">const</span> <span class="o">|</span>    <span class="mi">1</span> <span class="o">|</span> <span class="k">Using</span> <span class="k">where</span> <span class="o">|</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>type 显示为 <code>ref</code>, 说明是在使用一般索引查询( 若使用主键索引, 则显示为 <code>const</code>)
+rows 字段由之前的 5 变为 1, 扫描行数变少了.
+key, key_len 说明了使用了什么索引以及这个索引有多长</p>
+
+<p>MongoDB</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="s2">&quot;cursor&quot;</span> <span class="o">:</span> <span class="s2">&quot;BtreeCursor value_1&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;isMultiKey&quot;</span> <span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;n&quot;</span> <span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;nscannedObjects&quot;</span> <span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;nscanned&quot;</span> <span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>  <span class="c1">// 其它字段</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>cursor 值为 <code>BtreeCursor value_1</code>, 表示使用了名为 <code>value_1</code> 的索引进行查询
+nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前为 5, 现在变为 1.</p>
+
+<h3>仅查询索引</h3>
+
+<p>MySQL 和 MongoDB 中都有这样一个特性:</p>
+
+<p>查询时, 如果要求返回的字段信息只包含索引字段, 那么将直接从索引中返回值,
+不会再进行实表查找</p>
+
+<p>MySQL 中, 如果出现这样的情况, 会在 Extra 字段中显示 <code>using index</code> 信息, 如下</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='mysql'><span class='line'><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">explain</span> <span class="k">select</span> <span class="n">value</span> <span class="k">from</span> <span class="n">tbl</span> <span class="k">where</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'><span class="o">|</span> <span class="n">id</span> <span class="o">|</span> <span class="n">select_type</span> <span class="o">|</span> <span class="k">table</span> <span class="o">|</span> <span class="n">type</span> <span class="o">|</span> <span class="n">possible_keys</span> <span class="o">|</span> <span class="k">key</span>       <span class="o">|</span> <span class="n">key_len</span> <span class="o">|</span> <span class="n">ref</span>   <span class="o">|</span> <span class="n">rows</span> <span class="o">|</span> <span class="n">Extra</span>                    <span class="o">|</span>
+</span><span class='line'><span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="n">SIMPLE</span>      <span class="o">|</span> <span class="n">tbl</span>   <span class="o">|</span> <span class="n">ref</span>  <span class="o">|</span> <span class="n">idx_value</span>     <span class="o">|</span> <span class="n">idx_value</span> <span class="o">|</span> <span class="mi">5</span>       <span class="o">|</span> <span class="n">const</span> <span class="o">|</span>    <span class="mi">1</span> <span class="o">|</span> <span class="k">Using</span> <span class="k">where</span><span class="p">;</span> <span class="k">Using</span> <span class="k">index</span> <span class="o">|</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>而 MongoDB 中, 则是将 indexOnly 字段置为 <code>true</code>, 并且 <code>nscannedObjects</code> 为 0</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nx">value</span> <span class="o">:</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="nx">_id</span> <span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">value</span> <span class="o">:</span> <span class="mi">1</span><span class="p">}).</span><span class="nx">explain</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="s2">&quot;cursor&quot;</span> <span class="o">:</span> <span class="s2">&quot;BtreeCursor value_1&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;isMultiKey&quot;</span> <span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;n&quot;</span> <span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;nscannedObjects&quot;</span> <span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="c1">// 说明没有扫描实际对象</span>
+</span><span class='line'>  <span class="s2">&quot;nscanned&quot;</span> <span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;nscannedObjectsAllPlans&quot;</span> <span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;nscannedAllPlans&quot;</span> <span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;scanAndOrder&quot;</span> <span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;indexOnly&quot;</span> <span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// 说明没有返回字段只包含索引字段</span>
+</span><span class='line'>  <span class="s2">&quot;nYields&quot;</span> <span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;nChunkSkips&quot;</span> <span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;millis&quot;</span> <span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>  <span class="c1">// 其它字段</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>MongoDB中排序使用索引</h3>
+
+<p>在 MongoDB 中, 除了查询条件可以利用索引以外, 进行排序的相应字段也可以在排序时利用索引.</p>
+
+<p>这点是 MySQL 所不具备的</p>
+
+<p>直接上执行计划.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">sort</span><span class="p">({</span><span class="nx">value</span> <span class="o">:</span> <span class="mi">1</span><span class="p">}).</span><span class="nx">explain</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="s2">&quot;cursor&quot;</span> <span class="o">:</span> <span class="s2">&quot;BtreeCursor value_1&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;isMultiKey&quot;</span> <span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;n&quot;</span> <span class="o">:</span> <span class="mi">5</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;nscannedObjects&quot;</span> <span class="o">:</span> <span class="mi">5</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;nscanned&quot;</span> <span class="o">:</span> <span class="mi">5</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;nscannedObjectsAllPlans&quot;</span> <span class="o">:</span> <span class="mi">5</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;nscannedAllPlans&quot;</span> <span class="o">:</span> <span class="mi">5</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;scanAndOrder&quot;</span> <span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;indexOnly&quot;</span> <span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;nYields&quot;</span> <span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;nChunkSkips&quot;</span> <span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;millis&quot;</span> <span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;indexBounds&quot;</span> <span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="s2">&quot;value&quot;</span> <span class="o">:</span> <span class="p">[</span>
+</span><span class='line'>              <span class="p">[</span>
+</span><span class='line'>                  <span class="p">{</span>
+</span><span class='line'>                      <span class="s2">&quot;$minElement&quot;</span> <span class="o">:</span> <span class="mi">1</span>
+</span><span class='line'>                  <span class="p">},</span>
+</span><span class='line'>                  <span class="p">{</span>
+</span><span class='line'>                      <span class="s2">&quot;$maxElement&quot;</span> <span class="o">:</span> <span class="mi">1</span>
+</span><span class='line'>                  <span class="p">}</span>
+</span><span class='line'>              <span class="p">]</span>
+</span><span class='line'>          <span class="p">]</span>
+</span><span class='line'>      <span class="p">},</span>
+</span><span class='line'>      <span class="s2">&quot;server&quot;</span> <span class="o">:</span> <span class="s2">&quot;AY14031520284347468cZ:27017&quot;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可以看到, 没有任何查询条件, 只进行排序确实是使用了索引.</p>
+
+<p>不同的是, 在 <code>indexBounds</code> 中对索引字段 value 的查找范围是从 $minElement 到 $maxElement.</p>
+
+<h2>索引的强制使用</h2>
+
+<p>因为数据库自动使用索引的选择不见得是最好的. 所以 MySQL 和 MongoDB
+都提供了强制使用索引的方法.</p>
+
+<p>MySQL 中 使用 use index 子句</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='mysql'><span class='line'><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">tbl</span> <span class="k">use</span> <span class="k">index</span> <span class="p">(</span><span class="n">idx_value</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>MongoDB 中则使用 hint 方法</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">hint</span><span class="p">({</span><span class="nx">value</span> <span class="o">:</span> <span class="mi">1</span><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[nodejs Buffer性能优势]]></title>
