@@ -4,7 +4,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>面试问题总结 - Test Notes By _漏斗</title>
+  <title>面试技术问题解答 - Test Notes By _漏斗</title>
   <meta name="author" content="_漏斗">
 
   <meta name="description" content="面试时遇到的一些问题, 当时没有完全答上来的">
@@ -16,7 +16,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://Ralph-Wang.github.io/blog/2014/03/25/mian-shi-wen-ti-zong-jie">
+  <link rel="canonical" href="http://Ralph-Wang.github.io/blog/2014/03/25/mian-shi-wen-ti-jie-da">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="Test Notes By _漏斗" type="application/atom+xml">
 
@@ -111,7 +111,7 @@
     
     
     <h1 class="entry-title">
-        面试问题总结
+        面试技术问题解答
         
     </h1>
     
@@ -125,7 +125,7 @@
 
 <h2>Linux</h2>
 
-<h2>统计文本中某字符串出现次数</h2>
+<h3>统计文本中某字符串出现次数</h3>
 
 <p>前提: 一行中要查找的字符串可能出现多次.</p>
 
@@ -155,7 +155,7 @@
 
 <p>遂搜索之.  得如下解法</p>
 
-<h2>方法 1: grep 的 -o 选项</h2>
+<h3>方法 1: grep 的 -o 选项</h3>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>cat sample | grep -o ralph | wc -l
@@ -166,7 +166,7 @@
 
 <p>给 <code>grep</code> 加上 <code>-o</code> 选项后, 它只会打印出匹配到的字符串, 并且每匹配一次就打印一行.</p>
 
-<h2>方法 2: 神器 awk 之 RS</h2>
+<h3>方法 2: 神器 awk 之 RS</h3>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>awk -v <span class="nv">RS</span><span class="o">=</span><span class="s1">&#39;ralph&#39;</span> <span class="s1">&#39;END {print NR-1}&#39;</span> sample
@@ -179,7 +179,7 @@
 
 <p>在 END 中访问 NR 则为最后一行的行号, awk 起始行为 1, 所以此时总行数 = NR</p>
 
-<h2>方法 3: 神器 awk 之 gsub</h2>
+<h3>方法 3: 神器 awk 之 gsub</h3>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>awk <span class="s1">&#39;{count+=gsub(/ralph/, &quot;#&quot;)} END {print count}&#39;</span> sample
@@ -249,9 +249,9 @@ awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次�
 
 <h2>算法</h2>
 
-<h2>问题 1 链表倒序</h2>
+<h3>问题 1 链表倒序</h3>
 
-<p>&hellip;面试时, 想到去 clone next.. 为毛当时就不值得多给个变量呢&hellip;</p>
+<p>&hellip;面试时, 想到去 clone next.. 为毛当时就没想到多给个变量呢&hellip;</p>
 
 <figure class='code'><figcaption><span>List.java</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -438,7 +438,7 @@ awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次�
 
 <p>算法还是弱项&hellip;</p>
 
-<h2>问题 2 文本替换</h2>
+<h3>问题 2 文本替换</h3>
 
 <p>今天太晚了, 明天再继续</p>
 </div>
@@ -561,7 +561,7 @@ var duoshuoQuery = {short_name:"ralph-wang"};
   
   <div id="recent_posts" class="list-group">
     
-    <a class="list-group-item active" href="/blog/2014/03/25/mian-shi-wen-ti-zong-jie/">面试问题总结</a>
+    <a class="list-group-item active" href="/blog/2014/03/25/mian-shi-wen-ti-jie-da/">面试技术问题解答</a>
     
     <a class="list-group-item " href="/blog/2014/03/21/suo-yin-gong-neng-bi-jiao-mysql-yu-mongodb/">索引功能比较 MySQL 与 MongoDB</a>
     
@@ -594,16 +594,16 @@ var duoshuoQuery = {short_name:"ralph-wang"};
         <h3 class="panel-title">Tag Clouds</h3>
     </div>
     <ul class="tag-cloud" style="padding-left:10px">
-        <a style="font-size: 100%" href="/tags/init/">init</a>
-<a style="font-size: 100%" href="/tags/top/">top</a>
-<a style="font-size: 100%" href="/tags/buffer/">Buffer</a>
-<a style="font-size: 225%" href="/tags/jvisualvm/">jvisualvm</a>
-<a style="font-size: 100%" href="/tags/huan-jing-bian-liang/">环境变量</a>
-<a style="font-size: 100%" href="/tags/mongodb/">MongoDB,</a>
+        <a style="font-size: 100%" href="/tags/top/">top</a>
+<a style="font-size: 100%" href="/tags/loadrunner/">LoadRunner</a>
+<a style="font-size: 100%" href="/tags/mian-shi/">面试,</a>
+<a style="font-size: 100%" href="/tags/jian-kong/">监控</a>
+<a style="font-size: 100%" href="/tags/xing-neng/">性能,</a>
 <a style="font-size: 100%" href="/tags/java/">Java,</a>
-<a style="font-size: 100%" href="/tags/rdbms/">RDBMS,</a>
-<a style="font-size: 100%" href="/tags/xiang-xiang-li/">想象力</a>
-<a style="font-size: 100%" href="/tags/suan-fa/">算法</a>
+<a style="font-size: 100%" href="/tags/huan-jing-bian-liang/">环境变量</a>
+<a style="font-size: 100%" href="/tags/boxing/">boxing</a>
+<a style="font-size: 100%" href="/tags/jiao-ben-kai-fa/">脚本开发</a>
+<a style="font-size: 100%" href="/tags/guan-lian/">关联</a>
 
     </ul>
 </section>

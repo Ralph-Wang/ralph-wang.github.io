@@ -4,7 +4,7 @@
   <title><![CDATA[Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-03-26T00:37:03+08:00</updated>
+  <updated>2014-03-26T00:46:02+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -14,10 +14,10 @@
 
   
   <entry>
-    <title type="html"><![CDATA[面试问题总结]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/03/25/mian-shi-wen-ti-zong-jie/"/>
+    <title type="html"><![CDATA[面试技术问题解答]]></title>
+    <link href="http://Ralph-Wang.github.io/blog/2014/03/25/mian-shi-wen-ti-jie-da/"/>
     <updated>2014-03-25T19:49:37+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/03/25/mian-shi-wen-ti-zong-jie</id>
+    <id>http://Ralph-Wang.github.io/blog/2014/03/25/mian-shi-wen-ti-jie-da</id>
     <content type="html"><![CDATA[<p>面试时没有完全回答上或有存疑的问题</p>
 
 <!--more-->
@@ -25,7 +25,7 @@
 
 <h2>Linux</h2>
 
-<h2>统计文本中某字符串出现次数</h2>
+<h3>统计文本中某字符串出现次数</h3>
 
 <p>前提: 一行中要查找的字符串可能出现多次.</p>
 
@@ -55,7 +55,7 @@
 
 <p>遂搜索之.  得如下解法</p>
 
-<h2>方法 1: grep 的 -o 选项</h2>
+<h3>方法 1: grep 的 -o 选项</h3>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>cat sample | grep -o ralph | wc -l
@@ -66,7 +66,7 @@
 
 <p>给 <code>grep</code> 加上 <code>-o</code> 选项后, 它只会打印出匹配到的字符串, 并且每匹配一次就打印一行.</p>
 
-<h2>方法 2: 神器 awk 之 RS</h2>
+<h3>方法 2: 神器 awk 之 RS</h3>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>awk -v <span class="nv">RS</span><span class="o">=</span><span class="s1">&#39;ralph&#39;</span> <span class="s1">&#39;END {print NR-1}&#39;</span> sample
@@ -79,7 +79,7 @@
 
 <p>在 END 中访问 NR 则为最后一行的行号, awk 起始行为 1, 所以此时总行数 = NR</p>
 
-<h2>方法 3: 神器 awk 之 gsub</h2>
+<h3>方法 3: 神器 awk 之 gsub</h3>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>awk <span class="s1">&#39;{count+=gsub(/ralph/, &quot;#&quot;)} END {print count}&#39;</span> sample
@@ -149,9 +149,9 @@ awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次�
 
 <h2>算法</h2>
 
-<h2>问题 1 链表倒序</h2>
+<h3>问题 1 链表倒序</h3>
 
-<p>&hellip;面试时, 想到去 clone next.. 为毛当时就不值得多给个变量呢&hellip;</p>
+<p>&hellip;面试时, 想到去 clone next.. 为毛当时就没想到多给个变量呢&hellip;</p>
 
 <figure class='code'><figcaption><span>List.java</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -338,7 +338,7 @@ awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次�
 
 <p>算法还是弱项&hellip;</p>
 
-<h2>问题 2 文本替换</h2>
+<h3>问题 2 文本替换</h3>
 
 <p>今天太晚了, 明天再继续</p>
 ]]></content>
