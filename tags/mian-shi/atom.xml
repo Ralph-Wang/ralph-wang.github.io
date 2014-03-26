@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[标签: 面试, | Test Notes By _漏斗]]></title>
+  <title><![CDATA[标签: 面试 | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/mian-shi/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-03-26T00:46:02+08:00</updated>
+  <updated>2014-03-26T23:05:49+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -79,6 +79,12 @@ awk '{count+=gsub(/ralph/, "#")} END {print count}' sample
 awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次数求和即可.</p>
 
 <p>另外, awk 中的 <code>sub</code> 函数在每行中只完成一次替换.</p>
+
+<h2>Java</h2>
+
+<h3>反射</h3>
+
+<p>参考<a href="http://www.cnblogs.com/rollenholt/archive/2011/09/02/2163758.html">反射案例</a></p>
 
 <h2>MySQL</h2>
 
