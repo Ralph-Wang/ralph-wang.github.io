@@ -4,7 +4,7 @@
   <title><![CDATA[分类: 面试 | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//blog/categories/mian-shi/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-04-06T16:52:19+08:00</updated>
+  <updated>2014-04-06T16:59:06+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -233,9 +233,11 @@ public static void main(String[] args) {
 
 <h3>问题 2 文本替换</h3>
 
-<p>今天太晚了, 明天再继续
-<strong><em> 2014-04-06 更新 </em></strong>
-需求, 字符串或字符数组, 如 <code>AABBAAABBACCDD</code>, 取出连续的字符, 第N次出现取出连续N个, 不足则跳过</p>
+<p>今天太晚了, 明天再继续</p>
+
+<p>&mdash;&ndash;<strong><em> 2014-04-06 更新 </em></strong>&mdash;&ndash;</p>
+
+<p>需求, 字符串或字符数组, 如 <code>AAABBBAAACCADDD</code>, 取出连续的字符, 第N次出现取出连续N个, 不足则跳过</p>
 
 <p>如 AAABBBAAACCADDD &ndash;> ABAACAD</p>
 
