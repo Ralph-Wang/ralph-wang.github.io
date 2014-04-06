@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[标签: 工具 | Test Notes By _漏斗]]></title>
+  <link href="http://Ralph-Wang.github.io//tags/gong-ju/atom.xml" rel="self"/>
+  <link href="http://Ralph-Wang.github.io/"/>
+  <updated>2014-04-06T22:39:03+08:00</updated>
+  <id>http://Ralph-Wang.github.io/</id>
+  <author>
+    <name><![CDATA[_漏斗]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Jmeter 安装]]></title>
+    <link href="http://Ralph-Wang.github.io/blog/2014/04/06/jmeter-an-zhuang/"/>
+    <updated>2014-04-06T22:17:08+08:00</updated>
+    <id>http://Ralph-Wang.github.io/blog/2014/04/06/jmeter-an-zhuang</id>
+    <content type="html"><![CDATA[<p>跨平台工具赛高</p>
+
+<!--more-->
+
+
+<h2>安装 jdk</h2>
+
+<p>去 oracle 官网<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载</a>相应版本的 jdk</p>
+
+<p>如果没有特别要求, 下载最新版就可以.</p>
+
+<p>完成安装后配置上相应的环境变量
+<code>bash
+JAVA_HOME=/where/you/install/jdk
+CLASSPATH=$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+</code></p>
+
+<p>可以用下面代码测试安装成功与否
+```java Test.java
+import java.util.Date;</p>
+
+<p>public class Test {</p>
+
+<pre><code>public static void main(String[] args) {
+    System.out.println(new Date());
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<h2>安装 Jmeter</h2>
+
+<p>去 Apache 官网<a href="http://jmeter.apache.org/download_jmeter.cgi">下载</a> Jmeter</p>
+
+<p>解压得到目录 <code>apache-jmeter-*.*</code> (*.* 为版本号)</p>
+
+<p>将 <code>apache-jmeter-*.*</code> 复制到任意你喜欢的目录</p>
+
+<p>配置 Jmeter 环境变量
+<code>bash
+JMETER_HOME=/where/you/put/apache-jmeter-*.*
+CLASSPATH=$CLASSPATH:$JMETER_HOME/lib/logkit-2.0.jar:$JMETER_HOME/lib/jorphan.jar:$JMETER_HOME/lib/ext/ApacheJMeter_core.jar
+</code>
+其实就是在 <code>CLASSPATH</code> 中添加三个 jar 包:</p>
+
+<ul>
+<li>$JMETER_HOME/lib/logkit-2.0.jar</li>
+<li>$JMETER_HOME/lib/jorphan.jar</li>
+<li>$JMETER_HOME/lib/ext/ApacheJMeter_core.jar</li>
+</ul>
+
+
+<h2>启动 Jmeter</h2>
+
+<p>运行 $JMETER_HOME/bin 目录下的 jmeter (Windows 环境运行 jmeter.bat)</p>
+]]></content>
+  </entry>
+  
+</feed>
