@@ -4,7 +4,7 @@
   <title><![CDATA[分类: 面试 | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//blog/categories/mian-shi/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-04-02T23:22:20+08:00</updated>
+  <updated>2014-04-06T16:52:19+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -226,13 +226,65 @@ public static void main(String[] args) {
 }
 </code></pre>
 
-<p>}
-```
+<p>}</p>
+
+<p>```
 算法还是弱项&hellip;</p>
 
 <h3>问题 2 文本替换</h3>
 
-<p>今天太晚了, 明天再继续</p>
+<p>今天太晚了, 明天再继续
+<strong><em> 2014-04-06 更新 </em></strong>
+需求, 字符串或字符数组, 如 <code>AABBAAABBACCDD</code>, 取出连续的字符, 第N次出现取出连续N个, 不足则跳过</p>
+
+<p>如 AAABBBAAACCADDD &ndash;> ABAACAD</p>
+
+<p>```java
+import java.util.*;</p>
+
+<p>public class Sub {</p>
+
+<pre><code>public static void main(String[] args) {
+    char[] t = {'A', 'A', 'A', 'B', 'B', 'B','A', 'A', 'A', 'C',
+        'C', 'A', 'D', 'D', 'D'};
+    System.out.println(sub(t));
+}/* output:
+    ABAACAD
+  *///:~
+
+public static String sub(final char[] charArray) {
+    String res = "";
+    HashMap&lt;Character, Integer&gt; count =
+        new HashMap&lt;Character, Integer&gt;();
+    int seq = 0;
+    int curCount = 0;
+    char pre = '\0';
+    for (int i = 0; i &lt; charArray.length; i++) {
+        if (charArray[i] == pre &amp;&amp; curCount &gt;= &gt;seq) &gt;{
+            continue;
+        }
+        if (charArray[i] != pre) { // recount the new char
+            curCount = 0;
+            // get the sequence of the char
+            if (count.get(charArray[i]) == null) {
+                seq = 1;
+            } else {
+                seq = count.get(charArray[i]) + 1;
+            }
+            // cache the char sequence
+            count.put(charArray[i], seq);
+        }
+        res = res + charArray[i];
+        curCount++;
+        pre = charArray[i];
+    }
+    return res;
+}
+</code></pre>
+
+<p>}</p>
+
+<p>```</p>
 ]]></content>
   </entry>
   

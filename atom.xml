@@ -4,7 +4,7 @@
   <title><![CDATA[Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-04-02T23:22:20+08:00</updated>
+  <updated>2014-04-06T16:52:19+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -346,7 +346,94 @@ awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次�
 
 <h3>问题 2 文本替换</h3>
 
-<p>今天太晚了, 明天再继续</p>
+<p>今天太晚了, 明天再继续
+<strong><em> 2014-04-06 更新 </em></strong>
+需求, 字符串或字符数组, 如 <code>AABBAAABBACCDD</code>, 取出连续的字符, 第N次出现取出连续N个, 不足则跳过</p>
+
+<p>如 AAABBBAAACCADDD &ndash;> ABAACAD</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Sub</span> <span class="o">{</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="kt">char</span><span class="o">[]</span> <span class="n">t</span> <span class="o">=</span> <span class="o">{</span><span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;B&#39;</span><span class="o">,</span> <span class="sc">&#39;B&#39;</span><span class="o">,</span> <span class="sc">&#39;B&#39;</span><span class="o">,</span><span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;C&#39;</span><span class="o">,</span>
+</span><span class='line'>          <span class="sc">&#39;C&#39;</span><span class="o">,</span> <span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;D&#39;</span><span class="o">,</span> <span class="sc">&#39;D&#39;</span><span class="o">,</span> <span class="sc">&#39;D&#39;</span><span class="o">};</span>
+</span><span class='line'>      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sub</span><span class="o">(</span><span class="n">t</span><span class="o">));</span>
+</span><span class='line'>  <span class="o">}</span><span class="cm">/* output:</span>
+</span><span class='line'><span class="cm">     ABAACAD</span>
+</span><span class='line'><span class="cm">   */</span><span class="c1">//:~</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">sub</span><span class="o">(</span><span class="kd">final</span> <span class="kt">char</span><span class="o">[]</span> <span class="n">charArray</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">String</span> <span class="n">res</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+</span><span class='line'>      <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">count</span> <span class="o">=</span>
+</span><span class='line'>          <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;();</span>
+</span><span class='line'>      <span class="kt">int</span> <span class="n">seq</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>      <span class="kt">int</span> <span class="n">curCount</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>      <span class="kt">char</span> <span class="n">pre</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="o">;</span>
+</span><span class='line'>      <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">charArray</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>          <span class="k">if</span> <span class="o">(</span><span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">==</span> <span class="n">pre</span> <span class="o">&amp;&amp;</span> <span class="n">curCount</span> <span class="o">&gt;=</span> <span class="o">&gt;</span><span class="n">seq</span><span class="o">)</span> <span class="o">&gt;{</span>
+</span><span class='line'>              <span class="k">continue</span><span class="o">;</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          <span class="k">if</span> <span class="o">(</span><span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">!=</span> <span class="n">pre</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// recount the new char</span>
+</span><span class='line'>              <span class="n">curCount</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>              <span class="c1">// get the sequence of the char</span>
+</span><span class='line'>              <span class="k">if</span> <span class="o">(</span><span class="n">count</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                  <span class="n">seq</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>              <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>                  <span class="n">seq</span> <span class="o">=</span> <span class="n">count</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>              <span class="o">}</span>
+</span><span class='line'>              <span class="c1">// cache the char sequence</span>
+</span><span class='line'>              <span class="n">count</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">seq</span><span class="o">);</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          <span class="n">res</span> <span class="o">=</span> <span class="n">res</span> <span class="o">+</span> <span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+</span><span class='line'>          <span class="n">curCount</span><span class="o">++;</span>
+</span><span class='line'>          <span class="n">pre</span> <span class="o">=</span> <span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>      <span class="k">return</span> <span class="n">res</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
 ]]></content>
   </entry>
   
