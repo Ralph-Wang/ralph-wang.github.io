@@ -4,7 +4,7 @@
   <title><![CDATA[标签: 算法 | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/suan-fa/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-04-06T16:59:06+08:00</updated>
+  <updated>2014-04-06T17:00:52+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -262,7 +262,7 @@ public static String sub(final char[] charArray) {
     int curCount = 0;
     char pre = '\0';
     for (int i = 0; i &lt; charArray.length; i++) {
-        if (charArray[i] == pre &amp;&amp; curCount &gt;= &gt;seq) &gt;{
+        if (charArray[i] == pre &amp;&amp; curCount &gt;= seq) {
             continue;
         }
         if (charArray[i] != pre) { // recount the new char
