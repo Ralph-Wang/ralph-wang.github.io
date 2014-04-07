@@ -4,7 +4,7 @@
   <title><![CDATA[Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-04-06T22:39:03+08:00</updated>
+  <updated>2014-04-08T00:34:52+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -512,6 +512,8 @@ awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次�
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
+
+<p>若使用 <code>String</code> 作为输入, 则用 charAt 方法获取字符</p>
 ]]></content>
   </entry>
   

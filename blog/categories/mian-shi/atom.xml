@@ -4,7 +4,7 @@
   <title><![CDATA[分类: 面试 | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//blog/categories/mian-shi/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-04-06T22:39:03+08:00</updated>
+  <updated>2014-04-08T00:34:52+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -286,7 +286,8 @@ public static String sub(final char[] charArray) {
 
 <p>}</p>
 
-<p>```</p>
+<p><code>``
+若使用</code>String` 作为输入, 则用 charAt 方法获取字符</p>
 ]]></content>
   </entry>
   
