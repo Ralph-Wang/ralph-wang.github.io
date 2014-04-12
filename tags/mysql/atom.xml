@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[标签: MySQL, | Test Notes By _漏斗]]></title>
+  <title><![CDATA[标签: MySQL | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/mysql/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-04-12T10:44:48+08:00</updated>
+  <updated>2014-04-12T13:37:02+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,284 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[面试技术问题解答]]></title>
+    <link href="http://Ralph-Wang.github.io/blog/2014/03/25/mian-shi-wen-ti-jie-da/"/>
+    <updated>2014-03-25T19:49:37+08:00</updated>
+    <id>http://Ralph-Wang.github.io/blog/2014/03/25/mian-shi-wen-ti-jie-da</id>
+    <content type="html"><![CDATA[<p>面试时没有完全回答上或有存疑的问题</p>
+
+<!--more-->
+
+
+<h2>Linux</h2>
+
+<h3>统计文本中某字符串出现次数</h3>
+
+<p>前提: 一行中要查找的字符串可能出现多次.</p>
+
+<p>文本样例:</p>
+
+<p><code>text sample
+ralph, ralph
+Hello, ralph, HaHA
+No such word
+Hey
+ralph again.
+two times ralph ,ralph
+</code></p>
+
+<p>统计文中 <code>ralph</code> 出现的次数</p>
+
+<p>如果确定 ralph 在每行只出现一次的话, 可以通过 <code>cat sample | grep ralph | wc
+-l</code>解决</p>
+
+<p>但因为一行里可以关键词可以出现多次, 这种方式会漏掉一些. 所以并不是好的解决方案</p>
+
+<p>遂搜索之.  得如下解法</p>
+
+<h3>方法 1: grep 的 -o 选项</h3>
+
+<p><code>bash
+cat sample | grep -o ralph | wc -l
+</code>
+解释:</p>
+
+<p>给 <code>grep</code> 加上 <code>-o</code> 选项后, 它只会打印出匹配到的字符串, 并且每匹配一次就打印一行.</p>
+
+<h3>方法 2: 神器 awk 之 RS</h3>
+
+<p><code>bash
+awk -v RS='ralph' 'END {print NR-1}' sample
+</code></p>
+
+<p>解释:</p>
+
+<p>awk 中 RS 变量为行分隔符, 用目标字符串分隔行, 则总行数 = 出现次数 + 1.</p>
+
+<p>在 END 中访问 NR 则为最后一行的行号, awk 起始行为 1, 所以此时总行数 = NR</p>
+
+<h3>方法 3: 神器 awk 之 gsub</h3>
+
+<p><code>bash
+awk '{count+=gsub(/ralph/, "#")} END {print count}' sample
+</code>
+解释:
+awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次数求和即可.</p>
+
+<p>另外, awk 中的 <code>sub</code> 函数在每行中只完成一次替换.</p>
+
+<h2>Java</h2>
+
+<h3>反射</h3>
+
+<p>参考<a href="http://www.cnblogs.com/rollenholt/archive/2011/09/02/2163758.html">反射案例</a></p>
+
+<h2>MySQL</h2>
+
+<p>MySQL 相关的性能问题, 关于<strong>执行计划</strong>的倒是 OK.</p>
+
+<p>但一直没时间整理下关于慢查询日志的知识点. 所以这几次都只能回答说知道这个概念, 具体的配置参数却不记得了.</p>
+
+<p>在这里整理一下, 权当备忘</p>
+
+<ul>
+<li>查看慢查询是否开启</li>
+</ul>
+
+
+<p>```mysql
+mysql> show variables like &lsquo;%slow%&rsquo;;
+| Variable_name       | Value
+| log_slow_queries    | OFF
+| slow_launch_time    | 2
+| slow_query_log      | OFF
+| slow_query_log_file | ***</p>
+
+<p>mysql> show variables like &lsquo;long%&rsquo;;
+| Variable_name   | Value    |
+| long_query_time | 1.000000 |
+```</p>
+
+<ul>
+<li>在 my.cnf 中配置开启慢查询跟踪
+<code>ini my.cnf
+[mysqld]
+log-slow-queries = **** # 日志存放目录, 一般放到 MySQL 数据库的地方
+long-query-time = 2 # 超过这个时间(单位:秒) 的查询为慢查询
+log-queries-not-using-indexes # 记录下没有使用索引的查询
+</code></li>
+</ul>
+
+
+<p>产生慢查询日志后可以使用 mysqldumpslow 工具进行分析查看了.</p>
+
+<p>接下来的事就交给 <code>explain</code> 吧.</p>
+
+<h2>算法</h2>
+
+<h3>问题 1 链表倒序</h3>
+
+<p>&hellip;面试时, 想到去 clone next.. 为毛当时就没想到多给个变量呢&hellip;</p>
+
+<p>```java List.java
+public class List<T> { // 后进先出列表</p>
+
+<pre><code>private static class Node&lt;T&gt; {
+    private T item;
+    private Node&lt;T&gt; next;
+    /** init a end Node */
+    public Node() {
+        item = null;
+        next = null;
+    }
+
+    /** normal Node */
+    public Node(T item, Node&lt;T&gt; next) {
+        this.item = item;
+        this.next = next;
+    }
+
+    private T getItem() {
+        return item;
+    }
+
+    private Node&lt;T&gt; getNext() {
+        return next;
+    }
+
+    private void setNext(Node&lt;T&gt; next) {
+        this.next = next;
+    }
+
+    public boolean isEnd() {
+        return (next == null &amp;&amp; item == null);
+    }
+}
+
+private Node&lt;T&gt; top;
+
+public List() {
+    top = new Node&lt;T&gt;(); //init a end Node for list
+}
+
+/** push a item to the top */
+public void push(T item) {
+    top = new Node&lt;T&gt;(item, top);
+}
+
+/** pop the top item */
+public T pop() {
+    T result = null;
+    if (top.isEnd()) {
+        return result;
+    }
+    result = top.getItem();
+    top = top.getNext();
+    return result;
+}
+
+/** reverse the list */
+public void reverse() {
+    Node&lt;T&gt; cur = top;
+    Node&lt;T&gt; next = cur.getNext();
+    Node&lt;T&gt; pre = null;
+    if (cur.isEnd()) { // Empty list
+        return;
+    }
+
+    top.setNext(new Node&lt;T&gt;()); // a new sentinel
+    do {
+        pre = cur;
+        cur = next;
+        next = cur.getNext();
+        cur.setNext(pre);
+    } while(!next.isEnd());
+    // reset top
+    top = cur;
+}
+
+public static void main(String[] args) {
+    List&lt;String&gt; l = new List&lt;String&gt;();
+    l.push("a");
+    l.push("B");
+    l.push("c");
+    l.push("D");
+    l.push("e");
+    l.push("F");
+    l.reverse();
+    String res = null;
+    while ((res = l.pop()) != null) {
+        System.out.println(res);
+    }
+}
+</code></pre>
+
+<p>}</p>
+
+<p>```
+算法还是弱项&hellip;</p>
+
+<h3>问题 2 文本替换</h3>
+
+<p>今天太晚了, 明天再继续</p>
+
+<p>&mdash;&ndash;<strong><em> 2014-04-06 更新 </em></strong>&mdash;&ndash;</p>
+
+<p>需求, 字符串或字符数组, 如 <code>AAABBBAAACCADDD</code>, 取出连续的字符, 第N次出现取出连续N个, 不足则跳过</p>
+
+<p>如 AAABBBAAACCADDD &ndash;> ABAACAD</p>
+
+<p>```java
+import java.util.*;</p>
+
+<p>public class Sub {</p>
+
+<pre><code>public static void main(String[] args) {
+    char[] t = {'A', 'A', 'A', 'B', 'B', 'B','A', 'A', 'A', 'C',
+        'C', 'A', 'D', 'D', 'D'};
+    System.out.println(sub(t));
+}/* output:
+    ABAACAD
+  *///:~
+
+public static String sub(final char[] charArray) {
+    String res = "";
+    HashMap&lt;Character, Integer&gt; count =
+        new HashMap&lt;Character, Integer&gt;();
+    int seq = 0;
+    int curCount = 0;
+    char pre = '\0';
+    for (int i = 0; i &lt; charArray.length; i++) {
+        if (charArray[i] == pre &amp;&amp; curCount &gt;= seq) {
+            continue;
+        }
+        if (charArray[i] != pre) { // recount the new char
+            curCount = 0;
+            // get the sequence of the char
+            if (count.get(charArray[i]) == null) {
+                seq = 1;
+            } else {
+                seq = count.get(charArray[i]) + 1;
+            }
+            // cache the char sequence
+            count.put(charArray[i], seq);
+        }
+        res = res + charArray[i];
+        curCount++;
+        pre = charArray[i];
+    }
+    return res;
+}
+</code></pre>
+
+<p>}</p>
+
+<p><code>``
+若使用</code>String` 作为输入, 则用 charAt 方法获取字符</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[索引功能比较 MySQL 与 MongoDB]]></title>
