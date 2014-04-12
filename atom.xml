@@ -4,7 +4,7 @@
   <title><![CDATA[Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-04-08T00:34:52+08:00</updated>
+  <updated>2014-04-12T10:44:48+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,214 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[WebDriver 之 Page Object 设计模式]]></title>
+    <link href="http://Ralph-Wang.github.io/blog/2014/04/11/webdriver-zhi-page-object-she-ji-mo-shi/"/>
+    <updated>2014-04-11T21:17:47+08:00</updated>
+    <id>http://Ralph-Wang.github.io/blog/2014/04/11/webdriver-zhi-page-object-she-ji-mo-shi</id>
+    <content type="html"><![CDATA[<p>使用 Selenium Webdriver 最常用的设计模式 Page Object 规划页面</p>
+
+<!--more-->
+
+
+<p>例子页面:</p>
+
+<p><a href="http://ralph-wang.github.io/sample/login_test.html">login_test.html</a></p>
+
+<p>用户名: test 密码: test</p>
+
+<h2>一般写法</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;http://ralph-wang.github.io/sample/login_test.html&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">username</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span>
+</span><span class='line'><span class="n">pwd</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># 登录操作</span>
+</span><span class='line'><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&#39;username&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+</span><span class='line'><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&#39;pwd&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">pwd</span><span class="p">)</span>
+</span><span class='line'><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&#39;ok&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># 验证登录</span>
+</span><span class='line'><span class="n">alert</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">switch_to_alert</span><span class="p">()</span>
+</span><span class='line'><span class="k">assert</span> <span class="s">&#39;succ&#39;</span> <span class="ow">in</span> <span class="n">alert</span><span class="o">.</span><span class="n">text</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样的写法的代码复用和管理都会成为麻烦.</p>
+
+<p>一方面测试值的参数化不方便, 另一方面没有抽象出业务操作来, 可读性能差.</p>
+
+<p>如果需要自动化的页面只有一个时, 可以就这么写. 但业务多起来后代码的维护会非常痛苦</p>
+
+<p>下面就用 Page Object 来重构这个测试</p>
+
+<h2>Page Object 设计模式</h2>
+
+<p>先需要两个基类: <code>BrowserContainer</code>, <code>BasePage</code></p>
+
+<figure class='code'><figcaption><span>Base.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">BrowserContainer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">se</span>    <span class="n">lf</span><span class="p">,</span> <span class="n">driver</span><span class="p">,</span> <span class="n">baseURL</span><span class="p">):</span>
+</span><span class='line'>      <span class="bp">self</span><span class="o">.</span><span class="n">driver</span> <span class="o">=</span> <span class="n">driver</span>
+</span><span class='line'>      <span class="bp">self</span><span class="o">.</span><span class="n">baseURL</span> <span class="o">=</span> <span class="n">baseURL</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">BasePage</span><span class="p">(</span><span class="n">BrowserContainer</span><span class="p">):</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driver</span><span class="p">,</span> <span class="n">baseURL</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+</span><span class='line'>      <span class="n">BrowserContainer</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driver</span><span class="p">,</span> <span class="n">baseURL</span><span class="p">)</span>
+</span><span class='line'>      <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="c">## 页面路径</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>      <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">baseURL</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>BrowserContainer</code> 是一个抽象类, 用来存储 driver 和测试站点的 baseURL</p>
+
+<p><code>BasePage</code> 也是一个抽象类, 继承自 BrowserContainer, 后续所有测试页面都继承自它</p>
+
+<figure class='code'><figcaption><span>Site.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">page.Base</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">Site</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">Base</span><span class="o">.</span><span class="n">BrowserContainer</span><span class="p">):</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driver</span><span class="p">,</span> <span class="n">baseURL</span><span class="p">):</span>
+</span><span class='line'>      <span class="n">page</span><span class="o">.</span><span class="n">Base</span><span class="o">.</span><span class="n">BrowserContainer</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driver</span><span class="p">,</span> <span class="n">baseURL</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">getLoginPage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>      <span class="k">return</span> <span class="n">LoginPage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">baseURL</span><span class="p">,</span> <span class="s">&#39;/login_test.html&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">LoginPage</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">Base</span><span class="o">.</span><span class="n">BasePage</span><span class="p">):</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driver</span><span class="p">,</span> <span class="n">baseURL</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+</span><span class='line'>      <span class="n">page</span><span class="o">.</span><span class="n">Base</span><span class="o">.</span><span class="n">BasePage</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driver</span><span class="p">,</span> <span class="n">baseURL</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">pwd</span><span class="p">):</span>
+</span><span class='line'>      <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&#39;username&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+</span><span class='line'>      <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&#39;pwd&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">pwd</span><span class="p">)</span>
+</span><span class='line'>      <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&#39;ok&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>Site</code> 是一个工厂类, 用来取得各个测试页面的实例</p>
+
+<p><code>LoginPage</code> 就对应我们的测试页面 <code>/login_test.html</code></p>
+
+<p>这样, 我们可以把环境因素 baseURL 和 项目因素 path 分离, 这样更方便的实现多环境复用</p>
+
+<figure class='code'><figcaption><span>case.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">unittest</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">page.Site</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">TestLogin</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>      <span class="bp">self</span><span class="o">.</span><span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">()</span>
+</span><span class='line'>      <span class="bp">self</span><span class="o">.</span><span class="n">site</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">Site</span><span class="o">.</span><span class="n">Site</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="p">,</span>\
+</span><span class='line'>              <span class="s">&#39;http://ralph-github.io/sample&#39;</span><span class="p">)</span>
+</span><span class='line'>      <span class="bp">self</span><span class="o">.</span><span class="n">loginPage</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">getLoginPage</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">def</span> <span class="nf">testLogin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>          <span class="bp">self</span><span class="o">.</span><span class="n">loginPage</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+</span><span class='line'>          <span class="bp">self</span><span class="o">.</span><span class="n">loginPage</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="s">&#39;test&#39;</span><span class="p">,</span> <span class="s">&#39;test&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>          <span class="n">alert</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">switch_to_alert</span><span class="p">()</span>
+</span><span class='line'>          <span class="k">assert</span> <span class="s">&#39;succ&#39;</span> <span class="ow">in</span> <span class="n">alert</span><span class="o">.</span><span class="n">text</span>
+</span><span class='line'>          <span class="n">alert</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>      <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>  <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>最后我们再用 <code>unittest</code> 模块组织我们的测试用例.</p>
+
+<p>这样我们增加了不少代码, 但用例部分的可读性提升了不少.</p>
+
+<p>并且我们的业务和页面是绑定在一起了, 管理起来也很方便</p>
+
+<p>如果再增加测试页面和测试业务, 我们只需要增加一个页面类并添加一个 Site 的工厂函数即可.</p>
+
+<p>sample 所在的 git:</p>
+
+<p><a href="https://github.com/Ralph-Wang/page_object_sample">page_object_sample</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Jmeter 安装]]></title>
