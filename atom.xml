@@ -4,7 +4,7 @@
   <title><![CDATA[Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-04-12T13:37:02+08:00</updated>
+  <updated>2014-04-12T17:53:38+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -1256,6 +1256,10 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 <p>两次测试中, CPU 利用率均达到了 100%, 但不使用 Buffer 时, 用户态的 CPU 更高一些.</p>
 
 <p>高出来这一部分, 应该就是进行额外的 Buffer/String 转换消耗掉的.</p>
+
+<p>&#8212;&#8212;&#8212;&#8212;&#8212;
+2014-04-12 更新
+awk 脚本中 <code>sum/6</code> 应该改为 <code>sum/NR</code> 这样更通用</p>
 ]]></content>
   </entry>
   
