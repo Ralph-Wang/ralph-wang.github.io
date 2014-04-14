@@ -4,7 +4,7 @@
   <title><![CDATA[标签: 管道 | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/guan-dao/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-04-15T00:47:23+08:00</updated>
+  <updated>2014-04-15T00:50:18+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -23,9 +23,7 @@
 <!--more-->
 
 
-<h2> 查看 CPU 信息</h2>
-
-<h2>1. 查看 CPU 型号</h2>
+<h2>查看 CPU 型号及数量</h2>
 
 <p>原命令
 ```bash</p>
