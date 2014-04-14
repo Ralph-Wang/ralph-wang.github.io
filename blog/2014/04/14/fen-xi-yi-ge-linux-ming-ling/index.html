@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>分析一个 Linux 命令 - Test Notes By _漏斗</title>
+  <meta name="author" content="_漏斗">
+
+  <meta name="description" content="通过折解一些 Linux 命令组合来学习每个独立命令">
+  <meta name="keywords" content="Linux命令硬件拆解">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Ralph-Wang.github.io/blog/2014/04/14/fen-xi-yi-ge-linux-ming-ling">
+  <link href="/favicon.png" type="image/png" rel="icon">
+  <link href="/atom.xml" rel="alternate" title="Test Notes By _漏斗" type="application/atom+xml">
+
+  <link href="/assets/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+
+</head>
+
+  <body   >
+    <div id="wrap">
+      <header role="banner">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<a style="position:relative" href="https://github.com/Ralph-Wang/" id="fork">
+    <img style="position:absolute" src="http://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"
+    alt="Fork me on Github" />
+</a>
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Test Notes By _漏斗</a>
+        </div>
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li >
+                    <a href="/">玄关</a>
+                </li>
+                <li >
+                    <a href="/blog/archives">历史事件</a>
+                </li>
+                <li >
+                    <a href="/gan-jiang-mo-xie">干将莫邪</a>
+                </li>
+                <li >
+                    <a href="/about-me">关于我</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="subscribe-rss" href="/atom.xml" title="subscribe via RSS">
+                        <span class="visible-xs">RSS</span>
+                        <img class="hidden-xs" src="/images/rss.png" alt="RSS">
+                    </a>
+                </li>
+                
+            </ul>
+            
+                <form class="search navbar-form navbar-right" action="http://google.com/search" method="GET">
+                    <input type="hidden" name="q" value="site:Ralph-Wang.github.io">
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="q" placeholder="Search">
+                    </div>
+                </form>
+            
+        </div>
+    </div>
+</nav>
+
+
+      </header>
+      <div id="main" class="container">
+        <div id="content">
+          <div class="row">
+  <div class="page-content col-md-8">
+    <article class="hentry" role="article">
+      
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-04-14T22:44:14+08:00" pubdate data-updated="true">Apr 14<span>th</span>, 2014</time>
+        
+      </p>
+    
+    
+    <h1 class="entry-title">
+        分析一个 Linux 命令
+        
+    </h1>
+    
+  </header>
+
+
+<div class="entry-content clearfix"><p>通过拆解查看 CPU 信息的组合命令, 来学习每个独立命令</p>
+
+<!--more-->
+
+
+<h2> 查看 CPU 信息</h2>
+
+<h2>1. 查看 CPU 型号</h2>
+
+<p>原命令</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>cat 和 grep 就不多说了</p>
+
+<h3>cut:</h3>
+
+<p>help 中的说明是 <strong> Print selected parts of lines from each FILE to standard
+output </strong> .  输出所有选中的行</p>
+
+<p><code>-f2</code> 是选中第二列, 换成<code>--fields=2</code>也是可以的.</p>
+
+<p><code>-d:</code> 则表示用冒号作为列分割符, 等价于<code>--delimiter=:</code></p>
+
+<p><strong>其它选项:</strong></p>
+
+<p><code>-s</code> 不包含分割符的不输出</p>
+
+<h3>uniq:</h3>
+
+<p>man 中的说明 <strong> report or omit repeated lines </strong> . 实际就是去除重复行</p>
+
+<p><code>-c</code> 表示在输出行前加上其在原文件中出现的次数</p>
+
+<p><strong>其它选项:</strong></p>
+
+<p><em>和输出相关:</em></p>
+
+<p><code>-d</code> 只输出发生了重复的行.</p>
+
+<p><code>-D</code> 只输出发生了重复的行. 但输出所有行. 即, 去除唯一行</p>
+
+<p><code>-u</code> 只输出唯一行</p>
+
+<p><em>和比较相关:</em></p>
+
+<p><code>-fN</code> 前N列不比较. 以空格或TAB为列分割符</p>
+
+<p><code>-sN</code> 前N个字符不比较</p>
+
+<p><code>-wN</code> 最多比较N个字符</p>
+
+<p><code>-i</code> 无视大小写差别. A 与 a 视为一致</p>
+
+<p><em>其它:</em></p>
+
+<p><code>-z</code> 以 0 作为行末</p>
+</div>
+
+
+      <footer>
+        <p class="meta text-muted">
+          
+  
+
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard">Posted by <span class="fn">_漏斗</span></span>
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-04-14T22:44:14+08:00" pubdate data-updated="true">Apr 14<span>th</span>, 2014</time>
+          
+
+<span class="glyphicon glyphicon-folder-open"></span>&nbsp;
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>Linux</a>
+  
+</span>
+
+
+          
+
+<br />
+<span class="glyphicon glyphicon-tags"></span>&nbsp;
+<span class="tags">
+    
+    <a class='tag' href='/tags/linux/'>Linux</a>, <a class='tag' href='/tags/ming-ling/'>命令</a>, <a class='tag' href='/tags/guan-dao/'>管道</a>
+    
+</span>
+
+
+        </p>
+        
+          <ul class="meta text-muted pager">
+            
+            <li class="previous"><a href="/blog/2014/04/11/webdriver-zhi-page-object-she-ji-mo-shi/" title="Previous Post: WebDriver 之 Page Object 设计模式">&laquo; WebDriver 之 Page Object 设计模式</a></li>
+            
+            
+          </ul>
+        
+        
+          <div class="sharing">
+  
+  
+  
+  
+<!-- Baidu Share BEGIN -->
+<div class="bdsharebuttonbox"><a href="#" class="bds_more"
+    data-cmd="more">分享到：</a><a href="#" class="bds_qzone"
+    data-cmd="qzone" title="分享到QQ空间">QQ空间</a><a href="#"
+    class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a><a
+    href="#" class="bds_tqq" data-cmd="tqq"
+    title="分享到腾讯微博">腾讯微博</a><a href="#" class="bds_renren"
+    data-cmd="renren" title="分享到人人网">人人网</a><a href="#"
+    class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new
+Date()/36e5)];</script>
+<!-- Baidu Share END -->
+
+
+<!-- Duoshuo Comment BEGIN -->
+<div class="ds-thread" data-form-position="top" data-order="asc" data-limit=15 ></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"ralph-wang"};
+(function() {
+ var ds = document.createElement('script');
+ ds.type = 'text/javascript';ds.async = true;
+ ds.src = 'http://static.duoshuo.com/embed.js';
+ ds.charset = 'UTF-8';
+ (document.getElementsByTagName('head')[0] 
+  ||
+  document.getElementsByTagName('body')[0]).appendChild(ds);
+ })();
+</script>
+<!-- Duoshuo Comment END -->
+
+
+</div>
+
+        
+      </footer>
+    </article>
+    
+  </div>
+
+  
+  <aside class="sidebar col-md-4">
+    
+      
+<section class="panel panel-default clearfix">
+  <iframe 
+    width="100%"
+    height="500"
+    frameborder="0"
+    scrolling="no"
+    src="http://v.t.sina.com.cn/widget/widget_blog.php?uid=1854716251&height=500&skin=wd_02&showpic=1"
+    ></iframe>
+</section>
+
+<section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Recent Posts</h3>
+  </div>
+  
+  <div id="recent_posts" class="list-group">
+    
+    <a class="list-group-item active" href="/blog/2014/04/14/fen-xi-yi-ge-linux-ming-ling/">分析一个 Linux 命令</a>
+    
+    <a class="list-group-item " href="/blog/2014/04/11/webdriver-zhi-page-object-she-ji-mo-shi/">WebDriver 之 Page Object 设计模式</a>
+    
+    <a class="list-group-item " href="/blog/2014/04/06/jmeter-an-zhuang/">Jmeter 安装</a>
+    
+    <a class="list-group-item " href="/blog/2014/03/25/mian-shi-wen-ti-jie-da/">面试技术问题解答</a>
+    
+    <a class="list-group-item " href="/blog/2014/03/21/suo-yin-gong-neng-bi-jiao-mysql-yu-mongodb/">索引功能比较 MySQL 与 MongoDB</a>
+    
+  </div>
+</section>
+<section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Categories</h3>
+  </div>
+  <div class="list-group">
+      <a class='list-group-item' href='/blog/categories/jmeter/'>Jmeter <span class='badge'>1</span></a>
+<a class='list-group-item' href='/blog/categories/linux/'>Linux <span class='badge'>2</span></a>
+<a class='list-group-item' href='/blog/categories/loadrunner/'>LoadRunner <span class='badge'>1</span></a>
+<a class='list-group-item' href='/blog/categories/selenium/'>Selenium <span class='badge'>1</span></a>
+<a class='list-group-item' href='/blog/categories/java/'>java <span class='badge'>4</span></a>
+<a class='list-group-item' href='/blog/categories/nodejs/'>nodejs <span class='badge'>1</span></a>
+<a class='list-group-item' href='/blog/categories/octopress/'>octopress <span class='badge'>4</span></a>
+<a class='list-group-item' href='/blog/categories/si-wei-dao-tu/'>思维导图 <span class='badge'>1</span></a>
+<a class='list-group-item' href='/blog/categories/shu-ju-ku/'>数据库 <span class='badge'>1</span></a>
+<a class='list-group-item' href='/blog/categories/mian-shi/'>面试 <span class='badge'>1</span></a>
+
+  </div>
+</section>
+<section class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Tag Clouds</h3>
+    </div>
+    <ul class="tag-cloud" style="padding-left:10px">
+        <a style="font-size: 100%" href="/tags/suan-fa/">算法</a>
+<a style="font-size: 100%" href="/tags/jian-kong/">监控</a>
+<a style="font-size: 350%" href="/tags/octopress/">octopress</a>
+<a style="font-size: 100%" href="/tags/jiao-ben-kai-fa/">脚本开发</a>
+<a style="font-size: 100%" href="/tags/boxing/">boxing</a>
+<a style="font-size: 100%" href="/tags/selenium/">selenium</a>
+<a style="font-size: 100%" href="/tags/linux/">linux</a>
+<a style="font-size: 100%" href="/tags/buffer/">Buffer</a>
+<a style="font-size: 100%" href="/tags/guan-dao/">管道</a>
+<a style="font-size: 100%" href="/tags/java/">Java</a>
+
+    </ul>
+</section>
+
+<section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Comments</h3>
+  </div>
+  <div id="recent_comments" class="list-group">
+    <ul class="ds-recent-comments"
+      data-num-items="10"
+      data-show-avatars="1"
+      data-show-time="1"
+      data-show-title="1"
+      data-show-admin="1"
+      data-excerpt-length="70"
+      style="padding-left:20px"
+      ></ul>
+  </div>
+</section>
+
+
+<section class="panel panel-default clearfix">
+    <div class="panel-heading">
+        <h3 class="panel-title">Booklist in Douban</h3>
+    </div>
+    <div style="padding-left:40px">
+        <script type="text/javascript" src="http://www.douban.com/service/badge/ralph_ld/?selection=random&amp;picsize=small&amp;show=collection&amp;n=9&amp;cat=book&amp;columns=3&amp;hideself=on"></script>
+    </div>
+</section>
+
+
+    
+  </aside>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+    <footer role="contentinfo"><div class="container">
+    <p class="text-muted credits">
+  Copyright &copy; 2014 - _漏斗<br>
+  <small>
+      <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>,
+      <span class="credit">customized with <a href="https://github.com/kAworu/octostrap3">octostrap3</a></span>.
+  </small>
+</p>
+
+</div>
+</footer>
+    <script src="/assets/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+<script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47787507-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : "
+    http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol +
+      "hm.baidu.com/h.js%3Faf7f2e40fdeaea8b30e44d6df8cbfbc9'
+      type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
