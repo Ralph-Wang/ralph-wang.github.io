@@ -4,7 +4,7 @@
   <title><![CDATA[标签: 管道 | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/guan-dao/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-04-21T10:11:30+08:00</updated>
+  <updated>2014-04-24T21:36:23+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -56,9 +56,9 @@ output </strong> .  输出所有选中的行</p>
 
 <p><em>和输出相关:</em></p>
 
-<p><code>-d</code> 只输出发生了重复的行.</p>
+<p><code>-d</code> 只输出发生了重复的行. <em>04-24 更新:</em> 重复行只输出一行</p>
 
-<p><code>-D</code> 只输出发生了重复的行. 但输出所有行. 即, 去除唯一行</p>
+<p><code>-D</code> 只输出发生了重复的行. 但输出所有重复行.</p>
 
 <p><code>-u</code> 只输出唯一行</p>
 
