@@ -4,7 +4,7 @@
   <title><![CDATA[标签: 工具 | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/gong-ju/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-04-24T21:36:23+08:00</updated>
+  <updated>2014-05-07T16:58:57+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -57,19 +57,21 @@ import java.util.Date;</p>
 
 <p>将 <code>apache-jmeter-*.*</code> 复制到任意你喜欢的目录</p>
 
-<p>配置 Jmeter 环境变量
-<code>bash
-JMETER_HOME=/where/you/put/apache-jmeter-*.*
-CLASSPATH=$CLASSPATH:$JMETER_HOME/lib/logkit-2.0.jar:$JMETER_HOME/lib/jorphan.jar:$JMETER_HOME/lib/ext/ApacheJMeter_core.jar
-</code>
-其实就是在 <code>CLASSPATH</code> 中添加三个 jar 包:</p>
+<p>下面这段其实完全不需要 ( 2014-05-07 更新 )</p>
 
-<ul>
-<li>$JMETER_HOME/lib/logkit-2.0.jar</li>
-<li>$JMETER_HOME/lib/jorphan.jar</li>
-<li>$JMETER_HOME/lib/ext/ApacheJMeter_core.jar</li>
-</ul>
+<blockquote><p>配置 Jmeter 环境变量</p>
 
+<p>JMETER_HOME=/where/you/put/apache-jmeter-<em>.</em></p>
+
+<p>CLASSPATH=$CLASSPATH:$JMETER_HOME/lib/logkit-2.0.jar:$JMETER_HOME/lib/jorphan.jar:$JMETER_HOME/lib/ext/ApacheJMeter_core.jar</p>
+
+<p>其实就是在 <code>CLASSPATH</code> 中添加三个 jar 包:</p>
+
+<p>$JMETER_HOME/lib/logkit-2.0.jar</p>
+
+<p>$JMETER_HOME/lib/jorphan.jar</p>
+
+<p>$JMETER_HOME/lib/ext/ApacheJMeter_core.jar</p></blockquote>
 
 <h2>启动 Jmeter</h2>
 
