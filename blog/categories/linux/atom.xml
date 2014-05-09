@@ -4,7 +4,7 @@
   <title><![CDATA[分类: Linux | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-05-07T16:58:57+08:00</updated>
+  <updated>2014-05-09T21:28:42+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,86 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[迂回的监控数据库连接数]]></title>
+    <link href="http://Ralph-Wang.github.io/blog/2014/05/09/yu-hui-de-jian-kong-shu-ju-ku-lian-jie-shu/"/>
+    <updated>2014-05-09T09:45:51+08:00</updated>
+    <id>http://Ralph-Wang.github.io/blog/2014/05/09/yu-hui-de-jian-kong-shu-ju-ku-lian-jie-shu</id>
+    <content type="html"><![CDATA[<p>不能通过数据库工具监控到连接数时可用的迂回监控方法</p>
+
+<!--more-->
+
+
+<h2>原理</h2>
+
+<p>数据库连接底层使用的也是 TCP 协议.</p>
+
+<p>所以当连接到数据库时, 在本地也有打开一个 TCP 端口. 可以通过 nestat 查看</p>
+
+<p>并且每有一个连接, 就会产有一个端口.</p>
+
+<p>所以, 我们只需要数一下 netstat 中打印出来连接到数据库的端口即可</p>
+
+<h2>代码</h2>
+
+<p><div><script src='https://gist.github.com/2c5f64d45de600237f1c.js'></script>
+<noscript><pre><code>#!/bin/sh
+
+function echo_db_connect_count()
+{
+    current_date=`date '+%Y.%m.%d.%H.%M.%S'`
+    netstat -an |awk '{gsub(&quot;::ffff:&quot;,&quot;&quot;); print $5}'|grep &quot;$port&quot; |sort | uniq -c |sed &quot;s/^/$current_date/g&quot;
+}
+
+port=$1
+step=$2
+
+if [ &quot;$port&quot; == &quot;&quot; ];then
+    exit 1
+fi
+
+if [ &quot;$step&quot; == &quot;&quot; ];then
+    step=1
+fi
+
+
+while true
+do
+    echo_db_connect_count $port
+    sleep $step
+done
+</code></pre></noscript></div>
+</p>
+
+<h2>命令分析</h2>
+
+<p>核心就一行, 摘出来看看:</p>
+
+<p><code>bash
+netstat -an |awk '{gsub("::ffff:",""); print $5}'|grep "$port" |sort | uniq -c
+|sed "s/^/$current_date/g"
+</code></p>
+
+<p>各个命令在干什么:</p>
+
+<p><code>netstat</code> 不多说, 打印出所有打开着的端口</p>
+
+<p><code>awk</code> 在这里做一步初步处理, gsub(&ldquo;::ffff:&rdquo;, &ldquo;&rdquo;), 是为了去除 ipv6 格式的 ip 地址.</p>
+
+<p><code>grep</code> 就是为了过滤出想监控的端口号</p>
+
+<p><code>sort</code> 让所有打印出来的远程连接排序, 为下一步 uniq 作铺垫</p>
+
+<p><code>uniq</code> 去重, <code>-c</code> 计算重复的项. 这样就得到连接的总数了</p>
+
+<p><code>sed</code> 既然是监控, 在行首添加上时间.</p>
+
+<p>执行结果的样例:</p>
+
+<p><img src="/blogimgs/net_watch.png" alt="net_watch" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[分析一个 Linux 命令]]></title>
