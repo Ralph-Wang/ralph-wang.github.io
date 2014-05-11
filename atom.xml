@@ -4,7 +4,7 @@
   <title><![CDATA[Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-05-09T21:28:42+08:00</updated>
+  <updated>2014-05-11T14:47:48+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -1442,6 +1442,17 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 <p><img src="http://Ralph-Wang.github.io/blogimgs/path-withawk.png" alt="path with awk" /></p>
 
 <p>确实清晰不少.</p>
+
+<hr />
+
+<h4>2014-05-11 更新</h4>
+
+<p>今天才发现, 其实有更简单的办法&hellip; Orz</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">echo</span> <span class="nv">$PAHT</span> |tr : <span class="s1">&#39;\n&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
 ]]></content>
   </entry>
   

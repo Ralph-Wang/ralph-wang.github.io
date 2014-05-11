@@ -4,7 +4,7 @@
   <title><![CDATA[分类: Linux | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-05-09T21:28:42+08:00</updated>
+  <updated>2014-05-11T14:47:48+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -186,6 +186,15 @@ $echo $PATH | awk 'BEGIN {RS=":"} {print $0}'
 <p><img src="/blogimgs/path-withawk.png" alt="path with awk" /></p>
 
 <p>确实清晰不少.</p>
+
+<hr />
+
+<h4>2014-05-11 更新</h4>
+
+<p>今天才发现, 其实有更简单的办法&hellip; Orz
+<code>bash
+echo $PAHT |tr : '\n'
+</code></p>
 ]]></content>
   </entry>
   
