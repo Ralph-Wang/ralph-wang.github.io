@@ -4,7 +4,7 @@
   <title><![CDATA[标签: shell | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/shell/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-05-18T16:57:31+08:00</updated>
+  <updated>2014-05-18T20:14:51+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -132,7 +132,7 @@ sample3.sh: line 15: theVar: should not be empty
 
 <h1>!/bin/bash</h1>
 
-<p>filename=$1
+<p>filename=${1:?&ldquo;filename missing&rdquo;}
 howmany=${2:-10}</p>
 
 <p>sort -nr $filename | head -n $howmany

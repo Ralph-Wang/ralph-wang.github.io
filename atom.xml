@@ -4,7 +4,7 @@
   <title><![CDATA[Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-05-18T16:57:31+08:00</updated>
+  <updated>2014-05-18T20:14:51+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -180,7 +180,7 @@
 <span class='line-number'>6</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">filename</span><span class="o">=</span><span class="nv">$1</span>
+</span><span class='line'><span class="nv">filename</span><span class="o">=</span><span class="k">${</span><span class="nv">1</span><span class="p">:?</span><span class="s2">&quot;filename missing&quot;</span><span class="k">}</span>
 </span><span class='line'><span class="nv">howmany</span><span class="o">=</span><span class="k">${</span><span class="nv">2</span><span class="k">:-</span><span class="nv">10</span><span class="k">}</span>
 </span><span class='line'>
 </span><span class='line'>sort -nr <span class="nv">$filename</span> | head -n <span class="nv">$howmany</span>
