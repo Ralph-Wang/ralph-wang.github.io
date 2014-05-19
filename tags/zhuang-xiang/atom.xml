@@ -4,7 +4,7 @@
   <title><![CDATA[标签: 装箱 | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/zhuang-xiang/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-05-18T20:14:51+08:00</updated>
+  <updated>2014-05-19T16:02:26+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -59,77 +59,7 @@ int j = new Integer(100); //Unboxing
 
 
 <p>下面是测试代码：
-<div><script src='https://gist.github.com/8900088.js'></script>
-<noscript><pre><code>public class Boxing {
-  public static void main(String[] args) {
-    // boolean
-    Boolean b1 = true;
-    Boolean b2 = true;
-    Boolean b3 = false;
-    Boolean b4 = false;
-
-    // int
-    Integer i1 = -129;
-    Integer i2 = -129;
-    Integer i3 = -128;
-    Integer i4 = -128;
-    Integer i5 = 127;
-    Integer i6 = 127;
-    Integer i7 = 128;
-    Integer i8 = 128;
-
-    // long
-    Long l1 = -129L;
-    Long l2 = -129L;
-    Long l3 = -128L;
-    Long l4 = -128L;
-    Long l5 = 127L;
-    Long l6 = 127L;
-    Long l7 = 128L;
-    Long l8 = 128L;
-
-    // float
-    Float f1 = 0.0f;
-    Float f2 = 0.0f;
-
-    // double
-    Double d1 = 0.0d;
-    Double d2 = 0.0d;
-
-    // output
-    System.out.println(&quot;true: &quot; + (b1 == b2));
-    System.out.println(&quot;false: &quot; + (b3 == b4));
-    System.out.println(&quot;-129: &quot; + (i1 == i2));
-    System.out.println(&quot;-129: &quot; + (i1 == i2));
-    System.out.println(&quot;-128: &quot; + (i3 == i4));
-    System.out.println(&quot;127: &quot; + (i5 == i6));
-    System.out.println(&quot;128: &quot; + (i7 == i8));
-    System.out.println(&quot;-129L: &quot; + (l1 == l2));
-    System.out.println(&quot;-129L: &quot; + (l1 == l2));
-    System.out.println(&quot;-128L: &quot; + (l3 == l4));
-    System.out.println(&quot;127L: &quot; + (l5 == l6));
-    System.out.println(&quot;128L: &quot; + (l7 == l8));
-    System.out.println(&quot;0.0f: &quot; + (f1 == f2));
-    System.out.println(&quot;0.0d: &quot; + (d1 == d2));
-  }
-}/* output:
-true: true
-false: true
--129: false
--129: false
--128: true
-127: true
-128: false
--129L: false
--129L: false
--128L: true
-127L: true
-128L: false
-0.0f: false
-0.0d: false
-*///:~
-</code></pre></noscript></div>
-</p>
+{% gist 8900088 %}</p>
 ]]></content>
   </entry>
   

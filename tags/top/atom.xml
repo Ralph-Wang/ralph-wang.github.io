@@ -4,7 +4,7 @@
   <title><![CDATA[标签: top | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/top/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-05-18T20:14:51+08:00</updated>
+  <updated>2014-05-19T16:02:26+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -95,40 +95,7 @@ $jstack 100162
 
 <p>上完整源码</p>
 
-<p><div><script src='https://gist.github.com/9290490.js?file=testJstack.java'></script>
-<noscript><pre><code>public class testJstack {
-    public static void main(String[] args) {
-        Thread t = new Thread(new Fibonacci());
-        t.start();
-    }
-}
-
-class Fibonacci implements Runnable {
-    public void run() {
-        while (true) {
-            for (int i = 0; i &lt; 20; i++) {
-                System.out.println(calcFibo(i));
-            }
-        }
-    }
-    
-        /**
-     * 最土最慢的蜚波那契计算函数.
-     * @return int
-     */
-    private int  calcFibo(final int n) {
-
-        if (n == 0) {
-            return 0;
-        } else if (n == 1) {
-            return 1;
-        } else {
-            return calcFibo(n-1) + calcFibo(n-2);
-        }
-    }
-}
-</code></pre></noscript></div>
-</p>
+<p>{% gist 9290490 testJstack.java %}</p>
 ]]></content>
   </entry>
   

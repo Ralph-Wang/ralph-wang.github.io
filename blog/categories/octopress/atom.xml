@@ -4,7 +4,7 @@
   <title><![CDATA[分类: octopress | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-05-18T20:14:51+08:00</updated>
+  <updated>2014-05-19T16:02:26+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -167,8 +167,8 @@ post.puts "&lt;!--more--&gt;"
     noborder=1&
     isWeibo=1&
     isFans=1&
-    uid=&
-    verifier=&
+    uid={{yourUID}}&
+    verifier={{yourVerifier}}&
 dpc=1"></iframe>
 
 
@@ -177,7 +177,7 @@ src中的链接，就是微博秀的页面。</p>
 
 <p>改造一下，变成<code>octopress</code>的边栏片段：
 ```html weibo.html
-
+{% if site.weibo_uid %}
 <section class="well"></p>
 
 <pre><code>&lt;ul class="nav nav-list"&gt;
@@ -195,15 +195,15 @@ src中的链接，就是微博秀的页面。</p>
                     noborder=1&amp;
                     isWeibo=1&amp;
                     isFans=1&amp;
-                    uid=1854716251&amp;
-                    verifier=&amp;
+                    uid={{site.weibo_uid}}&amp;
+                    verifier={{site.weibo_verifier}}&amp;
                     dpc=1"&gt;&lt;/iframe&gt;
     &lt;/li&gt;
 &lt;/ul&gt;
 </code></pre>
 
 <p></section>
-
+{% endif %}
 <code>
 将这个文件保存到`custom/asides`目录下，并在`_config.yml`中的`default_asides`列表中添加`custom/asides/weibo.html`。
 </code>yml _config.yml
@@ -233,7 +233,7 @@ rake preview
 
 <p>于是换一种方式, 新的<code>weibo.html</code>
 ```html weibo.html
-
+{% if site.weibo_uid %}
 <section class="well">
   <ul id="weibo" class="nav nav-list"></p>
 
@@ -244,14 +244,14 @@ rake preview
   height="500"
   frameborder="0"
   scrolling="no"
-  src="http://service.weibo.com/widget/widget_blog.php?uid=1854716251&amp;height=500&amp;skin=wd_02&amp;showpic=1"
+  src="http://service.weibo.com/widget/widget_blog.php?uid={{site.weibo_uid}}&amp;height=500&amp;skin=wd_02&amp;showpic=1"
   &gt;&lt;/iframe&gt;
 &lt;/li&gt;
 </code></pre>
 
 <p>  </ul>
 </section>
-
+{% endif %}
 ```</p>
 ]]></content>
   </entry>
