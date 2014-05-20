@@ -4,7 +4,7 @@
   <title><![CDATA[标签: 监控 | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/jian-kong/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-05-19T16:02:26+08:00</updated>
+  <updated>2014-05-20T17:33:05+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -49,7 +49,12 @@
 
 <p>运行<code>jstatd</code>之前，我们需要配置一个安全策略文件,如下</p>
 
-<p>{% gist 8844076 jstatd.all.policy %}</p>
+<p><div><script src='https://gist.github.com/8844076.js?file=jstatd.all.policy'></script>
+<noscript><pre><code>grant codebase &quot;file:${java.home}/../lib/tools.jar&quot; {
+   permission java.security.AllPermission;
+};
+</code></pre></noscript></div>
+</p>
 
 <p>运行<code>jstatd</code>时需要用<code>-J-Djava.security.policy</code>参数指定策略文件
 <code>bash

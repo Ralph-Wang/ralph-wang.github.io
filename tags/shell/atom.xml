@@ -4,7 +4,7 @@
   <title><![CDATA[标签: shell | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/shell/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-05-19T16:02:26+08:00</updated>
+  <updated>2014-05-20T17:33:05+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -164,7 +164,34 @@ howmany=${2:-10}</p>
 
 <h2>代码</h2>
 
-<p>{% gist 2c5f64d45de600237f1c %}</p>
+<p><div><script src='https://gist.github.com/2c5f64d45de600237f1c.js'></script>
+<noscript><pre><code>#!/bin/sh
+
+function echo_db_connect_count()
+{
+    current_date=`date '+%Y.%m.%d.%H.%M.%S'`
+    netstat -an |awk '{gsub(&quot;::ffff:&quot;,&quot;&quot;); print $5}'|grep &quot;$port&quot; |sort | uniq -c |sed &quot;s/^/$current_date/g&quot;
+}
+
+port=$1
+step=$2
+
+if [ &quot;$port&quot; == &quot;&quot; ];then
+    exit 1
+fi
+
+if [ &quot;$step&quot; == &quot;&quot; ];then
+    step=1
+fi
+
+
+while true
+do
+    echo_db_connect_count $port
+    sleep $step
+done
+</code></pre></noscript></div>
+</p>
 
 <h2>命令分析</h2>
 
