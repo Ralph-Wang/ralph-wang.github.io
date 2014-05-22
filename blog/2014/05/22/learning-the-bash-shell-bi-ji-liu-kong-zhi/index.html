@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>关于我 - Test Notes By _漏斗</title>
+  <title>Learning the Bash Shell 笔记-流控制 - Test Notes By _漏斗</title>
   <meta name="author" content="_漏斗">
 
   
-  
+  <meta name="keywords" content="Linux, shell, bash, if, case, select">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -16,7 +16,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://Ralph-Wang.github.io/about-me">
+  <link rel="canonical" href="http://Ralph-Wang.github.io/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="Test Notes By _漏斗" type="application/atom+xml">
 
@@ -56,7 +56,7 @@
                 <li >
                     <a href="/gan-jiang-mo-xie">干将莫邪</a>
                 </li>
-                <li class="active">
+                <li >
                     <a href="/about-me">关于我</a>
                 </li>
                 <li>
@@ -133,11 +133,12 @@
         <div id="content">
           <div class="row">
   <div class="page-content col-md-8">
-    <article role="article">
+    <article class="hentry" role="article">
       
-        <header class="page-header">
-          
-            <p class="meta text-muted text-uppercase">
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
 
 
 
@@ -150,18 +151,62 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-01-30T15:13:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2014</time></p>
-          
-          
-            <h1 class="entry-title">
-              关于我
-              
-            </h1>
-          
-        </header>
-      
-      <div class="entry-content">
-        <figure class='code'><figcaption><span>just a segment</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-05-22T21:19:21+08:00" pubdate data-updated="true">May 22<span>nd</span>, 2014</time>
+        
+      </p>
+    
+    
+    <h1 class="entry-title">
+        Learning the Bash Shell 笔记-流控制
+        
+    </h1>
+    
+  </header>
+
+
+<div class="entry-content clearfix"><p>但凡是代码就逃不开的流控制话题</p>
+
+<!--more-->
+
+
+<h2>条件</h2>
+
+<p>bash 中的条件值以数字 0 表示真, 非0 则为假, 并不存在布尔类型</p>
+
+<p>其中有三种条件形式可以得到条件值</p>
+
+<h3>命令的退出状态</h3>
+
+<p>一般来说, Linux 的命令若执行成功, 则退出状态为 0, 不成功则返回 1-255</p>
+
+<blockquote><p><em>diff 命令除外, diff 返回 0 表示两个文件没有差别, 1 表示有差别, 2+
+表示发生错误</em></p></blockquote>
+
+<h3>脚本或函数的返回值</h3>
+
+<p>在脚本或函数中, 用 return 表示结束并返回</p>
+
+<p>当然, 在 bash 中只能返回数字类型, 返回字符串的话脚本会出错</p>
+
+<p>另外, return 写返回值的话, 默认返回 0</p>
+
+<blockquote><p>脚本或函数中若没有用 return 返回值时, 则以最后一条命令的退出状态作为返回值</p></blockquote>
+
+<h3>测试 test</h3>
+
+<p>bash 中测试有两种写法</p>
+
+<ul>
+<li>test condition</li>
+<li>[ condition ] <em>[ ] 两个方括号和中间条件之间必须要有一个空格</em></li>
+</ul>
+
+
+<p>两种写法是等价的, 详细的写法可参考 <code>man test</code></p>
+
+<h2>if..elif..else</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -170,74 +215,200 @@
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="kt">double</span> <span class="n">world</span><span class="p">;</span>
-</span><span class='line'>  <span class="kt">unsigned</span> <span class="n">letter</span><span class="p">;</span>
-</span><span class='line'>  <span class="kt">short</span> <span class="n">stay</span><span class="p">;</span>
-</span><span class='line'>  <span class="kt">long</span> <span class="n">memories</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;I miss you!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">if </span>condition
+</span><span class='line'><span class="k">then</span>
+</span><span class='line'><span class="k">  </span>statements
+</span><span class='line'><span class="o">[</span><span class="k">elif </span>condition
+</span><span class='line'><span class="k">then</span>
+</span><span class='line'><span class="k">  </span>statements<span class="o">]</span>
+</span><span class='line'><span class="o">[</span><span class="k">else</span>
+</span><span class='line'><span class="k">  </span>statements<span class="o">]</span>
+</span><span class='line'><span class="k">fi</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h3>我是?</h3>
+<h2>case</h2>
 
-<p>会写代码的测试</p>
-
-<p>懂些啥?</p>
-
-<ul>
-<li>开发语言 : Java, Python, NodeJS, HTML &hellip;</li>
-<li>脚本     : MS batch, shell &hellip;</li>
-<li>数据库   : MySQL, MongoDB, SQL Server &hellip;</li>
-<li>持续集成 : Jenkins &hellip;</li>
-<li>测试工具 : WebDriver(Java, Python) , QTP, LR, JMeter&hellip;</li>
-</ul>
-
-
-<p>没有程序员不会的, 只有还没学的</p>
-
-<p>more keyboard, less mouse.</p>
-
-<h3>我需要你的帮助</h3>
-
-<p>如果发现文章中有错误，不管是<strong>概念</strong>、<strong>用词</strong>、<strong>错别字</strong>亦或是其它<strong>任何</strong>问题，欢迎拍砖</p>
-
-<h4>联系方式</h4>
-
-<p>邮箱: ralph_ld#aliyun.com (每天都会收邮件)</p>
-
-<p>QQ: 182307203 (即使在线也不一定秒回, 不带耳机完全不知道有消息)</p>
-
-<p>old_blogs: <a href="http://www.cnblogs.com/Ralph-Wang/">_漏斗的博客园</a></p>
-
-      </div>
-      
-        <footer>
-          <p class="meta text-muted">
-            
-            
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">case </span>epxr in
+</span><span class='line'>  pattern1 <span class="o">)</span>
+</span><span class='line'>      statements
+</span><span class='line'>      ;;
+</span><span class='line'>  pattern2 <span class="o">)</span>
+</span><span class='line'>      statements
+</span><span class='line'>      ;;
+</span><span class='line'>  ...
+</span><span class='line'><span class="k">esac</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
+<p><em>pattern1/2</em> 支持 bash 的通配符, 也支持 | 来表示多模式匹配</p>
+
+<p><code>;;</code> 类似于其它语言中的 break</p>
+
+<p>因为匹配是从上到下的, 所以可以用 <code>*)</code> 来表示 default</p>
+
+<h2>select</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">select case</span> <span class="o">[</span>in caselist<span class="o">]</span>
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'><span class="k">  </span>statements about <span class="nv">$case</span>
+</span><span class='line'>  <span class="o">[</span><span class="nb">break</span><span class="o">]</span>
+</span><span class='line'><span class="k">done</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>用 caselist 里的所有项生成一个简单的选择菜单</p>
+
+<p>statements 中 $case 就是选择的项</p>
+
+<p>完成一次 statements 后, 若没有遇到 break 则会继续下一次 select</p>
+
+<h2>for</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">for</span> <span class="o">((</span>expr1;expr2;expr3<span class="o">))</span>
+</span><span class='line'>  statements
+</span><span class='line'>end
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个比较类似 Java 里的 for</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">for </span>i in list
+</span><span class='line'>begin
+</span><span class='line'>  statements
+</span><span class='line'>end
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个感觉更像 python 里的 for</p>
+
+<h2>while &amp; until</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">while </span>condition
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'><span class="k">  </span>statements
+</span><span class='line'><span class="k">done</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 
 
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">until </span>condition
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'><span class="k">  </span>statements
+</span><span class='line'><span class="k">done</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
+<p>while condition 等价于 until ! condition</p>
+
+<p>两者没有其它区别</p>
+
+<h2>附:</h2>
+
+<p>又一个友好地显示 PATH 的方法</p>
+
+<figure class='code'><figcaption><span>showpath.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">path</span><span class="o">=</span><span class="nv">$PATH</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">while</span> <span class="o">[</span> <span class="nv">$path</span> <span class="o">]</span>;
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'><span class="k">  </span><span class="nb">echo</span> <span class="k">${</span><span class="nv">path</span><span class="p">%%:*</span><span class="k">}</span>
+</span><span class='line'>  <span class="nb">echo</span> <span class="k">${</span><span class="nv">path</span><span class="p">#*:</span><span class="k">}</span>
+</span><span class='line'><span class="k">done</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
 
 
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-01-30T15:13:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2014</time>
-            
-          </p>
+      <footer>
+        <p class="meta text-muted">
           
-            <div class="sharing">
+  
+
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard">Posted by <span class="fn">_漏斗</span></span>
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-05-22T21:19:21+08:00" pubdate data-updated="true">May 22<span>nd</span>, 2014</time>
+          
+
+<span class="glyphicon glyphicon-folder-open"></span>&nbsp;
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>Linux</a>
+  
+</span>
+
+
+          
+
+<br />
+<span class="glyphicon glyphicon-tags"></span>&nbsp;
+<span class="tags">
+    
+    <a class='tag' href='/tags/linux/'>Linux</a>, <a class='tag' href='/tags/bash/'>bash</a>, <a class='tag' href='/tags/shell/'>shell</a>, <a class='tag' href='/tags/liu-kong-zhi/'>流控制</a>
+    
+</span>
+
+
+        </p>
+        
+          <ul class="meta text-muted pager">
+            
+            <li class="previous"><a href="/blog/2014/05/15/learning-the-bash-shell-du-shu-bi-ji-bian-liang/" title="Previous Post: Learning The Bash Shell 笔记-变量">&laquo; Learning The Bash Shell 笔记-变量</a></li>
+            
+            
+          </ul>
+        
+        
+          <div class="sharing">
   
   
   
@@ -275,17 +446,16 @@ var duoshuoQuery = {short_name:"ralph-wang"};
 
 </div>
 
-          
-        </footer>
-      
+        
+      </footer>
     </article>
     
   </div>
 
   
-    <aside class="sidebar col-md-4">
+  <aside class="sidebar col-md-4">
+    
       
-        
 <section class="panel panel-default clearfix">
   <iframe 
     width="100%"
@@ -303,7 +473,7 @@ var duoshuoQuery = {short_name:"ralph-wang"};
   
   <div id="recent_posts" class="list-group">
     
-    <a class="list-group-item " href="/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi/">Learning the Bash Shell 笔记-流控制</a>
+    <a class="list-group-item active" href="/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi/">Learning the Bash Shell 笔记-流控制</a>
     
     <a class="list-group-item " href="/blog/2014/05/15/learning-the-bash-shell-du-shu-bi-ji-bian-liang/">Learning the Bash Shell 笔记-变量</a>
     
@@ -338,16 +508,16 @@ var duoshuoQuery = {short_name:"ralph-wang"};
         <h3 class="panel-title">Tag Clouds</h3>
     </div>
     <ul class="tag-cloud" style="padding-left:10px">
-        <a style="font-size: 208%" href="/tags/jvisualvm/">jvisualvm</a>
-<a style="font-size: 100%" href="/tags/jstack/">jstack</a>
-<a style="font-size: 100%" href="/tags/an-zhuang/">安装</a>
-<a style="font-size: 208%" href="/tags/bash/">bash</a>
-<a style="font-size: 100%" href="/tags/mongodb/">MongoDB</a>
-<a style="font-size: 100%" href="/tags/loadrunner/">LoadRunner</a>
-<a style="font-size: 100%" href="/tags/xing-neng/">性能</a>
+        <a style="font-size: 100%" href="/tags/xing-neng/">性能</a>
+<a style="font-size: 100%" href="/tags/top/">top</a>
+<a style="font-size: 100%" href="/tags/buffer/">Buffer</a>
 <a style="font-size: 100%" href="/tags/tips/">tips</a>
-<a style="font-size: 208%" href="/tags/jvm/">jvm</a>
-<a style="font-size: 100%" href="/tags/bian-liang/">变量</a>
+<a style="font-size: 100%" href="/tags/si-wei-dao-tu/">思维导图</a>
+<a style="font-size: 208%" href="/tags/kuo-zhan/">扩展</a>
+<a style="font-size: 100%" href="/tags/zhuang-xiang/">装箱</a>
+<a style="font-size: 208%" href="/tags/jvisualvm/">jvisualvm</a>
+<a style="font-size: 100%" href="/tags/an-zhuang/">安装</a>
+<a style="font-size: 100%" href="/tags/suan-fa/">算法</a>
 
     </ul>
 </section>
@@ -380,8 +550,8 @@ var duoshuoQuery = {short_name:"ralph-wang"};
 </section>
 
 
-      
-    </aside>
+    
+  </aside>
   
 </div>
 
