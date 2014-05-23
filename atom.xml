@@ -4,7 +4,7 @@
   <title><![CDATA[Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-05-22T22:30:38+08:00</updated>
+  <updated>2014-05-23T09:32:42+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -148,14 +148,29 @@
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">for </span>i in list
-</span><span class='line'>begin
-</span><span class='line'>  statements
-</span><span class='line'>end
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">for </span>i <span class="o">[</span>in list<span class="o">]</span>
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'><span class="k">  </span>statements
+</span><span class='line'><span class="k">done</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>这个感觉更像 python 里的 for</p>
+
+<p>若省略 [in list] 的话, 则默认从 $@ 中取值</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">for </span>i in <span class="o">{</span>start..end..step<span class="o">}</span>
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'><span class="k">  </span>statements
+</span><span class='line'><span class="k">done</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>bash 4.0 以上才有的语法</p>
 
 <h2>while &amp; until</h2>
 

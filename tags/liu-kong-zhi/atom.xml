@@ -4,7 +4,7 @@
   <title><![CDATA[标签: 流控制 | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/liu-kong-zhi/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-05-22T22:30:38+08:00</updated>
+  <updated>2014-05-23T09:32:42+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -134,15 +134,28 @@ for ((expr1;expr2;expr3))</p>
 这个比较类似 Java 里的 for</p>
 
 <p>```bash
-for i in list
-begin</p>
+for i [in list]
+do</p>
 
 <pre><code>statements
 </code></pre>
 
-<p>end
+<p>done
 ```
 这个感觉更像 python 里的 for</p>
+
+<p>若省略 [in list] 的话, 则默认从 $@ 中取值</p>
+
+<p>```bash
+for i in {start..end..step}
+do</p>
+
+<pre><code>statements
+</code></pre>
+
+<p>done
+```
+bash 4.0 以上才有的语法</p>
 
 <h2>while &amp; until</h2>
 

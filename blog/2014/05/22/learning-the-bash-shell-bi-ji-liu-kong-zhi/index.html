@@ -294,14 +294,29 @@
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">for </span>i in list
-</span><span class='line'>begin
-</span><span class='line'>  statements
-</span><span class='line'>end
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">for </span>i <span class="o">[</span>in list<span class="o">]</span>
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'><span class="k">  </span>statements
+</span><span class='line'><span class="k">done</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>这个感觉更像 python 里的 for</p>
+
+<p>若省略 [in list] 的话, 则默认从 $@ 中取值</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">for </span>i in <span class="o">{</span>start..end..step<span class="o">}</span>
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'><span class="k">  </span>statements
+</span><span class='line'><span class="k">done</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>bash 4.0 以上才有的语法</p>
 
 <h2>while &amp; until</h2>
 
@@ -508,16 +523,16 @@ var duoshuoQuery = {short_name:"ralph-wang"};
         <h3 class="panel-title">Tag Clouds</h3>
     </div>
     <ul class="tag-cloud" style="padding-left:10px">
-        <a style="font-size: 100%" href="/tags/xing-neng/">性能</a>
-<a style="font-size: 100%" href="/tags/top/">top</a>
-<a style="font-size: 100%" href="/tags/buffer/">Buffer</a>
-<a style="font-size: 100%" href="/tags/tips/">tips</a>
+        <a style="font-size: 100%" href="/tags/buffer/">Buffer</a>
 <a style="font-size: 100%" href="/tags/si-wei-dao-tu/">思维导图</a>
-<a style="font-size: 208%" href="/tags/kuo-zhan/">扩展</a>
+<a style="font-size: 100%" href="/tags/guan-dao/">管道</a>
+<a style="font-size: 208%" href="/tags/bian-lan/">边栏</a>
+<a style="font-size: 100%" href="/tags/selenium/">selenium</a>
 <a style="font-size: 100%" href="/tags/zhuang-xiang/">装箱</a>
+<a style="font-size: 100%" href="/tags/xing-neng-ce-shi/">性能测试</a>
 <a style="font-size: 208%" href="/tags/jvisualvm/">jvisualvm</a>
-<a style="font-size: 100%" href="/tags/an-zhuang/">安装</a>
-<a style="font-size: 100%" href="/tags/suan-fa/">算法</a>
+<a style="font-size: 100%" href="/tags/dui-zhan/">堆栈</a>
+<a style="font-size: 100%" href="/tags/zhai-yao/">摘要</a>
 
     </ul>
 </section>
