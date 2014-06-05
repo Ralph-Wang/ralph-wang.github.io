@@ -4,7 +4,7 @@
   <title><![CDATA[Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-05-23T09:32:42+08:00</updated>
+  <updated>2014-06-05T23:12:12+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,138 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Learning the Bash Shell 笔记-杂项]]></title>
+    <link href="http://Ralph-Wang.github.io/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/"/>
+    <updated>2014-06-05T09:49:16+08:00</updated>
+    <id>http://Ralph-Wang.github.io/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang</id>
+    <content type="html"><![CDATA[<p>一些零散的内容</p>
+
+<!--more-->
+
+
+<h2>getopts</h2>
+
+<p>getopts 主要用来定义和解析脚本支持的命令行选项.</p>
+
+<p>简单用法如下:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">while </span><span class="nb">getopts</span> <span class="s2">&quot;:ab:c&quot;</span> opt
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'><span class="k">  case</span> <span class="nv">$opt</span> in
+</span><span class='line'>      a <span class="o">)</span>
+</span><span class='line'>          statements <span class="k">for</span> -a
+</span><span class='line'>          ;;
+</span><span class='line'>      b <span class="o">)</span>
+</span><span class='line'>          <span class="nv">$OPTARG</span> is the argument value of -b
+</span><span class='line'>          statements <span class="k">for</span> -b
+</span><span class='line'>          ;;
+</span><span class='line'>      c <span class="o">)</span>
+</span><span class='line'>          statements <span class="k">for</span> -c
+</span><span class='line'>          ;;
+</span><span class='line'>      <span class="se">\?</span> <span class="o">)</span>
+</span><span class='line'>          other
+</span><span class='line'>  <span class="k">esac</span>
+</span><span class='line'><span class="k">done</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">shift</span> <span class="k">$((</span><span class="nv">$OPTINT</span> <span class="o">-</span> <span class="m">1</span><span class="k">))</span>
+</span><span class='line'>
+</span><span class='line'>main scripts
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>getopts 第一个字符串中声明支持的选项名 (只能单字符);
+如果字符后面加有冒号(:)则表示该选项有对应的选项参数,
+参数值会保存到变量<code>OPTARG</code>中</p></li>
+<li><p>执行过 getopt 后, 会在变量<code>OPTINT</code>中保存 (选项+选项参数) 的总个数. 用 shift $(($OPTINT &ndash; 1)) 来确保后续代码不受实际选项个数影响</p></li>
+<li><p>在声明所支持的选项时, 如果以冒号(:)开头, 可以忽略传入不合法的选项</p></li>
+</ul>
+
+
+<h2>shell 实现极简 make</h2>
+
+<p>没有变量支持什么, 只是解释命令和依赖</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">#set -o verbose</span>
+</span><span class='line'>
+</span><span class='line'>makecmd<span class="o">()</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="nb">read </span>target colon sources
+</span><span class='line'>    <span class="k">for </span>src in <span class="nv">$sources</span>
+</span><span class='line'>    <span class="k">do</span>
+</span><span class='line'><span class="k">        if</span> <span class="o">[</span> <span class="nv">$src</span> -nt <span class="nv">$target</span> <span class="o">]</span>
+</span><span class='line'>        <span class="k">then</span>
+</span><span class='line'><span class="k">            while </span><span class="nb">read </span>cmd
+</span><span class='line'>            <span class="k">do</span>
+</span><span class='line'><span class="k">                </span><span class="nb">echo</span> <span class="s2">&quot;$cmd&quot;</span>
+</span><span class='line'>                <span class="nb">eval</span> <span class="k">${</span><span class="nv">cmd</span><span class="p">#\t</span><span class="k">}</span>
+</span><span class='line'>            <span class="k">done</span>
+</span><span class='line'><span class="k">            </span><span class="nb">break</span>
+</span><span class='line'><span class="nb">        </span><span class="k">fi</span>
+</span><span class='line'><span class="k">    done</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>makecmd &lt; Makefile
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>只能处理一个命令, 不支持变量什么的</p></li>
+<li><p>用 read 从标准输入中读取 target colon sources</p></li>
+<li><p>循环判断 sources 中各依赖与 target 修改日期; <code>FILE1 -nt FIlE2</code>, <code>FILE1 -ot
+FILE2</code> 用来比较两个文件修改时间</p></li>
+<li><p>eval &ldquo;string&rdquo; 将 string 作为 bash 命令解析</p></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Learning the Bash Shell 笔记-流控制]]></title>
@@ -3040,24 +3172,6 @@ class Hammer {
 </span><span class='line'>
 </span></code></pre></td></tr></table></div></figure>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[用 markdown 写作]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/01/27/yong-markdown-xie-zuo/"/>
-    <updated>2014-01-27T18:14:13+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/01/27/yong-markdown-xie-zuo</id>
-    <content type="html"><![CDATA[<p><strong>这是用 octpress + github 写的第一篇博客</strong></p>
-
-<!--more-->
-
-
-<p>用<code>markdown</code>写作是一个让人很爽快的事情。之前在 cnblogs 时也是特意找了几个
-<code>markdown</code>插件。偶然的机会，在<a href="http://kumu-linux.github.io">枯木君</a>的博客中了解到可以用
-github 来搭建一个完美支持<code>markdown</code>的博客。</p>
-
-<p>这一篇就作为测试<code>octpress</code>的效果用。</p>
 ]]></content>
   </entry>
   

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[标签: make | Test Notes By _漏斗]]></title>
+  <link href="http://Ralph-Wang.github.io//tags/make/atom.xml" rel="self"/>
+  <link href="http://Ralph-Wang.github.io/"/>
+  <updated>2014-06-05T23:12:12+08:00</updated>
+  <id>http://Ralph-Wang.github.io/</id>
+  <author>
+    <name><![CDATA[_漏斗]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Learning the Bash Shell 笔记-杂项]]></title>
+    <link href="http://Ralph-Wang.github.io/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/"/>
+    <updated>2014-06-05T09:49:16+08:00</updated>
+    <id>http://Ralph-Wang.github.io/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang</id>
+    <content type="html"><![CDATA[<p>一些零散的内容</p>
+
+<!--more-->
+
+
+<h2>getopts</h2>
+
+<p>getopts 主要用来定义和解析脚本支持的命令行选项.</p>
+
+<p>简单用法如下:
+```bash
+while getopts &ldquo;:ab:c&rdquo; opt
+do</p>
+
+<pre><code>case $opt in
+    a )
+        statements for -a
+        ;;
+    b )
+        $OPTARG is the argument value of -b
+        statements for -b
+        ;;
+    c )
+        statements for -c
+        ;;
+    \? )
+        other
+esac
+</code></pre>
+
+<p>done</p>
+
+<p>shift $(($OPTINT &ndash; 1))</p>
+
+<p>main scripts
+<code>``
+* getopts 第一个字符串中声明支持的选项名 (只能单字符);
+  如果字符后面加有冒号(:)则表示该选项有对应的选项参数,
+  参数值会保存到变量</code>OPTARG`中</p>
+
+<ul>
+<li><p>执行过 getopt 后, 会在变量<code>OPTINT</code>中保存 (选项+选项参数) 的总个数. 用 shift $(($OPTINT &ndash; 1)) 来确保后续代码不受实际选项个数影响</p></li>
+<li><p>在声明所支持的选项时, 如果以冒号(:)开头, 可以忽略传入不合法的选项</p></li>
+</ul>
+
+
+<h2>shell 实现极简 make</h2>
+
+<p>没有变量支持什么, 只是解释命令和依赖
+```</p>
+
+<h1>!/bin/sh</h1>
+
+<h1>set -o verbose</h1>
+
+<p>makecmd()
+{</p>
+
+<pre><code>read target colon sources
+for src in $sources
+do
+    if [ $src -nt $target ]
+    then
+        while read cmd
+        do
+            echo "$cmd"
+            eval ${cmd#\t}
+        done
+        break
+    fi
+done
+</code></pre>
+
+<p>}</p>
+
+<p>makecmd &lt; Makefile
+```
+* 只能处理一个命令, 不支持变量什么的</p>
+
+<ul>
+<li><p>用 read 从标准输入中读取 target colon sources</p></li>
+<li><p>循环判断 sources 中各依赖与 target 修改日期; <code>FILE1 -nt FIlE2</code>, <code>FILE1 -ot
+FILE2</code> 用来比较两个文件修改时间</p></li>
+<li><p>eval &ldquo;string&rdquo; 将 string 作为 bash 命令解析</p></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>
