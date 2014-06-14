@@ -4,7 +4,7 @@
   <title><![CDATA[Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-06-05T23:12:12+08:00</updated>
+  <updated>2014-06-15T00:31:01+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,548 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Learning the Bash Shell 笔记-Debug]]></title>
+    <link href="http://Ralph-Wang.github.io/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/"/>
+    <updated>2014-06-11T10:40:33+08:00</updated>
+    <id>http://Ralph-Wang.github.io/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug</id>
+    <content type="html"><![CDATA[<p>任何开发测试工作都离不开的话题 &mdash; Debug.</p>
+
+<p>bash 脚本自然也不能免俗</p>
+
+<!--more-->
+
+
+<h2>显示每一步执行的命令</h2>
+
+<p>默认情况下, bash 脚本执行时不会像 Windows 的 bat 一样显示每一次执行的命令.
+虽然说这功能在执行时比较难看, 但在 Debug
+时可以帮助我们查看脚本是执行到哪一行出现的问题</p>
+
+<p>如果想让 bash 脚本运行时显示每行命令, 则需要在脚本开始添加如下命令:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">set</span> -o <span class="o">[</span>noexec|verbose|xtrace<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>参数说明:</p>
+
+<ul>
+<li><p><code>noexec</code>  不执行脚本, 只检查语法错误</p></li>
+<li><p><code>verbose</code> 显示每一行命令 (开启这个功能后 bash 就和 bat 很像了)</p></li>
+<li><p><code>xtrace</code>  比 verbose 更详细的显示, 具体显示信息由 <code>PS4</code> 变量配置</p></li>
+</ul>
+
+
+<h2>几个 fake signal</h2>
+
+<h3>EXIT</h3>
+
+<p>在脚本退出时会触发该信号</p>
+
+<figure class='code'><figcaption><span>exit.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">trap</span> <span class="s1">&#39;echo exiting the script&#39;</span> EXIT
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span> <span class="s1">&#39;starting the script&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>执行结果:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$.</span>/exit.sh
+</span><span class='line'>starting the script
+</span><span class='line'>exiting the script
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>DEBUG</h3>
+
+<p>每一行命令执行前都会触发这个信号, 开启 <code>set -o functrace</code> 后函数内部也会触发</p>
+
+<figure class='code'><figcaption><span>debug.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">trap</span> <span class="s1">&#39;echo execute $LINENO&#39;</span> DEBUG
+</span><span class='line'>
+</span><span class='line'><span class="k">for</span> <span class="o">((</span><span class="nv">_i</span><span class="o">=</span>0;_i&lt;2;_i++<span class="o">))</span>
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'><span class="nb">echo</span> <span class="nv">$_i</span>
+</span><span class='line'><span class="k">done</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>执行结果:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$.</span>/debug.sh
+</span><span class='line'>execute 5
+</span><span class='line'>execute 5
+</span><span class='line'>execute 7
+</span><span class='line'>0
+</span><span class='line'>execute 5
+</span><span class='line'>execute 5
+</span><span class='line'>execute 7
+</span><span class='line'>1
+</span><span class='line'>execute 5
+</span><span class='line'>execute 5
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>ERR</h3>
+
+<p>当有命令执行后的返回值不是 0 时触发该信号</p>
+
+<figure class='code'><figcaption><span>err.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">trap</span> <span class="s1">&#39;echo Error with status $?&#39;</span> ERR
+</span><span class='line'>
+</span><span class='line'><span class="k">function </span>bad
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>  <span class="k">return </span>111
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>bad
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>执行结果</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$.</span>/err.sh
+</span><span class='line'>Error with status 111
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>RETURN</h3>
+
+<p>当用 <code>source</code> 执行脚本返回后触发该信号</p>
+
+<p>若执行 <code>set -o functrace</code>, 则函数返回后也能触发该信号</p>
+
+<figure class='code'><figcaption><span>x.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Hello World&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span>return.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'><span class="nb">trap</span> <span class="s1">&#39;echo debug occured&#39;</span> DEBUG
+</span><span class='line'><span class="nb">trap</span> <span class="s1">&#39;echo return occured&#39;</span> RETURN
+</span><span class='line'>
+</span><span class='line'><span class="nb">source</span> ./x.sh
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>执行结果</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>debug occured
+</span><span class='line'>Hello World
+</span><span class='line'><span class="k">return </span>occured
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>一个简易的 Debugger</h2>
+
+<p>一个 Debugger 需要的功能点:</p>
+
+<ul>
+<li><p>断点</p></li>
+<li><p>逐步执行</p></li>
+<li><p>变量监视</p></li>
+<li><p>显示当前执行位置和断点位置</p></li>
+<li><p>不需要改动源码即可进行 Debug</p></li>
+</ul>
+
+
+<h2>实现原理:</h2>
+
+<p>利用 <code>DEBUG</code> 信号中断执行. 进而进入 debug 命令行</p>
+
+<h2>核心数组:</h2>
+
+<ul>
+<li><p><code>_lines</code> 用来存储所有 Debug 脚本的代码</p></li>
+<li><p><code>_linebp</code> 用来存储断点行号</p></li>
+</ul>
+
+
+<p>文件结构:</p>
+
+<blockquote><p>bashdb  # 主脚本, 即驱动器</p>
+
+<p>bashdb.pre # 添加到原脚本头的部分</p>
+
+<p>bashdb.fns # 定义的函数们</p></blockquote>
+
+<figure class='code'><figcaption><span>bashdb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">_dbname</span><span class="o">=</span><span class="k">${</span><span class="nv">0</span><span class="p">##*/</span><span class="k">}</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s1">&#39;Bash Debugger Version 1.0&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="o">((</span> <span class="nv">$# </span>&lt; 1 <span class="o">))</span>
+</span><span class='line'><span class="k">then</span>
+</span><span class='line'><span class="k">  </span><span class="nb">echo</span> <span class="s2">&quot;$_dbname Usage: $_dbname filename.&quot;</span> &gt;&amp;2
+</span><span class='line'>  <span class="nb">exit </span>1
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">_guineapig</span><span class="o">=</span><span class="nv">$1</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> -r <span class="nv">$_guineapig</span> <span class="o">]</span>
+</span><span class='line'><span class="k">then</span>
+</span><span class='line'><span class="k">  </span><span class="nb">echo</span> <span class="s2">&quot;$_dbname: file &#39;$1&#39; is not readable.&quot;</span> &gt;&amp;2
+</span><span class='line'>  <span class="nb">exit </span>1
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">shift</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">_tmpdir</span><span class="o">=</span>/tmp
+</span><span class='line'><span class="nv">_libdir</span><span class="o">=</span>.
+</span><span class='line'><span class="nv">_debugfile</span><span class="o">=</span><span class="nv">$_tmpdir</span>/bashdb.<span class="nv">$$</span> <span class="c"># tmp file for script debugged</span>
+</span><span class='line'>
+</span><span class='line'>cat <span class="nv">$_libdir</span>/bashdb.pre <span class="nv">$_guineapig</span> &gt; <span class="nv">$_debugfile</span>
+</span><span class='line'><span class="nb">exec </span>bash <span class="nv">$_debugfile</span> <span class="nv">$_guineapig</span> <span class="nv">$_tmpdir</span> <span class="nv">$_libdir</span> <span class="s2">&quot;$@&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<blockquote><p>关于 <code>exec</code> 命令</p>
+
+<blockquote><p>执行其参数, 用其并替代当前进程. 脚本中在 <code>exec</code> 后的命令都不会执行
+在 cli 中执行 exec 后&hellip; 当前 shell 会直接退出</p></blockquote></blockquote>
+
+<figure class='code'><figcaption><span>bashdb.pre</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">_debugfile</span><span class="o">=</span><span class="nv">$0</span>
+</span><span class='line'><span class="nv">_guineapig</span><span class="o">=</span><span class="nv">$1</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">_tmpdir</span><span class="o">=</span><span class="nv">$2</span>
+</span><span class='line'><span class="nv">_libdir</span><span class="o">=</span><span class="nv">$3</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">shift </span>3
+</span><span class='line'>
+</span><span class='line'><span class="c"># 将所有函数加载进来</span>
+</span><span class='line'><span class="nb">source</span> <span class="nv">$_libdir</span>/bashdb.fns
+</span><span class='line'>
+</span><span class='line'><span class="nv">_linebp</span><span class="o">=</span>
+</span><span class='line'><span class="nb">let </span><span class="nv">_trace</span><span class="o">=</span>0
+</span><span class='line'><span class="nb">let </span><span class="nv">_i</span><span class="o">=</span>0
+</span><span class='line'>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>  <span class="k">while </span><span class="nb">read</span>
+</span><span class='line'><span class="nb"> </span><span class="k">do</span>
+</span><span class='line'><span class="k">      </span>_line<span class="o">[</span><span class="nv">$_i</span><span class="o">]=</span><span class="nv">$REPLY</span>
+</span><span class='line'>      <span class="nb">let </span><span class="nv">_i</span><span class="o">=</span><span class="nv">$_i</span>+1
+</span><span class='line'>  <span class="k">done</span>
+</span><span class='line'><span class="o">}</span> &lt; <span class="nv">$_guineapig</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># 退出时清除临时文件</span>
+</span><span class='line'><span class="nb">trap </span>_cleanup EXIT
+</span><span class='line'>
+</span><span class='line'><span class="nb">let </span><span class="nv">_steps</span><span class="o">=</span>1
+</span><span class='line'>
+</span><span class='line'><span class="c"># 减掉 bashdb.pre 的行数</span>
+</span><span class='line'><span class="nb">trap</span> <span class="s1">&#39;_steptrap $(($LINENO - 32))&#39;</span> DEBUG
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>bashdb.fns</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Debugger 的主要函数 _steptrap</span>
+</span><span class='line'><span class="c"># 每一行代码执行前, 这个函数都会被调用</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">function </span>_steptrap
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>  <span class="nv">_curlline</span><span class="o">=</span><span class="nv">$1</span>
+</span><span class='line'>  <span class="o">((</span> <span class="nv">$trace</span> <span class="o">))</span> <span class="o">&amp;&amp;</span> _msg <span class="s2">&quot;Line $_curlline: ${_lines[$_curlline]}&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="o">((</span> <span class="nv">$_steps</span> &gt;<span class="o">=</span> 0 <span class="o">))</span>
+</span><span class='line'>  <span class="k">then</span>
+</span><span class='line'><span class="k">      </span><span class="nb">let </span><span class="nv">_steps</span><span class="o">=</span><span class="nv">$_steps</span>-1
+</span><span class='line'>  <span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># check if there is a breakpoint</span>
+</span><span class='line'>  <span class="k">if </span>_at_linenumbp
+</span><span class='line'>  <span class="k">then</span>
+</span><span class='line'><span class="k">      </span>_msg <span class="s2">&quot;Reached breakpoint at $_curlline&quot;</span>
+</span><span class='line'>      _cmdloop
+</span><span class='line'>  <span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># check if there is a break condition</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">[</span> -n <span class="s2">&quot;$_brcond&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">eval</span> <span class="nv">$_brcond</span>
+</span><span class='line'>  <span class="k">then</span>
+</span><span class='line'><span class="k">      </span>_msg <span class="s2">&quot;Break condition $_brcond true at line $_curlline&quot;</span>
+</span><span class='line'>      _cmdloop
+</span><span class='line'>  
+</span><span class='line'>  <span class="c"># check if there are no more steps</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">((</span> <span class="nv">$_steps</span> <span class="o">==</span> 0 <span class="o">))</span>
+</span><span class='line'>  <span class="k">then</span>
+</span><span class='line'><span class="k">      </span>_msg <span class="s2">&quot;Stopped at line $_curlline&quot;</span>
+</span><span class='line'>      _cmdloop
+</span><span class='line'>  <span class="k">fi</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># 命令处理函数 _cmdloop</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">function </span>_cmdloop
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>  <span class="nb">local </span>cmd args
+</span><span class='line'>
+</span><span class='line'>  <span class="k">while </span><span class="nb">read</span> -e -p <span class="s2">&quot;bash&gt; &quot;</span> cmd args
+</span><span class='line'>  <span class="k">do</span>
+</span><span class='line'><span class="k">      case</span> <span class="nv">$cmd</span> in
+</span><span class='line'>          <span class="se">\?</span>|h <span class="o">)</span> <span class="c"># 显示命令菜单</span>
+</span><span class='line'>              _menu ;;
+</span><span class='line'>          bc <span class="o">)</span> <span class="c"># 设置中断条件</span>
+</span><span class='line'>              _setbc <span class="nv">$args</span> ;;
+</span><span class='line'>          bp <span class="o">)</span> <span class="c"># 设置断点</span>
+</span><span class='line'>              _setbp <span class="nv">$args</span> ;;
+</span><span class='line'>          cb <span class="o">)</span> <span class="c"># 清除一个或全部断点</span>
+</span><span class='line'>              _clearbp <span class="nv">$args</span> ;;
+</span><span class='line'>          ds <span class="o">)</span> <span class="c"># 显示脚本和断点</span>
+</span><span class='line'>              _displayscript ;;
+</span><span class='line'>          g <span class="o">)</span> <span class="c"># 运行脚本直到断点</span>
+</span><span class='line'>              <span class="k">return</span> ;;
+</span><span class='line'>          q <span class="o">)</span> <span class="c"># 退出</span>
+</span><span class='line'>              <span class="nb">exit</span> ;;
+</span><span class='line'>          s <span class="o">)</span> <span class="c"># 执行 N 行, 默认 1 行</span>
+</span><span class='line'>              <span class="nb">let </span><span class="nv">_steps</span><span class="o">=</span><span class="k">${</span><span class="nv">args</span><span class="k">:-</span><span class="nv">1</span><span class="k">}</span>
+</span><span class='line'>          x <span class="o">)</span> <span class="c"># 开关显示所在行</span>
+</span><span class='line'>              _xtrace ;;
+</span><span class='line'>          !* <span class="o">)</span> <span class="c"># 执行 shell 命令</span>
+</span><span class='line'>              <span class="nb">eval</span> <span class="k">${</span><span class="nv">cmd</span><span class="p">#!</span><span class="k">}</span> <span class="nv">$args</span>;;
+</span><span class='line'>          * <span class="o">)</span>
+</span><span class='line'>              _msg <span class="s2">&quot;Invalid command: &#39;$cmd&#39;&quot;</span> ;;
+</span><span class='line'>      <span class="k">esac</span>
+</span><span class='line'><span class="k">  done</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># 设置断点命令对应函数 _setbp</span>
+</span><span class='line'>
+</span><span class='line'>functrace _setbp
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>  <span class="c"># 没有参数就显示断点信息</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;$1&quot;</span> <span class="o">]</span>
+</span><span class='line'>  <span class="k">then</span>
+</span><span class='line'><span class="k">      </span>_listbp
+</span><span class='line'>  <span class="k">elif</span> <span class="o">[</span> <span class="k">$(</span><span class="nb">echo</span> <span class="nv">$1</span> | grep <span class="s1">&#39;^[0-9]*&#39;</span><span class="k">)</span> <span class="o">]</span>
+</span><span class='line'>  <span class="k">then</span>
+</span><span class='line'><span class="k">      if</span> <span class="o">[</span> -n <span class="s2">&quot;${list[$1]&quot;</span> <span class="o">]</span>
+</span><span class='line'>      <span class="k">then</span> <span class="c"># 将新断点与旧断点重新排序放入 _linebp</span>
+</span><span class='line'>          <span class="nv">_linebp</span><span class="o">=(</span><span class="k">$(</span><span class="nb">echo</span> <span class="k">$(</span> <span class="o">(</span><span class="k">for </span>i in <span class="k">${</span><span class="nv">_linebp</span><span class="p">[@]</span><span class="k">}</span> <span class="nv">$1</span>;<span class="k">do</span>
+</span><span class='line'><span class="k">          </span><span class="nb">echo</span> <span class="nv">$i</span>; <span class="k">done)</span> | sort -n<span class="k">)</span> <span class="o">))</span>
+</span><span class='line'>      <span class="k">else</span> <span class="c"># 空行不能设置断点</span>
+</span><span class='line'>          _msg <span class="s2">&quot;Breakpoints can only be set on non-blank lines&quot;</span>
+</span><span class='line'>      <span class="k">fi</span>
+</span><span class='line'><span class="k">  else</span>
+</span><span class='line'><span class="k">      </span>_msg <span class="s2">&quot;Please specify a numeric line number&quot;</span>
+</span><span class='line'>  <span class="k">fi</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">## 其它函数这里省略</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Learning the Bash Shell 笔记-杂项]]></title>
@@ -2992,185 +3534,6 @@ class Hammer {
 </span></code></pre></td></tr></table></div></figure>
 
 
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[octopress嵌入新浪微博边栏]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/02/04/octopressqian-ru-xin-lang-wei-bo-bian-lan/"/>
-    <updated>2014-02-04T18:26:31+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/02/04/octopressqian-ru-xin-lang-wei-bo-bian-lan</id>
-    <content type="html"><![CDATA[<p>更换<a href="http://github.com/bkutil/bootstrap-theme"><code>boottrap-theme</code></a>后，边栏只有<strong>最近发表</strong>和<strong>文章分类</strong>两项内容显得有点寒碜。于是想着添加个新浪微博的边栏试试</p>
-
-<!--more-->
-
-
-<h4>使用微博秀服务</h4>
-
-<p>微博提供的一个小工具。点<a href="http://weibo.com/tool/weiboshow">这里</a>查看。</p>
-
-<p>从这个工具可以得到一个<code>iframe</code>片段如下：</p>
-
-<figure class='code'><figcaption><span>weiboshow</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;iframe</span> <span class="na">width=</span><span class="s">&quot;100%&quot;</span> <span class="na">height=</span><span class="s">&quot;550&quot;</span> <span class="na">class=</span><span class="s">&quot;share_self&quot;</span>  <span class="na">frameborder=</span><span class="s">&quot;0&quot;</span>
-</span><span class='line'>  <span class="na">scrolling=</span><span class="s">&quot;no&quot;</span>
-</span><span class='line'>  <span class="na">src=</span><span class="s">&quot;http://widget.weibo.com/weiboshow/index.php?language=&amp;</span>
-</span><span class='line'><span class="s">  width=0&amp;</span>
-</span><span class='line'><span class="s">  height=550&amp;</span>
-</span><span class='line'><span class="s">  fansRow=2&amp;</span>
-</span><span class='line'><span class="s">  ptype=1&amp;</span>
-</span><span class='line'><span class="s">  speed=0&amp;</span>
-</span><span class='line'><span class="s">  skin=1&amp;</span>
-</span><span class='line'><span class="s">  isTitle=1&amp;</span>
-</span><span class='line'><span class="s">  noborder=1&amp;</span>
-</span><span class='line'><span class="s">  isWeibo=1&amp;</span>
-</span><span class='line'><span class="s">  isFans=1&amp;</span>
-</span><span class='line'><span class="s">  uid=&amp;</span>
-</span><span class='line'><span class="s">  verifier=&amp;</span>
-</span><span class='line'><span class="s">dpc=1&quot;</span><span class="nt">&gt;&lt;/iframe&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>src中的链接，就是微博秀的页面。</p>
-
-<p>改造一下，变成<code>octopress</code>的边栏片段：</p>
-
-<figure class='code'><figcaption><span>weibo.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>
-</span><span class='line'><span class="nt">&lt;section</span> <span class="na">class=</span><span class="s">&quot;well&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;nav nav-list&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>      <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;nav-header&quot;</span><span class="nt">&gt;</span>微博<span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>      <span class="nt">&lt;li&gt;&lt;iframe</span> <span class="na">width=</span><span class="s">&quot;100%&quot;</span> <span class="na">height=</span><span class="s">&quot;550&quot;</span> <span class="na">class=</span><span class="s">&quot;share_self&quot;</span>  <span class="na">frameborder=</span><span class="s">&quot;0&quot;</span>
-</span><span class='line'>                      <span class="na">scrolling=</span><span class="s">&quot;no&quot;</span>
-</span><span class='line'>                      <span class="na">src=</span><span class="s">&quot;http://widget.weibo.com/weiboshow/index.php?language=&amp;</span>
-</span><span class='line'><span class="s">                      width=0&amp;</span>
-</span><span class='line'><span class="s">                      height=550&amp;</span>
-</span><span class='line'><span class="s">                      fansRow=2&amp;</span>
-</span><span class='line'><span class="s">                      ptype=1&amp;</span>
-</span><span class='line'><span class="s">                      speed=0&amp;</span>
-</span><span class='line'><span class="s">                      skin=1&amp;</span>
-</span><span class='line'><span class="s">                      isTitle=1&amp;</span>
-</span><span class='line'><span class="s">                      noborder=1&amp;</span>
-</span><span class='line'><span class="s">                      isWeibo=1&amp;</span>
-</span><span class='line'><span class="s">                      isFans=1&amp;</span>
-</span><span class='line'><span class="s">                      uid=1854716251&amp;</span>
-</span><span class='line'><span class="s">                      verifier=&amp;</span>
-</span><span class='line'><span class="s">                      dpc=1&quot;</span><span class="nt">&gt;&lt;/iframe&gt;</span>
-</span><span class='line'>      <span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/ul&gt;</span>
-</span><span class='line'><span class="nt">&lt;/section&gt;</span>
-</span><span class='line'>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>将这个文件保存到<code>custom/asides</code>目录下，并在<code>_config.yml</code>中的<code>default_asides</code>列表中添加<code>custom/asides/weibo.html</code>。</p>
-
-<figure class='code'><figcaption><span>_config.yml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">default_asides</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">custom/asides/weibo.html</span><span class="p-Indicator">,</span> <span class="nv">custom/asides/category_list.html</span><span class="p-Indicator">,</span> <span class="nv">custom/asides/recent_posts.html</span><span class="p-Indicator">]</span>
-</span><span class='line'><span class="nn">...</span>
-</span><span class='line'><span class="c1"># Weibo</span>
-</span><span class='line'><span class="l-Scalar-Plain">weibo_uid</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1854716251</span>
-</span><span class='line'><span class="l-Scalar-Plain">weibo_verifier</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">verifier</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>接下来</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>rake generate
-</span><span class='line'>rake preview
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>访问<code>localhost:4000</code>查看一下效果。</p>
-
-<p>注： <code>default_asides</code>列表中各页面的顺序就是边栏显示的顺序</p>
-
-<hr />
-
-<h4>更新：</h4>
-
-<p>我在使用微博秀的过程中并不稳定，有时显示，有时不显示。不显示的时候直接访问URL又是有效的。</p>
-
-<p>于是换一种方式, 新的<code>weibo.html</code></p>
-
-<figure class='code'><figcaption><span>weibo.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>
-</span><span class='line'><span class="nt">&lt;section</span> <span class="na">class=</span><span class="s">&quot;well&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">&quot;weibo&quot;</span> <span class="na">class=</span><span class="s">&quot;nav nav-list&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;nav-header&quot;</span><span class="nt">&gt;</span>微博<span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;li&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;iframe</span>
-</span><span class='line'>      <span class="na">width=</span><span class="s">&quot;100%&quot;</span>
-</span><span class='line'>      <span class="na">height=</span><span class="s">&quot;500&quot;</span>
-</span><span class='line'>      <span class="na">frameborder=</span><span class="s">&quot;0&quot;</span>
-</span><span class='line'>      <span class="na">scrolling=</span><span class="s">&quot;no&quot;</span>
-</span><span class='line'>      <span class="na">src=</span><span class="s">&quot;http://service.weibo.com/widget/widget_blog.php?uid=1854716251&amp;height=500&amp;skin=wd_02&amp;showpic=1&quot;</span>
-</span><span class='line'>      <span class="nt">&gt;&lt;/iframe&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/ul&gt;</span>
-</span><span class='line'><span class="nt">&lt;/section&gt;</span>
-</span><span class='line'>
-</span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
   </entry>
