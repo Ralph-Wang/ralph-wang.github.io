@@ -23,9 +23,19 @@ Weibo: @\_漏斗
 
 ### 1. 关系型数据库与 NoSQL
 
+* 什么是数据库
+* 关系型数据库
+* NoSQL 数据库
+
 ### 2. MongoDB 基础
 
+* 为什么独爱 MongoDB
+* MongoDB 基本使用
+
 ### 3. 在 Python 中使用 MongoDB
+
+* 在 Python 中使用 MongoDB
+* 一个简单的项目(带单元测试)
 
 .....
 
@@ -86,7 +96,7 @@ delete from tbl where f1 = 11;
 
 ...............
 
-## 为什么独爱 Mongo Why Mongo?
+## 为什么独爱 MongoDB Why MongoDB?
 * 与 **Redis** 匹敌的查询速度
 * 与 **RDBMS** 们相当的查询功能
 
@@ -125,10 +135,13 @@ for (var i=0; i < 10; i++) {
 ## 安装 Install
 
 ### 1. [下载](http://www.mongodb.org/downloads)
+
+* 根据你的系统版本选择
+
 ### 2. 解压
 
 ```
-$tar zxvf mongodb-linux-x86_64-2.6.3.tgz
+$tar zxvf mongodb-<os-version>-<reversion>.tgz
 ```
 
 ### 3. 运行
