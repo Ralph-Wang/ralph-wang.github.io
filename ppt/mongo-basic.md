@@ -21,9 +21,11 @@ Weibo: @\_漏斗
 
 ## 大纲 Syllibus
 
-* 关系型数据库与 NoSQL
-* MongoDB 基础
-* 在 Python 中使用 MongoDB
+### 1. 关系型数据库与 NoSQL
+
+### 2. MongoDB 基础
+
+### 3. 在 Python 中使用 MongoDB
 
 .....
 
@@ -122,9 +124,18 @@ for (var i=0; i < 10; i++) {
 
 ## 安装 Install
 
-* [下载](http://www.mongodb.org/downloads)
-* 解压
-* 运行
+### 1. [下载](http://www.mongodb.org/downloads)
+### 2. 解压
+
+```
+$tar zxvf mongodb-linux-x86_64-2.6.3.tgz
+```
+
+### 3. 运行
+
+```
+$mongod --dbpath /where/you/put/the/data
+```
 
 
 ...................

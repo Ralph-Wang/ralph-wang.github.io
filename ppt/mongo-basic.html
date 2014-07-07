@@ -50,11 +50,9 @@
 <blockquote>
 <p>嘁, 打个酱油</p>
 </blockquote></section><section class="slide"><h2>大纲 Syllibus</h2>
-<ul>
-<li>关系型数据库与 NoSQL</li>
-<li>MongoDB 基础</li>
-<li>在 Python 中使用 MongoDB</li>
-</ul></section><section class="slide"><h2>什么是数据库? WTF Database</h2>
+<h3>1. 关系型数据库与 NoSQL</h3>
+<h3>2. MongoDB 基础</h3>
+<h3>3. 在 Python 中使用 MongoDB</h3></section><section class="slide"><h2>什么是数据库? WTF Database</h2>
 <ul>
 <li>我们需要一个<code>工具</code>来保存和管理一些<code>资源</code></li>
 <li>这个工具就叫<code>数据库</code></li>
@@ -120,11 +118,11 @@ for (var i=0; i &lt; 10; i++) {
     "num" : 1024,
     "list" : [1, 2, 3]
 }</code></pre></section><section class="slide"><h2>安装 Install</h2>
-<ul>
-<li><a href="http://www.mongodb.org/downloads">下载</a></li>
-<li>解压</li>
-<li>运行</li>
-</ul></section><section class="slide"><h2>存储结构 Struct</h2>
+<h3>1. <a href="http://www.mongodb.org/downloads">下载</a></h3>
+<h3>2. 解压</h3>
+<pre><code>$tar zxvf mongodb-linux-x86_64-2.6.3.tgz</code></pre>
+<h3>3. 运行</h3>
+<pre><code>$mongod --dbpath /where/you/put/the/data</code></pre></section><section class="slide"><h2>存储结构 Struct</h2>
 <ul>
 <li>库结构</li>
 <li>数据形式 <a href="http://bsonspec.org/">BSON</a> (Binary JSON)
