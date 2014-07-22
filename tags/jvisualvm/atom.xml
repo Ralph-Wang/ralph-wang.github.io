@@ -4,7 +4,7 @@
   <title><![CDATA[标签: jvisualvm | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/jvisualvm/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-07-18T19:16:16+08:00</updated>
+  <updated>2014-07-22T20:14:24+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -46,21 +46,21 @@
 <p>代码：
 <div><script src='https://gist.github.com/8839097.js?file=NT.java'></script>
 <noscript><pre><code>public class NT {
-  public static void main(String[] args) {
-    Thread t = new Thread();
-    System.out.println(t.getState());
-    t.start(); // call start to start the thread
-    try {
-      Thread.sleep(1 * 1000L);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    System.out.println(t.getState());
-  }
-}/* output:
-NEW
-TERMINDATED
-*///:~
+    public static void main(String[] args) {
+        Thread t = new Thread();
+        System.out.println(t.getState());
+        t.start(); // call start to start the thread
+        try {
+            Thread.sleep(1 * 1000L);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(t.getState());
+    }/* output:
+    NEW
+    TERMINDATED
+    *///:~
+}
 </code></pre></noscript></div>
 </p>
 
