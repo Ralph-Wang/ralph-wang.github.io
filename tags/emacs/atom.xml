@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[标签: Emacs | Test Notes By _漏斗]]></title>
+  <link href="http://Ralph-Wang.github.io//tags/emacs/atom.xml" rel="self"/>
+  <link href="http://Ralph-Wang.github.io/"/>
+  <updated>2014-07-26T02:32:18+08:00</updated>
+  <id>http://Ralph-Wang.github.io/</id>
+  <author>
+    <name><![CDATA[_漏斗]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[从 vim 转到 emacs]]></title>
+    <link href="http://Ralph-Wang.github.io/blog/2014/07/25/cong-vim-zhuan-dao-emacs/"/>
+    <updated>2014-07-25T21:24:43+08:00</updated>
+    <id>http://Ralph-Wang.github.io/blog/2014/07/25/cong-vim-zhuan-dao-emacs</id>
+    <content type="html"><![CDATA[<p>正式从 vim 切换到 emacs</p>
+
+<!--more-->
+
+
+<h1>理由</h1>
+
+<p>emacs 优势: 不区分模式, 移动和输入可以并行
+emacs 劣势: 快捷键均为组合键, 输入相对 vim 麻烦</p>
+
+<p>嘛, 上面那个劣势完全可以通过练习适应, 更何况 emacs 有传说中的 org-mode. 使用起来会更给力.</p>
+
+<p>所以, 这个编辑器的切换是势在必行的</p>
+
+<h1>入门练习</h1>
+
+<p>emacs 提供了很好的帮助+练习文档 <code>M-x help-with-tutorial</code></p>
+
+<p>为了尽快能使用 emacs, 个人认为有必要优先学习以下快捷键:</p>
+
+<ul>
+<li>翻页: C-v, M-V</li>
+<li>移动: C-f, C-n, C-b, C-f</li>
+<li>编辑: 直接狠狠的敲键盘, C-u (n) , M-(n)</li>
+<li>保存及退出: C-x C-s, C-x C-c</li>
+<li>删除: C-d, Delete/BackSpace, M-d, M-Delete, C-k, M-k</li>
+<li>粘贴(yank): C-y, M-y</li>
+<li>Undo/Redo: C-x u, C-<em> , <code>C-g</code> C-</em>. ( <code>C-g</code> 可以用任意非编辑命令代替</li>
+<li>Buffer: C-x C-b, C-x b [buffer]</li>
+<li>窗口: C-x 1</li>
+<li>goto: M-x goto-line</li>
+<li>简单补全: M-/</li>
+</ul>
+
+
+<p>有了这些快捷键可以保证基本的文本编辑了, 至于高级的功能如语法高亮/自动缩进等一系列功能就需要另外学习了.</p>
+
+<h1>用 emacs 写 markdown</h1>
+
+<p>emacs 原生没有 markdown-mode. 需要下载安装
+<a href="http://jblevins.org/projects/markdown-mode/">markdown-mode.el</a></p>
+
+<p>安装方法参考官方文档</p>
+
+<h2>markdown-mode 下的比较有用的快捷键</h2>
+
+<p><code>C-c C-a L</code> 交互式的添加<a href="http://ralph-wang.github.io/" title="This Blog">链接</a>, 这种方式会在 MiniBuffer 中以交互式完成链接书写 <a href="http://ralph-wang.github.io/" title="This Blog">相同链接</a></p>
+
+<p><code>C-c C-a f</code>: 给句字添加一个注脚<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>,  Mou 倒是能解析. 不知道 octopress 能解析不?</p>
+
+<h3>添加图片 <code>C-c C-i</code></h3>
+
+<p><code>C-c C-i i</code> 插入 <code>![]()</code>, 按键位置比直接输入括号好一些</p>
+
+<p><code>C-c C-i I</code> 插入引用图片, ![][], 可惜不是交互式的</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>这里是一个注脚<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
+  
+</feed>
