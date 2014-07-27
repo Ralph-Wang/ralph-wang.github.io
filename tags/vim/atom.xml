@@ -4,7 +4,7 @@
   <title><![CDATA[标签: Vim | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/vim/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-07-26T02:32:18+08:00</updated>
+  <updated>2014-07-28T00:33:22+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -45,7 +45,7 @@ emacs 劣势: 快捷键均为组合键, 输入相对 vim 麻烦</p>
 <li>保存及退出: C-x C-s, C-x C-c</li>
 <li>删除: C-d, Delete/BackSpace, M-d, M-Delete, C-k, M-k</li>
 <li>粘贴(yank): C-y, M-y</li>
-<li>Undo/Redo: C-x u, C-<em> , <code>C-g</code> C-</em>. ( <code>C-g</code> 可以用任意非编辑命令代替</li>
+<li>Undo/Redo: C-x u, C-_ , <code>C-g</code> C-_. ( <code>C-g</code> 可以用任意非编辑命令代替</li>
 <li>Buffer: C-x C-b, C-x b [buffer]</li>
 <li>窗口: C-x 1</li>
 <li>goto: M-x goto-line</li>

@@ -4,7 +4,7 @@
   <title><![CDATA[Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-07-26T02:32:18+08:00</updated>
+  <updated>2014-07-28T00:33:22+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,119 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[无节操地重新认识多态和IoC]]></title>
+    <link href="http://Ralph-Wang.github.io/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/"/>
+    <updated>2014-07-27T23:41:34+08:00</updated>
+    <id>http://Ralph-Wang.github.io/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc</id>
+    <content type="html"><![CDATA[<p>起源 <a href="http://weibo.com/1854716251/BfnE2jSR9">http://weibo.com/1854716251/BfnE2jSR9</a></p>
+
+<!--more-->
+
+
+<p>刚转这篇微博的时候, 确实只意识到它用了多态特性.</p>
+
+<p>在自己尝试写一个 Python 版的时候, 才意识到其实这里面更多的在表达 IoC 的设计思路</p>
+
+<h2>IoC 简介</h2>
+
+<p><code>IoC</code> 的全称是 <code>Inversion of Control</code> 译过来就是控制返转.</p>
+
+<p><a href="http://coolshell.cn/articles/9949.html" title="酷壳">酷壳</a>有一个比较好的例子, 我这里就不重复造轮子了.</p>
+
+<h2>无节操的例子</h2>
+
+<p>这里我们详细谈一下<a href="http://weibo.com/1854716251/BfnE2jSR9" title="PHP版">起源</a>里的例子是怎么回事:</p>
+
+<p>妹子与汉子约会, 会因为汉子的种类(高富帅或diaosi)采取不同行动.</p>
+
+<p>一般的理解思路就是<code>妹子在做选择</code>, 也就是控制权在妹子手里.</p>
+
+<p>这样如果用代码表示的话可能就是下面这样</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">meet</span><span class="p">(</span><span class="n">hanzi</span><span class="p">):</span>
+</span><span class='line'>   <span class="n">hanzi</span><span class="o">.</span><span class="n">flower</span><span class="p">()</span>
+</span><span class='line'>   <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hanzi</span><span class="p">,</span> <span class="n">GFS</span><span class="p">):</span>
+</span><span class='line'>       <span class="k">print</span> <span class="s">&#39;啪啪啪啪啪啪啪啪&#39;</span>
+</span><span class='line'>   <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hanzi</span><span class="p">,</span> <span class="n">DS</span><span class="p">):</span>
+</span><span class='line'>       <span class="k">print</span> <span class="s">&#39;啪&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>而 IoC 的理解思路却是这样的:</p>
+
+<blockquote><p><em>控制权其实在 <code>hanzi</code> 这边, 妹子对汉子的表达是相同的, 但因为 <code>hanzi</code> 的不同而产生了不同结果而已</em></p></blockquote>
+
+<p>用代码来表达就是这样</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">Meizi</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">meet</span><span class="p">(</span><span class="n">hanzi</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">hanzi</span><span class="o">.</span><span class="n">flower</span><span class="p">()</span>
+</span><span class='line'>        <span class="n">hanzi</span><span class="o">.</span><span class="n">chu</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>Meizi</code> 这边的代码是不是就变得非常干净了, 那汉子在 chu 之后的结果就不在妹子这里控制了.</p>
+
+<p>至于发生了什么, 我们来看一下 <code>Hanzi</code> 们的具体实现</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">Hanzi</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+</span><span class='line'>    <span class="s">&#39;Abstract class Hanzi&#39;</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">flower</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">print</span> <span class="s">&#39;妹子笑了...&#39;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">chu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&#39;Abstract Method chu not implemented yet&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">GFS</span><span class="p">(</span><span class="n">Hanzi</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">chu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">print</span> <span class="s">&#39;啪啪啪啪啪啪啪啪&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">DS</span><span class="p">(</span><span class="n">Hanzi</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">chu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">print</span> <span class="s">&#39;啪&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>看, 结果的不同是因为 <code>Hanzi</code> 自己的属性, 而不是妹子的选择.</strong></p>
+
+<p>这就是 IoC 的本质了<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>其实是把妹的本质吧, 喂!!<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[从 vim 转到 emacs]]></title>
@@ -45,7 +158,7 @@ emacs 劣势: 快捷键均为组合键, 输入相对 vim 麻烦</p>
 <li>保存及退出: C-x C-s, C-x C-c</li>
 <li>删除: C-d, Delete/BackSpace, M-d, M-Delete, C-k, M-k</li>
 <li>粘贴(yank): C-y, M-y</li>
-<li>Undo/Redo: C-x u, C-<em> , <code>C-g</code> C-</em>. ( <code>C-g</code> 可以用任意非编辑命令代替</li>
+<li>Undo/Redo: C-x u, C-_ , <code>C-g</code> C-_. ( <code>C-g</code> 可以用任意非编辑命令代替</li>
 <li>Buffer: C-x C-b, C-x b [buffer]</li>
 <li>窗口: C-x 1</li>
 <li>goto: M-x goto-line</li>
@@ -3464,68 +3577,6 @@ class Hammer {
 <p><strong>jvisualvm</strong> 中的情况：</p>
 
 <p><img src="http://Ralph-Wang.github.io/blogimgs/status-block.png" alt="deadBlock" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[用jvisualvm监控远程java进程]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/02/06/yong-jvisualvmjian-kong-yuan-cheng-javajin-cheng/"/>
-    <updated>2014-02-06T21:48:26+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/02/06/yong-jvisualvmjian-kong-yuan-cheng-javajin-cheng</id>
-    <content type="html"><![CDATA[<p><strong>jvisualvm</strong>是从<strong>jdk1.6</strong>开始添加到JDK包中的图形化监控工具。</p>
-
-<!--more-->
-
-
-<p>开启后可以自动监控本机运行中的java进程。</p>
-
-<p>另外，<strong>jvisualvm</strong>它还可以监控远程机器上java进程的运行状态。</p>
-
-<p>不过，监控远程机器需要在被监控机器上做一些配置：</p>
-
-<h4>1. 安装JDK</h4>
-
-<p>这一步不多说了</p>
-
-<h4>2. 配置/etc/hosts</h4>
-
-<p>要让<strong>jvisualvm</strong>成功连接到被监控机器上，需要在/etc/hosts文件中将被监控机的主机名绑定到被监控机的IP地址。</p>
-
-<p>通过<code>hostname</code>命令可以获得主机名</p>
-
-<figure class='code'><figcaption><span>/etc/hosts</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='text'><span class='line'>192.168.192.132 Ralph.Wang
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>hostname -i</code>返回实际的IP地址即绑定成功。</p>
-
-<p>注：<strong>CentOS</strong>中的/etc/hosts默认是没有绑定主机名的IP的，直接添加即可</p>
-
-<h4>3. 运行jstatd</h4>
-
-<p>运行<code>jstatd</code>之前，我们需要配置一个安全策略文件,如下</p>
-
-<div><script src='https://gist.github.com/8844076.js?file=jstatd.all.policy'></script>
-<noscript><pre><code>grant codebase &quot;file:${java.home}/../lib/tools.jar&quot; {
-   permission java.security.AllPermission;
-};
-</code></pre></noscript></div>
-
-
-<p>运行<code>jstatd</code>时需要用<code>-J-Djava.security.policy</code>参数指定策略文件</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>jstatd -J-Djava.security.policy<span class="o">=</span>jstatd.all.policy
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>4.在jvisualvm中添加远程机</h3>
-
-<p><code>文件</code>&ndash;><code>添加远程主机</code> 输入IP地址即可。</p>
-
-<p>下面是示例图
-<img src="http://Ralph-Wang.github.io/blogimgs/jvisualvm-remote.png" alt="jvisualvm监控示例" /></p>
 ]]></content>
   </entry>
   
