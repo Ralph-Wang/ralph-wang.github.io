@@ -4,7 +4,7 @@
   <title><![CDATA[分类: Linux | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-07-30T19:58:16+08:00</updated>
+  <updated>2014-08-01T01:46:51+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -18,46 +18,49 @@
     <link href="http://Ralph-Wang.github.io/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/"/>
     <updated>2014-06-11T10:40:33+08:00</updated>
     <id>http://Ralph-Wang.github.io/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug</id>
-    <content type="html"><![CDATA[<p>任何开发测试工作都离不开的话题 &mdash; Debug.</p>
+    <content type="html"><![CDATA[<p>任何开发测试工作都离不开的话题 – Debug. </p>
 
-<p>bash 脚本自然也不能免俗</p>
+<p>bash 脚本自然也不能免俗
+<!--more--></p>
 
-<!--more-->
-
-
-<h2>显示每一步执行的命令</h2>
+<h2 id="section">显示每一步执行的命令</h2>
 
 <p>默认情况下, bash 脚本执行时不会像 Windows 的 bat 一样显示每一次执行的命令.
 虽然说这功能在执行时比较难看, 但在 Debug
 时可以帮助我们查看脚本是执行到哪一行出现的问题</p>
 
-<p>如果想让 bash 脚本运行时显示每行命令, 则需要在脚本开始添加如下命令:
-<code>bash
+<p>如果想让 bash 脚本运行时显示每行命令, 则需要在脚本开始添加如下命令:</p>
+
+<p><code>bash
 set -o [noexec|verbose|xtrace]
 </code></p>
 
 <p>参数说明:</p>
 
 <ul>
-<li><p><code>noexec</code>  不执行脚本, 只检查语法错误</p></li>
-<li><p><code>verbose</code> 显示每一行命令 (开启这个功能后 bash 就和 bat 很像了)</p></li>
-<li><p><code>xtrace</code>  比 verbose 更详细的显示, 具体显示信息由 <code>PS4</code> 变量配置</p></li>
+  <li>
+    <p><code>noexec</code>	不执行脚本, 只检查语法错误</p>
+  </li>
+  <li>
+    <p><code>verbose</code>	显示每一行命令 (开启这个功能后 bash 就和 bat 很像了)</p>
+  </li>
+  <li>
+    <p><code>xtrace</code>	比 verbose 更详细的显示, 具体显示信息由 <code>PS4</code> 变量配置</p>
+  </li>
 </ul>
 
+<h2 id="fake-signal">几个 fake signal</h2>
 
-<h2>几个 fake signal</h2>
-
-<h3>EXIT</h3>
+<h3 id="exit">EXIT</h3>
 
 <p>在脚本退出时会触发该信号</p>
 
-<p>```bash exit.sh</p>
+<p>```bash exit.sh
+#!/bin/sh</p>
 
-<h1>!/bin/sh</h1>
+<p>trap ‘echo exiting the script’ EXIT</p>
 
-<p>trap &lsquo;echo exiting the script&rsquo; EXIT</p>
-
-<p>echo &lsquo;starting the script&rsquo;
+<p>echo ‘starting the script’
 ```</p>
 
 <p>执行结果:</p>
@@ -68,19 +71,18 @@ starting the script
 exiting the script
 </code></p>
 
-<h3>DEBUG</h3>
+<h3 id="debug">DEBUG</h3>
 
 <p>每一行命令执行前都会触发这个信号, 开启 <code>set -o functrace</code> 后函数内部也会触发</p>
 
-<p>```bash debug.sh</p>
+<p>```bash debug.sh
+#!/bin/sh</p>
 
-<h1>!/bin/sh</h1>
+<p>trap ‘echo execute $LINENO’ DEBUG</p>
 
-<p>trap &lsquo;echo execute $LINENO&rsquo; DEBUG</p>
-
-<p>for ((<em>i=0;</em>i&lt;2;<em>i++))
+<p>for ((_i=0;_i&lt;2;_i++))
 do
-echo $</em>i
+echo $_i
 done
 ```</p>
 
@@ -100,279 +102,269 @@ execute 5
 execute 5
 </code></p>
 
-<h3>ERR</h3>
+<h3 id="err">ERR</h3>
+<p>当有命令执行后的返回值不是 0 时触发该信号</p>
 
-<p>当有命令执行后的返回值不是 0 时触发该信号
-```bash err.sh</p>
+<p>```bash err.sh
+#!/bin/sh</p>
 
-<h1>!/bin/sh</h1>
-
-<p>trap &lsquo;echo Error with status $?&rsquo; ERR</p>
+<p>trap ‘echo Error with status $?’ ERR</p>
 
 <p>function bad
-{</p>
-
-<pre><code>return 111
-</code></pre>
-
-<p>}</p>
+{
+	return 111
+}</p>
 
 <p>bad
-<code>
-执行结果
-</code>bash
-$./err.sh
-Error with status 111
 ```</p>
 
-<h3>RETURN</h3>
+<p>执行结果</p>
 
+<p><code>bash
+$./err.sh
+Error with status 111
+</code></p>
+
+<h3 id="return">RETURN</h3>
 <p>当用 <code>source</code> 执行脚本返回后触发该信号</p>
 
-<p>若执行 <code>set -o functrace</code>, 则函数返回后也能触发该信号
-<code>bash x.sh
+<p>若执行 <code>set -o functrace</code>, 则函数返回后也能触发该信号</p>
+
+<p><code>bash x.sh
 echo "Hello World"
-</code>
-```bash return.sh</p>
+</code></p>
 
-<h1>!/bin/sh</h1>
-
-<p>trap &lsquo;echo debug occured&rsquo; DEBUG
-trap &lsquo;echo return occured&rsquo; RETURN</p>
+<p>```bash return.sh
+#!/bin/sh
+trap ‘echo debug occured’ DEBUG
+trap ‘echo return occured’ RETURN</p>
 
 <p>source ./x.sh
-<code>
-执行结果
-</code>bash
+```</p>
+
+<p>执行结果</p>
+
+<p><code>bash
 debug occured
 Hello World
 return occured
-```</p>
+</code></p>
 
-<h2>一个简易的 Debugger</h2>
+<h2 id="debugger">一个简易的 Debugger</h2>
 
 <p>一个 Debugger 需要的功能点:</p>
 
 <ul>
-<li><p>断点</p></li>
-<li><p>逐步执行</p></li>
-<li><p>变量监视</p></li>
-<li><p>显示当前执行位置和断点位置</p></li>
-<li><p>不需要改动源码即可进行 Debug</p></li>
+  <li>
+    <p>断点</p>
+  </li>
+  <li>
+    <p>逐步执行</p>
+  </li>
+  <li>
+    <p>变量监视</p>
+  </li>
+  <li>
+    <p>显示当前执行位置和断点位置</p>
+  </li>
+  <li>
+    <p>不需要改动源码即可进行 Debug</p>
+  </li>
 </ul>
 
-
-<h2>实现原理:</h2>
-
+<h2 id="section-1">实现原理:</h2>
 <p>利用 <code>DEBUG</code> 信号中断执行. 进而进入 debug 命令行</p>
 
-<h2>核心数组:</h2>
-
+<h2 id="section-2">核心数组:</h2>
 <ul>
-<li><p><code>_lines</code> 用来存储所有 Debug 脚本的代码</p></li>
-<li><p><code>_linebp</code> 用来存储断点行号</p></li>
+  <li>
+    <p><code>_lines</code> 用来存储所有 Debug 脚本的代码</p>
+  </li>
+  <li>
+    <p><code>_linebp</code> 用来存储断点行号</p>
+  </li>
 </ul>
-
 
 <p>文件结构:</p>
 
-<blockquote><p>bashdb  # 主脚本, 即驱动器</p>
+<blockquote>
+  <p>bashdb  # 主脚本, 即驱动器</p>
+</blockquote>
 
-<p>bashdb.pre # 添加到原脚本头的部分</p>
+<blockquote>
+  <p>bashdb.pre # 添加到原脚本头的部分</p>
+</blockquote>
 
-<p>bashdb.fns # 定义的函数们</p></blockquote>
+<blockquote>
+  <p>bashdb.fns # 定义的函数们</p>
+</blockquote>
 
-<p>```bash bashdb</p>
-
-<h1>!/bin/sh</h1>
+<p>```bash bashdb
+#!/bin/sh</p>
 
 <p>_dbname=${0##*/}
-echo &lsquo;Bash Debugger Version 1.0&rsquo;</p>
+echo ‘Bash Debugger Version 1.0’</p>
 
 <p>if (( $# &lt; 1 ))
-then</p>
-
-<pre><code>echo "$_dbname Usage: $_dbname filename." &gt;&amp;2
-exit 1
-</code></pre>
-
-<p>fi</p>
+then
+	echo “$_dbname Usage: $_dbname filename.” &gt;&amp;2
+	exit 1
+fi</p>
 
 <p>_guineapig=$1</p>
 
 <p>if [ -r $_guineapig ]
-then</p>
-
-<pre><code>echo "$_dbname: file '$1' is not readable." &gt;&amp;2
-exit 1
-</code></pre>
-
-<p>fi</p>
+then
+	echo “$_dbname: file ‘$1’ is not readable.” &gt;&amp;2
+	exit 1
+fi</p>
 
 <p>shift</p>
 
-<p><em>tmpdir=/tmp
-</em>libdir=.
-<em>debugfile=$</em>tmpdir/bashdb.$$ # tmp file for script debugged</p>
+<p>_tmpdir=/tmp
+_libdir=.
+_debugfile=$_tmpdir/bashdb.$$ # tmp file for script debugged</p>
 
-<p>cat $<em>libdir/bashdb.pre $</em>guineapig > $<em>debugfile
-exec bash $</em>debugfile $<em>guineapig $</em>tmpdir $_libdir &ldquo;$@&rdquo;
+<p>cat $_libdir/bashdb.pre $_guineapig &gt; $_debugfile
+exec bash $_debugfile $_guineapig $_tmpdir $_libdir “$@”
 ```</p>
 
-<blockquote><p>关于 <code>exec</code> 命令</p>
+<blockquote>
+  <p>关于 <code>exec</code> 命令
+&gt; 执行其参数, 用其并替代当前进程. 脚本中在 <code>exec</code> 后的命令都不会执行
+&gt; 在 cli 中执行 exec 后… 当前 shell 会直接退出</p>
+</blockquote>
 
-<blockquote><p>执行其参数, 用其并替代当前进程. 脚本中在 <code>exec</code> 后的命令都不会执行
-在 cli 中执行 exec 后&hellip; 当前 shell 会直接退出</p></blockquote></blockquote>
+<p>```bash bashdb.pre
+#!/bin/sh</p>
 
-<p>```bash bashdb.pre</p>
+<p>_debugfile=$0
+_guineapig=$1</p>
 
-<h1>!/bin/sh</h1>
-
-<p><em>debugfile=$0
-</em>guineapig=$1</p>
-
-<p><em>tmpdir=$2
-</em>libdir=$3</p>
+<p>_tmpdir=$2
+_libdir=$3</p>
 
 <p>shift 3</p>
 
-<h1>将所有函数加载进来</h1>
-
+<h1 id="section-3">将所有函数加载进来</h1>
 <p>source $_libdir/bashdb.fns</p>
 
-<p><em>linebp=
-let </em>trace=0
+<p>_linebp=
+let _trace=0
 let _i=0</p>
 
-<p>{</p>
+<p>{
+	while read
+	do
+		_line[$_i]=$REPLY
+		let _i=$_i+1
+	done
+} &lt; $_guineapig</p>
 
-<pre><code>while read
-do
-    _line[$_i]=$REPLY
-    let _i=$_i+1
-done
-</code></pre>
-
-<p>} &lt; $_guineapig</p>
-
-<h1>退出时清除临时文件</h1>
-
+<h1 id="section-4">退出时清除临时文件</h1>
 <p>trap _cleanup EXIT</p>
 
 <p>let _steps=1</p>
 
-<h1>减掉 bashdb.pre 的行数</h1>
-
-<p>trap &lsquo;_steptrap $(($LINENO &ndash; 32))&rsquo; DEBUG
+<h1 id="bashdbpre-">减掉 bashdb.pre 的行数</h1>
+<p>trap ‘_steptrap $(($LINENO - 32))’ DEBUG
 ```</p>
 
-<p>```bash bashdb.fns</p>
+<p>```bash bashdb.fns
+#!/bin/sh</p>
 
-<h1>!/bin/sh</h1>
-
-<h1>Debugger 的主要函数 _steptrap</h1>
-
-<h1>每一行代码执行前, 这个函数都会被调用</h1>
+<h1 id="debugger--steptrap">Debugger 的主要函数 _steptrap</h1>
+<p># 每一行代码执行前, 这个函数都会被调用</p>
 
 <p>function _steptrap
-{</p>
+{
+	_curlline=$1
+	(( $trace )) &amp;&amp; _msg “Line $_curlline: ${_lines[$_curlline]}”</p>
 
-<pre><code>_curlline=$1
-(( $trace )) &amp;&amp; _msg "Line $_curlline: ${_lines[$_curlline]}"
-
-if (( $_steps &gt;= 0 ))
+<pre><code>if (( $_steps &gt;= 0 ))
 then
-    let _steps=$_steps-1
+	let _steps=$_steps-1
 fi
 
 # check if there is a breakpoint
 if _at_linenumbp
 then
-    _msg "Reached breakpoint at $_curlline"
-    _cmdloop
+	_msg "Reached breakpoint at $_curlline"
+	_cmdloop
 fi
 
 # check if there is a break condition
 if [ -n "$_brcond" ] &amp;&amp; eval $_brcond 
 then
-    _msg "Break condition $_brcond true at line $_curlline"
-    _cmdloop
+	_msg "Break condition $_brcond true at line $_curlline"
+	_cmdloop
 
 # check if there are no more steps
 if (( $_steps == 0 ))
 then
-    _msg "Stopped at line $_curlline"
-    _cmdloop
-fi
+	_msg "Stopped at line $_curlline"
+	_cmdloop
+fi }
 </code></pre>
 
-<p>}</p>
-
-<h1>命令处理函数 _cmdloop</h1>
+<h1 id="cmdloop">命令处理函数 _cmdloop</h1>
 
 <p>function _cmdloop
-{</p>
+{
+	local cmd args</p>
 
-<pre><code>local cmd args
-
-while read -e -p "bash&gt; " cmd args
+<pre><code>while read -e -p "bash&gt; " cmd args
 do
-    case $cmd in
-        \?|h ) # 显示命令菜单
-            _menu ;;
-        bc ) # 设置中断条件
-            _setbc $args ;;
-        bp ) # 设置断点
-            _setbp $args ;;
-        cb ) # 清除一个或全部断点
-            _clearbp $args ;;
-        ds ) # 显示脚本和断点
-            _displayscript ;;
-        g ) # 运行脚本直到断点
-            return ;;
-        q ) # 退出
-            exit ;;
-        s ) # 执行 N 行, 默认 1 行
-            let _steps=${args:-1}
-        x ) # 开关显示所在行
-            _xtrace ;;
-        !* ) # 执行 shell 命令
-            eval ${cmd#!} $args;;
-        * )
-            _msg "Invalid command: '$cmd'" ;;
-    esac
-done
+	case $cmd in
+		\?|h ) # 显示命令菜单
+			_menu ;;
+		bc ) # 设置中断条件
+			_setbc $args ;;
+		bp ) # 设置断点
+			_setbp $args ;;
+		cb ) # 清除一个或全部断点
+			_clearbp $args ;;
+		ds ) # 显示脚本和断点
+			_displayscript ;;
+		g ) # 运行脚本直到断点
+			return ;;
+		q ) # 退出
+			exit ;;
+		s ) # 执行 N 行, 默认 1 行
+			let _steps=${args:-1}
+		x ) # 开关显示所在行
+			_xtrace ;;
+		!* ) # 执行 shell 命令
+			eval ${cmd#!} $args;;
+		* )
+			_msg "Invalid command: '$cmd'" ;;
+	esac
+done }
 </code></pre>
 
-<p>}</p>
-
-<h1>设置断点命令对应函数 _setbp</h1>
+<h1 id="setbp">设置断点命令对应函数 _setbp</h1>
 
 <p>functrace _setbp
-{</p>
+{
+	# 没有参数就显示断点信息
+	if [ -z “$1” ]
+	then
+		_listbp
+	elif [ $(echo $1 | grep ‘^[0-9]*’) ]
+	then
+		if [ -n “${list[$1]” ]
+		then # 将新断点与旧断点重新排序放入 _linebp
+			_linebp=($(echo $( (for i in ${_linebp[@]} $1;do
+			echo $i; done) | sort -n) ))
+		else # 空行不能设置断点
+			_msg “Breakpoints can only be set on non-blank lines”
+		fi
+	else
+		_msg “Please specify a numeric line number”
+	fi
+}</p>
 
-<pre><code># 没有参数就显示断点信息
-if [ -z "$1" ]
-then
-    _listbp
-elif [ $(echo $1 | grep '^[0-9]*') ]
-then
-    if [ -n "${list[$1]" ]
-    then # 将新断点与旧断点重新排序放入 _linebp
-        _linebp=($(echo $( (for i in ${_linebp[@]} $1;do
-        echo $i; done) | sort -n) ))
-    else # 空行不能设置断点
-        _msg "Breakpoints can only be set on non-blank lines"
-    fi
-else
-    _msg "Please specify a numeric line number"
-fi
-</code></pre>
-
-<p>}</p>
-
-<h2>其它函数这里省略</h2>
-
+<h2 id="section-5">其它函数这里省略</h2>
 <p>```</p>
 ]]></content>
   </entry>
@@ -382,92 +374,94 @@ fi
     <link href="http://Ralph-Wang.github.io/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/"/>
     <updated>2014-06-05T09:49:16+08:00</updated>
     <id>http://Ralph-Wang.github.io/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang</id>
-    <content type="html"><![CDATA[<p>一些零散的内容</p>
-
+    <content type="html"><![CDATA[<p>一些零散的内容
 <!--more-->
+## getopts
+getopts 主要用来定义和解析脚本支持的命令行选项.</p>
 
+<p>简单用法如下:</p>
 
-<h2>getopts</h2>
+<p>```bash
+while getopts “:ab:c” opt
+do
+	case $opt in
+		a )
+			statements for -a
+			;;
+		b )
+			$OPTARG is the argument value of -b
+			statements for -b
+			;;
+		c )
+			statements for -c
+			;;
+		\? )
+			other
+	esac
+done</p>
 
-<p>getopts 主要用来定义和解析脚本支持的命令行选项.</p>
-
-<p>简单用法如下:
-```bash
-while getopts &ldquo;:ab:c&rdquo; opt
-do</p>
-
-<pre><code>case $opt in
-    a )
-        statements for -a
-        ;;
-    b )
-        $OPTARG is the argument value of -b
-        statements for -b
-        ;;
-    c )
-        statements for -c
-        ;;
-    \? )
-        other
-esac
-</code></pre>
-
-<p>done</p>
-
-<p>shift $(($OPTINT &ndash; 1))</p>
+<p>shift $(($OPTIND - 1))</p>
 
 <p>main scripts
-<code>``
-* getopts 第一个字符串中声明支持的选项名 (只能单字符);
-  如果字符后面加有冒号(:)则表示该选项有对应的选项参数,
-  参数值会保存到变量</code>OPTARG`中</p>
-
-<ul>
-<li><p>执行过 getopt 后, 会在变量<code>OPTINT</code>中保存 (选项+选项参数) 的总个数. 用 shift $(($OPTINT &ndash; 1)) 来确保后续代码不受实际选项个数影响</p></li>
-<li><p>在声明所支持的选项时, 如果以冒号(:)开头, 可以忽略传入不合法的选项</p></li>
-</ul>
-
-
-<h2>shell 实现极简 make</h2>
-
-<p>没有变量支持什么, 只是解释命令和依赖
 ```</p>
 
-<h1>!/bin/sh</h1>
-
-<h1>set -o verbose</h1>
-
-<p>makecmd()
-{</p>
-
-<pre><code>read target colon sources
-for src in $sources
-do
-    if [ $src -nt $target ]
-    then
-        while read cmd
-        do
-            echo "$cmd"
-            eval ${cmd#\t}
-        done
-        break
-    fi
-done
-</code></pre>
-
-<p>}</p>
-
-<p>makecmd &lt; Makefile
-```
-* 只能处理一个命令, 不支持变量什么的</p>
-
 <ul>
-<li><p>用 read 从标准输入中读取 target colon sources</p></li>
-<li><p>循环判断 sources 中各依赖与 target 修改日期; <code>FILE1 -nt FIlE2</code>, <code>FILE1 -ot
-FILE2</code> 用来比较两个文件修改时间</p></li>
-<li><p>eval &ldquo;string&rdquo; 将 string 作为 bash 命令解析</p></li>
+  <li>
+    <p>getopts 第一个字符串中声明支持的选项名 (只能单字符);
+如果字符后面加有冒号(:)则表示该选项有对应的选项参数,
+参数值会保存到变量<code>OPTARG</code>中</p>
+  </li>
+  <li>
+    <p>执行过 getopt 后, 会在变量<code>OPTIND</code>中保存 (选项+选项参数) 的总个数. 用 shift $(($OPTIND - 1)) 来确保后续代码不受实际选项个数影响</p>
+  </li>
+  <li>
+    <p>在声明所支持的选项时, 如果以冒号(:)开头, 可以忽略传入不合法的选项</p>
+  </li>
 </ul>
 
+<h2 id="shell--make">shell 实现极简 make</h2>
+<p>没有变量支持什么, 只是解释命令和依赖</p>
+
+<p>```
+#!/bin/sh</p>
+
+<h1 id="set--o-verbose">set -o verbose</h1>
+
+<p>makecmd()
+{
+    read target colon sources
+    for src in $sources
+    do
+        if [ $src -nt $target ]
+        then
+            while read cmd
+            do
+                echo “$cmd”
+                eval ${cmd#\t}
+            done
+            break
+        fi
+    done
+}</p>
+
+<p>makecmd &lt; Makefile
+```</p>
+
+<ul>
+  <li>
+    <p>只能处理一个命令, 不支持变量什么的</p>
+  </li>
+  <li>
+    <p>用 read 从标准输入中读取 target colon sources</p>
+  </li>
+  <li>
+    <p>循环判断 sources 中各依赖与 target 修改日期; <code>FILE1 -nt FIlE2</code>, <code>FILE1 -ot
+FILE2</code> 用来比较两个文件修改时间</p>
+  </li>
+  <li>
+    <p>eval “string” 将 string 作为 bash 命令解析</p>
+  </li>
+</ul>
 ]]></content>
   </entry>
   
@@ -476,25 +470,24 @@ FILE2</code> 用来比较两个文件修改时间</p></li>
     <link href="http://Ralph-Wang.github.io/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi/"/>
     <updated>2014-05-22T21:19:21+08:00</updated>
     <id>http://Ralph-Wang.github.io/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi</id>
-    <content type="html"><![CDATA[<p>但凡是代码就逃不开的流控制话题</p>
+    <content type="html"><![CDATA[<p>但凡是代码就逃不开的流控制话题
+<!--more--></p>
 
-<!--more-->
-
-
-<h2>条件</h2>
+<h2 id="section">条件</h2>
 
 <p>bash 中的条件值以数字 0 表示真, 非0 则为假, 并不存在布尔类型</p>
 
 <p>其中有三种条件形式可以得到条件值</p>
 
-<h3>命令的退出状态</h3>
-
+<h3 id="section-1">命令的退出状态</h3>
 <p>一般来说, Linux 的命令若执行成功, 则退出状态为 0, 不成功则返回 1-255</p>
 
-<blockquote><p><em>diff 命令除外, diff 返回 0 表示两个文件没有差别, 1 表示有差别, 2+
-表示发生错误</em></p></blockquote>
+<blockquote>
+  <p><em>diff 命令除外, diff 返回 0 表示两个文件没有差别, 1 表示有差别, 2+
+表示发生错误</em></p>
+</blockquote>
 
-<h3>脚本或函数的返回值</h3>
+<h3 id="section-2">脚本或函数的返回值</h3>
 
 <p>在脚本或函数中, 用 return 表示结束并返回</p>
 
@@ -502,158 +495,130 @@ FILE2</code> 用来比较两个文件修改时间</p></li>
 
 <p>另外, return 写返回值的话, 默认返回 0</p>
 
-<blockquote><p>脚本或函数中若没有用 return 返回值时, 则以最后一条命令的退出状态作为返回值</p></blockquote>
+<blockquote>
+  <p>脚本或函数中若没有用 return 返回值时, 则以最后一条命令的退出状态作为返回值</p>
+</blockquote>
 
-<h3>测试 test</h3>
+<h3 id="test">测试 test</h3>
 
 <p>bash 中测试有两种写法</p>
 
 <ul>
-<li>test condition</li>
-<li>[ condition ] <em>[ ] 两个方括号和中间条件之间必须要有一个空格</em></li>
+  <li>test condition</li>
+  <li>[ condition ] <em>[ ] 两个方括号和中间条件之间必须要有一个空格</em></li>
 </ul>
-
 
 <p>两种写法是等价的, 详细的写法可参考 <code>man test</code></p>
 
-<h2>if..elif..else</h2>
+<h2 id="ifelifelse">if..elif..else</h2>
 
-<p>```bash
+<p><code>bash
 if condition
-then</p>
+then
+	statements
+[elif condition
+then
+	statements]
+[else
+	statements]
+fi
+</code></p>
 
-<pre><code>statements
-</code></pre>
+<h2 id="case">case</h2>
 
-<p>[elif condition
-then</p>
-
-<pre><code>statements]
-</code></pre>
-
-<p>[else</p>
-
-<pre><code>statements]
-</code></pre>
-
-<p>fi
-```</p>
-
-<h2>case</h2>
-
-<p>```bash
-case epxr in</p>
-
-<pre><code>pattern1 )
-    statements
-    ;;
-pattern2 )
-    statements
-    ;;
-...
-</code></pre>
-
-<p>esac
-```
+<p><code>bash
+case epxr in
+	pattern1 )
+		statements
+		;;
+	pattern2 )
+		statements
+		;;
+	...
+esac
+</code>
 <em>pattern1/2</em> 支持 bash 的通配符, 也支持 | 来表示多模式匹配</p>
 
 <p><code>;;</code> 类似于其它语言中的 break</p>
 
 <p>因为匹配是从上到下的, 所以可以用 <code>*)</code> 来表示 default</p>
 
-<h2>select</h2>
+<h2 id="select">select</h2>
 
-<p>```bash
+<p><code>bash
 select case [in caselist]
-do</p>
+do
+	statements about $case
+	[break]
+done
+</code></p>
 
-<pre><code>statements about $case
-[break]
-</code></pre>
-
-<p>done
-```
-用 caselist 里的所有项生成一个简单的选择菜单</p>
+<p>用 caselist 里的所有项生成一个简单的选择菜单</p>
 
 <p>statements 中 $case 就是选择的项</p>
 
 <p>完成一次 statements 后, 若没有遇到 break 则会继续下一次 select</p>
 
-<h2>for</h2>
+<h2 id="for">for</h2>
 
-<p>```bash
-for ((expr1;expr2;expr3))</p>
+<p><code>bash
+for ((expr1;expr2;expr3))
+	statements
+end
+</code></p>
 
-<pre><code>statements
-</code></pre>
+<p>这个比较类似 Java 里的 for</p>
 
-<p>end
-```
-这个比较类似 Java 里的 for</p>
-
-<p>```bash
+<p><code>bash
 for i [in list]
-do</p>
+do
+	statements
+done
+</code></p>
 
-<pre><code>statements
-</code></pre>
-
-<p>done
-```
-这个感觉更像 python 里的 for</p>
+<p>这个感觉更像 python 里的 for</p>
 
 <p>若省略 [in list] 的话, 则默认从 $@ 中取值</p>
 
-<p>```bash
+<p><code>bash
 for i in {start..end..step}
-do</p>
-
-<pre><code>statements
-</code></pre>
-
-<p>done
-```
+do
+	statements
+done
+</code>
 bash 4.0 以上才有的语法</p>
 
-<h2>while &amp; until</h2>
+<h2 id="while--until">while &amp; until</h2>
 
-<p>```bash
+<p><code>bash
 while condition
-do</p>
+do
+	statements
+done
+</code></p>
 
-<pre><code>statements
-</code></pre>
-
-<p>done
-```</p>
-
-<p>```bash
+<p><code>bash
 until condition
-do</p>
+do
+	statements
+done
+</code></p>
 
-<pre><code>statements
-</code></pre>
-
-<p>done
-```
-while condition 等价于 until ! condition</p>
+<p>while condition 等价于 until ! condition</p>
 
 <p>两者没有其它区别</p>
 
-<h2>附:</h2>
+<h2 id="section-3">附:</h2>
+<p>又一个友好地显示 PATH 的方法</p>
 
-<p>又一个友好地显示 PATH 的方法
-```bash showpath.sh
+<p>```bash showpath.sh
 path=$PATH</p>
 
 <p>while [ $path ];
-do</p>
-
-<pre><code>echo ${path%%:*}
-echo ${path#*:}
-</code></pre>
-
-<p>done
+do
+	echo ${path%%:<em>}
+	echo ${path#</em>:}
+done
 ```</p>
 ]]></content>
   </entry>
@@ -665,16 +630,13 @@ echo ${path#*:}
     <id>http://Ralph-Wang.github.io/blog/2014/05/15/learning-the-bash-shell-du-shu-bi-ji-bian-liang</id>
     <content type="html"><![CDATA[<!--more-->
 
-
-<h2>$* 和 $@</h2>
-
+<h2 id="section">$* 和 $@</h2>
 <p>这两个变量都可以得到脚本运行得到的所有参数.</p>
 
 <p>默认情况下, 这两个变量没有区别</p>
 
-<p>```bash sample.sh</p>
-
-<h1>!/bin/bash</h1>
+<p>```bash sample.sh
+#!/bin/bash</p>
 
 <p>echo $*</p>
 
@@ -692,15 +654,14 @@ $./sample.sh 1 2 3
 <p>但是, 当给变量 IFS(internal field sperator) 赋上值并用双引号将 <code>$*</code> 和 <code>$@</code>
 括起来, 情况就不一样了.</p>
 
-<p>```bash sample2.sh</p>
-
-<h1>!/bin/bash</h1>
+<p>```bash sample2.sh
+#!/bin/bash</p>
 
 <p>IFS=,</p>
 
-<p>echo &ldquo;$*&rdquo;</p>
+<p>echo “$*”</p>
 
-<p>echo &ldquo;$@&rdquo;
+<p>echo “$@”
 ```</p>
 
 <p>这时候, 在 <code>$*</code> 中不再是以空格分割所有参数, 而是由 IFS 的值 (当前脚本中为逗号)来分割</p>
@@ -717,40 +678,49 @@ $./sample2.sh 1 2 3
 
 <p>而 <code>"$@"</code> 等价于 <code>"$1" "$2" "$3"... "$N"</code></p>
 
-<h2>String Operator</h2>
+<h2 id="string-operator">String Operator</h2>
 
 <p>对于 shell 变量, 还有一些操作符可以让脚本变得更活</p>
 
 <ul>
-<li><p><code>${var:-word}</code>: 如果 var 变量不存在或为 null, 则返回 word. var 变量仍然不存在或为 null</p></li>
-<li><p><code>${var:=word}</code>: 如果 var 变量不存在或为 null, 则将 word 赋值给 var, 并返回 var 的新值(word)</p></li>
-<li><p><code>${var:?msg}</code>: 如果 var 变量不存在或为 null, 则停止脚本, 并输出信息 <strong>var: msg</strong></p></li>
-<li><p><code>${var:+word}</code>: 如果 var 变量存在并不为 null, 则返回 word. 否则, 返回 null</p></li>
-<li><p><code>${var:offset:length}</code> 截取变量 var 从 offset 开始长度为 length 的字符串.  offset 从 0 开始. length 为 null 截取剩余全部.</p></li>
+  <li>
+    <p><code>${var:-word}</code>: 如果 var 变量不存在或为 null, 则返回 word. var 变量仍然不存在或为 null</p>
+  </li>
+  <li>
+    <p><code>${var:=word}</code>: 如果 var 变量不存在或为 null, 则将 word 赋值给 var, 并返回 var 的新值(word)</p>
+  </li>
+  <li>
+    <p><code>${var:?msg}</code>: 如果 var 变量不存在或为 null, 则停止脚本, 并输出信息 <strong>var: msg</strong></p>
+  </li>
+  <li>
+    <p><code>${var:+word}</code>: 如果 var 变量存在并不为 null, 则返回 word. 否则, 返回 null</p>
+  </li>
+  <li>
+    <p><code>${var:offset:length}</code> 截取变量 var 从 offset 开始长度为 length 的字符串.  offset 从 0 开始. length 为 null 截取剩余全部.</p>
+  </li>
 </ul>
 
+<p>```bash sample3.sh
+#!/bin/bash</p>
 
-<p>```bash sample3.sh</p>
-
-<h1>!/bin/bash</h1>
-
-<p>echo ${var:&ndash;&ldquo;minus&rdquo;}</p>
+<p>echo ${var:-“minus”}</p>
 
 <p>echo ${var}</p>
 
-<p>echo ${var:=&ldquo;equals&rdquo;}</p>
+<p>echo ${var:=”equals”}</p>
 
 <p>echo ${var}</p>
 
-<p>echo ${var:+&ldquo;plus&rdquo;}</p>
+<p>echo ${var:+”plus”}</p>
 
 <p>echo ${var:2:2} #output ua</p>
 
-<p>echo ${theVar:?&ldquo;should not be empty&rdquo;}
+<p>echo ${theVar:?”should not be empty”}
 ```</p>
 
-<p>输出:
-```
+<p>输出:</p>
+
+<p>```
 minus</p>
 
 <p>equals
@@ -760,10 +730,10 @@ ua
 sample3.sh: line 15: theVar: should not be empty
 ```</p>
 
-<h2>一个练习</h2>
+<h2 id="section-1">一个练习</h2>
+<p>你收集了一专辑, 并已经统计出了不同歌手的专辑数量, 现在需要找出收集数量前 10 的歌手. 文件格式如下:</p>
 
-<p>你收集了一专辑, 并已经统计出了不同歌手的专辑数量, 现在需要找出收集数量前 10 的歌手. 文件格式如下:
-<code>text file
+<p><code>text file
 5 Depeche Mode
 2 Split Enz
 3 Simple Minds
@@ -772,12 +742,12 @@ sample3.sh: line 15: theVar: should not be empty
 
 <p>ok, 实现代码很简单 <code>sort -nr file | head -n 10</code></p>
 
-<p>不过, 书中的解答不得不说更好
-```bash</p>
+<p>不过, 书中的解答不得不说更好</p>
 
-<h1>!/bin/bash</h1>
+<p>```bash
+#!/bin/bash</p>
 
-<p>filename=${1:?&ldquo;filename missing&rdquo;}
+<p>filename=${1:?”filename missing”}
 howmany=${2:-10}</p>
 
 <p>sort -nr $filename | head -n $howmany
@@ -792,14 +762,10 @@ howmany=${2:-10}</p>
     <link href="http://Ralph-Wang.github.io/blog/2014/05/09/yu-hui-de-jian-kong-shu-ju-ku-lian-jie-shu/"/>
     <updated>2014-05-09T09:45:51+08:00</updated>
     <id>http://Ralph-Wang.github.io/blog/2014/05/09/yu-hui-de-jian-kong-shu-ju-ku-lian-jie-shu</id>
-    <content type="html"><![CDATA[<p>不能通过数据库工具监控到连接数时可用的迂回监控方法</p>
-
+    <content type="html"><![CDATA[<p>不能通过数据库工具监控到连接数时可用的迂回监控方法
 <!--more-->
-
-
-<h2>原理</h2>
-
-<p>数据库连接底层使用的也是 TCP 协议.</p>
+## 原理
+数据库连接底层使用的也是 TCP 协议.</p>
 
 <p>所以当连接到数据库时, 在本地也有打开一个 TCP 端口. 可以通过 nestat 查看</p>
 
@@ -807,7 +773,7 @@ howmany=${2:-10}</p>
 
 <p>所以, 我们只需要数一下 netstat 中打印出来连接到数据库的端口即可</p>
 
-<h2>代码</h2>
+<h2 id="section">代码</h2>
 
 <p><div><script src='https://gist.github.com/2c5f64d45de600237f1c.js'></script>
 <noscript><pre><code>#!/bin/sh
@@ -830,7 +796,7 @@ done
 </code></pre></noscript></div>
 </p>
 
-<h2>命令分析</h2>
+<h2 id="section-1">命令分析</h2>
 
 <p>核心就一行, 摘出来看看:</p>
 
@@ -839,11 +805,11 @@ netstat -an |awk '{gsub("::ffff:",""); print $5}'|grep "$port" |sort | uniq -c
 |sed "s/^/$current_date/g"
 </code></p>
 
-<p>各个命令在干什么:</p>
+<p>各个命令在干什么: </p>
 
 <p><code>netstat</code> 不多说, 打印出所有打开着的端口</p>
 
-<p><code>awk</code> 在这里做一步初步处理, gsub(&ldquo;::ffff:&rdquo;, &ldquo;&rdquo;), 是为了去除 ipv6 格式的 ip 地址.</p>
+<p><code>awk</code> 在这里做一步初步处理, gsub(“::ffff:”, “”), 是为了去除 ipv6 格式的 ip 地址.</p>
 
 <p><code>grep</code> 就是为了过滤出想监控的端口号</p>
 

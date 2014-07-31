@@ -4,7 +4,7 @@
   <title><![CDATA[标签: 流控制 | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/liu-kong-zhi/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-07-30T19:58:16+08:00</updated>
+  <updated>2014-08-01T01:46:51+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -18,25 +18,24 @@
     <link href="http://Ralph-Wang.github.io/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi/"/>
     <updated>2014-05-22T21:19:21+08:00</updated>
     <id>http://Ralph-Wang.github.io/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi</id>
-    <content type="html"><![CDATA[<p>但凡是代码就逃不开的流控制话题</p>
+    <content type="html"><![CDATA[<p>但凡是代码就逃不开的流控制话题
+<!--more--></p>
 
-<!--more-->
-
-
-<h2>条件</h2>
+<h2 id="section">条件</h2>
 
 <p>bash 中的条件值以数字 0 表示真, 非0 则为假, 并不存在布尔类型</p>
 
 <p>其中有三种条件形式可以得到条件值</p>
 
-<h3>命令的退出状态</h3>
-
+<h3 id="section-1">命令的退出状态</h3>
 <p>一般来说, Linux 的命令若执行成功, 则退出状态为 0, 不成功则返回 1-255</p>
 
-<blockquote><p><em>diff 命令除外, diff 返回 0 表示两个文件没有差别, 1 表示有差别, 2+
-表示发生错误</em></p></blockquote>
+<blockquote>
+  <p><em>diff 命令除外, diff 返回 0 表示两个文件没有差别, 1 表示有差别, 2+
+表示发生错误</em></p>
+</blockquote>
 
-<h3>脚本或函数的返回值</h3>
+<h3 id="section-2">脚本或函数的返回值</h3>
 
 <p>在脚本或函数中, 用 return 表示结束并返回</p>
 
@@ -44,158 +43,130 @@
 
 <p>另外, return 写返回值的话, 默认返回 0</p>
 
-<blockquote><p>脚本或函数中若没有用 return 返回值时, 则以最后一条命令的退出状态作为返回值</p></blockquote>
+<blockquote>
+  <p>脚本或函数中若没有用 return 返回值时, 则以最后一条命令的退出状态作为返回值</p>
+</blockquote>
 
-<h3>测试 test</h3>
+<h3 id="test">测试 test</h3>
 
 <p>bash 中测试有两种写法</p>
 
 <ul>
-<li>test condition</li>
-<li>[ condition ] <em>[ ] 两个方括号和中间条件之间必须要有一个空格</em></li>
+  <li>test condition</li>
+  <li>[ condition ] <em>[ ] 两个方括号和中间条件之间必须要有一个空格</em></li>
 </ul>
-
 
 <p>两种写法是等价的, 详细的写法可参考 <code>man test</code></p>
 
-<h2>if..elif..else</h2>
+<h2 id="ifelifelse">if..elif..else</h2>
 
-<p>```bash
+<p><code>bash
 if condition
-then</p>
+then
+	statements
+[elif condition
+then
+	statements]
+[else
+	statements]
+fi
+</code></p>
 
-<pre><code>statements
-</code></pre>
+<h2 id="case">case</h2>
 
-<p>[elif condition
-then</p>
-
-<pre><code>statements]
-</code></pre>
-
-<p>[else</p>
-
-<pre><code>statements]
-</code></pre>
-
-<p>fi
-```</p>
-
-<h2>case</h2>
-
-<p>```bash
-case epxr in</p>
-
-<pre><code>pattern1 )
-    statements
-    ;;
-pattern2 )
-    statements
-    ;;
-...
-</code></pre>
-
-<p>esac
-```
+<p><code>bash
+case epxr in
+	pattern1 )
+		statements
+		;;
+	pattern2 )
+		statements
+		;;
+	...
+esac
+</code>
 <em>pattern1/2</em> 支持 bash 的通配符, 也支持 | 来表示多模式匹配</p>
 
 <p><code>;;</code> 类似于其它语言中的 break</p>
 
 <p>因为匹配是从上到下的, 所以可以用 <code>*)</code> 来表示 default</p>
 
-<h2>select</h2>
+<h2 id="select">select</h2>
 
-<p>```bash
+<p><code>bash
 select case [in caselist]
-do</p>
+do
+	statements about $case
+	[break]
+done
+</code></p>
 
-<pre><code>statements about $case
-[break]
-</code></pre>
-
-<p>done
-```
-用 caselist 里的所有项生成一个简单的选择菜单</p>
+<p>用 caselist 里的所有项生成一个简单的选择菜单</p>
 
 <p>statements 中 $case 就是选择的项</p>
 
 <p>完成一次 statements 后, 若没有遇到 break 则会继续下一次 select</p>
 
-<h2>for</h2>
+<h2 id="for">for</h2>
 
-<p>```bash
-for ((expr1;expr2;expr3))</p>
+<p><code>bash
+for ((expr1;expr2;expr3))
+	statements
+end
+</code></p>
 
-<pre><code>statements
-</code></pre>
+<p>这个比较类似 Java 里的 for</p>
 
-<p>end
-```
-这个比较类似 Java 里的 for</p>
-
-<p>```bash
+<p><code>bash
 for i [in list]
-do</p>
+do
+	statements
+done
+</code></p>
 
-<pre><code>statements
-</code></pre>
-
-<p>done
-```
-这个感觉更像 python 里的 for</p>
+<p>这个感觉更像 python 里的 for</p>
 
 <p>若省略 [in list] 的话, 则默认从 $@ 中取值</p>
 
-<p>```bash
+<p><code>bash
 for i in {start..end..step}
-do</p>
-
-<pre><code>statements
-</code></pre>
-
-<p>done
-```
+do
+	statements
+done
+</code>
 bash 4.0 以上才有的语法</p>
 
-<h2>while &amp; until</h2>
+<h2 id="while--until">while &amp; until</h2>
 
-<p>```bash
+<p><code>bash
 while condition
-do</p>
+do
+	statements
+done
+</code></p>
 
-<pre><code>statements
-</code></pre>
-
-<p>done
-```</p>
-
-<p>```bash
+<p><code>bash
 until condition
-do</p>
+do
+	statements
+done
+</code></p>
 
-<pre><code>statements
-</code></pre>
-
-<p>done
-```
-while condition 等价于 until ! condition</p>
+<p>while condition 等价于 until ! condition</p>
 
 <p>两者没有其它区别</p>
 
-<h2>附:</h2>
+<h2 id="section-3">附:</h2>
+<p>又一个友好地显示 PATH 的方法</p>
 
-<p>又一个友好地显示 PATH 的方法
-```bash showpath.sh
+<p>```bash showpath.sh
 path=$PATH</p>
 
 <p>while [ $path ];
-do</p>
-
-<pre><code>echo ${path%%:*}
-echo ${path#*:}
-</code></pre>
-
-<p>done
+do
+	echo ${path%%:<em>}
+	echo ${path#</em>:}
+done
 ```</p>
 ]]></content>
   </entry>

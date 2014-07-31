@@ -164,33 +164,28 @@
   </header>
 
 
-<div class="entry-content clearfix"><p>面试时没有完全回答上或有存疑的问题</p>
-
+<div class="entry-content clearfix"><p>面试时没有完全回答上或有存疑的问题
 <!--more-->
-
-
-<h2>Linux</h2>
-
-<h3>统计文本中某字符串出现次数</h3>
-
-<p>前提: 一行中要查找的字符串可能出现多次.</p>
+Linux
+——
+### 统计文本中某字符串出现次数
+前提: 一行中要查找的字符串可能出现多次.</p>
 
 <p>文本样例:</p>
 
-<figure class='code'><figcaption><span>sample</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='text'><span class='line'>ralph, ralph
-</span><span class='line'>Hello, ralph, HaHA
-</span><span class='line'>No such word
-</span><span class='line'>Hey
-</span><span class='line'>ralph again.
-</span><span class='line'>two times ralph ,ralph
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>sample</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="text"><span class="line">ralph, ralph
+</span><span class="line">Hello, ralph, HaHA
+</span><span class="line">No such word
+</span><span class="line">Hey
+</span><span class="line">ralph again.
+</span><span class="line">two times ralph ,ralph
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>统计文中 <code>ralph</code> 出现的次数</p>
 
@@ -201,23 +196,20 @@
 
 <p>遂搜索之.  得如下解法</p>
 
-<h3>方法 1: grep 的 -o 选项</h3>
+<h3 id="grep---o-">方法 1: grep 的 -o 选项</h3>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>cat sample | grep -o ralph | wc -l
-</span></code></pre></td></tr></table></div></figure>
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">cat sample | grep -o ralph | wc -l
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 <p>解释:</p>
 
-<p>给 <code>grep</code> 加上 <code>-o</code> 选项后, 它只会打印出匹配到的字符串, 并且每匹配一次就打印一行.</p>
+<p>给 <code>grep</code> 加上 <code>-o</code> 选项后, 它只会打印出匹配到的字符串, 并且每匹配一次就打印一行. </p>
 
-<h3>方法 2: 神器 awk 之 RS</h3>
+<h3 id="awk--rs">方法 2: 神器 awk 之 RS</h3>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>awk -v <span class="nv">RS</span><span class="o">=</span><span class="s1">&#39;ralph&#39;</span> <span class="s1">&#39;END {print NR-1}&#39;</span> sample
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">awk -v <span class="nv">RS</span><span class="o">=</span><span class="s1">&#39;ralph&#39;</span> <span class="s1">&#39;END {print NR-1}&#39;</span> sample
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>解释:</p>
 
@@ -225,26 +217,21 @@
 
 <p>在 END 中访问 NR 则为最后一行的行号, awk 起始行为 1, 所以此时总行数 = NR</p>
 
-<h3>方法 3: 神器 awk 之 gsub</h3>
+<h3 id="awk--gsub">方法 3: 神器 awk 之 gsub</h3>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>awk <span class="s1">&#39;{count+=gsub(/ralph/, &quot;#&quot;)} END {print count}&#39;</span> sample
-</span></code></pre></td></tr></table></div></figure>
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">awk <span class="s1">&#39;{count+=gsub(/ralph/, &quot;#&quot;)} END {print count}&#39;</span> sample
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 <p>解释:
 awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次数求和即可.</p>
 
 <p>另外, awk 中的 <code>sub</code> 函数在每行中只完成一次替换.</p>
 
-<h2>Java</h2>
+<h2 id="java">Java</h2>
+<p>### 反射
+参考<a href="http://www.cnblogs.com/rollenholt/archive/2011/09/02/2163758.html">反射案例</a></p>
 
-<h3>反射</h3>
-
-<p>参考<a href="http://www.cnblogs.com/rollenholt/archive/2011/09/02/2163758.html">反射案例</a></p>
-
-<h2>MySQL</h2>
-
+<h2 id="mysql">MySQL</h2>
 <p>MySQL 相关的性能问题, 关于<strong>执行计划</strong>的倒是 OK.</p>
 
 <p>但一直没时间整理下关于慢查询日志的知识点. 所以这几次都只能回答说知道这个概念, 具体的配置参数却不记得了.</p>
@@ -252,337 +239,326 @@ awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次�
 <p>在这里整理一下, 权当备忘</p>
 
 <ul>
-<li>查看慢查询是否开启</li>
+  <li>查看慢查询是否开启</li>
 </ul>
 
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='mysql'><span class='line'><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">show</span> <span class="n">variables</span> <span class="k">like</span> <span class="s1">&#39;%slow%&#39;</span><span class="p">;</span>
-</span><span class='line'><span class="o">|</span> <span class="n">Variable_name</span>       <span class="o">|</span> <span class="n">Value</span>
-</span><span class='line'><span class="o">|</span> <span class="n">log_slow_queries</span>    <span class="o">|</span> <span class="n">OFF</span>
-</span><span class='line'><span class="o">|</span> <span class="n">slow_launch_time</span>    <span class="o">|</span> <span class="mi">2</span>
-</span><span class='line'><span class="o">|</span> <span class="n">slow_query_log</span>      <span class="o">|</span> <span class="n">OFF</span>
-</span><span class='line'><span class="o">|</span> <span class="n">slow_query_log_file</span> <span class="o">|</span> <span class="o">***</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">show</span> <span class="n">variables</span> <span class="k">like</span> <span class="s1">&#39;long%&#39;</span><span class="p">;</span>
-</span><span class='line'><span class="o">|</span> <span class="n">Variable_name</span>   <span class="o">|</span> <span class="n">Value</span>    <span class="o">|</span>
-</span><span class='line'><span class="o">|</span> <span class="n">long_query_time</span> <span class="o">|</span> <span class="mi">1</span><span class="p">.</span><span class="mi">000000</span> <span class="o">|</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="mysql"><span class="line"><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">show</span> <span class="n">variables</span> <span class="k">like</span> <span class="s1">&#39;%slow%&#39;</span><span class="p">;</span>
+</span><span class="line"><span class="o">|</span> <span class="n">Variable_name</span>       <span class="o">|</span> <span class="n">Value</span>
+</span><span class="line"><span class="o">|</span> <span class="n">log_slow_queries</span>    <span class="o">|</span> <span class="n">OFF</span>
+</span><span class="line"><span class="o">|</span> <span class="n">slow_launch_time</span>    <span class="o">|</span> <span class="mi">2</span>
+</span><span class="line"><span class="o">|</span> <span class="n">slow_query_log</span>      <span class="o">|</span> <span class="n">OFF</span>
+</span><span class="line"><span class="o">|</span> <span class="n">slow_query_log_file</span> <span class="o">|</span> <span class="o">***</span>
+</span><span class="line">
+</span><span class="line"><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">show</span> <span class="n">variables</span> <span class="k">like</span> <span class="s1">&#39;long%&#39;</span><span class="p">;</span>
+</span><span class="line"><span class="o">|</span> <span class="n">Variable_name</span>   <span class="o">|</span> <span class="n">Value</span>    <span class="o">|</span>
+</span><span class="line"><span class="o">|</span> <span class="n">long_query_time</span> <span class="o">|</span> <span class="mi">1</span><span class="p">.</span><span class="mi">000000</span> <span class="o">|</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <ul>
-<li>在 my.cnf 中配置开启慢查询跟踪</li>
+  <li>在 my.cnf 中配置开启慢查询跟踪</li>
 </ul>
 
-
-<figure class='code'><figcaption><span>my.cnf</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ini'><span class='line'><span class="k">[mysqld]</span>
-</span><span class='line'><span class="na">log-slow-queries</span> <span class="o">=</span> <span class="s">**** # 日志存放目录, 一般放到 MySQL 数据库的地方</span>
-</span><span class='line'><span class="na">long-query-time</span> <span class="o">=</span> <span class="s">2 # 超过这个时间(单位:秒) 的查询为慢查询</span>
-</span><span class='line'><span class="err">log-queries-not-using-indexes</span> <span class="c1"># 记录下没有使用索引的查询</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>my.cnf</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="ini"><span class="line"><span class="k">[mysqld]</span>
+</span><span class="line"><span class="na">log-slow-queries</span> <span class="o">=</span> <span class="s">**** # 日志存放目录, 一般放到 MySQL 数据库的地方</span>
+</span><span class="line"><span class="na">long-query-time</span> <span class="o">=</span> <span class="s">2 # 超过这个时间(单位:秒) 的查询为慢查询</span>
+</span><span class="line"><span class="err">log-queries-not-using-indexes</span> <span class="c1"># 记录下没有使用索引的查询</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>产生慢查询日志后可以使用 mysqldumpslow 工具进行分析查看了.</p>
 
 <p>接下来的事就交给 <code>explain</code> 吧.</p>
 
-<h2>算法</h2>
+<h2 id="section">算法</h2>
+<p>### 问题 1 链表倒序
+…面试时, 想到去 clone next.. 为毛当时就没想到多给个变量呢…</p>
 
-<h3>问题 1 链表倒序</h3>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>List.java</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+<span class="line-number">59</span>
+<span class="line-number">60</span>
+<span class="line-number">61</span>
+<span class="line-number">62</span>
+<span class="line-number">63</span>
+<span class="line-number">64</span>
+<span class="line-number">65</span>
+<span class="line-number">66</span>
+<span class="line-number">67</span>
+<span class="line-number">68</span>
+<span class="line-number">69</span>
+<span class="line-number">70</span>
+<span class="line-number">71</span>
+<span class="line-number">72</span>
+<span class="line-number">73</span>
+<span class="line-number">74</span>
+<span class="line-number">75</span>
+<span class="line-number">76</span>
+<span class="line-number">77</span>
+<span class="line-number">78</span>
+<span class="line-number">79</span>
+<span class="line-number">80</span>
+<span class="line-number">81</span>
+<span class="line-number">82</span>
+<span class="line-number">83</span>
+<span class="line-number">84</span>
+<span class="line-number">85</span>
+<span class="line-number">86</span>
+<span class="line-number">87</span>
+<span class="line-number">88</span>
+<span class="line-number">89</span>
+<span class="line-number">90</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span> <span class="c1">// 后进先出列表</span>
+</span><span class="line">	<span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+</span><span class="line">		<span class="kd">private</span> <span class="n">T</span> <span class="n">item</span><span class="o">;</span>
+</span><span class="line">		<span class="kd">private</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">next</span><span class="o">;</span>
+</span><span class="line">		<span class="cm">/** init a end Node */</span>
+</span><span class="line">		<span class="kd">public</span> <span class="nf">Node</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">			<span class="n">item</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class="line">			<span class="n">next</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class="line">		<span class="o">}</span>
+</span><span class="line">
+</span><span class="line">		<span class="cm">/** normal Node */</span>
+</span><span class="line">		<span class="kd">public</span> <span class="nf">Node</span><span class="o">(</span><span class="n">T</span> <span class="n">item</span><span class="o">,</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">next</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">			<span class="k">this</span><span class="o">.</span><span class="na">item</span> <span class="o">=</span> <span class="n">item</span><span class="o">;</span>
+</span><span class="line">			<span class="k">this</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">next</span><span class="o">;</span>
+</span><span class="line">		<span class="o">}</span>
+</span><span class="line">
+</span><span class="line">		<span class="kd">private</span> <span class="n">T</span> <span class="nf">getItem</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">			<span class="k">return</span> <span class="n">item</span><span class="o">;</span>
+</span><span class="line">		<span class="o">}</span>
+</span><span class="line">
+</span><span class="line">		<span class="kd">private</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">getNext</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">			<span class="k">return</span> <span class="n">next</span><span class="o">;</span>
+</span><span class="line">		<span class="o">}</span>
+</span><span class="line">
+</span><span class="line">		<span class="kd">private</span> <span class="kt">void</span> <span class="nf">setNext</span><span class="o">(</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">next</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">			<span class="k">this</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">next</span><span class="o">;</span>
+</span><span class="line">		<span class="o">}</span>
+</span><span class="line">
+</span><span class="line">		<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isEnd</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">			<span class="k">return</span> <span class="o">(</span><span class="n">next</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">item</span> <span class="o">==</span> <span class="kc">null</span><span class="o">);</span>
+</span><span class="line">		<span class="o">}</span>
+</span><span class="line">	<span class="o">}</span>
+</span><span class="line">
+</span><span class="line">	<span class="kd">private</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">top</span><span class="o">;</span>
+</span><span class="line">
+</span><span class="line">	<span class="kd">public</span> <span class="nf">List</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">		<span class="n">top</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;();</span> <span class="c1">//init a end Node for list</span>
+</span><span class="line">	<span class="o">}</span>
+</span><span class="line">
+</span><span class="line">	<span class="cm">/** push a item to the top */</span>
+</span><span class="line">	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">		<span class="n">top</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;(</span><span class="n">item</span><span class="o">,</span> <span class="n">top</span><span class="o">);</span>
+</span><span class="line">	<span class="o">}</span>
+</span><span class="line">
+</span><span class="line">	<span class="cm">/** pop the top item */</span>
+</span><span class="line">	<span class="kd">public</span> <span class="n">T</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">		<span class="n">T</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class="line">		<span class="k">if</span> <span class="o">(</span><span class="n">top</span><span class="o">.</span><span class="na">isEnd</span><span class="o">())</span> <span class="o">{</span>
+</span><span class="line">			<span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+</span><span class="line">		<span class="o">}</span>
+</span><span class="line">		<span class="n">result</span> <span class="o">=</span> <span class="n">top</span><span class="o">.</span><span class="na">getItem</span><span class="o">();</span>
+</span><span class="line">		<span class="n">top</span> <span class="o">=</span> <span class="n">top</span><span class="o">.</span><span class="na">getNext</span><span class="o">();</span>
+</span><span class="line">		<span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+</span><span class="line">	<span class="o">}</span>
+</span><span class="line">
+</span><span class="line">	<span class="cm">/** reverse the list */</span>
+</span><span class="line">	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">reverse</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">		<span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">top</span><span class="o">;</span>
+</span><span class="line">		<span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">next</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="na">getNext</span><span class="o">();</span>
+</span><span class="line">		<span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">pre</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class="line">		<span class="k">if</span> <span class="o">(</span><span class="n">cur</span><span class="o">.</span><span class="na">isEnd</span><span class="o">())</span> <span class="o">{</span> <span class="c1">// Empty list</span>
+</span><span class="line">			<span class="k">return</span><span class="o">;</span>
+</span><span class="line">		<span class="o">}</span>
+</span><span class="line">
+</span><span class="line">		<span class="n">top</span><span class="o">.</span><span class="na">setNext</span><span class="o">(</span><span class="k">new</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;());</span> <span class="c1">// a new sentinel</span>
+</span><span class="line">		<span class="k">do</span> <span class="o">{</span>
+</span><span class="line">			<span class="n">pre</span> <span class="o">=</span> <span class="n">cur</span><span class="o">;</span>
+</span><span class="line">			<span class="n">cur</span> <span class="o">=</span> <span class="n">next</span><span class="o">;</span>
+</span><span class="line">			<span class="n">next</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="na">getNext</span><span class="o">();</span>
+</span><span class="line">			<span class="n">cur</span><span class="o">.</span><span class="na">setNext</span><span class="o">(</span><span class="n">pre</span><span class="o">);</span>
+</span><span class="line">		<span class="o">}</span> <span class="k">while</span><span class="o">(!</span><span class="n">next</span><span class="o">.</span><span class="na">isEnd</span><span class="o">());</span>
+</span><span class="line">		<span class="c1">// reset top</span>
+</span><span class="line">		<span class="n">top</span> <span class="o">=</span> <span class="n">cur</span><span class="o">;</span>
+</span><span class="line">	<span class="o">}</span>
+</span><span class="line">
+</span><span class="line">	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">		<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="k">new</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;();</span>
+</span><span class="line">		<span class="n">l</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="s">&quot;a&quot;</span><span class="o">);</span>
+</span><span class="line">		<span class="n">l</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="s">&quot;B&quot;</span><span class="o">);</span>
+</span><span class="line">		<span class="n">l</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="s">&quot;c&quot;</span><span class="o">);</span>
+</span><span class="line">		<span class="n">l</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="s">&quot;D&quot;</span><span class="o">);</span>
+</span><span class="line">		<span class="n">l</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="s">&quot;e&quot;</span><span class="o">);</span>
+</span><span class="line">		<span class="n">l</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="s">&quot;F&quot;</span><span class="o">);</span>
+</span><span class="line">		<span class="n">l</span><span class="o">.</span><span class="na">reverse</span><span class="o">();</span>
+</span><span class="line">		<span class="n">String</span> <span class="n">res</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class="line">		<span class="k">while</span> <span class="o">((</span><span class="n">res</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="na">pop</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">res</span><span class="o">);</span>
+</span><span class="line">		<span class="o">}</span>
+</span><span class="line">	<span class="o">}</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>算法还是弱项…</p>
 
-<p>&hellip;面试时, 想到去 clone next.. 为毛当时就没想到多给个变量呢&hellip;</p>
-
-<figure class='code'><figcaption><span>List.java</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span> <span class="c1">// 后进先出列表</span>
-</span><span class='line'>  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
-</span><span class='line'>      <span class="kd">private</span> <span class="n">T</span> <span class="n">item</span><span class="o">;</span>
-</span><span class='line'>      <span class="kd">private</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">next</span><span class="o">;</span>
-</span><span class='line'>      <span class="cm">/** init a end Node */</span>
-</span><span class='line'>      <span class="kd">public</span> <span class="nf">Node</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>          <span class="n">item</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class='line'>          <span class="n">next</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="cm">/** normal Node */</span>
-</span><span class='line'>      <span class="kd">public</span> <span class="nf">Node</span><span class="o">(</span><span class="n">T</span> <span class="n">item</span><span class="o">,</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">next</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>          <span class="k">this</span><span class="o">.</span><span class="na">item</span> <span class="o">=</span> <span class="n">item</span><span class="o">;</span>
-</span><span class='line'>          <span class="k">this</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">next</span><span class="o">;</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="kd">private</span> <span class="n">T</span> <span class="nf">getItem</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>          <span class="k">return</span> <span class="n">item</span><span class="o">;</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="kd">private</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">getNext</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>          <span class="k">return</span> <span class="n">next</span><span class="o">;</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="kd">private</span> <span class="kt">void</span> <span class="nf">setNext</span><span class="o">(</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">next</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>          <span class="k">this</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">next</span><span class="o">;</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isEnd</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>          <span class="k">return</span> <span class="o">(</span><span class="n">next</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">item</span> <span class="o">==</span> <span class="kc">null</span><span class="o">);</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">private</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">top</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">public</span> <span class="nf">List</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">top</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;();</span> <span class="c1">//init a end Node for list</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="cm">/** push a item to the top */</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">top</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;(</span><span class="n">item</span><span class="o">,</span> <span class="n">top</span><span class="o">);</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="cm">/** pop the top item */</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="n">T</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">T</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class='line'>      <span class="k">if</span> <span class="o">(</span><span class="n">top</span><span class="o">.</span><span class="na">isEnd</span><span class="o">())</span> <span class="o">{</span>
-</span><span class='line'>          <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>      <span class="n">result</span> <span class="o">=</span> <span class="n">top</span><span class="o">.</span><span class="na">getItem</span><span class="o">();</span>
-</span><span class='line'>      <span class="n">top</span> <span class="o">=</span> <span class="n">top</span><span class="o">.</span><span class="na">getNext</span><span class="o">();</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="cm">/** reverse the list */</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">reverse</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">top</span><span class="o">;</span>
-</span><span class='line'>      <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">next</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="na">getNext</span><span class="o">();</span>
-</span><span class='line'>      <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">pre</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class='line'>      <span class="k">if</span> <span class="o">(</span><span class="n">cur</span><span class="o">.</span><span class="na">isEnd</span><span class="o">())</span> <span class="o">{</span> <span class="c1">// Empty list</span>
-</span><span class='line'>          <span class="k">return</span><span class="o">;</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="n">top</span><span class="o">.</span><span class="na">setNext</span><span class="o">(</span><span class="k">new</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;());</span> <span class="c1">// a new sentinel</span>
-</span><span class='line'>      <span class="k">do</span> <span class="o">{</span>
-</span><span class='line'>          <span class="n">pre</span> <span class="o">=</span> <span class="n">cur</span><span class="o">;</span>
-</span><span class='line'>          <span class="n">cur</span> <span class="o">=</span> <span class="n">next</span><span class="o">;</span>
-</span><span class='line'>          <span class="n">next</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="na">getNext</span><span class="o">();</span>
-</span><span class='line'>          <span class="n">cur</span><span class="o">.</span><span class="na">setNext</span><span class="o">(</span><span class="n">pre</span><span class="o">);</span>
-</span><span class='line'>      <span class="o">}</span> <span class="k">while</span><span class="o">(!</span><span class="n">next</span><span class="o">.</span><span class="na">isEnd</span><span class="o">());</span>
-</span><span class='line'>      <span class="c1">// reset top</span>
-</span><span class='line'>      <span class="n">top</span> <span class="o">=</span> <span class="n">cur</span><span class="o">;</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="k">new</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;();</span>
-</span><span class='line'>      <span class="n">l</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="s">&quot;a&quot;</span><span class="o">);</span>
-</span><span class='line'>      <span class="n">l</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="s">&quot;B&quot;</span><span class="o">);</span>
-</span><span class='line'>      <span class="n">l</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="s">&quot;c&quot;</span><span class="o">);</span>
-</span><span class='line'>      <span class="n">l</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="s">&quot;D&quot;</span><span class="o">);</span>
-</span><span class='line'>      <span class="n">l</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="s">&quot;e&quot;</span><span class="o">);</span>
-</span><span class='line'>      <span class="n">l</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="s">&quot;F&quot;</span><span class="o">);</span>
-</span><span class='line'>      <span class="n">l</span><span class="o">.</span><span class="na">reverse</span><span class="o">();</span>
-</span><span class='line'>      <span class="n">String</span> <span class="n">res</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class='line'>      <span class="k">while</span> <span class="o">((</span><span class="n">res</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="na">pop</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">res</span><span class="o">);</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>算法还是弱项&hellip;</p>
-
-<h3>问题 2 文本替换</h3>
-
+<h3 id="section-1">问题 2 文本替换</h3>
 <p>今天太晚了, 明天再继续</p>
 
-<p>&mdash;&ndash;<strong><em> 2014-04-06 更新 </em></strong>&mdash;&ndash;</p>
+<p>—<em>** 2014-04-06 更新 **</em>—</p>
 
 <p>需求, 字符串或字符数组, 如 <code>AAABBBAAACCADDD</code>, 取出连续的字符, 第N次出现取出连续N个, 不足则跳过</p>
 
-<p>如 AAABBBAAACCADDD &ndash;> ABAACAD</p>
+<p>如 AAABBBAAACCADDD -&gt; ABAACAD</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Sub</span> <span class="o">{</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="kt">char</span><span class="o">[]</span> <span class="n">t</span> <span class="o">=</span> <span class="o">{</span><span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;B&#39;</span><span class="o">,</span> <span class="sc">&#39;B&#39;</span><span class="o">,</span> <span class="sc">&#39;B&#39;</span><span class="o">,</span><span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;C&#39;</span><span class="o">,</span>
-</span><span class='line'>          <span class="sc">&#39;C&#39;</span><span class="o">,</span> <span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;D&#39;</span><span class="o">,</span> <span class="sc">&#39;D&#39;</span><span class="o">,</span> <span class="sc">&#39;D&#39;</span><span class="o">};</span>
-</span><span class='line'>      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sub</span><span class="o">(</span><span class="n">t</span><span class="o">));</span>
-</span><span class='line'>  <span class="o">}</span><span class="cm">/* output:</span>
-</span><span class='line'><span class="cm">     ABAACAD</span>
-</span><span class='line'><span class="cm">   */</span><span class="c1">//:~</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">sub</span><span class="o">(</span><span class="kd">final</span> <span class="kt">char</span><span class="o">[]</span> <span class="n">charArray</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">String</span> <span class="n">res</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
-</span><span class='line'>      <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">count</span> <span class="o">=</span>
-</span><span class='line'>          <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;();</span>
-</span><span class='line'>      <span class="kt">int</span> <span class="n">seq</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>      <span class="kt">int</span> <span class="n">curCount</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>      <span class="kt">char</span> <span class="n">pre</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="o">;</span>
-</span><span class='line'>      <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">charArray</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-</span><span class='line'>          <span class="k">if</span> <span class="o">(</span><span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">==</span> <span class="n">pre</span> <span class="o">&amp;&amp;</span> <span class="n">curCount</span> <span class="o">&gt;=</span> <span class="n">seq</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>              <span class="k">continue</span><span class="o">;</span>
-</span><span class='line'>          <span class="o">}</span>
-</span><span class='line'>          <span class="k">if</span> <span class="o">(</span><span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">!=</span> <span class="n">pre</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// recount the new char</span>
-</span><span class='line'>              <span class="n">curCount</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>              <span class="c1">// get the sequence of the char</span>
-</span><span class='line'>              <span class="k">if</span> <span class="o">(</span><span class="n">count</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>                  <span class="n">seq</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
-</span><span class='line'>              <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-</span><span class='line'>                  <span class="n">seq</span> <span class="o">=</span> <span class="n">count</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
-</span><span class='line'>              <span class="o">}</span>
-</span><span class='line'>              <span class="c1">// cache the char sequence</span>
-</span><span class='line'>              <span class="n">count</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">seq</span><span class="o">);</span>
-</span><span class='line'>          <span class="o">}</span>
-</span><span class='line'>          <span class="n">res</span> <span class="o">=</span> <span class="n">res</span> <span class="o">+</span> <span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
-</span><span class='line'>          <span class="n">curCount</span><span class="o">++;</span>
-</span><span class='line'>          <span class="n">pre</span> <span class="o">=</span> <span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">res</span><span class="o">;</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Sub</span> <span class="o">{</span>
+</span><span class="line">	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">		<span class="kt">char</span><span class="o">[]</span> <span class="n">t</span> <span class="o">=</span> <span class="o">{</span><span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;B&#39;</span><span class="o">,</span> <span class="sc">&#39;B&#39;</span><span class="o">,</span> <span class="sc">&#39;B&#39;</span><span class="o">,</span><span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;C&#39;</span><span class="o">,</span>
+</span><span class="line">			<span class="sc">&#39;C&#39;</span><span class="o">,</span> <span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;D&#39;</span><span class="o">,</span> <span class="sc">&#39;D&#39;</span><span class="o">,</span> <span class="sc">&#39;D&#39;</span><span class="o">};</span>
+</span><span class="line">		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sub</span><span class="o">(</span><span class="n">t</span><span class="o">));</span>
+</span><span class="line">	<span class="o">}</span><span class="cm">/* output:</span>
+</span><span class="line"><span class="cm">		ABAACAD</span>
+</span><span class="line"><span class="cm">	  */</span><span class="c1">//:~</span>
+</span><span class="line">
+</span><span class="line">	<span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">sub</span><span class="o">(</span><span class="kd">final</span> <span class="kt">char</span><span class="o">[]</span> <span class="n">charArray</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">		<span class="n">String</span> <span class="n">res</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+</span><span class="line">		<span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">count</span> <span class="o">=</span>
+</span><span class="line">			<span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;();</span>
+</span><span class="line">		<span class="kt">int</span> <span class="n">seq</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class="line">		<span class="kt">int</span> <span class="n">curCount</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class="line">		<span class="kt">char</span> <span class="n">pre</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="o">;</span>
+</span><span class="line">		<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">charArray</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class="line">			<span class="k">if</span> <span class="o">(</span><span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">==</span> <span class="n">pre</span> <span class="o">&amp;&amp;</span> <span class="n">curCount</span> <span class="o">&gt;=</span> <span class="n">seq</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">				<span class="k">continue</span><span class="o">;</span>
+</span><span class="line">			<span class="o">}</span>
+</span><span class="line">			<span class="k">if</span> <span class="o">(</span><span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">!=</span> <span class="n">pre</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// recount the new char</span>
+</span><span class="line">				<span class="n">curCount</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class="line">				<span class="c1">// get the sequence of the char</span>
+</span><span class="line">				<span class="k">if</span> <span class="o">(</span><span class="n">count</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">					<span class="n">seq</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class="line">				<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class="line">					<span class="n">seq</span> <span class="o">=</span> <span class="n">count</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class="line">				<span class="o">}</span>
+</span><span class="line">				<span class="c1">// cache the char sequence</span>
+</span><span class="line">				<span class="n">count</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">seq</span><span class="o">);</span>
+</span><span class="line">			<span class="o">}</span>
+</span><span class="line">			<span class="n">res</span> <span class="o">=</span> <span class="n">res</span> <span class="o">+</span> <span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+</span><span class="line">			<span class="n">curCount</span><span class="o">++;</span>
+</span><span class="line">			<span class="n">pre</span> <span class="o">=</span> <span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+</span><span class="line">		<span class="o">}</span>
+</span><span class="line">		<span class="k">return</span> <span class="n">res</span><span class="o">;</span>
+</span><span class="line">	<span class="o">}</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 <p>若使用 <code>String</code> 作为输入, 则用 charAt 方法获取字符</p>
 </div>
 
@@ -706,6 +682,8 @@ var duoshuoQuery = {short_name:"ralph-wang"};
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2014/08/01/wei-octopress-tian-jia-toc/">为 Octopress 添加 TOC</a>
+    
     <a class="list-group-item " href="/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/">无节操地重新认识多态和IoC</a>
     
     <a class="list-group-item " href="/blog/2014/07/25/cong-vim-zhuan-dao-emacs/">从 Vim 转到 Emacs</a>
@@ -713,8 +691,6 @@ var duoshuoQuery = {short_name:"ralph-wang"};
     <a class="list-group-item " href="/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/">Learning the Bash Shell 笔记-Debug</a>
     
     <a class="list-group-item " href="/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/">Learning the Bash Shell 笔记-杂项</a>
-    
-    <a class="list-group-item " href="/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi/">Learning the Bash Shell 笔记-流控制</a>
     
   </div>
 </section>
@@ -730,7 +706,7 @@ var duoshuoQuery = {short_name:"ralph-wang"};
 <a class='list-group-item' href='/blog/categories/selenium/'>Selenium <span class='badge'>1</span></a>
 <a class='list-group-item' href='/blog/categories/java/'>java <span class='badge'>4</span></a>
 <a class='list-group-item' href='/blog/categories/nodejs/'>nodejs <span class='badge'>1</span></a>
-<a class='list-group-item' href='/blog/categories/octopress/'>octopress <span class='badge'>4</span></a>
+<a class='list-group-item' href='/blog/categories/octopress/'>octopress <span class='badge'>5</span></a>
 <a class='list-group-item' href='/blog/categories/si-wei-dao-tu/'>思维导图 <span class='badge'>1</span></a>
 <a class='list-group-item' href='/blog/categories/shu-ju-ku/'>数据库 <span class='badge'>1</span></a>
 <a class='list-group-item' href='/blog/categories/cheng-xu-she-ji/'>程序设计 <span class='badge'>1</span></a>
@@ -743,16 +719,16 @@ var duoshuoQuery = {short_name:"ralph-wang"};
         <h3 class="panel-title">Tag Clouds</h3>
     </div>
     <ul class="tag-cloud" style="padding-left:10px">
-        <a style="font-size: 100%" href="/tags/jiao-ben-kai-fa/">脚本开发</a>
-<a style="font-size: 100%" href="/tags/jian-kong/">监控</a>
+        <a style="font-size: 100%" href="/tags/getopts/">getopts</a>
+<a style="font-size: 100%" href="/tags/chai-xiang/">拆箱</a>
+<a style="font-size: 100%" href="/tags/selenium/">selenium</a>
+<a style="font-size: 307%" href="/tags/octopress/">octopress</a>
+<a style="font-size: 100%" href="/tags/buffer/">Buffer</a>
+<a style="font-size: 278%" href="/tags/bash/">bash</a>
 <a style="font-size: 100%" href="/tags/boxing/">boxing</a>
-<a style="font-size: 100%" href="/tags/cheng-xu-she-ji/">程序设计,</a>
-<a style="font-size: 100%" href="/tags/awk/">awk</a>
-<a style="font-size: 350%" href="/tags/linux/">Linux</a>
-<a style="font-size: 241%" href="/tags/shell/">shell</a>
-<a style="font-size: 100%" href="/tags/emacs/">Emacs</a>
-<a style="font-size: 100%" href="/tags/tips/">tips</a>
-<a style="font-size: 100%" href="/tags/nodejs/">nodejs</a>
+<a style="font-size: 100%" href="/tags/zhuang-xiang/">装箱</a>
+<a style="font-size: 100%" href="/tags/jiao-ben-kai-fa/">脚本开发</a>
+<a style="font-size: 100%" href="/tags/liu-kong-zhi/">流控制</a>
 
     </ul>
 </section>
@@ -772,16 +748,6 @@ var duoshuoQuery = {short_name:"ralph-wang"};
       style="padding-left:20px"
       ></ul>
   </div>
-</section>
-
-
-<section class="panel panel-default clearfix">
-    <div class="panel-heading">
-        <h3 class="panel-title">Booklist in Douban</h3>
-    </div>
-    <div style="padding-left:40px">
-        <script type="text/javascript" src="http://www.douban.com/service/badge/ralph_ld/?selection=random&amp;picsize=small&amp;show=collection&amp;n=9&amp;cat=book&amp;columns=3&amp;hideself=on"></script>
-    </div>
 </section>
 
 

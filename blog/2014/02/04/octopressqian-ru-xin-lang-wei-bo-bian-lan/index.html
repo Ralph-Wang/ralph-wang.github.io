@@ -167,174 +167,166 @@
 <div class="entry-content clearfix"><p>更换<a href="http://github.com/bkutil/bootstrap-theme"><code>boottrap-theme</code></a>后，边栏只有<strong>最近发表</strong>和<strong>文章分类</strong>两项内容显得有点寒碜。于是想着添加个新浪微博的边栏试试</p>
 
 <!--more-->
-
-
-<h4>使用微博秀服务</h4>
-
-<p>微博提供的一个小工具。点<a href="http://weibo.com/tool/weiboshow">这里</a>查看。</p>
+<p>#### 使用微博秀服务
+微博提供的一个小工具。点<a href="http://weibo.com/tool/weiboshow">这里</a>查看。</p>
 
 <p>从这个工具可以得到一个<code>iframe</code>片段如下：</p>
 
-<figure class='code'><figcaption><span>weiboshow</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;iframe</span> <span class="na">width=</span><span class="s">&quot;100%&quot;</span> <span class="na">height=</span><span class="s">&quot;550&quot;</span> <span class="na">class=</span><span class="s">&quot;share_self&quot;</span>  <span class="na">frameborder=</span><span class="s">&quot;0&quot;</span>
-</span><span class='line'>  <span class="na">scrolling=</span><span class="s">&quot;no&quot;</span>
-</span><span class='line'>  <span class="na">src=</span><span class="s">&quot;http://widget.weibo.com/weiboshow/index.php?language=&amp;</span>
-</span><span class='line'><span class="s">  width=0&amp;</span>
-</span><span class='line'><span class="s">  height=550&amp;</span>
-</span><span class='line'><span class="s">  fansRow=2&amp;</span>
-</span><span class='line'><span class="s">  ptype=1&amp;</span>
-</span><span class='line'><span class="s">  speed=0&amp;</span>
-</span><span class='line'><span class="s">  skin=1&amp;</span>
-</span><span class='line'><span class="s">  isTitle=1&amp;</span>
-</span><span class='line'><span class="s">  noborder=1&amp;</span>
-</span><span class='line'><span class="s">  isWeibo=1&amp;</span>
-</span><span class='line'><span class="s">  isFans=1&amp;</span>
-</span><span class='line'><span class="s">  uid=&amp;</span>
-</span><span class='line'><span class="s">  verifier=&amp;</span>
-</span><span class='line'><span class="s">dpc=1&quot;</span><span class="nt">&gt;&lt;/iframe&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>weiboshow</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line"><span class="nt">&lt;iframe</span> <span class="na">width=</span><span class="s">&quot;100%&quot;</span> <span class="na">height=</span><span class="s">&quot;550&quot;</span> <span class="na">class=</span><span class="s">&quot;share_self&quot;</span>  <span class="na">frameborder=</span><span class="s">&quot;0&quot;</span>
+</span><span class="line">	<span class="na">scrolling=</span><span class="s">&quot;no&quot;</span>
+</span><span class="line">	<span class="na">src=</span><span class="s">&quot;http://widget.weibo.com/weiboshow/index.php?language=&amp;</span>
+</span><span class="line"><span class="s">	width=0&amp;</span>
+</span><span class="line"><span class="s">	height=550&amp;</span>
+</span><span class="line"><span class="s">	fansRow=2&amp;</span>
+</span><span class="line"><span class="s">	ptype=1&amp;</span>
+</span><span class="line"><span class="s">	speed=0&amp;</span>
+</span><span class="line"><span class="s">	skin=1&amp;</span>
+</span><span class="line"><span class="s">	isTitle=1&amp;</span>
+</span><span class="line"><span class="s">	noborder=1&amp;</span>
+</span><span class="line"><span class="s">	isWeibo=1&amp;</span>
+</span><span class="line"><span class="s">	isFans=1&amp;</span>
+</span><span class="line"><span class="s">	uid=&amp;</span>
+</span><span class="line"><span class="s">	verifier=&amp;</span>
+</span><span class="line"><span class="s">dpc=1&quot;</span><span class="nt">&gt;&lt;/iframe&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>src中的链接，就是微博秀的页面。</p>
 
 <p>改造一下，变成<code>octopress</code>的边栏片段：</p>
 
-<figure class='code'><figcaption><span>weibo.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>
-</span><span class='line'><span class="nt">&lt;section</span> <span class="na">class=</span><span class="s">&quot;well&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;nav nav-list&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>      <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;nav-header&quot;</span><span class="nt">&gt;</span>微博<span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>      <span class="nt">&lt;li&gt;&lt;iframe</span> <span class="na">width=</span><span class="s">&quot;100%&quot;</span> <span class="na">height=</span><span class="s">&quot;550&quot;</span> <span class="na">class=</span><span class="s">&quot;share_self&quot;</span>  <span class="na">frameborder=</span><span class="s">&quot;0&quot;</span>
-</span><span class='line'>                      <span class="na">scrolling=</span><span class="s">&quot;no&quot;</span>
-</span><span class='line'>                      <span class="na">src=</span><span class="s">&quot;http://widget.weibo.com/weiboshow/index.php?language=&amp;</span>
-</span><span class='line'><span class="s">                      width=0&amp;</span>
-</span><span class='line'><span class="s">                      height=550&amp;</span>
-</span><span class='line'><span class="s">                      fansRow=2&amp;</span>
-</span><span class='line'><span class="s">                      ptype=1&amp;</span>
-</span><span class='line'><span class="s">                      speed=0&amp;</span>
-</span><span class='line'><span class="s">                      skin=1&amp;</span>
-</span><span class='line'><span class="s">                      isTitle=1&amp;</span>
-</span><span class='line'><span class="s">                      noborder=1&amp;</span>
-</span><span class='line'><span class="s">                      isWeibo=1&amp;</span>
-</span><span class='line'><span class="s">                      isFans=1&amp;</span>
-</span><span class='line'><span class="s">                      uid=1854716251&amp;</span>
-</span><span class='line'><span class="s">                      verifier=&amp;</span>
-</span><span class='line'><span class="s">                      dpc=1&quot;</span><span class="nt">&gt;&lt;/iframe&gt;</span>
-</span><span class='line'>      <span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/ul&gt;</span>
-</span><span class='line'><span class="nt">&lt;/section&gt;</span>
-</span><span class='line'>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>weibo.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">
+</span><span class="line"><span class="nt">&lt;section</span> <span class="na">class=</span><span class="s">&quot;well&quot;</span><span class="nt">&gt;</span>
+</span><span class="line">	<span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;nav nav-list&quot;</span><span class="nt">&gt;</span>
+</span><span class="line">		<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;nav-header&quot;</span><span class="nt">&gt;</span>微博<span class="nt">&lt;/li&gt;</span>
+</span><span class="line">		<span class="nt">&lt;li&gt;&lt;iframe</span> <span class="na">width=</span><span class="s">&quot;100%&quot;</span> <span class="na">height=</span><span class="s">&quot;550&quot;</span> <span class="na">class=</span><span class="s">&quot;share_self&quot;</span>  <span class="na">frameborder=</span><span class="s">&quot;0&quot;</span>
+</span><span class="line">						<span class="na">scrolling=</span><span class="s">&quot;no&quot;</span>
+</span><span class="line">						<span class="na">src=</span><span class="s">&quot;http://widget.weibo.com/weiboshow/index.php?language=&amp;</span>
+</span><span class="line"><span class="s">						width=0&amp;</span>
+</span><span class="line"><span class="s">						height=550&amp;</span>
+</span><span class="line"><span class="s">						fansRow=2&amp;</span>
+</span><span class="line"><span class="s">						ptype=1&amp;</span>
+</span><span class="line"><span class="s">						speed=0&amp;</span>
+</span><span class="line"><span class="s">						skin=1&amp;</span>
+</span><span class="line"><span class="s">						isTitle=1&amp;</span>
+</span><span class="line"><span class="s">						noborder=1&amp;</span>
+</span><span class="line"><span class="s">						isWeibo=1&amp;</span>
+</span><span class="line"><span class="s">						isFans=1&amp;</span>
+</span><span class="line"><span class="s">						uid=1854716251&amp;</span>
+</span><span class="line"><span class="s">						verifier=&amp;</span>
+</span><span class="line"><span class="s">						dpc=1&quot;</span><span class="nt">&gt;&lt;/iframe&gt;</span>
+</span><span class="line">		<span class="nt">&lt;/li&gt;</span>
+</span><span class="line">	<span class="nt">&lt;/ul&gt;</span>
+</span><span class="line"><span class="nt">&lt;/section&gt;</span>
+</span><span class="line">
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>将这个文件保存到<code>custom/asides</code>目录下，并在<code>_config.yml</code>中的<code>default_asides</code>列表中添加<code>custom/asides/weibo.html</code>。</p>
 
-<figure class='code'><figcaption><span>_config.yml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">default_asides</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">custom/asides/weibo.html</span><span class="p-Indicator">,</span> <span class="nv">custom/asides/category_list.html</span><span class="p-Indicator">,</span> <span class="nv">custom/asides/recent_posts.html</span><span class="p-Indicator">]</span>
-</span><span class='line'><span class="nn">...</span>
-</span><span class='line'><span class="c1"># Weibo</span>
-</span><span class='line'><span class="l-Scalar-Plain">weibo_uid</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1854716251</span>
-</span><span class='line'><span class="l-Scalar-Plain">weibo_verifier</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">verifier</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>_config.yml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="yaml"><span class="line"><span class="l-Scalar-Plain">default_asides</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">custom/asides/weibo.html</span><span class="p-Indicator">,</span> <span class="nv">custom/asides/category_list.html</span><span class="p-Indicator">,</span> <span class="nv">custom/asides/recent_posts.html</span><span class="p-Indicator">]</span>
+</span><span class="line"><span class="nn">...</span>
+</span><span class="line">
+</span><span class="line"><span class="c1"># Weibo</span>
+</span><span class="line"><span class="l-Scalar-Plain">weibo_uid</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1854716251</span>
+</span><span class="line"><span class="l-Scalar-Plain">weibo_verifier</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">verifier</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>接下来</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>rake generate
-</span><span class='line'>rake preview
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">rake generate
+</span><span class="line">rake preview
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>访问<code>localhost:4000</code>查看一下效果。</p>
 
 <p>注： <code>default_asides</code>列表中各页面的顺序就是边栏显示的顺序</p>
 
 <hr />
-
-<h4>更新：</h4>
-
-<p>我在使用微博秀的过程中并不稳定，有时显示，有时不显示。不显示的时候直接访问URL又是有效的。</p>
+<p>####更新：
+我在使用微博秀的过程中并不稳定，有时显示，有时不显示。不显示的时候直接访问URL又是有效的。</p>
 
 <p>于是换一种方式, 新的<code>weibo.html</code></p>
 
-<figure class='code'><figcaption><span>weibo.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>
-</span><span class='line'><span class="nt">&lt;section</span> <span class="na">class=</span><span class="s">&quot;well&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">&quot;weibo&quot;</span> <span class="na">class=</span><span class="s">&quot;nav nav-list&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;nav-header&quot;</span><span class="nt">&gt;</span>微博<span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;li&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;iframe</span>
-</span><span class='line'>      <span class="na">width=</span><span class="s">&quot;100%&quot;</span>
-</span><span class='line'>      <span class="na">height=</span><span class="s">&quot;500&quot;</span>
-</span><span class='line'>      <span class="na">frameborder=</span><span class="s">&quot;0&quot;</span>
-</span><span class='line'>      <span class="na">scrolling=</span><span class="s">&quot;no&quot;</span>
-</span><span class='line'>      <span class="na">src=</span><span class="s">&quot;http://service.weibo.com/widget/widget_blog.php?uid=1854716251&amp;height=500&amp;skin=wd_02&amp;showpic=1&quot;</span>
-</span><span class='line'>      <span class="nt">&gt;&lt;/iframe&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/ul&gt;</span>
-</span><span class='line'><span class="nt">&lt;/section&gt;</span>
-</span><span class='line'>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>weibo.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">
+</span><span class="line"><span class="nt">&lt;section</span> <span class="na">class=</span><span class="s">&quot;well&quot;</span><span class="nt">&gt;</span>
+</span><span class="line">  <span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">&quot;weibo&quot;</span> <span class="na">class=</span><span class="s">&quot;nav nav-list&quot;</span><span class="nt">&gt;</span>
+</span><span class="line">    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;nav-header&quot;</span><span class="nt">&gt;</span>微博<span class="nt">&lt;/li&gt;</span>
+</span><span class="line">    <span class="nt">&lt;li&gt;</span>
+</span><span class="line">    <span class="nt">&lt;iframe</span>
+</span><span class="line">      <span class="na">width=</span><span class="s">&quot;100%&quot;</span>
+</span><span class="line">      <span class="na">height=</span><span class="s">&quot;500&quot;</span>
+</span><span class="line">      <span class="na">frameborder=</span><span class="s">&quot;0&quot;</span>
+</span><span class="line">      <span class="na">scrolling=</span><span class="s">&quot;no&quot;</span>
+</span><span class="line">      <span class="na">src=</span><span class="s">&quot;http://service.weibo.com/widget/widget_blog.php?uid=1854716251&amp;height=500&amp;skin=wd_02&amp;showpic=1&quot;</span>
+</span><span class="line">      <span class="nt">&gt;&lt;/iframe&gt;</span>
+</span><span class="line">    <span class="nt">&lt;/li&gt;</span>
+</span><span class="line">  <span class="nt">&lt;/ul&gt;</span>
+</span><span class="line"><span class="nt">&lt;/section&gt;</span>
+</span><span class="line">
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
 
 
@@ -457,6 +449,8 @@ var duoshuoQuery = {short_name:"ralph-wang"};
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2014/08/01/wei-octopress-tian-jia-toc/">为 Octopress 添加 TOC</a>
+    
     <a class="list-group-item " href="/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/">无节操地重新认识多态和IoC</a>
     
     <a class="list-group-item " href="/blog/2014/07/25/cong-vim-zhuan-dao-emacs/">从 Vim 转到 Emacs</a>
@@ -464,8 +458,6 @@ var duoshuoQuery = {short_name:"ralph-wang"};
     <a class="list-group-item " href="/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/">Learning the Bash Shell 笔记-Debug</a>
     
     <a class="list-group-item " href="/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/">Learning the Bash Shell 笔记-杂项</a>
-    
-    <a class="list-group-item " href="/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi/">Learning the Bash Shell 笔记-流控制</a>
     
   </div>
 </section>
@@ -481,7 +473,7 @@ var duoshuoQuery = {short_name:"ralph-wang"};
 <a class='list-group-item' href='/blog/categories/selenium/'>Selenium <span class='badge'>1</span></a>
 <a class='list-group-item' href='/blog/categories/java/'>java <span class='badge'>4</span></a>
 <a class='list-group-item' href='/blog/categories/nodejs/'>nodejs <span class='badge'>1</span></a>
-<a class='list-group-item' href='/blog/categories/octopress/'>octopress <span class='badge'>4</span></a>
+<a class='list-group-item' href='/blog/categories/octopress/'>octopress <span class='badge'>5</span></a>
 <a class='list-group-item' href='/blog/categories/si-wei-dao-tu/'>思维导图 <span class='badge'>1</span></a>
 <a class='list-group-item' href='/blog/categories/shu-ju-ku/'>数据库 <span class='badge'>1</span></a>
 <a class='list-group-item' href='/blog/categories/cheng-xu-she-ji/'>程序设计 <span class='badge'>1</span></a>
@@ -494,16 +486,16 @@ var duoshuoQuery = {short_name:"ralph-wang"};
         <h3 class="panel-title">Tag Clouds</h3>
     </div>
     <ul class="tag-cloud" style="padding-left:10px">
-        <a style="font-size: 100%" href="/tags/debug/">debug</a>
+        <a style="font-size: 100%" href="/tags/ming-ling/">命令</a>
+<a style="font-size: 100%" href="/tags/si-wei-xun-lian/">思维训练</a>
+<a style="font-size: 241%" href="/tags/shell/">shell</a>
+<a style="font-size: 350%" href="/tags/linux/">Linux</a>
 <a style="font-size: 100%" href="/tags/gong-ju/">工具</a>
-<a style="font-size: 100%" href="/tags/bian-liang/">变量</a>
-<a style="font-size: 189%" href="/tags/mysql/">MySQL</a>
-<a style="font-size: 100%" href="/tags/liu-kong-zhi/">流控制</a>
-<a style="font-size: 100%" href="/tags/xian-cheng/">线程</a>
-<a style="font-size: 189%" href="/tags/kuo-zhan/">扩展</a>
-<a style="font-size: 100%" href="/tags/jiao-ben-kai-fa/">脚本开发</a>
-<a style="font-size: 100%" href="/tags/buffer/">Buffer</a>
-<a style="font-size: 100%" href="/tags/webdriver/">webdriver</a>
+<a style="font-size: 100%" href="/tags/jmeter/">Jmeter</a>
+<a style="font-size: 100%" href="/tags/zhai-yao/">摘要</a>
+<a style="font-size: 100%" href="/tags/zhuang-xiang/">装箱</a>
+<a style="font-size: 100%" href="/tags/rdbms/">RDBMS</a>
+<a style="font-size: 100%" href="/tags/shu-ju-lei-xing/">数据类型</a>
 
     </ul>
 </section>
@@ -523,16 +515,6 @@ var duoshuoQuery = {short_name:"ralph-wang"};
       style="padding-left:20px"
       ></ul>
   </div>
-</section>
-
-
-<section class="panel panel-default clearfix">
-    <div class="panel-heading">
-        <h3 class="panel-title">Booklist in Douban</h3>
-    </div>
-    <div style="padding-left:40px">
-        <script type="text/javascript" src="http://www.douban.com/service/badge/ralph_ld/?selection=random&amp;picsize=small&amp;show=collection&amp;n=9&amp;cat=book&amp;columns=3&amp;hideself=on"></script>
-    </div>
 </section>
 
 

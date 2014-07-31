@@ -164,92 +164,87 @@
   </header>
 
 
-<div class="entry-content clearfix"><p>用 top + jstack 定位 java 线程问题</p>
+<div class="entry-content clearfix"><p>用 top + jstack 定位 java 线程问题
+<!--more--></p>
 
-<!--more-->
+<h3 id="section">1. 需要定位的程序</h3>
 
+<p>首先, 写一个用于计算并输出蜚波那契数列的 java 程序, 大致的输出信息如下.</p>
 
-<h3>1. 需要定位的程序</h3>
+<p><img src="/blogimgs/thread-fb.png" alt="Fibonacci" title="a Fibonacci Thread" /></p>
 
-<p>首先, 写一个用于计算并输出蜚波那契数列的 java 程序, 大致的输出信息如下.
-<img src="/blogimgs/thread-fb.png" title="a Fibonacci Thread" alt="Fibonacci" />
-这里特意写成<strong>死循环</strong>, 让它不停地去消耗 CPU</p>
+<p>这里特意写成<strong>死循环</strong>, 让它不停地去消耗 CPU</p>
 
-<h3>2. 用 top 命令定位进程号</h3>
-
+<h3 id="top-">2. 用 top 命令定位进程号</h3>
 <p>程序运行起来之后, 就该 <code>top</code> 命令出场了.</p>
 
 <p>直接在命令行中输入</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$top</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$top</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>看 <code>top</code> 命令的输出
-<img src="/blogimgs/thread-top.png" title="use top" alt="use top" />
+<img src="/blogimgs/thread-top.png" alt="use top" title="use top" />
 看到消耗 CPU 最高的就是一个 java 进程.</p>
 
 <p>OK, 记下进程号 <strong>100162</strong></p>
 
-<blockquote><p>补充:</p>
+<blockquote>
+  <p>补充:  <br />
+&gt; <code>top</code> 添加 -c 参数可以查看到命令的参数信息  <br />
+&gt; 这样可以看到 java 具体执行的类, 定位更准确</p>
+</blockquote>
 
-<blockquote><p><code>top</code> 添加 -c 参数可以查看到命令的参数信息</p>
+<h3 id="top--h--p-">3. 用 top -H -p 命令定位到线程号</h3>
+<p>现在, 我们知道消耗 CPU 最高的进程是哪个了. </p>
 
-<p>这样可以看到 java 具体执行的类, 定位更准确</p></blockquote></blockquote>
-
-<h3>3. 用 top -H -p 命令定位到线程号</h3>
-
-<p>现在, 我们知道消耗 CPU 最高的进程是哪个了.</p>
-
-<p>但我们还不知道具体是哪个线程的问题, 所以不着急用 <code>jstack</code> 去获取 java 进程快照.</p>
+<p>但我们还不知道具体是哪个线程的问题, 所以不着急用 <code>jstack</code> 去获取 java 进程快照. </p>
 
 <p>再次使用 <code>top</code> 命令, 不过, 这次我们加上 <code>-H -p</code> 参数来查看线程运行情况.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>top -H -p 100162
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>top -H -p 100162
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-
-<blockquote><p>注: <em>也可以 <code>top -p &lt;pid&gt;</code> 后再敲 H 打开子线程信息</em></p></blockquote>
+<blockquote>
+  <p>注: <em>也可以 <code>top -p &lt;pid&gt;</code> 后再敲 H 打开子线程信息</em></p>
+</blockquote>
 
 <p>这次, 得到如下图的结果:
-<img src="/blogimgs/thread-topHp.png" title="use top -H -p &lt;pid&gt;" alt="use top -H -p (pid)" /></p>
+<img src="/blogimgs/thread-topHp.png" alt="use top -H -p (pid)" title="use top -H -p &lt;pid&gt;" /></p>
 
 <p>消耗 CPU 最高的不再是 100162 了. 可以清楚的看到是线程 <strong>100172</strong></p>
 
-<h3>4. 用 jstack 定位到代码行</h3>
-
+<h3 id="jstack-">4. 用 jstack 定位到代码行</h3>
 <p>下面, 就可以用 <code>jstack</code> 来导出进程的堆栈信息了.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$jstack</span> 100162
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$jstack</span> 100162
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <ul>
-<li>这里不能直接使用 <code>jstack 100172</code>的形式, jstack 似乎只能对<strong>主线程</strong>使用</li>
-<li>jstack 不能导出堆栈问题解决: <a href="http://www.haply.info/blog/archives/305">jstack 不能导出堆栈</a></li>
+  <li>这里不能直接使用 <code>jstack 100172</code>的形式, jstack 似乎只能对<strong>主线程</strong>使用</li>
+  <li>jstack 不能导出堆栈问题解决: <a href="http://www.haply.info/blog/archives/305">jstack 不能导出堆栈</a></li>
 </ul>
-
 
 <p>然后, 在堆栈信息中找到 nid=0x27bc(100172 的 16 进制) 的线程.</p>
 
 <p>就是下面的 <strong>Thread-0</strong> 线程了</p>
 
-<p><img src="/blogimgs/thread-jstack.png" title="use jstack" alt="use jstack" /></p>
+<p><img src="/blogimgs/thread-jstack.png" alt="use jstack" title="use jstack" /></p>
 
 <p>全是 <code>Fibonacci.calcFibo (testJstack.java:28)</code></p>
 
-<p>定位源码文件 <code>testJstack.java</code> 第 28 行, 最土最慢最二的蜚波那契数列算法&hellip;</p>
+<p>定位源码文件 <code>testJstack.java</code> 第 28 行, 最土最慢最二的蜚波那契数列算法…</p>
 
-<p><img src="/blogimgs/thread-28.png" title="get the criminal" alt="get the criminal" /></p>
+<p><img src="/blogimgs/thread-28.png" alt="get the criminal" title="get the criminal" /></p>
 
 <p>问题定位结束</p>
 
 <p>上完整源码</p>
 
-<div><script src='https://gist.github.com/9290490.js?file=testJstack.java'></script>
+<div><script src="https://gist.github.com/9290490.js?file=testJstack.java"></script>
 <noscript><pre><code>public class testJstack {
     public static void main(String[] args) {
         Thread t = new Thread(new Fibonacci());
@@ -282,8 +277,6 @@ class Fibonacci implements Runnable {
     }
 }
 </code></pre></noscript></div>
-
-
 
 </div>
 
@@ -407,6 +400,8 @@ var duoshuoQuery = {short_name:"ralph-wang"};
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2014/08/01/wei-octopress-tian-jia-toc/">为 Octopress 添加 TOC</a>
+    
     <a class="list-group-item " href="/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/">无节操地重新认识多态和IoC</a>
     
     <a class="list-group-item " href="/blog/2014/07/25/cong-vim-zhuan-dao-emacs/">从 Vim 转到 Emacs</a>
@@ -414,8 +409,6 @@ var duoshuoQuery = {short_name:"ralph-wang"};
     <a class="list-group-item " href="/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/">Learning the Bash Shell 笔记-Debug</a>
     
     <a class="list-group-item " href="/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/">Learning the Bash Shell 笔记-杂项</a>
-    
-    <a class="list-group-item " href="/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi/">Learning the Bash Shell 笔记-流控制</a>
     
   </div>
 </section>
@@ -431,7 +424,7 @@ var duoshuoQuery = {short_name:"ralph-wang"};
 <a class='list-group-item' href='/blog/categories/selenium/'>Selenium <span class='badge'>1</span></a>
 <a class='list-group-item' href='/blog/categories/java/'>java <span class='badge'>4</span></a>
 <a class='list-group-item' href='/blog/categories/nodejs/'>nodejs <span class='badge'>1</span></a>
-<a class='list-group-item' href='/blog/categories/octopress/'>octopress <span class='badge'>4</span></a>
+<a class='list-group-item' href='/blog/categories/octopress/'>octopress <span class='badge'>5</span></a>
 <a class='list-group-item' href='/blog/categories/si-wei-dao-tu/'>思维导图 <span class='badge'>1</span></a>
 <a class='list-group-item' href='/blog/categories/shu-ju-ku/'>数据库 <span class='badge'>1</span></a>
 <a class='list-group-item' href='/blog/categories/cheng-xu-she-ji/'>程序设计 <span class='badge'>1</span></a>
@@ -444,16 +437,16 @@ var duoshuoQuery = {short_name:"ralph-wang"};
         <h3 class="panel-title">Tag Clouds</h3>
     </div>
     <ul class="tag-cloud" style="padding-left:10px">
-        <a style="font-size: 100%" href="/tags/getopts/">getopts</a>
-<a style="font-size: 350%" href="/tags/linux/">Linux</a>
-<a style="font-size: 100%" href="/tags/xing-neng-ce-shi/">性能测试</a>
-<a style="font-size: 100%" href="/tags/java/">Java</a>
-<a style="font-size: 100%" href="/tags/xian-cheng/">线程</a>
+        <a style="font-size: 100%" href="/tags/she-ji-mo-shi/">设计模式</a>
+<a style="font-size: 100%" href="/tags/webdriver/">webdriver</a>
+<a style="font-size: 100%" href="/tags/duo-tai/">多态</a>
+<a style="font-size: 100%" href="/tags/jiao-ben-kai-fa/">脚本开发</a>
+<a style="font-size: 100%" href="/tags/si-wei-xun-lian/">思维训练</a>
+<a style="font-size: 100%" href="/tags/make/">make</a>
 <a style="font-size: 100%" href="/tags/huan-jing-bian-liang/">环境变量</a>
-<a style="font-size: 100%" href="/tags/selenium/">selenium</a>
-<a style="font-size: 100%" href="/tags/chai-xiang/">拆箱</a>
-<a style="font-size: 100%" href="/tags/jian-kong/">监控</a>
-<a style="font-size: 100%" href="/tags/mongodb/">MongoDB</a>
+<a style="font-size: 100%" href="/tags/liu-kong-zhi/">流控制</a>
+<a style="font-size: 100%" href="/tags/zhuang-xiang/">装箱</a>
+<a style="font-size: 100%" href="/tags/mian-shi/">面试</a>
 
     </ul>
 </section>
@@ -473,16 +466,6 @@ var duoshuoQuery = {short_name:"ralph-wang"};
       style="padding-left:20px"
       ></ul>
   </div>
-</section>
-
-
-<section class="panel panel-default clearfix">
-    <div class="panel-heading">
-        <h3 class="panel-title">Booklist in Douban</h3>
-    </div>
-    <div style="padding-left:40px">
-        <script type="text/javascript" src="http://www.douban.com/service/badge/ralph_ld/?selection=random&amp;picsize=small&amp;show=collection&amp;n=9&amp;cat=book&amp;columns=3&amp;hideself=on"></script>
-    </div>
 </section>
 
 

@@ -4,7 +4,7 @@
   <title><![CDATA[分类: 程序设计 | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//blog/categories/cheng-xu-she-ji/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-07-30T19:58:16+08:00</updated>
+  <updated>2014-08-01T01:46:51+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -22,18 +22,22 @@
 
 <!--more-->
 
+<ul id="markdown-toc">
+  <li><a href="#ioc-">IoC 简介</a></li>
+  <li><a href="#section">无节操的例子</a></li>
+</ul>
 
 <p>刚转这篇微博的时候, 确实只意识到它用了多态特性.</p>
 
 <p>在自己尝试写一个 Python 版的时候, 才意识到其实这里面更多的在表达 IoC 的设计思路</p>
 
-<h2>IoC 简介</h2>
+<h2 id="ioc-">IoC 简介</h2>
 
 <p><code>IoC</code> 的全称是 <code>Inversion of Control</code> 译过来就是控制返转.</p>
 
 <p><a href="http://coolshell.cn/articles/9949.html" title="酷壳">酷壳</a>有一个比较好的例子, 我这里就不重复造轮子了.</p>
 
-<h2>无节操的例子</h2>
+<h2 id="section">无节操的例子</h2>
 
 <p>这里我们详细谈一下<a href="http://weibo.com/1854716251/BfnE2jSR9" title="PHP版">起源</a>里的例子是怎么回事:</p>
 
@@ -43,77 +47,64 @@
 
 <p>这样如果用代码表示的话可能就是下面这样</p>
 
-<p>```python
+<p><code>python
 def meet(hanzi):
    hanzi.flower()
-   if isinstance(hanzi, GFS):</p>
-
-<pre><code>   print '啪啪啪啪啪啪啪啪'
-</code></pre>
-
-<p>   elif isinstance(hanzi, DS):</p>
-
-<pre><code>   print '啪'
-</code></pre>
-
-<p>```</p>
+   if isinstance(hanzi, GFS):
+       print '啪啪啪啪啪啪啪啪'
+   elif isinstance(hanzi, DS):
+       print '啪'
+</code></p>
 
 <p>而 IoC 的理解思路却是这样的:</p>
 
-<blockquote><p><em>控制权其实在 <code>hanzi</code> 这边, 妹子对汉子的表达是相同的, 但因为 <code>hanzi</code> 的不同而产生了不同结果而已</em></p></blockquote>
+<blockquote>
+  <p><em>控制权其实在 <code>hanzi</code> 这边, 妹子对汉子的表达是相同的, 但因为 <code>hanzi</code> 的不同而产生了不同结果而已</em></p>
+</blockquote>
 
 <p>用代码来表达就是这样</p>
 
-<p>```python
-class Meizi(object):</p>
-
-<pre><code>def meet(hanzi):
-    hanzi.flower()
-    hanzi.chu()
-</code></pre>
-
-<p>```</p>
+<p><code>python
+class Meizi(object):
+    def meet(hanzi):
+        hanzi.flower()
+        hanzi.chu()
+</code></p>
 
 <p><code>Meizi</code> 这边的代码是不是就变得非常干净了, 那汉子在 chu 之后的结果就不在妹子这里控制了.</p>
 
 <p>至于发生了什么, 我们来看一下 <code>Hanzi</code> 们的具体实现</p>
 
 <p>```python
-class Hanzi(object):</p>
+class Hanzi(object):
+    ‘Abstract class Hanzi’
+    def flower(self):
+        print ‘妹子笑了…’</p>
 
-<pre><code>'Abstract class Hanzi'
-def flower(self):
-    print '妹子笑了...'
-
-def chu(self):
+<pre><code>def chu(self):
     raise NotImplementedError('Abstract Method chu not implemented yet')
 </code></pre>
 
-<p>class GFS(Hanzi):</p>
+<p>class GFS(Hanzi):
+    def chu(self):
+        print ‘啪啪啪啪啪啪啪啪’</p>
 
-<pre><code>def chu(self):
-    print '啪啪啪啪啪啪啪啪'
-</code></pre>
-
-<p>class DS(Hanzi):</p>
-
-<pre><code>def chu(self):
-    print '啪'
-</code></pre>
-
-<p>```</p>
+<p>class DS(Hanzi):
+    def chu(self):
+        print ‘啪’
+```</p>
 
 <p><strong>看, 结果的不同是因为 <code>Hanzi</code> 自己的属性, 而不是妹子的选择.</strong></p>
 
 <p>这就是 IoC 的本质了<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.</p>
-<div class="footnotes">
-<hr/>
-<ol>
-<li id="fn:1">
-<p>其实是把妹的本质吧, 喂!!<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
-</ol>
-</div>
 
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>其实是把妹的本质吧, 喂!!<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
 ]]></content>
   </entry>
   

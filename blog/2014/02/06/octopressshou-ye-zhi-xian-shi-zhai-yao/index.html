@@ -166,67 +166,66 @@
 
 <div class="entry-content clearfix"><p>上一篇博客比较长，发现首页居然照样显示了全文</p>
 
-<p>于时查找了下如何只显示摘要</p>
-
+<p>于时查找了下如何只显示摘要
 <!--more-->
-
-
-<p>实现方式很简单:</p>
+实现方式很简单:</p>
 
 <ul>
-<li><p>在博客文档中添加<code>&lt;!--more--&gt;</code>即可</p></li>
-<li><p>添加之后，首页文章后会添加一个<code>read on</code>链接，指向文章页面</p></li>
-<li><p>并且只有<code>&lt;!--more--&gt;</code>前的内容人显示到首页</p></li>
+  <li>
+    <p>在博客文档中添加<code>&lt;!--more--&gt;</code>即可</p>
+  </li>
+  <li>
+    <p>添加之后，首页文章后会添加一个<code>read on</code>链接，指向文章页面</p>
+  </li>
+  <li>
+    <p>并且只有<code>&lt;!--more--&gt;</code>前的内容人显示到首页</p>
+  </li>
 </ul>
-
 
 <p>像这样</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>上一篇博客比较长，发现首页居然照样显示了全文
-</span><span class='line'>
-</span><span class='line'>于时查找了下如何只显示摘要
-</span><span class='line'>&lt;!--more--&gt;
-</span><span class='line'>实现方式很简单:
-</span><span class='line'>
-</span><span class='line'>* 在博客文档中添加`&lt;!--more--&gt;`即可
-</span><span class='line'>
-</span><span class='line'>* 添加之后，首页文章后会添加一个`read on`链接，指向文章页面
-</span><span class='line'>
-</span><span class='line'>* 并且只有`&lt;!--more--&gt;`前的内容人显示到首页</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">上一篇博客比较长，发现首页居然照样显示了全文
+</span><span class="line">
+</span><span class="line">于时查找了下如何只显示摘要
+</span><span class="line">&lt;!--more--&gt;
+</span><span class="line">实现方式很简单:
+</span><span class="line">
+</span><span class="line">* 在博客文档中添加`&lt;!--more--&gt;`即可
+</span><span class="line">
+</span><span class="line">* 添加之后，首页文章后会添加一个`read on`链接，指向文章页面
+</span><span class="line">
+</span><span class="line">* 并且只有`&lt;!--more--&gt;`前的内容人显示到首页</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-
-<h4>　懒人做法</h4>
+<h4 id="section">　懒人做法</h4>
 
 <p>修改<code>Rakefile</code>，使写新文章时自动添加一个<code>&lt;!--more--&gt;</code></p>
 
-<figure class='code'><figcaption><span>Rakefile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;date: </span><span class="si">#{</span><span class="no">Time</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-%d %H:%M:%S %z&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span class='line'><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;comments: true&quot;</span>
-</span><span class='line'><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;categories: &quot;</span>
-</span><span class='line'><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;---&quot;</span>
-</span><span class='line'><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;&quot;</span>
-</span><span class='line'><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;&quot;</span>
-</span><span class='line'><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;&lt;!--more--&gt;&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>Rakefile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;date: </span><span class="si">#{</span><span class="no">Time</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-%d %H:%M:%S %z&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class="line"><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;comments: true&quot;</span>
+</span><span class="line"><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;categories: &quot;</span>
+</span><span class="line"><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;---&quot;</span>
+</span><span class="line"><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;&quot;</span>
+</span><span class="line"><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;&quot;</span>
+</span><span class="line"><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;&lt;!--more--&gt;&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 </div>
 
@@ -350,6 +349,8 @@ var duoshuoQuery = {short_name:"ralph-wang"};
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2014/08/01/wei-octopress-tian-jia-toc/">为 Octopress 添加 TOC</a>
+    
     <a class="list-group-item " href="/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/">无节操地重新认识多态和IoC</a>
     
     <a class="list-group-item " href="/blog/2014/07/25/cong-vim-zhuan-dao-emacs/">从 Vim 转到 Emacs</a>
@@ -357,8 +358,6 @@ var duoshuoQuery = {short_name:"ralph-wang"};
     <a class="list-group-item " href="/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/">Learning the Bash Shell 笔记-Debug</a>
     
     <a class="list-group-item " href="/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/">Learning the Bash Shell 笔记-杂项</a>
-    
-    <a class="list-group-item " href="/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi/">Learning the Bash Shell 笔记-流控制</a>
     
   </div>
 </section>
@@ -374,7 +373,7 @@ var duoshuoQuery = {short_name:"ralph-wang"};
 <a class='list-group-item' href='/blog/categories/selenium/'>Selenium <span class='badge'>1</span></a>
 <a class='list-group-item' href='/blog/categories/java/'>java <span class='badge'>4</span></a>
 <a class='list-group-item' href='/blog/categories/nodejs/'>nodejs <span class='badge'>1</span></a>
-<a class='list-group-item' href='/blog/categories/octopress/'>octopress <span class='badge'>4</span></a>
+<a class='list-group-item' href='/blog/categories/octopress/'>octopress <span class='badge'>5</span></a>
 <a class='list-group-item' href='/blog/categories/si-wei-dao-tu/'>思维导图 <span class='badge'>1</span></a>
 <a class='list-group-item' href='/blog/categories/shu-ju-ku/'>数据库 <span class='badge'>1</span></a>
 <a class='list-group-item' href='/blog/categories/cheng-xu-she-ji/'>程序设计 <span class='badge'>1</span></a>
@@ -387,16 +386,16 @@ var duoshuoQuery = {short_name:"ralph-wang"};
         <h3 class="panel-title">Tag Clouds</h3>
     </div>
     <ul class="tag-cloud" style="padding-left:10px">
-        <a style="font-size: 100%" href="/tags/mian-shi/">面试</a>
-<a style="font-size: 100%" href="/tags/zhai-yao/">摘要</a>
+        <a style="font-size: 100%" href="/tags/gong-ju/">工具</a>
+<a style="font-size: 100%" href="/tags/webdriver/">webdriver</a>
+<a style="font-size: 100%" href="/tags/guan-dao/">管道</a>
+<a style="font-size: 100%" href="/tags/editor/">Editor</a>
+<a style="font-size: 189%" href="/tags/bian-lan/">边栏</a>
 <a style="font-size: 189%" href="/tags/jvm/">jvm</a>
-<a style="font-size: 100%" href="/tags/nodejs/">nodejs</a>
-<a style="font-size: 189%" href="/tags/mysql/">MySQL</a>
-<a style="font-size: 100%" href="/tags/suo-yin/">索引</a>
-<a style="font-size: 100%" href="/tags/xing-neng/">性能</a>
-<a style="font-size: 100%" href="/tags/emacs/">Emacs</a>
-<a style="font-size: 100%" href="/tags/jian-kong/">监控</a>
-<a style="font-size: 100%" href="/tags/nosql/">NoSQL</a>
+<a style="font-size: 278%" href="/tags/java/">java</a>
+<a style="font-size: 100%" href="/tags/make/">make</a>
+<a style="font-size: 100%" href="/tags/toc/">toc</a>
+<a style="font-size: 100%" href="/tags/java/">Java</a>
 
     </ul>
 </section>
@@ -416,16 +415,6 @@ var duoshuoQuery = {short_name:"ralph-wang"};
       style="padding-left:20px"
       ></ul>
   </div>
-</section>
-
-
-<section class="panel panel-default clearfix">
-    <div class="panel-heading">
-        <h3 class="panel-title">Booklist in Douban</h3>
-    </div>
-    <div style="padding-left:40px">
-        <script type="text/javascript" src="http://www.douban.com/service/badge/ralph_ld/?selection=random&amp;picsize=small&amp;show=collection&amp;n=9&amp;cat=book&amp;columns=3&amp;hideself=on"></script>
-    </div>
 </section>
 
 

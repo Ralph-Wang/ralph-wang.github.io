@@ -4,7 +4,7 @@
   <title><![CDATA[标签: 环境变量 | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/huan-jing-bian-liang/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-07-30T19:58:16+08:00</updated>
+  <updated>2014-08-01T01:46:51+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -19,14 +19,13 @@
     <updated>2014-03-06T14:18:22+08:00</updated>
     <id>http://Ralph-Wang.github.io/blog/2014/03/06/yong-awk-cha-kan-path-huan-jing-bian-liang</id>
     <content type="html"><![CDATA[<!--more-->
-
-
 <p>查看 PATH 环境变量是件痛苦的事情.</p>
 
 <p>用 <code>echo</code> 直接显示时, 输出只有一行, 查看起来很费神</p>
 
-<p>如下图
-<code>bash
+<p>如下图</p>
+
+<p><code>bash
 $echo $PATH
 </code></p>
 
@@ -44,10 +43,10 @@ $echo $PATH | awk 'BEGIN {RS=":"} {print $0}'
 
 <hr />
 
-<h4>2014-05-11 更新</h4>
+<h4 id="section">2014-05-11 更新</h4>
+<p>今天才发现, 其实有更简单的办法… Orz</p>
 
-<p>今天才发现, 其实有更简单的办法&hellip; Orz
-<code>bash
+<p><code>bash
 echo $PAHT |tr : '\n'
 </code></p>
 ]]></content>

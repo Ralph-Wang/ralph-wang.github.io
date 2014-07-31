@@ -4,7 +4,7 @@
   <title><![CDATA[标签: 数据类型 | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/shu-ju-lei-xing/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-07-30T19:58:16+08:00</updated>
+  <updated>2014-08-01T01:46:51+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -22,16 +22,14 @@
 
 <p>另外地，<strong>基本类型</strong>们都有其对应的<strong>封装类</strong>。</p>
 
-<p>比如： <code>int</code> &ndash;> <code>Integer</code></p>
-
-<!--more-->
-
+<p>比如： <code>int</code> -&gt; <code>Integer</code>
+<!--more--></p>
 
 <p>将<strong>基本类型</strong>转换成其对应的<strong>封装类</strong>的过程，就叫做装箱(Boxing)。</p>
 
 <p>反之，就叫拆箱(Unboxing)。</p>
 
-<h2>Auto Boxing &amp;&amp; Unboxing</h2>
+<h2 id="auto-boxing--unboxing">Auto Boxing &amp;&amp; Unboxing</h2>
 
 <p>因为每次显示的装箱、拆箱过于麻烦，从<code>JDK 5</code>开始，Java　提供了自动装箱、拆箱(Auto Boxing &amp; Unboxing)</p>
 
@@ -51,12 +49,11 @@ int j = new Integer(100); //Unboxing
 <p>类似的其它基本类型的范围：</p>
 
 <ul>
-<li><code>boolean</code> : 装箱后总是指向同一对象</li>
-<li><code>long</code> : -128L~127 之间，装箱后指向同一对象</li>
-<li><code>float</code> : 总是产生新对象</li>
-<li><code>double</code> : 总是产生新对象</li>
+  <li><code>boolean</code> : 装箱后总是指向同一对象</li>
+  <li><code>long</code> : -128L~127 之间，装箱后指向同一对象</li>
+  <li><code>float</code> : 总是产生新对象</li>
+  <li><code>double</code> : 总是产生新对象</li>
 </ul>
-
 
 <p>下面是测试代码：
 <div><script src='https://gist.github.com/8900088.js'></script>

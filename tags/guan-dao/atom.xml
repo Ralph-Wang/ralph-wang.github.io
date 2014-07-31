@@ -4,7 +4,7 @@
   <title><![CDATA[标签: 管道 | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/guan-dao/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-07-30T19:58:16+08:00</updated>
+  <updated>2014-08-01T01:46:51+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -18,25 +18,20 @@
     <link href="http://Ralph-Wang.github.io/blog/2014/04/14/fen-xi-yi-ge-linux-ming-ling/"/>
     <updated>2014-04-14T22:44:14+08:00</updated>
     <id>http://Ralph-Wang.github.io/blog/2014/04/14/fen-xi-yi-ge-linux-ming-ling</id>
-    <content type="html"><![CDATA[<p>通过拆解查看 CPU 信息的组合命令, 来学习每个独立命令</p>
+    <content type="html"><![CDATA[<p>通过拆解查看 CPU 信息的组合命令, 来学习每个独立命令
+<!--more--></p>
 
-<!--more-->
+<h2 id="cpu-">查看 CPU 型号及数量</h2>
+<p>原命令</p>
 
+<p><code>bash
+cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c
+</code></p>
 
-<h2>查看 CPU 型号及数量</h2>
-
-<p>原命令
-```bash</p>
-
-<h1>cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c</h1>
-
-<p>```
-cat 和 grep 就不多说了</p>
-
-<h3>cut:</h3>
-
-<p>help 中的说明是 <strong> Print selected parts of lines from each FILE to standard
-output </strong> .  输出所有选中的行</p>
+<p>cat 和 grep 就不多说了
+### cut:
+help 中的说明是 ** Print selected parts of lines from each FILE to standard
+output ** .  输出所有选中的行</p>
 
 <p><code>-f2</code> 是选中第二列, 换成<code>--fields=2</code>也是可以的.</p>
 
@@ -46,9 +41,8 @@ output </strong> .  输出所有选中的行</p>
 
 <p><code>-s</code> 不包含分割符的不输出</p>
 
-<h3>uniq:</h3>
-
-<p>man 中的说明 <strong> report or omit repeated lines </strong> . 实际就是去除重复行</p>
+<h3 id="uniq">uniq:</h3>
+<p>man 中的说明 ** report or omit repeated lines ** . 实际就是去除重复行</p>
 
 <p><code>-c</code> 表示在输出行前加上其在原文件中出现的次数</p>
 
@@ -75,6 +69,7 @@ output </strong> .  输出所有选中的行</p>
 <p><em>其它:</em></p>
 
 <p><code>-z</code> 以 0 作为行末</p>
+
 ]]></content>
   </entry>
   

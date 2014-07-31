@@ -167,31 +167,26 @@
 <div class="entry-content clearfix"><p>监控 Java 线程时，首先要关注的就是线程的运行状态。</p>
 
 <!--more-->
-
-
-<p>一般来说，Java 线程有 6 种状态：</p>
+<p>一般来说，Java 线程有 6 种状态： </p>
 
 <ol>
-<li>NEW</li>
-<li>RUNNABLE</li>
-<li>WAITING &amp; TIMED_WAITING</li>
-<li>SLEEP</li>
-<li>TERMINATED</li>
-<li>BLOCK</li>
+  <li>NEW</li>
+  <li>RUNNABLE</li>
+  <li>WAITING &amp; TIMED_WAITING</li>
+  <li>SLEEP</li>
+  <li>TERMINATED</li>
+  <li>BLOCK</li>
 </ol>
-
 
 <p>下面，用代码示例一下各个状态</p>
 
-<h3>1. NEW &amp; TERMINATED</h3>
-
+<h3 id="new--terminated">1. NEW &amp; TERMINATED</h3>
 <p>这两个状态比较特殊，分别出现在线程<strong>运行之前</strong>和线程<strong>运行之后</strong>。</p>
 
 <p>这里所说的<strong>运行</strong>指调用线程的<code>start()</code>方法。</p>
 
 <p>代码：</p>
-
-<div><script src='https://gist.github.com/8839097.js?file=NT.java'></script>
+<div><script src="https://gist.github.com/8839097.js?file=NT.java"></script>
 <noscript><pre><code>public class NT {
     public static void main(String[] args) {
         Thread t = new Thread();
@@ -210,18 +205,15 @@
 }
 </code></pre></noscript></div>
 
-
 <p>虽然没有重写<code>run</code>方法，线程会很快结束。但如果在<code>start()</code>后直接调用<code>getState()</code>的话，仍然会返回<strong>RUNNABLE</strong>，所以耐心的等上一秒吧。</p>
 
-<h3>2. RUNNABLE</h3>
-
+<h3 id="runnable">2. RUNNABLE</h3>
 <p>我们开线程的目的就是要让它跑起来，所以这个状态可以说是线程的主要状态。</p>
 
 <p>它表示线程正如我们预期的一样正在运行。</p>
 
 <p>代码：</p>
-
-<div><script src='https://gist.github.com/8839097.js?file=Runnable.java'></script>
+<div><script src="https://gist.github.com/8839097.js?file=Runnable.java"></script>
 <noscript><pre><code>public class Runnable {
     public static void main(String[] args) {
         Thread t = new Thread(){
@@ -243,7 +235,6 @@
 }
 </code></pre></noscript></div>
 
-
 <p>运行时，程序会在标准输出里不断输出 <strong>running</strong>。</p>
 
 <p>下面是用 <strong>jvisualvm</strong> 监控到的情况：</p>
@@ -252,15 +243,13 @@
 
 <p>图中的 <strong>runnable</strong> 线程就是我们在代码中启动的线程。</p>
 
-<h3>3. SLEEP</h3>
-
+<h3 id="sleep">3. SLEEP</h3>
 <p><strong>休眠</strong>状态下，线程不能被唤醒；必须等到休眠时间结束线程才能回到可执行状态。</p>
 
 <p>让线程进入状态需要调用<code>Thread</code>类的<code>sleep</code>方法。调用时指定好需要休眠的时间，线程就可以美美的睡上一觉了。</p>
 
 <p>代码：</p>
-
-<div><script src='https://gist.github.com/8839097.js?file=Sleep.java'></script>
+<div><script src="https://gist.github.com/8839097.js?file=Sleep.java"></script>
 <noscript><pre><code>public class Sleep {
     public static void main(String[] args) {
         Thread t = new Thread() {
@@ -287,25 +276,24 @@
 }
 </code></pre></noscript></div>
 
-
 <p><strong>jvisualvm</strong> 中的情况：</p>
 
 <p><img src="/blogimgs/status-sleep.png" alt="sleep" /></p>
 
 <p>注：如果用<strong>线程 dump</strong> 查看，会发现 sleep 线程标示的是 <strong>TIMED_WATING</strong></p>
 
-<blockquote><p>&mdash;-更新&mdash;&ndash;  <br/>
-但在 <strong>TIMED_WATING</strong> 后会显示 (sleeping) 作为与 wait 调用的区分</p></blockquote>
+<blockquote>
+  <p>—更新—  <br />
+但在 <strong>TIMED_WATING</strong> 后会显示 (sleeping) 作为与 wait 调用的区分    </p>
+</blockquote>
 
-<h3>4.WAITING &amp; TIMED_WAITING</h3>
-
+<h3 id="waiting--timedwaiting">4.WAITING &amp; TIMED_WAITING</h3>
 <p>和休眠类似，等待状态下的线程也没有在运行。但是等待下的线程可以随时被唤醒。</p>
 
 <p><strong>WAITING</strong> 和 <strong>TIMED_WAITING</strong> 都是调用<code>wait</code>方法后的状态。区别在于 <strong>WATING</strong> 没有指定时间，除非被唤醒，否则会一直等下去。而 <strong>TIMED_WAITING</strong>　因为指定了时间，即使不被唤醒，也会在指定时间到达之后回到可执行状态。</p>
 
 <p>代码：</p>
-
-<div><script src='https://gist.github.com/8839097.js?file=TimedWait.java'></script>
+<div><script src="https://gist.github.com/8839097.js?file=TimedWait.java"></script>
 <noscript><pre><code>public class TimedWait {
     public static void main(String[] args) {
         final Object lock = new Object();
@@ -367,7 +355,6 @@
 }
 </code></pre></noscript></div>
 
-
 <p><strong>jvisualvm</strong> 中的情况：</p>
 
 <p><img src="/blogimgs/status-wait.png" alt="waiting" /></p>
@@ -376,12 +363,13 @@
 
 <p><img src="/blogimgs/status-timedwait.png" alt="timed_wating" /></p>
 
-<blockquote><p>&mdash;更新&mdash;  <br/>
-可以看到在 <strong>TIMED_WATING</strong> 后有显示 (on object monitor)  <br/>
-表示调用的是 wait, 而不是 sleep</p></blockquote>
+<blockquote>
+  <p>–更新–  <br />
+可以看到在 <strong>TIMED_WATING</strong> 后有显示 (on object monitor)  <br />
+表示调用的是 wait, 而不是 sleep    </p>
+</blockquote>
 
-<h3>5.BLOCK</h3>
-
+<h3 id="block">5.BLOCK</h3>
 <p>在线程中，可以使用 <code>sychronized</code> 关键字锁住某些资源，以保证其它线程不能同时访问。如果这时其它线程需要这个资源，就会进入<strong>阻塞</strong>状态。</p>
 
 <p>如果，两个线程同时需要对方锁住的资源，而这些资源又不能被释放，那就会形成死锁。</p>
@@ -389,8 +377,7 @@
 <p>这里就用死锁来示例<strong>阻塞</strong>状态</p>
 
 <p>代码：</p>
-
-<div><script src='https://gist.github.com/8839097.js?file=DeadBlock.java'></script>
+<div><script src="https://gist.github.com/8839097.js?file=DeadBlock.java"></script>
 <noscript><pre><code>public class DeadBlock {
     public static void main(String[] args) {
         Knife k = new Knife();
@@ -466,7 +453,6 @@ class Knife {
 class Hammer {
 }
 </code></pre></noscript></div>
-
 
 <p><strong>jvisualvm</strong> 中的情况：</p>
 
@@ -593,6 +579,8 @@ var duoshuoQuery = {short_name:"ralph-wang"};
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2014/08/01/wei-octopress-tian-jia-toc/">为 Octopress 添加 TOC</a>
+    
     <a class="list-group-item " href="/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/">无节操地重新认识多态和IoC</a>
     
     <a class="list-group-item " href="/blog/2014/07/25/cong-vim-zhuan-dao-emacs/">从 Vim 转到 Emacs</a>
@@ -600,8 +588,6 @@ var duoshuoQuery = {short_name:"ralph-wang"};
     <a class="list-group-item " href="/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/">Learning the Bash Shell 笔记-Debug</a>
     
     <a class="list-group-item " href="/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/">Learning the Bash Shell 笔记-杂项</a>
-    
-    <a class="list-group-item " href="/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi/">Learning the Bash Shell 笔记-流控制</a>
     
   </div>
 </section>
@@ -617,7 +603,7 @@ var duoshuoQuery = {short_name:"ralph-wang"};
 <a class='list-group-item' href='/blog/categories/selenium/'>Selenium <span class='badge'>1</span></a>
 <a class='list-group-item' href='/blog/categories/java/'>java <span class='badge'>4</span></a>
 <a class='list-group-item' href='/blog/categories/nodejs/'>nodejs <span class='badge'>1</span></a>
-<a class='list-group-item' href='/blog/categories/octopress/'>octopress <span class='badge'>4</span></a>
+<a class='list-group-item' href='/blog/categories/octopress/'>octopress <span class='badge'>5</span></a>
 <a class='list-group-item' href='/blog/categories/si-wei-dao-tu/'>思维导图 <span class='badge'>1</span></a>
 <a class='list-group-item' href='/blog/categories/shu-ju-ku/'>数据库 <span class='badge'>1</span></a>
 <a class='list-group-item' href='/blog/categories/cheng-xu-she-ji/'>程序设计 <span class='badge'>1</span></a>
@@ -630,16 +616,16 @@ var duoshuoQuery = {short_name:"ralph-wang"};
         <h3 class="panel-title">Tag Clouds</h3>
     </div>
     <ul class="tag-cloud" style="padding-left:10px">
-        <a style="font-size: 100%" href="/tags/java/">Java</a>
-<a style="font-size: 100%" href="/tags/debug/">debug</a>
-<a style="font-size: 100%" href="/tags/linux/">linux</a>
-<a style="font-size: 100%" href="/tags/bian-liang/">变量</a>
-<a style="font-size: 100%" href="/tags/dui-zhan/">堆栈</a>
-<a style="font-size: 100%" href="/tags/she-ji-mo-shi/">设计模式</a>
-<a style="font-size: 278%" href="/tags/octopress/">octopress</a>
-<a style="font-size: 100%" href="/tags/cheng-xu-she-ji/">程序设计,</a>
+        <a style="font-size: 100%" href="/tags/debug/">debug</a>
+<a style="font-size: 100%" href="/tags/chai-xiang/">拆箱</a>
+<a style="font-size: 100%" href="/tags/jian-kong/">监控</a>
+<a style="font-size: 100%" href="/tags/rdbms/">RDBMS</a>
+<a style="font-size: 241%" href="/tags/shell/">shell</a>
 <a style="font-size: 100%" href="/tags/shu-ju-lei-xing/">数据类型</a>
-<a style="font-size: 100%" href="/tags/nodejs/">nodejs</a>
+<a style="font-size: 100%" href="/tags/ming-ling/">命令</a>
+<a style="font-size: 100%" href="/tags/gong-ju/">工具</a>
+<a style="font-size: 100%" href="/tags/guan-lian/">关联</a>
+<a style="font-size: 100%" href="/tags/getopts/">getopts</a>
 
     </ul>
 </section>
@@ -659,16 +645,6 @@ var duoshuoQuery = {short_name:"ralph-wang"};
       style="padding-left:20px"
       ></ul>
   </div>
-</section>
-
-
-<section class="panel panel-default clearfix">
-    <div class="panel-heading">
-        <h3 class="panel-title">Booklist in Douban</h3>
-    </div>
-    <div style="padding-left:40px">
-        <script type="text/javascript" src="http://www.douban.com/service/badge/ralph_ld/?selection=random&amp;picsize=small&amp;show=collection&amp;n=9&amp;cat=book&amp;columns=3&amp;hideself=on"></script>
-    </div>
 </section>
 
 

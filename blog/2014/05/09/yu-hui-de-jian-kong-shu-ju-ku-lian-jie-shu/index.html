@@ -164,14 +164,10 @@
   </header>
 
 
-<div class="entry-content clearfix"><p>不能通过数据库工具监控到连接数时可用的迂回监控方法</p>
-
+<div class="entry-content clearfix"><p>不能通过数据库工具监控到连接数时可用的迂回监控方法
 <!--more-->
-
-
-<h2>原理</h2>
-
-<p>数据库连接底层使用的也是 TCP 协议.</p>
+## 原理
+数据库连接底层使用的也是 TCP 协议.</p>
 
 <p>所以当连接到数据库时, 在本地也有打开一个 TCP 端口. 可以通过 nestat 查看</p>
 
@@ -179,9 +175,9 @@
 
 <p>所以, 我们只需要数一下 netstat 中打印出来连接到数据库的端口即可</p>
 
-<h2>代码</h2>
+<h2 id="section">代码</h2>
 
-<div><script src='https://gist.github.com/2c5f64d45de600237f1c.js'></script>
+<div><script src="https://gist.github.com/2c5f64d45de600237f1c.js"></script>
 <noscript><pre><code>#!/bin/sh
 
 function echo_db_connect_count()
@@ -201,23 +197,21 @@ do
 done
 </code></pre></noscript></div>
 
-
-<h2>命令分析</h2>
+<h2 id="section-1">命令分析</h2>
 
 <p>核心就一行, 摘出来看看:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>netstat -an |awk <span class="s1">&#39;{gsub(&quot;::ffff:&quot;,&quot;&quot;); print $5}&#39;</span>|grep <span class="s2">&quot;$port&quot;</span> |sort | uniq -c
-</span><span class='line'>|sed <span class="s2">&quot;s/^/$current_date/g&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">netstat -an |awk <span class="s1">&#39;{gsub(&quot;::ffff:&quot;,&quot;&quot;); print $5}&#39;</span>|grep <span class="s2">&quot;$port&quot;</span> |sort | uniq -c
+</span><span class="line">|sed <span class="s2">&quot;s/^/$current_date/g&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-
-<p>各个命令在干什么:</p>
+<p>各个命令在干什么: </p>
 
 <p><code>netstat</code> 不多说, 打印出所有打开着的端口</p>
 
-<p><code>awk</code> 在这里做一步初步处理, gsub(&ldquo;::ffff:&rdquo;, &ldquo;&rdquo;), 是为了去除 ipv6 格式的 ip 地址.</p>
+<p><code>awk</code> 在这里做一步初步处理, gsub(“::ffff:”, “”), 是为了去除 ipv6 格式的 ip 地址.</p>
 
 <p><code>grep</code> 就是为了过滤出想监控的端口号</p>
 
@@ -352,6 +346,8 @@ var duoshuoQuery = {short_name:"ralph-wang"};
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2014/08/01/wei-octopress-tian-jia-toc/">为 Octopress 添加 TOC</a>
+    
     <a class="list-group-item " href="/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/">无节操地重新认识多态和IoC</a>
     
     <a class="list-group-item " href="/blog/2014/07/25/cong-vim-zhuan-dao-emacs/">从 Vim 转到 Emacs</a>
@@ -359,8 +355,6 @@ var duoshuoQuery = {short_name:"ralph-wang"};
     <a class="list-group-item " href="/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/">Learning the Bash Shell 笔记-Debug</a>
     
     <a class="list-group-item " href="/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/">Learning the Bash Shell 笔记-杂项</a>
-    
-    <a class="list-group-item " href="/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi/">Learning the Bash Shell 笔记-流控制</a>
     
   </div>
 </section>
@@ -376,7 +370,7 @@ var duoshuoQuery = {short_name:"ralph-wang"};
 <a class='list-group-item' href='/blog/categories/selenium/'>Selenium <span class='badge'>1</span></a>
 <a class='list-group-item' href='/blog/categories/java/'>java <span class='badge'>4</span></a>
 <a class='list-group-item' href='/blog/categories/nodejs/'>nodejs <span class='badge'>1</span></a>
-<a class='list-group-item' href='/blog/categories/octopress/'>octopress <span class='badge'>4</span></a>
+<a class='list-group-item' href='/blog/categories/octopress/'>octopress <span class='badge'>5</span></a>
 <a class='list-group-item' href='/blog/categories/si-wei-dao-tu/'>思维导图 <span class='badge'>1</span></a>
 <a class='list-group-item' href='/blog/categories/shu-ju-ku/'>数据库 <span class='badge'>1</span></a>
 <a class='list-group-item' href='/blog/categories/cheng-xu-she-ji/'>程序设计 <span class='badge'>1</span></a>
@@ -389,16 +383,16 @@ var duoshuoQuery = {short_name:"ralph-wang"};
         <h3 class="panel-title">Tag Clouds</h3>
     </div>
     <ul class="tag-cloud" style="padding-left:10px">
-        <a style="font-size: 100%" href="/tags/chai-xiang/">拆箱</a>
-<a style="font-size: 100%" href="/tags/nosql/">NoSQL</a>
-<a style="font-size: 278%" href="/tags/octopress/">octopress</a>
-<a style="font-size: 278%" href="/tags/java/">java</a>
-<a style="font-size: 100%" href="/tags/wang-luo-lian-jie-shu/">网络连接数</a>
-<a style="font-size: 100%" href="/tags/awk/">awk</a>
-<a style="font-size: 100%" href="/tags/loadrunner/">LoadRunner</a>
-<a style="font-size: 241%" href="/tags/shell/">shell</a>
-<a style="font-size: 189%" href="/tags/jvm/">jvm</a>
-<a style="font-size: 100%" href="/tags/top/">top</a>
+        <a style="font-size: 100%" href="/tags/an-zhuang/">安装</a>
+<a style="font-size: 100%" href="/tags/suo-yin/">索引</a>
+<a style="font-size: 100%" href="/tags/liu-kong-zhi/">流控制</a>
+<a style="font-size: 100%" href="/tags/toc/">toc</a>
+<a style="font-size: 189%" href="/tags/kuo-zhan/">扩展</a>
+<a style="font-size: 100%" href="/tags/webdriver/">webdriver</a>
+<a style="font-size: 100%" href="/tags/jiao-ben-kai-fa/">脚本开发</a>
+<a style="font-size: 100%" href="/tags/she-ji-mo-shi/">设计模式</a>
+<a style="font-size: 100%" href="/tags/rdbms/">RDBMS</a>
+<a style="font-size: 100%" href="/tags/debug/">debug</a>
 
     </ul>
 </section>
@@ -418,16 +412,6 @@ var duoshuoQuery = {short_name:"ralph-wang"};
       style="padding-left:20px"
       ></ul>
   </div>
-</section>
-
-
-<section class="panel panel-default clearfix">
-    <div class="panel-heading">
-        <h3 class="panel-title">Booklist in Douban</h3>
-    </div>
-    <div style="padding-left:40px">
-        <script type="text/javascript" src="http://www.douban.com/service/badge/ralph_ld/?selection=random&amp;picsize=small&amp;show=collection&amp;n=9&amp;cat=book&amp;columns=3&amp;hideself=on"></script>
-    </div>
 </section>
 
 

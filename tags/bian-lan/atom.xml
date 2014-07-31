@@ -4,7 +4,7 @@
   <title><![CDATA[标签: 边栏 | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/bian-lan/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-07-30T19:58:16+08:00</updated>
+  <updated>2014-08-01T01:46:51+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -18,21 +18,20 @@
     <link href="http://Ralph-Wang.github.io/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng/"/>
     <updated>2014-02-15T00:09:14+08:00</updated>
     <id>http://Ralph-Wang.github.io/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng</id>
-    <content type="html"><![CDATA[<p>对于博客文章来讲, 除了类别外, 另一个重要的标识属性便是<strong>标签</strong>.</p>
-
-<!--more-->
-
+    <content type="html"><![CDATA[<p>对于博客文章来讲, 除了类别外, 另一个重要的标识属性便是<strong>标签</strong>.
+<!--more--></p>
 
 <p>诚如 <code>alswlx</code> 在 <a href="http://blog.log4d.com/2012/05/tag-cloud/">给 octopress 加上标签功能</a>
-描述的那样:
-<code>
+描述的那样:</p>
+
+<p><code>
 分类 和 标签 分别代表了 有序/无序 两种不同的知识归纳方法.
 一篇文章只会属于一个分类, 但可以同时拥有多个标签.
 </code></p>
 
 <p>而原生的 octopress 却不支持标签功能, 所以, 有必要为它添加上这个功能</p>
 
-<p>我选择的解决方案来自:</p>
+<p>我选择的解决方案来自: </p>
 
 <p><a href="http://codemacro.com/2012/07/18/add-tag-to-octopress/">为octopress添加tag
 Cloud</a></p>
@@ -69,13 +68,11 @@ Cloud</a></p>
 
 <p>如下:</p>
 
-<h2>```</h2>
-
-<p>tags: [octopress, 扩展, asides]</p>
-
-<h2>categories: octopress</h2>
-
-<p>```</p>
+<h2 id="section">```</h2>
+<p>tags: [octopress, 扩展, asides]
+categories: octopress
+—-
+```</p>
 ]]></content>
   </entry>
   
@@ -87,114 +84,107 @@ Cloud</a></p>
     <content type="html"><![CDATA[<p>更换<a href="http://github.com/bkutil/bootstrap-theme"><code>boottrap-theme</code></a>后，边栏只有<strong>最近发表</strong>和<strong>文章分类</strong>两项内容显得有点寒碜。于是想着添加个新浪微博的边栏试试</p>
 
 <!--more-->
+<p>#### 使用微博秀服务
+微博提供的一个小工具。点<a href="http://weibo.com/tool/weiboshow">这里</a>查看。</p>
 
+<p>从这个工具可以得到一个<code>iframe</code>片段如下：</p>
 
-<h4>使用微博秀服务</h4>
+<p><code>html weiboshow
+&lt;iframe width="100%" height="550" class="share_self"  frameborder="0"
+	scrolling="no"
+	src="http://widget.weibo.com/weiboshow/index.php?language=&amp;
+	width=0&amp;
+	height=550&amp;
+	fansRow=2&amp;
+	ptype=1&amp;
+	speed=0&amp;
+	skin=1&amp;
+	isTitle=1&amp;
+	noborder=1&amp;
+	isWeibo=1&amp;
+	isFans=1&amp;
+	uid=&amp;
+	verifier=&amp;
+dpc=1"&gt;&lt;/iframe&gt;
+</code></p>
 
-<p>微博提供的一个小工具。点<a href="http://weibo.com/tool/weiboshow">这里</a>查看。</p>
+<p>src中的链接，就是微博秀的页面。</p>
 
-<p>从这个工具可以得到一个<code>iframe</code>片段如下：
-```html weiboshow</p>
+<p>改造一下，变成<code>octopress</code>的边栏片段：</p>
 
-<iframe width="100%" height="550" class="share_self"  frameborder="0"
-    scrolling="no"
-    src="http://widget.weibo.com/weiboshow/index.php?language=&
-    width=0&
-    height=550&
-    fansRow=2&
-    ptype=1&
-    speed=0&
-    skin=1&
-    isTitle=1&
-    noborder=1&
-    isWeibo=1&
-    isFans=1&
-    uid=&
-    verifier=&
-dpc=1"></iframe>
+<p><code>html weibo.html
 
+&lt;section class="well"&gt;
+	&lt;ul class="nav nav-list"&gt;
+		&lt;li class="nav-header"&gt;微博&lt;/li&gt;
+		&lt;li&gt;&lt;iframe width="100%" height="550" class="share_self"  frameborder="0"
+						scrolling="no"
+						src="http://widget.weibo.com/weiboshow/index.php?language=&amp;
+						width=0&amp;
+						height=550&amp;
+						fansRow=2&amp;
+						ptype=1&amp;
+						speed=0&amp;
+						skin=1&amp;
+						isTitle=1&amp;
+						noborder=1&amp;
+						isWeibo=1&amp;
+						isFans=1&amp;
+						uid=1854716251&amp;
+						verifier=&amp;
+						dpc=1"&gt;&lt;/iframe&gt;
+		&lt;/li&gt;
+	&lt;/ul&gt;
+&lt;/section&gt;
 
-<p>```
-src中的链接，就是微博秀的页面。</p>
+</code></p>
 
-<p>改造一下，变成<code>octopress</code>的边栏片段：
-```html weibo.html
+<p>将这个文件保存到<code>custom/asides</code>目录下，并在<code>_config.yml</code>中的<code>default_asides</code>列表中添加<code>custom/asides/weibo.html</code>。</p>
 
-<section class="well"></p>
-
-<pre><code>&lt;ul class="nav nav-list"&gt;
-    &lt;li class="nav-header"&gt;微博&lt;/li&gt;
-    &lt;li&gt;&lt;iframe width="100%" height="550" class="share_self"  frameborder="0"
-                    scrolling="no"
-                    src="http://widget.weibo.com/weiboshow/index.php?language=&amp;
-                    width=0&amp;
-                    height=550&amp;
-                    fansRow=2&amp;
-                    ptype=1&amp;
-                    speed=0&amp;
-                    skin=1&amp;
-                    isTitle=1&amp;
-                    noborder=1&amp;
-                    isWeibo=1&amp;
-                    isFans=1&amp;
-                    uid=1854716251&amp;
-                    verifier=&amp;
-                    dpc=1"&gt;&lt;/iframe&gt;
-    &lt;/li&gt;
-&lt;/ul&gt;
-</code></pre>
-
-<p></section>
-
-<code>
-将这个文件保存到`custom/asides`目录下，并在`_config.yml`中的`default_asides`列表中添加`custom/asides/weibo.html`。
-</code>yml _config.yml
+<p>```yml _config.yml
 default_asides: [custom/asides/weibo.html, custom/asides/category_list.html, custom/asides/recent_posts.html]
-&hellip;</p>
+…</p>
 
-<h1>Weibo</h1>
-
+<h1 id="weibo">Weibo</h1>
 <p>weibo_uid: 1854716251
 weibo_verifier: verifier
 ```</p>
 
-<p>接下来
-<code>bash
+<p>接下来</p>
+
+<p><code>bash
 rake generate
 rake preview
-</code>
-访问<code>localhost:4000</code>查看一下效果。</p>
+</code></p>
+
+<p>访问<code>localhost:4000</code>查看一下效果。</p>
 
 <p>注： <code>default_asides</code>列表中各页面的顺序就是边栏显示的顺序</p>
 
 <hr />
+<p>####更新：
+我在使用微博秀的过程中并不稳定，有时显示，有时不显示。不显示的时候直接访问URL又是有效的。</p>
 
-<h4>更新：</h4>
+<p>于是换一种方式, 新的<code>weibo.html</code></p>
 
-<p>我在使用微博秀的过程中并不稳定，有时显示，有时不显示。不显示的时候直接访问URL又是有效的。</p>
+<p><code>html weibo.html
 
-<p>于是换一种方式, 新的<code>weibo.html</code>
-```html weibo.html
+&lt;section class="well"&gt;
+  &lt;ul id="weibo" class="nav nav-list"&gt;
+    &lt;li class="nav-header"&gt;微博&lt;/li&gt;
+    &lt;li&gt;
+    &lt;iframe 
+      width="100%"
+      height="500"
+      frameborder="0"
+      scrolling="no"
+      src="http://service.weibo.com/widget/widget_blog.php?uid=1854716251&amp;height=500&amp;skin=wd_02&amp;showpic=1"
+      &gt;&lt;/iframe&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/section&gt;
 
-<section class="well">
-  <ul id="weibo" class="nav nav-list"></p>
-
-<pre><code>&lt;li class="nav-header"&gt;微博&lt;/li&gt;
-&lt;li&gt;
-&lt;iframe 
-  width="100%"
-  height="500"
-  frameborder="0"
-  scrolling="no"
-  src="http://service.weibo.com/widget/widget_blog.php?uid=1854716251&amp;height=500&amp;skin=wd_02&amp;showpic=1"
-  &gt;&lt;/iframe&gt;
-&lt;/li&gt;
-</code></pre>
-
-<p>  </ul>
-</section>
-
-```</p>
+</code></p>
 ]]></content>
   </entry>
   

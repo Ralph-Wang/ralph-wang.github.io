@@ -167,54 +167,45 @@
 <div class="entry-content clearfix"><p><strong>jvisualvm</strong>是从<strong>jdk1.6</strong>开始添加到JDK包中的图形化监控工具。</p>
 
 <!--more-->
-
-
 <p>开启后可以自动监控本机运行中的java进程。</p>
 
 <p>另外，<strong>jvisualvm</strong>它还可以监控远程机器上java进程的运行状态。</p>
 
 <p>不过，监控远程机器需要在被监控机器上做一些配置：</p>
 
-<h4>1. 安装JDK</h4>
-
+<h4 id="jdk">1. 安装JDK</h4>
 <p>这一步不多说了</p>
 
-<h4>2. 配置/etc/hosts</h4>
-
+<h4 id="etchosts">2. 配置/etc/hosts</h4>
 <p>要让<strong>jvisualvm</strong>成功连接到被监控机器上，需要在/etc/hosts文件中将被监控机的主机名绑定到被监控机的IP地址。</p>
 
 <p>通过<code>hostname</code>命令可以获得主机名</p>
 
-<figure class='code'><figcaption><span>/etc/hosts</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='text'><span class='line'>192.168.192.132 Ralph.Wang
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>/etc/hosts</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="text"><span class="line">192.168.192.132 Ralph.Wang
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p><code>hostname -i</code>返回实际的IP地址即绑定成功。</p>
 
 <p>注：<strong>CentOS</strong>中的/etc/hosts默认是没有绑定主机名的IP的，直接添加即可</p>
 
-<h4>3. 运行jstatd</h4>
-
+<h4 id="jstatd">3. 运行jstatd</h4>
 <p>运行<code>jstatd</code>之前，我们需要配置一个安全策略文件,如下</p>
 
-<div><script src='https://gist.github.com/8844076.js?file=jstatd.all.policy'></script>
+<div><script src="https://gist.github.com/8844076.js?file=jstatd.all.policy"></script>
 <noscript><pre><code>grant codebase &quot;file:${java.home}/../lib/tools.jar&quot; {
    permission java.security.AllPermission;
 };
 </code></pre></noscript></div>
 
-
 <p>运行<code>jstatd</code>时需要用<code>-J-Djava.security.policy</code>参数指定策略文件</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>jstatd -J-Djava.security.policy<span class="o">=</span>jstatd.all.policy
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">jstatd -J-Djava.security.policy<span class="o">=</span>jstatd.all.policy
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-
-<h3>4.在jvisualvm中添加远程机</h3>
-
-<p><code>文件</code>&ndash;><code>添加远程主机</code> 输入IP地址即可。</p>
+<h3 id="jvisualvm">4.在jvisualvm中添加远程机</h3>
+<p><code>文件</code>-&gt;<code>添加远程主机</code> 输入IP地址即可。</p>
 
 <p>下面是示例图
 <img src="/blogimgs/jvisualvm-remote.png" alt="jvisualvm监控示例" /></p>
@@ -340,6 +331,8 @@ var duoshuoQuery = {short_name:"ralph-wang"};
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2014/08/01/wei-octopress-tian-jia-toc/">为 Octopress 添加 TOC</a>
+    
     <a class="list-group-item " href="/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/">无节操地重新认识多态和IoC</a>
     
     <a class="list-group-item " href="/blog/2014/07/25/cong-vim-zhuan-dao-emacs/">从 Vim 转到 Emacs</a>
@@ -347,8 +340,6 @@ var duoshuoQuery = {short_name:"ralph-wang"};
     <a class="list-group-item " href="/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/">Learning the Bash Shell 笔记-Debug</a>
     
     <a class="list-group-item " href="/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/">Learning the Bash Shell 笔记-杂项</a>
-    
-    <a class="list-group-item " href="/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi/">Learning the Bash Shell 笔记-流控制</a>
     
   </div>
 </section>
@@ -364,7 +355,7 @@ var duoshuoQuery = {short_name:"ralph-wang"};
 <a class='list-group-item' href='/blog/categories/selenium/'>Selenium <span class='badge'>1</span></a>
 <a class='list-group-item' href='/blog/categories/java/'>java <span class='badge'>4</span></a>
 <a class='list-group-item' href='/blog/categories/nodejs/'>nodejs <span class='badge'>1</span></a>
-<a class='list-group-item' href='/blog/categories/octopress/'>octopress <span class='badge'>4</span></a>
+<a class='list-group-item' href='/blog/categories/octopress/'>octopress <span class='badge'>5</span></a>
 <a class='list-group-item' href='/blog/categories/si-wei-dao-tu/'>思维导图 <span class='badge'>1</span></a>
 <a class='list-group-item' href='/blog/categories/shu-ju-ku/'>数据库 <span class='badge'>1</span></a>
 <a class='list-group-item' href='/blog/categories/cheng-xu-she-ji/'>程序设计 <span class='badge'>1</span></a>
@@ -377,16 +368,16 @@ var duoshuoQuery = {short_name:"ralph-wang"};
         <h3 class="panel-title">Tag Clouds</h3>
     </div>
     <ul class="tag-cloud" style="padding-left:10px">
-        <a style="font-size: 189%" href="/tags/mysql/">MySQL</a>
+        <a style="font-size: 100%" href="/tags/jiao-ben-kai-fa/">脚本开发</a>
+<a style="font-size: 189%" href="/tags/kuo-zhan/">扩展</a>
 <a style="font-size: 100%" href="/tags/guan-lian/">关联</a>
-<a style="font-size: 100%" href="/tags/editor/">Editor</a>
-<a style="font-size: 100%" href="/tags/she-ji-mo-shi/">设计模式</a>
-<a style="font-size: 100%" href="/tags/shu-ju-lei-xing/">数据类型</a>
-<a style="font-size: 100%" href="/tags/liu-kong-zhi/">流控制</a>
+<a style="font-size: 100%" href="/tags/zi-dong-hua-ce-shi/">自动化测试</a>
+<a style="font-size: 100%" href="/tags/python/">python</a>
 <a style="font-size: 100%" href="/tags/make/">make</a>
-<a style="font-size: 100%" href="/tags/getopts/">getopts</a>
-<a style="font-size: 100%" href="/tags/zhuang-xiang/">装箱</a>
-<a style="font-size: 100%" href="/tags/gong-ju/">工具</a>
+<a style="font-size: 189%" href="/tags/jvm/">jvm</a>
+<a style="font-size: 100%" href="/tags/init/">init</a>
+<a style="font-size: 100%" href="/tags/suan-fa/">算法</a>
+<a style="font-size: 278%" href="/tags/java/">java</a>
 
     </ul>
 </section>
@@ -406,16 +397,6 @@ var duoshuoQuery = {short_name:"ralph-wang"};
       style="padding-left:20px"
       ></ul>
   </div>
-</section>
-
-
-<section class="panel panel-default clearfix">
-    <div class="panel-heading">
-        <h3 class="panel-title">Booklist in Douban</h3>
-    </div>
-    <div style="padding-left:40px">
-        <script type="text/javascript" src="http://www.douban.com/service/badge/ralph_ld/?selection=random&amp;picsize=small&amp;show=collection&amp;n=9&amp;cat=book&amp;columns=3&amp;hideself=on"></script>
-    </div>
 </section>
 
 

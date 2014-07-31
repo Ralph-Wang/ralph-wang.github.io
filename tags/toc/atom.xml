@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[标签: toc | Test Notes By _漏斗]]></title>
+  <link href="http://Ralph-Wang.github.io//tags/toc/atom.xml" rel="self"/>
+  <link href="http://Ralph-Wang.github.io/"/>
+  <updated>2014-08-01T01:46:51+08:00</updated>
+  <id>http://Ralph-Wang.github.io/</id>
+  <author>
+    <name><![CDATA[_漏斗]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[为 octopress 添加 TOC]]></title>
+    <link href="http://Ralph-Wang.github.io/blog/2014/08/01/wei-octopress-tian-jia-toc/"/>
+    <updated>2014-08-01T00:52:13+08:00</updated>
+    <id>http://Ralph-Wang.github.io/blog/2014/08/01/wei-octopress-tian-jia-toc</id>
+    <content type="html"><![CDATA[<p>添加一个 TOC 方便阅读</p>
+
+<!--more-->
+
+<ul id="markdown-toc">
+  <li><a href="#section">尝试</a></li>
+  <li><a href="#kramdown-">kramdown 配置</a></li>
+  <li><a href="#section-1">在文章中使用</a></li>
+  <li><a href="#toc-">让 TOC 飘起来</a></li>
+  <li><a href="#section-2">问题什么的</a></li>
+</ul>
+
+<h2 id="section">尝试</h2>
+
+<p>开始时尝试了使用默认引擎 <code>rdiscount</code> 的扩展 <code>generate_toc</code>, 但效果并不好.
+生成的目录不能进行点击跳转</p>
+
+<p>切换为 <code>kramdown</code> 引擎后, TOC 解析正常.</p>
+
+<h2 id="kramdown-">kramdown 配置</h2>
+
+<p>要切换 <code>kramdown</code>, 只需要修改 <code>_config.yml</code> 文件中的 <code>markdown</code> 属性</p>
+
+<p>如下:</p>
+
+<p><code>yaml _config.yml
+markdown: kramdown
+  toc_levels: 2..3
+</code></p>
+
+<p>其中, <code>toc_levels</code> 是用来指定那些标题会进入目录.</p>
+
+<p>因为写作习惯, 我这里就只配置为 h2, h3 进入目录.</p>
+
+<h2 id="section-1">在文章中使用</h2>
+
+<p>完成配置后, 在文章中需要的地方添加以下两行</p>
+
+<p>```
+* any list</p>
+<p>```</p>
+
+<p><code>kramdown</code> 引擎会帮我们把上面两行按配置解析成 toc, 也就是目录了.</p>
+
+<blockquote>
+  <p>如果没有第一行的列表标识的话, kramdown 是不会进行正确的 toc 解析的</p>
+</blockquote>
+
+<h2 id="toc-">让 TOC 飘起来</h2>
+
+<p>为了让 TOC 更在阅读的时候更方便, 我们需要修改一下样式</p>
+
+<p>kramdown 解析出来的 TOC 的 id 为 <code>markdown-toc</code>. 所以我们修改样式如下</p>
+
+<p><code>css
+#markdown:before {
+    content: "目录";
+    font-weight: bold;
+}
+ul#markdown-toc {
+    list-style: none;
+    position: fixed;
+    padding: 0px;
+    left: 10px;
+    bottom: 200px;
+    border-radius: 0.3em;
+    box-shadow: rgba(0,0,0,0.15) 0 1px 4px;
+    box-sizing: border-box;
+    border: #fff 0.5em solid;
+    background-color: white;
+}
+</code></p>
+
+<p>这样一个在文章左边悬停的 TOC 就做了好</p>
+
+<h2 id="section-2">问题什么的<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></h2>
+
+<ul>
+  <li>
+    <p>kramdown 与 rdiscount 在对 markdown 的部分细节处理上有所不同. 以前的文章也要做调整</p>
+  </li>
+  <li>
+    <p>TOC 的锚, 在跳转时因为 navbar-fixed-top 的问题, 调整 h1~h6 的样式为 {margin-top:-70px;padding-top:70px}.</p>
+  </li>
+  <li>
+    <p>小标题能太长.. 要不会盖到文章正文</p>
+  </li>
+</ul>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>呃, 为一个 TOC 做到这样. 我也算蛮拼的…<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
+  
+</feed>

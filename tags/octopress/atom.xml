@@ -4,7 +4,7 @@
   <title><![CDATA[标签: octopress | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/octopress/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-07-30T19:58:16+08:00</updated>
+  <updated>2014-08-01T01:46:51+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -14,25 +14,130 @@
 
   
   <entry>
+    <title type="html"><![CDATA[为 octopress 添加 TOC]]></title>
+    <link href="http://Ralph-Wang.github.io/blog/2014/08/01/wei-octopress-tian-jia-toc/"/>
+    <updated>2014-08-01T00:52:13+08:00</updated>
+    <id>http://Ralph-Wang.github.io/blog/2014/08/01/wei-octopress-tian-jia-toc</id>
+    <content type="html"><![CDATA[<p>添加一个 TOC 方便阅读</p>
+
+<!--more-->
+
+<ul id="markdown-toc">
+  <li><a href="#section">尝试</a></li>
+  <li><a href="#kramdown-">kramdown 配置</a></li>
+  <li><a href="#section-1">在文章中使用</a></li>
+  <li><a href="#toc-">让 TOC 飘起来</a></li>
+  <li><a href="#section-2">问题什么的</a></li>
+</ul>
+
+<h2 id="section">尝试</h2>
+
+<p>开始时尝试了使用默认引擎 <code>rdiscount</code> 的扩展 <code>generate_toc</code>, 但效果并不好.
+生成的目录不能进行点击跳转</p>
+
+<p>切换为 <code>kramdown</code> 引擎后, TOC 解析正常.</p>
+
+<h2 id="kramdown-">kramdown 配置</h2>
+
+<p>要切换 <code>kramdown</code>, 只需要修改 <code>_config.yml</code> 文件中的 <code>markdown</code> 属性</p>
+
+<p>如下:</p>
+
+<p><code>yaml _config.yml
+markdown: kramdown
+  toc_levels: 2..3
+</code></p>
+
+<p>其中, <code>toc_levels</code> 是用来指定那些标题会进入目录.</p>
+
+<p>因为写作习惯, 我这里就只配置为 h2, h3 进入目录.</p>
+
+<h2 id="section-1">在文章中使用</h2>
+
+<p>完成配置后, 在文章中需要的地方添加以下两行</p>
+
+<p>```
+* any list</p>
+<p>```</p>
+
+<p><code>kramdown</code> 引擎会帮我们把上面两行按配置解析成 toc, 也就是目录了.</p>
+
+<blockquote>
+  <p>如果没有第一行的列表标识的话, kramdown 是不会进行正确的 toc 解析的</p>
+</blockquote>
+
+<h2 id="toc-">让 TOC 飘起来</h2>
+
+<p>为了让 TOC 更在阅读的时候更方便, 我们需要修改一下样式</p>
+
+<p>kramdown 解析出来的 TOC 的 id 为 <code>markdown-toc</code>. 所以我们修改样式如下</p>
+
+<p><code>css
+#markdown:before {
+    content: "目录";
+    font-weight: bold;
+}
+ul#markdown-toc {
+    list-style: none;
+    position: fixed;
+    padding: 0px;
+    left: 10px;
+    bottom: 200px;
+    border-radius: 0.3em;
+    box-shadow: rgba(0,0,0,0.15) 0 1px 4px;
+    box-sizing: border-box;
+    border: #fff 0.5em solid;
+    background-color: white;
+}
+</code></p>
+
+<p>这样一个在文章左边悬停的 TOC 就做了好</p>
+
+<h2 id="section-2">问题什么的<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></h2>
+
+<ul>
+  <li>
+    <p>kramdown 与 rdiscount 在对 markdown 的部分细节处理上有所不同. 以前的文章也要做调整</p>
+  </li>
+  <li>
+    <p>TOC 的锚, 在跳转时因为 navbar-fixed-top 的问题, 调整 h1~h6 的样式为 {margin-top:-70px;padding-top:70px}.</p>
+  </li>
+  <li>
+    <p>小标题能太长.. 要不会盖到文章正文</p>
+  </li>
+</ul>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>呃, 为一个 TOC 做到这样. 我也算蛮拼的…<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[为 Octopress 添加 Tag 功能]]></title>
     <link href="http://Ralph-Wang.github.io/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng/"/>
     <updated>2014-02-15T00:09:14+08:00</updated>
     <id>http://Ralph-Wang.github.io/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng</id>
-    <content type="html"><![CDATA[<p>对于博客文章来讲, 除了类别外, 另一个重要的标识属性便是<strong>标签</strong>.</p>
-
-<!--more-->
-
+    <content type="html"><![CDATA[<p>对于博客文章来讲, 除了类别外, 另一个重要的标识属性便是<strong>标签</strong>.
+<!--more--></p>
 
 <p>诚如 <code>alswlx</code> 在 <a href="http://blog.log4d.com/2012/05/tag-cloud/">给 octopress 加上标签功能</a>
-描述的那样:
-<code>
+描述的那样:</p>
+
+<p><code>
 分类 和 标签 分别代表了 有序/无序 两种不同的知识归纳方法.
 一篇文章只会属于一个分类, 但可以同时拥有多个标签.
 </code></p>
 
 <p>而原生的 octopress 却不支持标签功能, 所以, 有必要为它添加上这个功能</p>
 
-<p>我选择的解决方案来自:</p>
+<p>我选择的解决方案来自: </p>
 
 <p><a href="http://codemacro.com/2012/07/18/add-tag-to-octopress/">为octopress添加tag
 Cloud</a></p>
@@ -69,13 +174,11 @@ Cloud</a></p>
 
 <p>如下:</p>
 
-<h2>```</h2>
-
-<p>tags: [octopress, 扩展, asides]</p>
-
-<h2>categories: octopress</h2>
-
-<p>```</p>
+<h2 id="section">```</h2>
+<p>tags: [octopress, 扩展, asides]
+categories: octopress
+—-
+```</p>
 ]]></content>
   </entry>
   
@@ -86,54 +189,58 @@ Cloud</a></p>
     <id>http://Ralph-Wang.github.io/blog/2014/02/06/octopressshou-ye-zhi-xian-shi-zhai-yao</id>
     <content type="html"><![CDATA[<p>上一篇博客比较长，发现首页居然照样显示了全文</p>
 
-<p>于时查找了下如何只显示摘要</p>
-
+<p>于时查找了下如何只显示摘要
 <!--more-->
-
-
-<p>实现方式很简单:</p>
+实现方式很简单:</p>
 
 <ul>
-<li><p>在博客文档中添加<code>&lt;!--more--&gt;</code>即可</p></li>
-<li><p>添加之后，首页文章后会添加一个<code>read on</code>链接，指向文章页面</p></li>
-<li><p>并且只有<code>&lt;!--more--&gt;</code>前的内容人显示到首页</p></li>
+  <li>
+    <p>在博客文档中添加<code>&lt;!--more--&gt;</code>即可</p>
+  </li>
+  <li>
+    <p>添加之后，首页文章后会添加一个<code>read on</code>链接，指向文章页面</p>
+  </li>
+  <li>
+    <p>并且只有<code>&lt;!--more--&gt;</code>前的内容人显示到首页</p>
+  </li>
 </ul>
 
+<p>像这样</p>
 
-<p>像这样
-```
+<p>```
 上一篇博客比较长，发现首页居然照样显示了全文</p>
 
-<p>于时查找了下如何只显示摘要</p>
-
+<p>于时查找了下如何只显示摘要
 <!--more-->
-
-
-<p>实现方式很简单:</p>
+实现方式很简单:</p>
 
 <ul>
-<li><p>在博客文档中添加<code>&lt;!--more--&gt;</code>即可</p></li>
-<li><p>添加之后，首页文章后会添加一个<code>read on</code>链接，指向文章页面</p></li>
-<li><p>并且只有<code>&lt;!--more--&gt;</code>前的内容人显示到首页
-```</p></li>
+  <li>
+    <p>在博客文档中添加<code>&lt;!--more--&gt;</code>即可</p>
+  </li>
+  <li>
+    <p>添加之后，首页文章后会添加一个<code>read on</code>链接，指向文章页面</p>
+  </li>
+  <li>
+    <p>并且只有<code>&lt;!--more--&gt;</code>前的内容人显示到首页
+```</p>
+  </li>
 </ul>
 
+<h4 id="section">　懒人做法</h4>
 
-<h4>　懒人做法</h4>
+<p>修改<code>Rakefile</code>，使写新文章时自动添加一个<code>&lt;!--more--&gt;</code></p>
 
-<p>修改<code>Rakefile</code>，使写新文章时自动添加一个<code>&lt;!--more--&gt;</code>
-```ruby Rakefile</p>
+<p><code>ruby Rakefile
+    post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M:%S %z')}"
+    post.puts "comments: true"
+    post.puts "categories: "
+    post.puts "---"
+    post.puts ""
+    post.puts ""
+    post.puts "&lt;!--more--&gt;"
+</code></p>
 
-<pre><code>post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M:%S %z')}"
-post.puts "comments: true"
-post.puts "categories: "
-post.puts "---"
-post.puts ""
-post.puts ""
-post.puts "&lt;!--more--&gt;"
-</code></pre>
-
-<p>```</p>
 ]]></content>
   </entry>
   
@@ -145,114 +252,107 @@ post.puts "&lt;!--more--&gt;"
     <content type="html"><![CDATA[<p>更换<a href="http://github.com/bkutil/bootstrap-theme"><code>boottrap-theme</code></a>后，边栏只有<strong>最近发表</strong>和<strong>文章分类</strong>两项内容显得有点寒碜。于是想着添加个新浪微博的边栏试试</p>
 
 <!--more-->
+<p>#### 使用微博秀服务
+微博提供的一个小工具。点<a href="http://weibo.com/tool/weiboshow">这里</a>查看。</p>
 
+<p>从这个工具可以得到一个<code>iframe</code>片段如下：</p>
 
-<h4>使用微博秀服务</h4>
+<p><code>html weiboshow
+&lt;iframe width="100%" height="550" class="share_self"  frameborder="0"
+	scrolling="no"
+	src="http://widget.weibo.com/weiboshow/index.php?language=&amp;
+	width=0&amp;
+	height=550&amp;
+	fansRow=2&amp;
+	ptype=1&amp;
+	speed=0&amp;
+	skin=1&amp;
+	isTitle=1&amp;
+	noborder=1&amp;
+	isWeibo=1&amp;
+	isFans=1&amp;
+	uid=&amp;
+	verifier=&amp;
+dpc=1"&gt;&lt;/iframe&gt;
+</code></p>
 
-<p>微博提供的一个小工具。点<a href="http://weibo.com/tool/weiboshow">这里</a>查看。</p>
+<p>src中的链接，就是微博秀的页面。</p>
 
-<p>从这个工具可以得到一个<code>iframe</code>片段如下：
-```html weiboshow</p>
+<p>改造一下，变成<code>octopress</code>的边栏片段：</p>
 
-<iframe width="100%" height="550" class="share_self"  frameborder="0"
-    scrolling="no"
-    src="http://widget.weibo.com/weiboshow/index.php?language=&
-    width=0&
-    height=550&
-    fansRow=2&
-    ptype=1&
-    speed=0&
-    skin=1&
-    isTitle=1&
-    noborder=1&
-    isWeibo=1&
-    isFans=1&
-    uid=&
-    verifier=&
-dpc=1"></iframe>
+<p><code>html weibo.html
 
+&lt;section class="well"&gt;
+	&lt;ul class="nav nav-list"&gt;
+		&lt;li class="nav-header"&gt;微博&lt;/li&gt;
+		&lt;li&gt;&lt;iframe width="100%" height="550" class="share_self"  frameborder="0"
+						scrolling="no"
+						src="http://widget.weibo.com/weiboshow/index.php?language=&amp;
+						width=0&amp;
+						height=550&amp;
+						fansRow=2&amp;
+						ptype=1&amp;
+						speed=0&amp;
+						skin=1&amp;
+						isTitle=1&amp;
+						noborder=1&amp;
+						isWeibo=1&amp;
+						isFans=1&amp;
+						uid=1854716251&amp;
+						verifier=&amp;
+						dpc=1"&gt;&lt;/iframe&gt;
+		&lt;/li&gt;
+	&lt;/ul&gt;
+&lt;/section&gt;
 
-<p>```
-src中的链接，就是微博秀的页面。</p>
+</code></p>
 
-<p>改造一下，变成<code>octopress</code>的边栏片段：
-```html weibo.html
+<p>将这个文件保存到<code>custom/asides</code>目录下，并在<code>_config.yml</code>中的<code>default_asides</code>列表中添加<code>custom/asides/weibo.html</code>。</p>
 
-<section class="well"></p>
-
-<pre><code>&lt;ul class="nav nav-list"&gt;
-    &lt;li class="nav-header"&gt;微博&lt;/li&gt;
-    &lt;li&gt;&lt;iframe width="100%" height="550" class="share_self"  frameborder="0"
-                    scrolling="no"
-                    src="http://widget.weibo.com/weiboshow/index.php?language=&amp;
-                    width=0&amp;
-                    height=550&amp;
-                    fansRow=2&amp;
-                    ptype=1&amp;
-                    speed=0&amp;
-                    skin=1&amp;
-                    isTitle=1&amp;
-                    noborder=1&amp;
-                    isWeibo=1&amp;
-                    isFans=1&amp;
-                    uid=1854716251&amp;
-                    verifier=&amp;
-                    dpc=1"&gt;&lt;/iframe&gt;
-    &lt;/li&gt;
-&lt;/ul&gt;
-</code></pre>
-
-<p></section>
-
-<code>
-将这个文件保存到`custom/asides`目录下，并在`_config.yml`中的`default_asides`列表中添加`custom/asides/weibo.html`。
-</code>yml _config.yml
+<p>```yml _config.yml
 default_asides: [custom/asides/weibo.html, custom/asides/category_list.html, custom/asides/recent_posts.html]
-&hellip;</p>
+…</p>
 
-<h1>Weibo</h1>
-
+<h1 id="weibo">Weibo</h1>
 <p>weibo_uid: 1854716251
 weibo_verifier: verifier
 ```</p>
 
-<p>接下来
-<code>bash
+<p>接下来</p>
+
+<p><code>bash
 rake generate
 rake preview
-</code>
-访问<code>localhost:4000</code>查看一下效果。</p>
+</code></p>
+
+<p>访问<code>localhost:4000</code>查看一下效果。</p>
 
 <p>注： <code>default_asides</code>列表中各页面的顺序就是边栏显示的顺序</p>
 
 <hr />
+<p>####更新：
+我在使用微博秀的过程中并不稳定，有时显示，有时不显示。不显示的时候直接访问URL又是有效的。</p>
 
-<h4>更新：</h4>
+<p>于是换一种方式, 新的<code>weibo.html</code></p>
 
-<p>我在使用微博秀的过程中并不稳定，有时显示，有时不显示。不显示的时候直接访问URL又是有效的。</p>
+<p><code>html weibo.html
 
-<p>于是换一种方式, 新的<code>weibo.html</code>
-```html weibo.html
+&lt;section class="well"&gt;
+  &lt;ul id="weibo" class="nav nav-list"&gt;
+    &lt;li class="nav-header"&gt;微博&lt;/li&gt;
+    &lt;li&gt;
+    &lt;iframe 
+      width="100%"
+      height="500"
+      frameborder="0"
+      scrolling="no"
+      src="http://service.weibo.com/widget/widget_blog.php?uid=1854716251&amp;height=500&amp;skin=wd_02&amp;showpic=1"
+      &gt;&lt;/iframe&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/section&gt;
 
-<section class="well">
-  <ul id="weibo" class="nav nav-list"></p>
-
-<pre><code>&lt;li class="nav-header"&gt;微博&lt;/li&gt;
-&lt;li&gt;
-&lt;iframe 
-  width="100%"
-  height="500"
-  frameborder="0"
-  scrolling="no"
-  src="http://service.weibo.com/widget/widget_blog.php?uid=1854716251&amp;height=500&amp;skin=wd_02&amp;showpic=1"
-  &gt;&lt;/iframe&gt;
-&lt;/li&gt;
-</code></pre>
-
-<p>  </ul>
-</section>
-
-```</p>
+</code></p>
 ]]></content>
   </entry>
   
@@ -261,14 +361,12 @@ rake preview
     <link href="http://Ralph-Wang.github.io/blog/2014/01/27/yong-markdown-xie-zuo/"/>
     <updated>2014-01-27T18:14:13+08:00</updated>
     <id>http://Ralph-Wang.github.io/blog/2014/01/27/yong-markdown-xie-zuo</id>
-    <content type="html"><![CDATA[<p><strong>这是用 octpress + github 写的第一篇博客</strong></p>
-
-<!--more-->
-
+    <content type="html"><![CDATA[<p><strong>这是用 octpress + github 写的第一篇博客</strong>
+<!--more--></p>
 
 <p>用<code>markdown</code>写作是一个让人很爽快的事情。之前在 cnblogs 时也是特意找了几个
 <code>markdown</code>插件。偶然的机会，在<a href="http://kumu-linux.github.io">枯木君</a>的博客中了解到可以用
-github 来搭建一个完美支持<code>markdown</code>的博客。</p>
+github 来搭建一个完美支持<code>markdown</code>的博客。     </p>
 
 <p>这一篇就作为测试<code>octpress</code>的效果用。</p>
 ]]></content>

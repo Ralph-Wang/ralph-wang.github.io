@@ -4,7 +4,7 @@
   <title><![CDATA[分类: LoadRunner | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//blog/categories/loadrunner/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-07-30T19:58:16+08:00</updated>
+  <updated>2014-08-01T01:46:51+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -18,33 +18,29 @@
     <link href="http://Ralph-Wang.github.io/blog/2014/02/18/lr-guan-lian-zhi-alfresco/"/>
     <updated>2014-02-18T00:39:11+08:00</updated>
     <id>http://Ralph-Wang.github.io/blog/2014/02/18/lr-guan-lian-zhi-alfresco</id>
-    <content type="html"><![CDATA[<p>遇到一个比较特别的关联的例子.</p>
-
+    <content type="html"><![CDATA[<p>遇到一个比较特别的关联的例子. 
 <!--more-->
-
-
-<p>项目是 <strong>Alfresco</strong>
+项目是 <strong>Alfresco</strong>
 需要开发的脚本业务: 管理员新增用户.</p>
 
-<h3>问题</h3>
-
+<h3 id="section">问题</h3>
 <p>录制后, 简单参数化一下运行, 发现最后一步提交数据时, 返回的状态码为 500.</p>
 
-<p><img src="/blogimgs/alfresco-errmsg.png" title="Err Msg" alt="Error Message" /></p>
+<p><img src="/blogimgs/alfresco-errmsg.png" alt="Error Message" title="Err Msg" /></p>
 
 <p>会不会是系统出了什么毛病? 于是去手工操作业务, 却发现一切正常.</p>
 
 <p>再去翻看 LoadRunner 的 Test Result. 发现了好东西.</p>
 
-<p><img src="/blogimgs/alfresco-500page.png" title="500 Page" alt="Test Result" /></p>
+<p><img src="/blogimgs/alfresco-500page.png" alt="Test Result" title="500 Page" /></p>
 
-<p>如上图, 虽然请求返回的状态码是 500, 但返回页面仍是 Alfresco 的页面,</p>
+<p>如上图, 虽然请求返回的状态码是 500, 但返回页面仍是 Alfresco 的页面, </p>
 
-<h3>分析</h3>
+<h3 id="section-1">分析</h3>
 
-<p>状态码 500, 返回页面为系统页面. 这说明 500 的状态码是系统主动返回的.</p>
+<p>状态码 500, 返回页面为系统页面. 这说明 500 的状态码是系统主动返回的. </p>
 
-<p>一般来说, 这种情况都是系统需要验证了某些提交信息,
+<p>一般来说, 这种情况都是系统需要验证了某些提交信息, 
 而这些信息是由前面的某个请求返回的. 回放时这些信息发生了变化, 导致请求失败.</p>
 
 <p>我们需要关联这些信息来保证请求的合法性.</p>
@@ -57,29 +53,28 @@
 
 <p>我们先来看请求发出的信息. 首先从请求体里面找</p>
 
-<p>请求体是 <code>json</code> 格式的, 如下
-```javascript
-{   &ldquo;userName&rdquo;:&ldquo;www2&rdquo;,</p>
+<p>请求体是 <code>json</code> 格式的, 如下</p>
 
-<pre><code>"password":"www2",
-"firstName":"www2",
-"lastName":"",
-"email":"www2@www.com",
-"disableAccount":false,
-"quota":127893619,
-"groups":[]
-</code></pre>
+<p><code>javascript
+{   "userName":"www2",
+	"password":"www2",
+	"firstName":"www2",
+	"lastName":"",
+	"email":"www2@www.com",
+	"disableAccount":false,
+	"quota":127893619,
+	"groups":[]
+}
+</code></p>
 
-<p>}
-<code>``
-</code>userName<code>是用户名,</code>password<code>是用户密码,</code>firstName<code>是名字,</code>lastName<code>
-是姓氏,</code>email<code>是邮箱,</code>disableAccount<code>是禁用选项,</code>quota<code>是分配容量,</code>groups` 是用户所在组</p>
+<p><code>userName</code> 是用户名, <code>password</code> 是用户密码, <code>firstName</code> 是名字, <code>lastName</code>
+是姓氏, <code>email</code> 是邮箱, <code>disableAccount</code> 是禁用选项, <code>quota</code> 是分配容量, <code>groups</code> 是用户所在组</p>
 
-<p>呃&hellip; 每个 key 都有对应的表单字段. 看来需要关联的验证信息并不在请求体中.</p>
+<p>呃… 每个 key 都有对应的表单字段. 看来需要关联的验证信息并不在请求体中.</p>
 
 <p>那就只有看看请求头了.</p>
 
-<p><img src="/blogimgs/alfresco-lr.png" title="Lr Log" alt="LR Log" /></p>
+<p><img src="/blogimgs/alfresco-lr.png" alt="LR Log" title="Lr Log" /></p>
 
 <p>这里发现了一个嫌疑犯: <code>Alfresco-CSRFToken</code></p>
 
@@ -87,7 +82,7 @@
 
 <p>我们再用 <code>Fiddler</code> 来看下新请求里, 这个值是否发生了变化.</p>
 
-<p><img src="/blogimgs/alfresco-fiddler.png" title="Fiddler" alt="Fiddler" /></p>
+<p><img src="/blogimgs/alfresco-fiddler.png" alt="Fiddler" title="Fiddler" /></p>
 
 <p>果然发生了变化. 这下没错了, 它就是我们需要关联的对象.</p>
 
@@ -95,83 +90,82 @@
 
 <p>依次查看各个请求后发现, 在进入用户管理页面时, 返回的请求头里有如下信息</p>
 
-<p><img src="/blogimgs/alfresco-tocor.png" title="To Correlations" alt="To Correlations" /></p>
+<p><img src="/blogimgs/alfresco-tocor.png" alt="To Correlations" title="To Correlations" /></p>
 
 <p>由于信息中的特殊符号被 <code>URL编码</code> 了, 导致在前后两个请求中看上去有些不一样.
 通过解码我们可以确认, 这里就是关联参数的来源</p>
 
 <p>```javascript
-decodeURIComponent(&lsquo;NPizHL2EuHsHN6VMml0sAfezFhPQmT5fynjkx%2fkqP88%3d&rsquo;)</p>
+decodeURIComponent(‘NPizHL2EuHsHN6VMml0sAfezFhPQmT5fynjkx%2fkqP88%3d’)</p>
 
 <p>// output: NPizHL2EuHsHN6VMml0sAfezFhPQmT5fynjkx/kqP88=
 ```</p>
 
-<h3>解决方案</h3>
+<h3 id="section-2">解决方案</h3>
 
-<p>添加以下代码
-```c
-web_reg_save_param(&ldquo;token&rdquo;,</p>
+<p>添加以下代码</p>
 
-<pre><code>    "LB=CSRFToken=",
-    "RB=;",
-    "Search=Headers",
-    LAST);
-</code></pre>
-
-<p>&hellip;
+<p>```c
+web_reg_save_param(“token”,
+		“LB=CSRFToken=”,
+		“RB=;”,
+		“Search=Headers”,
+		LAST);
+…
 // user requests codes
-&hellip;</p>
+…</p>
 
-<p>web_add_header(&ldquo;Alfresco-CSRFToken&rdquo;, url_decode(lr_eval_string(&ldquo;{token}&rdquo;)));
-&hellip;
+<p>web_add_header(“Alfresco-CSRFToken”, url_decode(lr_eval_string(“{token}”)));
+…
 // submit requests codes
-&hellip;
-```
-TIPS:</p>
+…
+```</p>
+
+<p>TIPS:</p>
 
 <ul>
-<li><p>由于不能直接在请求中添加请求头信息, 所以我们需要调用 <code>web_add_header</code>
-函数来添加.</p></li>
-<li><p>因为系统发送过来的 <code>token</code> 是 <code>URL编码</code> 的字符串, 而提交新增时发送回去的是解码过的. 所以我们在添加 header 时需要进行解码.  这就是 <code>url_decode</code> 函数的作用. 这个函数并不是 LR 自带的函数, 需要自行添加. 源代码及添加方法戳<a href="http://www.51testing.com/html/96/n-832896.html">这里</a></p></li>
+  <li>
+    <p>由于不能直接在请求中添加请求头信息, 所以我们需要调用 <code>web_add_header</code>
+函数来添加.</p>
+  </li>
+  <li>
+    <p>因为系统发送过来的 <code>token</code> 是 <code>URL编码</code> 的字符串, 而提交新增时发送回去的是解码过的. 所以我们在添加 header 时需要进行解码.  这就是 <code>url_decode</code> 函数的作用. 这个函数并不是 LR 自带的函数, 需要自行添加. 源代码及添加方法戳<a href="http://www.51testing.com/html/96/n-832896.html">这里</a></p>
+  </li>
 </ul>
 
-
 <hr />
-
 <p>关于 <code>URL编码</code> 问题, 后来又找到一个 LoadRunner 原生的解决方案如下:</p>
 
 <p><a href="http://blog.csdn.net/womengdoushizhongguo/article/details/8517598">http://blog.csdn.net/womengdoushizhongguo/article/details/8517598</a></p>
 
-<p>于是, 新增的代码可以修改为
-```c
-web_reg_save_param(&ldquo;token&rdquo;,</p>
+<p>于是, 新增的代码可以修改为</p>
 
-<pre><code>    "LB=CSRFToken=",
-    "RB=;",
-    "Search=Headers",
-    LAST);
-</code></pre>
-
-<p>&hellip;
+<p>```c
+web_reg_save_param(“token”,
+		“LB=CSRFToken=”,
+		“RB=;”,
+		“Search=Headers”,
+		LAST);
+…
 // user requests codes
-&hellip;</p>
+…</p>
 
-<p>web_convert_param(&ldquo;token&rdquo;, &ldquo;SourceEncoding=URL&rdquo;, &ldquo;TargetEncoding=PLAIN&rdquo;,LAST );
-web_add_header(&ldquo;Alfresco-CSRFToken&rdquo;, lr_eval_string(&ldquo;{token}&rdquo;));</p>
+<p>web_convert_param(“token”, “SourceEncoding=URL”, “TargetEncoding=PLAIN”,LAST );
+web_add_header(“Alfresco-CSRFToken”, lr_eval_string(“{token}”));</p>
 
-<p>&hellip;
+<p>…
 // submit requests codes
 ```</p>
 
-<h2>02.24 更新</h2>
+<h2 id="section-3">02.24 更新</h2>
 
 <hr />
-
 <hr />
 
 <p>再往深了想一下, 如果前端通过某种自定义的算法加密的验证信息再返回系统.</p>
 
 <p>那没有开发配合, 这脚本还真没法完成了.</p>
+
 ]]></content>
   </entry>
   

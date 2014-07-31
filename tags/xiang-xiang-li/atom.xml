@@ -4,7 +4,7 @@
   <title><![CDATA[标签: 想象力 | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/xiang-xiang-li/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-07-30T19:58:16+08:00</updated>
+  <updated>2014-08-01T01:46:51+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -18,10 +18,8 @@
     <link href="http://Ralph-Wang.github.io/blog/2014/02/11/lian-xiang-jie-long/"/>
     <updated>2014-02-11T23:18:09+08:00</updated>
     <id>http://Ralph-Wang.github.io/blog/2014/02/11/lian-xiang-jie-long</id>
-    <content type="html"><![CDATA[<p><code>你的第一本思维导图操作书</code>中<code>自由联想练习</code>的第一个练习方法</p>
-
-<!--more-->
-
+    <content type="html"><![CDATA[<p><code>你的第一本思维导图操作书</code>中<code>自由联想练习</code>的第一个练习方法
+<!--more--></p>
 
 <p><img src="/blogimgs/brain_flow.png" alt="brain_flow" /></p>
 
@@ -31,13 +29,13 @@
 
 <p>书上用非常夸张的表达说明, 甚至从末尾开始向前回忆也可以完全回忆起来.</p>
 
-<p>原本不是很相信, 试了一下.</p>
+<p>原本不是很相信, 试了一下. </p>
 
 <p>我的联想结果如下:</p>
 
 <p><img src="/blogimgs/my_brain_flow.png" alt="my_brain_flow" /></p>
 
-<p>嗯&hellip; 其实, 这个练习是在下午 5 点左右进行的. 现在是 23:40.</p>
+<p>嗯… 其实, 这个练习是在下午 5 点左右进行的. 现在是 23:40.</p>
 
 <p>而这图是刚刚按下午的练习填上去的.</p>
 
@@ -46,14 +44,13 @@
 <p>P.S. 我的联想思路:</p>
 
 <ul>
-<li><code>系统</code> &ndash;> <code>操作系统</code>, 因为<code>操作系统</code>是一种<code>软件系统</code></li>
-<li><code>操作系统</code> &ndash;> <code>Linux</code>, 因为<code>Linux</code>是著名的开源<code>操作系统</code></li>
-<li><code>Linux</code> &ndash;> <code>shell</code>, 因为<code>shell</code>是<code>Linux</code>的用户操作接口</li>
-<li><code>shell</code> &ndash;> <code>脚本</code>, 因为<code>shell</code>可以编写<code>脚本</code>运行</li>
-<li><code>脚本</code> &ndash;> <code>Python</code>, 因为<code>Python</code>是一种<code>脚本</code>语言</li>
-<li><code>Python</code> &ndash;> <code>Java</code>, 因为<code>Java</code>和<code>Python</code>一样是强类型语言</li>
+  <li><code>系统</code> -&gt; <code>操作系统</code>, 因为<code>操作系统</code>是一种<code>软件系统</code></li>
+  <li><code>操作系统</code> -&gt; <code>Linux</code>, 因为<code>Linux</code>是著名的开源<code>操作系统</code></li>
+  <li><code>Linux</code> -&gt; <code>shell</code>, 因为<code>shell</code>是<code>Linux</code>的用户操作接口</li>
+  <li><code>shell</code> -&gt; <code>脚本</code>, 因为<code>shell</code>可以编写<code>脚本</code>运行</li>
+  <li><code>脚本</code> -&gt; <code>Python</code>, 因为<code>Python</code>是一种<code>脚本</code>语言</li>
+  <li><code>Python</code> -&gt; <code>Java</code>, 因为<code>Java</code>和<code>Python</code>一样是强类型语言</li>
 </ul>
-
 ]]></content>
   </entry>
   

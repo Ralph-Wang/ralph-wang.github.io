@@ -4,7 +4,7 @@
   <title><![CDATA[标签: MySQL | Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io//tags/mysql/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-07-30T19:58:16+08:00</updated>
+  <updated>2014-08-01T01:46:51+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -18,16 +18,12 @@
     <link href="http://Ralph-Wang.github.io/blog/2014/03/25/mian-shi-wen-ti-jie-da/"/>
     <updated>2014-03-25T19:49:37+08:00</updated>
     <id>http://Ralph-Wang.github.io/blog/2014/03/25/mian-shi-wen-ti-jie-da</id>
-    <content type="html"><![CDATA[<p>面试时没有完全回答上或有存疑的问题</p>
-
+    <content type="html"><![CDATA[<p>面试时没有完全回答上或有存疑的问题
 <!--more-->
-
-
-<h2>Linux</h2>
-
-<h3>统计文本中某字符串出现次数</h3>
-
-<p>前提: 一行中要查找的字符串可能出现多次.</p>
+Linux
+——
+### 统计文本中某字符串出现次数
+前提: 一行中要查找的字符串可能出现多次.</p>
 
 <p>文本样例:</p>
 
@@ -49,16 +45,16 @@ two times ralph ,ralph
 
 <p>遂搜索之.  得如下解法</p>
 
-<h3>方法 1: grep 的 -o 选项</h3>
+<h3 id="grep---o-">方法 1: grep 的 -o 选项</h3>
 
 <p><code>bash
 cat sample | grep -o ralph | wc -l
 </code>
 解释:</p>
 
-<p>给 <code>grep</code> 加上 <code>-o</code> 选项后, 它只会打印出匹配到的字符串, 并且每匹配一次就打印一行.</p>
+<p>给 <code>grep</code> 加上 <code>-o</code> 选项后, 它只会打印出匹配到的字符串, 并且每匹配一次就打印一行. </p>
 
-<h3>方法 2: 神器 awk 之 RS</h3>
+<h3 id="awk--rs">方法 2: 神器 awk 之 RS</h3>
 
 <p><code>bash
 awk -v RS='ralph' 'END {print NR-1}' sample
@@ -70,7 +66,7 @@ awk -v RS='ralph' 'END {print NR-1}' sample
 
 <p>在 END 中访问 NR 则为最后一行的行号, awk 起始行为 1, 所以此时总行数 = NR</p>
 
-<h3>方法 3: 神器 awk 之 gsub</h3>
+<h3 id="awk--gsub">方法 3: 神器 awk 之 gsub</h3>
 
 <p><code>bash
 awk '{count+=gsub(/ralph/, "#")} END {print count}' sample
@@ -80,14 +76,11 @@ awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次�
 
 <p>另外, awk 中的 <code>sub</code> 函数在每行中只完成一次替换.</p>
 
-<h2>Java</h2>
+<h2 id="java">Java</h2>
+<p>### 反射
+参考<a href="http://www.cnblogs.com/rollenholt/archive/2011/09/02/2163758.html">反射案例</a></p>
 
-<h3>反射</h3>
-
-<p>参考<a href="http://www.cnblogs.com/rollenholt/archive/2011/09/02/2163758.html">反射案例</a></p>
-
-<h2>MySQL</h2>
-
+<h2 id="mysql">MySQL</h2>
 <p>MySQL 相关的性能问题, 关于<strong>执行计划</strong>的倒是 OK.</p>
 
 <p>但一直没时间整理下关于慢查询日志的知识点. 所以这几次都只能回答说知道这个概念, 具体的配置参数却不记得了.</p>
@@ -95,199 +88,189 @@ awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次�
 <p>在这里整理一下, 权当备忘</p>
 
 <ul>
-<li>查看慢查询是否开启</li>
+  <li>查看慢查询是否开启</li>
 </ul>
 
-
 <p>```mysql
-mysql> show variables like &lsquo;%slow%&rsquo;;
+mysql&gt; show variables like ‘%slow%’;
 | Variable_name       | Value
 | log_slow_queries    | OFF
 | slow_launch_time    | 2
 | slow_query_log      | OFF
 | slow_query_log_file | ***</p>
 
-<p>mysql> show variables like &lsquo;long%&rsquo;;
+<p>mysql&gt; show variables like ‘long%’;
 | Variable_name   | Value    |
 | long_query_time | 1.000000 |
 ```</p>
 
 <ul>
-<li>在 my.cnf 中配置开启慢查询跟踪
-<code>ini my.cnf
+  <li>在 my.cnf 中配置开启慢查询跟踪</li>
+</ul>
+
+<p><code>ini my.cnf
 [mysqld]
 log-slow-queries = **** # 日志存放目录, 一般放到 MySQL 数据库的地方
 long-query-time = 2 # 超过这个时间(单位:秒) 的查询为慢查询
 log-queries-not-using-indexes # 记录下没有使用索引的查询
-</code></li>
-</ul>
-
+</code></p>
 
 <p>产生慢查询日志后可以使用 mysqldumpslow 工具进行分析查看了.</p>
 
 <p>接下来的事就交给 <code>explain</code> 吧.</p>
 
-<h2>算法</h2>
-
-<h3>问题 1 链表倒序</h3>
-
-<p>&hellip;面试时, 想到去 clone next.. 为毛当时就没想到多给个变量呢&hellip;</p>
+<h2 id="section">算法</h2>
+<p>### 问题 1 链表倒序
+…面试时, 想到去 clone next.. 为毛当时就没想到多给个变量呢…</p>
 
 <p>```java List.java
-public class List<T> { // 后进先出列表</p>
+public class List<t> { // 后进先出列表
+	private static class Node<t> {
+		private T item;
+		private Node<t> next;
+		/** init a end Node */
+		public Node() {
+			item = null;
+			next = null;
+		}</t></t></t></p>
 
-<pre><code>private static class Node&lt;T&gt; {
-    private T item;
-    private Node&lt;T&gt; next;
-    /** init a end Node */
-    public Node() {
-        item = null;
-        next = null;
-    }
+<pre><code>	/** normal Node */
+	public Node(T item, Node&lt;T&gt; next) {
+		this.item = item;
+		this.next = next;
+	}
 
-    /** normal Node */
-    public Node(T item, Node&lt;T&gt; next) {
-        this.item = item;
-        this.next = next;
-    }
+	private T getItem() {
+		return item;
+	}
 
-    private T getItem() {
-        return item;
-    }
+	private Node&lt;T&gt; getNext() {
+		return next;
+	}
 
-    private Node&lt;T&gt; getNext() {
-        return next;
-    }
+	private void setNext(Node&lt;T&gt; next) {
+		this.next = next;
+	}
 
-    private void setNext(Node&lt;T&gt; next) {
-        this.next = next;
-    }
-
-    public boolean isEnd() {
-        return (next == null &amp;&amp; item == null);
-    }
+	public boolean isEnd() {
+		return (next == null &amp;&amp; item == null);
+	}
 }
 
 private Node&lt;T&gt; top;
 
 public List() {
-    top = new Node&lt;T&gt;(); //init a end Node for list
+	top = new Node&lt;T&gt;(); //init a end Node for list
 }
 
 /** push a item to the top */
 public void push(T item) {
-    top = new Node&lt;T&gt;(item, top);
+	top = new Node&lt;T&gt;(item, top);
 }
 
 /** pop the top item */
 public T pop() {
-    T result = null;
-    if (top.isEnd()) {
-        return result;
-    }
-    result = top.getItem();
-    top = top.getNext();
-    return result;
+	T result = null;
+	if (top.isEnd()) {
+		return result;
+	}
+	result = top.getItem();
+	top = top.getNext();
+	return result;
 }
 
 /** reverse the list */
 public void reverse() {
-    Node&lt;T&gt; cur = top;
-    Node&lt;T&gt; next = cur.getNext();
-    Node&lt;T&gt; pre = null;
-    if (cur.isEnd()) { // Empty list
-        return;
-    }
+	Node&lt;T&gt; cur = top;
+	Node&lt;T&gt; next = cur.getNext();
+	Node&lt;T&gt; pre = null;
+	if (cur.isEnd()) { // Empty list
+		return;
+	}
 
-    top.setNext(new Node&lt;T&gt;()); // a new sentinel
-    do {
-        pre = cur;
-        cur = next;
-        next = cur.getNext();
-        cur.setNext(pre);
-    } while(!next.isEnd());
-    // reset top
-    top = cur;
+	top.setNext(new Node&lt;T&gt;()); // a new sentinel
+	do {
+		pre = cur;
+		cur = next;
+		next = cur.getNext();
+		cur.setNext(pre);
+	} while(!next.isEnd());
+	// reset top
+	top = cur;
 }
 
 public static void main(String[] args) {
-    List&lt;String&gt; l = new List&lt;String&gt;();
-    l.push("a");
-    l.push("B");
-    l.push("c");
-    l.push("D");
-    l.push("e");
-    l.push("F");
-    l.reverse();
-    String res = null;
-    while ((res = l.pop()) != null) {
-        System.out.println(res);
-    }
-}
+	List&lt;String&gt; l = new List&lt;String&gt;();
+	l.push("a");
+	l.push("B");
+	l.push("c");
+	l.push("D");
+	l.push("e");
+	l.push("F");
+	l.reverse();
+	String res = null;
+	while ((res = l.pop()) != null) {
+		System.out.println(res);
+	}
+} }
 </code></pre>
 
-<p>}</p>
-
 <p>```
-算法还是弱项&hellip;</p>
+算法还是弱项…</p>
 
-<h3>问题 2 文本替换</h3>
-
+<h3 id="section-1">问题 2 文本替换</h3>
 <p>今天太晚了, 明天再继续</p>
 
-<p>&mdash;&ndash;<strong><em> 2014-04-06 更新 </em></strong>&mdash;&ndash;</p>
+<p>—<em>** 2014-04-06 更新 **</em>—</p>
 
 <p>需求, 字符串或字符数组, 如 <code>AAABBBAAACCADDD</code>, 取出连续的字符, 第N次出现取出连续N个, 不足则跳过</p>
 
-<p>如 AAABBBAAACCADDD &ndash;> ABAACAD</p>
+<p>如 AAABBBAAACCADDD -&gt; ABAACAD</p>
 
 <p>```java
 import java.util.*;</p>
 
-<p>public class Sub {</p>
+<p>public class Sub {
+	public static void main(String[] args) {
+		char[] t = {‘A’, ‘A’, ‘A’, ‘B’, ‘B’, ‘B’,’A’, ‘A’, ‘A’, ‘C’,
+			‘C’, ‘A’, ‘D’, ‘D’, ‘D’};
+		System.out.println(sub(t));
+	}/* output:
+		ABAACAD
+	  *///:~</p>
 
-<pre><code>public static void main(String[] args) {
-    char[] t = {'A', 'A', 'A', 'B', 'B', 'B','A', 'A', 'A', 'C',
-        'C', 'A', 'D', 'D', 'D'};
-    System.out.println(sub(t));
-}/* output:
-    ABAACAD
-  *///:~
-
-public static String sub(final char[] charArray) {
-    String res = "";
-    HashMap&lt;Character, Integer&gt; count =
-        new HashMap&lt;Character, Integer&gt;();
-    int seq = 0;
-    int curCount = 0;
-    char pre = '\0';
-    for (int i = 0; i &lt; charArray.length; i++) {
-        if (charArray[i] == pre &amp;&amp; curCount &gt;= seq) {
-            continue;
-        }
-        if (charArray[i] != pre) { // recount the new char
-            curCount = 0;
-            // get the sequence of the char
-            if (count.get(charArray[i]) == null) {
-                seq = 1;
-            } else {
-                seq = count.get(charArray[i]) + 1;
-            }
-            // cache the char sequence
-            count.put(charArray[i], seq);
-        }
-        res = res + charArray[i];
-        curCount++;
-        pre = charArray[i];
-    }
-    return res;
-}
+<pre><code>public static String sub(final char[] charArray) {
+	String res = "";
+	HashMap&lt;Character, Integer&gt; count =
+		new HashMap&lt;Character, Integer&gt;();
+	int seq = 0;
+	int curCount = 0;
+	char pre = '\0';
+	for (int i = 0; i &lt; charArray.length; i++) {
+		if (charArray[i] == pre &amp;&amp; curCount &gt;= seq) {
+			continue;
+		}
+		if (charArray[i] != pre) { // recount the new char
+			curCount = 0;
+			// get the sequence of the char
+			if (count.get(charArray[i]) == null) {
+				seq = 1;
+			} else {
+				seq = count.get(charArray[i]) + 1;
+			}
+			// cache the char sequence
+			count.put(charArray[i], seq);
+		}
+		res = res + charArray[i];
+		curCount++;
+		pre = charArray[i];
+	}
+	return res;
+} }
 </code></pre>
 
-<p>}</p>
-
-<p><code>``
-若使用</code>String` 作为输入, 则用 charAt 方法获取字符</p>
+<p>```
+若使用 <code>String</code> 作为输入, 则用 charAt 方法获取字符</p>
 ]]></content>
   </entry>
   
@@ -298,107 +281,98 @@ public static String sub(final char[] charArray) {
     <id>http://Ralph-Wang.github.io/blog/2014/03/21/suo-yin-gong-neng-bi-jiao-mysql-yu-mongodb</id>
     <content type="html"><![CDATA[<p>索引是影响数据库性能的重要元素.</p>
 
-<p>这里比较一下 MySQL 与 MongoDB 中索引的基本使用, 也算复习一下这个数据库中的基本概念</p>
+<p>这里比较一下 MySQL 与 MongoDB 中索引的基本使用, 也算复习一下这个数据库中的基本概念
+<!--more--></p>
 
-<!--more-->
+<blockquote>
+  <p><em>注: MongoDB 的操作以其自带 mongoshell 为准, 不同语言的 api 操作(传参, 调用)可能会有一些差别</em></p>
+</blockquote>
 
-
-<blockquote><p><em>注: MongoDB 的操作以其自带 mongoshell 为准, 不同语言的 api 操作(传参, 调用)可能会有一些差别</em></p></blockquote>
-
-<h2>准备</h2>
-
+<h2 id="section">准备</h2>
 <p>索引总是建立在字段上的, 所以我们这里做准备一张简单的表, 并做一些简单的数据.</p>
 
-<p>MySQL 怎么建表, 插数据就不多说了
-```mysql
-&mdash; 建表
-CREATE TABLE tbl (</p>
+<p>MySQL 怎么建表, 插数据就不多说了</p>
 
-<pre><code>id int,
-value int,
-PRIMARY KEY(id)
-</code></pre>
+<p>```mysql
+– 建表
+CREATE TABLE tbl (
+	id int,
+	value int,
+	PRIMARY KEY(id)
+);</p>
 
-<p>);</p>
-
-<p>&mdash; 插入5条极简数据
+<p>– 插入5条极简数据
 INSERT INTO tbl VALUES(1,1), (2,2), (3,3), (4,4), (5,5)
 ```</p>
 
 <p>MongoDB 不需要显式的创建 集合 (Collection, 与 MySQL 中表是同一级概念)
 所以直接插入数据.</p>
 
-<p>```javascript
-[1,2,3,4,5].forEach(function(v) {</p>
+<p><code>javascript
+[1,2,3,4,5].forEach(function(v) {
+		db.tbl.insert({ _id : v, value : v });
+	})
+</code></p>
 
-<pre><code>    db.tbl.insert({ _id : v, value : v });
-})
-</code></pre>
-
-<p>```</p>
-
-<h2>索引的 CRD</h2>
-
-<h3>创建索引.</h3>
+<h2 id="crd">索引的 CRD</h2>
+<p>### 创建索引.</p>
 
 <p>MySQL 创建索引的方式很多, 可以在建表同时直接创建. 也可以在建表后再补.</p>
 
 <p>如果是在建表同时创建, 需要将上面的建表语句修改一下</p>
 
-<p>```mysql
-CREATE TABLE tbl (</p>
-
-<pre><code>id int,
-value int,
-PRIMARY KEY(id), -- 创建主键索引
-KEY (value) -- 创建一般索引
-</code></pre>
-
-<p>);
-```</p>
+<p><code>mysql
+CREATE TABLE tbl (
+	id int,
+	value int,
+	PRIMARY KEY(id), -- 创建主键索引
+	KEY (value) -- 创建一般索引
+);
+</code></p>
 
 <p>建表后则用 <code>ALTER TABLE</code> 或 <code>CREATE INDEX</code> 创建</p>
 
 <p>下面两种方式均可以在 tbl 表的 value 字段上创建一个名为 idx_value 的索引.</p>
 
 <p>```mysql
-&mdash; ALFTER TABLE 式
+– ALFTER TABLE 式
 ALTER TABLE tbl ADD KEY idx_value (value);</p>
 
-<p>&mdash; CREATE INDEX 式
+<p>– CREATE INDEX 式
 CREATE INDEX idx_value ON tbl (value)
 ```</p>
 
-<p>MongoDB 则只留出了一个 createIndex 的接口来创建索引
-<code>javascript
+<p>MongoDB 则只留出了一个 createIndex 的接口来创建索引</p>
+
+<p><code>javascript
 db.tbl.createIndex({value : 1})
 </code>
 另外要注意的是, MongoDB 允许在暂时不存在的集合或不存在的字段上添加索引.</p>
 
 <p>如果集合名或字段字敲错了, mongoshell 可不会报错.</p>
 
-<p>在 mongoshell 中有一个助手方法, <code>ensureIndex</code>
-```javascript</p>
+<p>在 mongoshell 中有一个助手方法, <code>ensureIndex</code></p>
 
-<blockquote><p>db.tbl.ensureIndex
-function ( keys , options ){</p>
-
-<pre><code>this.createIndex(keys, options);
-err = this.getDB().getLastErrorObj();
-if (err.err) {
-    return err;
+<p><code>javascript
+&gt;db.tbl.ensureIndex
+function ( keys , options ){
+	this.createIndex(keys, options);
+	err = this.getDB().getLastErrorObj();
+	if (err.err) {
+		return err;
+	}
+	// nothing returned on success
 }
-// nothing returned on success
-</code></pre>
+</code></p>
 
-<p>}
-<code>``
-可以看到, 其实</code>ensureIndex<code>仍然通过调用</code>createIndex` 来完成索引创建</p>
+<p>可以看到, 其实 <code>ensureIndex</code> 仍然通过调用 <code>createIndex</code> 来完成索引创建</p>
 
-<p>其实像 nodejs 或 python 中 MongoDB 的建立索引的接口名称都使用的 ensure. 而不是
-create</p></blockquote>
+<blockquote>
+  <p>其实像 nodejs 或 python 中 MongoDB 的建立索引的接口名称都使用的 ensure. 而不是
+create</p>
+</blockquote>
 
-<h3>查看已有索引.</h3>
+<h3 id="section-1">查看已有索引.</h3>
 
 <p>MySQL 使用 <code>show index</code> 命令即可查看, 同时可以使用 where 子句进行过滤</p>
 
@@ -412,10 +386,11 @@ SHOW INDEX FROM tbl WHERE KEY_NAME = 'idx_value';
 db.tbl.getIndexes();
 </code></p>
 
-<h3>删除索引.</h3>
+<h3 id="section-2">删除索引.</h3>
 
-<p>在 MySQL 中删除索引时, 和创建一样可以用 <code>ALTER TABLE</code> 或 <code>DROP INDEX</code> 两种方法
-<code>mysql
+<p>在 MySQL 中删除索引时, 和创建一样可以用 <code>ALTER TABLE</code> 或 <code>DROP INDEX</code> 两种方法</p>
+
+<p><code>mysql
 -- ALTER TABLE 式
 ALTER TABLE tbl DROP INDEX idx_value;
 -- DROP INDEX 式
@@ -423,8 +398,9 @@ DROP INDEX idx_value ON tbl;
 </code></p>
 
 <p>而 MongoDB 则是允许用 <code>dropIndexes</code> 一次性删除全部索引, 也可以用 <code>dropIndex</code>
-删除指定索引
-<code>javascript
+删除指定索引</p>
+
+<p><code>javascript
 // 删除全部索引
 db.tbl.dropIndexes();
 // 通过索引字段删除指定索引
@@ -433,11 +409,9 @@ db.tbl.dropIndex({ value : 1});
 db.tbl.dropIndex('value_1');
 </code></p>
 
-<h2>索引在执行计划中的表现</h2>
-
-<h3>没有使用索引的情况</h3>
-
-<p>先来看看没有使用索引时的执行计划是个什么样子.</p>
+<h2 id="section-3">索引在执行计划中的表现</h2>
+<p>### 没有使用索引的情况
+先来看看没有使用索引时的执行计划是个什么样子.</p>
 
 <p>使用 explain 命令可以获得 MySQL 中 SQL 语句的执行计划.</p>
 
@@ -448,67 +422,66 @@ mysql&gt; explain select * from tbl where value = 1;
 </code>
 type 字段中的 <code>ALL</code> 就表示了这次查询是全表扫描, 而 key_len 字段则明确的告诉我们没有使用索引</p>
 
-<blockquote><p><em>不能相信 key 字段, 因为可能这样: create index `NULL` on tbl(value)</em></p></blockquote>
+<blockquote>
+  <p><em>不能相信 key 字段, 因为可能这样: create index `NULL` on tbl(value)</em></p>
+</blockquote>
 
 <p>类似的,MongoDB允许使用 <code>explain</code> 方法获取查询的执行计划</p>
 
-<p>```javascript</p>
-
-<blockquote><p>db.tbl.find({value : 1}).explain();
-{</p>
-
-<pre><code>"cursor" : "BasicCursor",
-"isMultiKey" : false,
-"n" : 1,
-"nscannedObjects" : 5,
-"nscanned" : 5
-// ... 一些其它字段
-</code></pre>
-
-<p>}
-```</p></blockquote>
+<p><code>javascript
+&gt;db.tbl.find({value : 1}).explain();
+{
+	"cursor" : "BasicCursor",
+	"isMultiKey" : false,
+	"n" : 1,
+	"nscannedObjects" : 5,
+	"nscanned" : 5
+	// ... 一些其它字段
+}
+</code></p>
 
 <p>其中 <code>cursor</code> 的值为 <code>BasicCursor</code>, 已经说明这次查询没有使用索引</p>
 
-<h3>一般情况</h3>
+<h3 id="section-4">一般情况</h3>
 
 <p>现在, 把索引建立起来, 看看相同查询的执行计划.</p>
 
-<p>MySQL 使用索引查询时的执行计划
-<code>mysql
+<p>MySQL 使用索引查询时的执行计划</p>
+
+<p><code>mysql
 | id | select_type | table | type | possible_keys | key       | key_len | ref   | rows | Extra       |
 |  1 | SIMPLE      | tbl   | ref  | idx_value     | idx_value | 5       | const |    1 | Using where |
-</code>
-type 显示为 <code>ref</code>, 说明是在使用一般索引查询( 若使用主键索引, 则显示为 <code>const</code>)
+</code></p>
+
+<p>type 显示为 <code>ref</code>, 说明是在使用一般索引查询( 若使用主键索引, 则显示为 <code>const</code>)
 rows 字段由之前的 5 变为 1, 扫描行数变少了.
 key, key_len 说明了使用了什么索引以及这个索引有多长</p>
 
-<p>MongoDB
-```javascript
-{</p>
+<p>MongoDB</p>
 
-<pre><code>"cursor" : "BtreeCursor value_1",
-"isMultiKey" : false,
-"n" : 1,
-"nscannedObjects" : 1,
-"nscanned" : 1,
-// 其它字段
-</code></pre>
+<p><code>javascript
+{
+	"cursor" : "BtreeCursor value_1",
+	"isMultiKey" : false,
+	"n" : 1,
+	"nscannedObjects" : 1,
+	"nscanned" : 1,
+	// 其它字段
+}
+</code></p>
 
-<p>}
-<code>``
-cursor 值为</code>BtreeCursor value_1<code>, 表示使用了名为</code>value_1` 的索引进行查询
+<p>cursor 值为 <code>BtreeCursor value_1</code>, 表示使用了名为 <code>value_1</code> 的索引进行查询
 nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前为 5, 现在变为 1.</p>
 
-<h3>仅查询索引</h3>
-
+<h3 id="section-5">仅查询索引</h3>
 <p>MySQL 和 MongoDB 中都有这样一个特性:</p>
 
 <p>查询时, 如果要求返回的字段信息只包含索引字段, 那么将直接从索引中返回值,
 不会再进行实表查找</p>
 
-<p>MySQL 中, 如果出现这样的情况, 会在 Extra 字段中显示 <code>using index</code> 信息, 如下
-<code>mysql
+<p>MySQL 中, 如果出现这样的情况, 会在 Extra 字段中显示 <code>using index</code> 信息, 如下</p>
+
+<p><code>mysql
 mysql&gt; explain select value from tbl where value = 1;
 | id | select_type | table | type | possible_keys | key       | key_len | ref   | rows | Extra                    |
 |  1 | SIMPLE      | tbl   | ref  | idx_value     | idx_value | 5       | const |    1 | Using where; Using index |
@@ -516,86 +489,81 @@ mysql&gt; explain select value from tbl where value = 1;
 
 <p>而 MongoDB 中, 则是将 indexOnly 字段置为 <code>true</code>, 并且 <code>nscannedObjects</code> 为 0</p>
 
-<p>```javascript</p>
+<p><code>javascript
+&gt; db.tbl.find({value : 1}, {_id : 0, value : 1}).explain()
+{
+	"cursor" : "BtreeCursor value_1",
+	"isMultiKey" : false,
+	"n" : 1,
+	"nscannedObjects" : 0, // 说明没有扫描实际对象
+	"nscanned" : 1,
+	"nscannedObjectsAllPlans" : 0,
+	"nscannedAllPlans" : 1,
+	"scanAndOrder" : false,
+	"indexOnly" : true, // 说明没有返回字段只包含索引字段
+	"nYields" : 0,
+	"nChunkSkips" : 0,
+	"millis" : 0,
+	// 其它字段
+}
+</code></p>
 
-<blockquote><p>db.tbl.find({value : 1}, {_id : 0, value : 1}).explain()
-{</p>
-
-<pre><code>"cursor" : "BtreeCursor value_1",
-"isMultiKey" : false,
-"n" : 1,
-"nscannedObjects" : 0, // 说明没有扫描实际对象
-"nscanned" : 1,
-"nscannedObjectsAllPlans" : 0,
-"nscannedAllPlans" : 1,
-"scanAndOrder" : false,
-"indexOnly" : true, // 说明没有返回字段只包含索引字段
-"nYields" : 0,
-"nChunkSkips" : 0,
-"millis" : 0,
-// 其它字段
-</code></pre>
-
-<p>}
-```</p></blockquote>
-
-<h3>MongoDB中排序使用索引</h3>
+<h3 id="mongodb">MongoDB中排序使用索引</h3>
 
 <p>在 MongoDB 中, 除了查询条件可以利用索引以外, 进行排序的相应字段也可以在排序时利用索引.</p>
 
 <p>这点是 MySQL 所不具备的</p>
 
-<p>直接上执行计划.
-```javascript</p>
+<p>直接上执行计划.</p>
 
-<blockquote><p>db.tbl.find().sort({value : 1}).explain()
-{</p>
+<p><code>javascript
+&gt; db.tbl.find().sort({value : 1}).explain()
+{
+	"cursor" : "BtreeCursor value_1",
+		"isMultiKey" : false,
+		"n" : 5,
+		"nscannedObjects" : 5,
+		"nscanned" : 5,
+		"nscannedObjectsAllPlans" : 5,
+		"nscannedAllPlans" : 5,
+		"scanAndOrder" : false,
+		"indexOnly" : false,
+		"nYields" : 0,
+		"nChunkSkips" : 0,
+		"millis" : 0,
+		"indexBounds" : {
+			"value" : [
+				[
+					{
+						"$minElement" : 1
+					},
+					{
+						"$maxElement" : 1
+					}
+				]
+			]
+		},
+		"server" : "AY14031520284347468cZ:27017"
+}
+</code></p>
 
-<pre><code>"cursor" : "BtreeCursor value_1",
-    "isMultiKey" : false,
-    "n" : 5,
-    "nscannedObjects" : 5,
-    "nscanned" : 5,
-    "nscannedObjectsAllPlans" : 5,
-    "nscannedAllPlans" : 5,
-    "scanAndOrder" : false,
-    "indexOnly" : false,
-    "nYields" : 0,
-    "nChunkSkips" : 0,
-    "millis" : 0,
-    "indexBounds" : {
-        "value" : [
-            [
-                {
-                    "$minElement" : 1
-                },
-                {
-                    "$maxElement" : 1
-                }
-            ]
-        ]
-    },
-    "server" : "AY14031520284347468cZ:27017"
-</code></pre>
+<p>可以看到, 没有任何查询条件, 只进行排序确实是使用了索引.</p>
 
-<p>}
-```
-可以看到, 没有任何查询条件, 只进行排序确实是使用了索引.</p></blockquote>
+<p>不同的是, 在 <code>indexBounds</code> 中对索引字段 value 的查找范围是从 $minElement 到 $maxElement. </p>
 
-<p>不同的是, 在 <code>indexBounds</code> 中对索引字段 value 的查找范围是从 $minElement 到 $maxElement.</p>
-
-<h2>索引的强制使用</h2>
-
+<h2 id="section-6">索引的强制使用</h2>
 <p>因为数据库自动使用索引的选择不见得是最好的. 所以 MySQL 和 MongoDB
 都提供了强制使用索引的方法.</p>
 
-<p>MySQL 中 使用 use index 子句
-<code>mysql
+<p>MySQL 中 使用 use index 子句</p>
+
+<p><code>mysql
 select * from tbl use index (idx_value);
 </code></p>
 
-<p>MongoDB 中则使用 hint 方法
-<code>javascript
+<p>MongoDB 中则使用 hint 方法</p>
+
+<p><code>javascript
 db.tbl.find().hint({value : 1});
 </code></p>
 ]]></content>
