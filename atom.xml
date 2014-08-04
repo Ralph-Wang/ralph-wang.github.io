@@ -4,7 +4,7 @@
   <title><![CDATA[Test Notes By _漏斗]]></title>
   <link href="http://Ralph-Wang.github.io/atom.xml" rel="self"/>
   <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-08-04T20:03:56+08:00</updated>
+  <updated>2014-08-04T23:57:52+08:00</updated>
   <id>http://Ralph-Wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,195 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[df 与 du 结果不匹配问题]]></title>
+    <link href="http://Ralph-Wang.github.io/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti/"/>
+    <updated>2014-08-04T22:03:28+08:00</updated>
+    <id>http://Ralph-Wang.github.io/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti</id>
+    <content type="html"><![CDATA[<p>du 与 df 与 文件描述符不得不说的故事</p>
+
+<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">案发现场</a></li>
+  <li><a href="#section-1">侦探们</a>    <ul>
+      <li><a href="#df">df</a></li>
+      <li><a href="#du">du</a></li>
+      <li><a href="#lsof">lsof</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-2">真相只有一个</a></li>
+  <li><a href="#section-3">现场还原</a></li>
+</ul>
+
+<h2 id="section">案发现场</h2>
+
+<p>开发同学接到了 cacti 的预警. 一台生产机器硬盘吃紧, 使用量达到了 90% 以上</p>
+
+<p>这里不方便给截图, 请看官们自行脑补…</p>
+
+<h2 id="section-1">侦探们</h2>
+
+<h3 id="df">df</h3>
+<p>首先, 我们派出第一位侦探 <code>df</code>, 以确认被占用的硬盘.</p>
+
+<p><code>df</code> 给出的调查报告如下</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">ralph -&gt; df -h
+</span><span class="line">Filesystem      Size  Used Avail Use% Mounted on
+</span><span class="line">/dev/xvda1       20G   19G  972K 100% /
+</span><span class="line">tmpfs           245M     0  245M   0% /dev/shm
+</span><span class="line">/dev/xvdb1       40G  6.9G   31G  19% /data</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>根据 <code>df</code> 先生的报告, 我们确认被占用的磁盘为 /dev/xvda1, 其挂载目录为 <code>/</code></p>
+
+<h3 id="du">du</h3>
+
+<p>接下来, 该 <code>du</code> 先生出场了, 他会帮我们找到那该死的大文件在哪目录下面的.</p>
+
+<p>我们先看他的第一次报告.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">ralph -&gt; du --max-depth=1 -h /
+</span><span class="line">164K    /dev
+</span><span class="line">5.9M    /bin
+</span><span class="line">0       /sys
+</span><span class="line">4.0K    /mnt
+</span><span class="line">18M     /lib64
+</span><span class="line">39M     /boot
+</span><span class="line">292M    /var
+</span><span class="line">603M    /root
+</span><span class="line">5.5G    /usr
+</span><span class="line">4.0K    /selinux
+</span><span class="line">6.7G    /data
+</span><span class="line">9.4M    /sbin
+</span><span class="line">0       /proc
+</span><span class="line">6.6M    /etc
+</span><span class="line">75M     /tmp
+</span><span class="line">239M    /lib
+</span><span class="line">4.0K    /opt
+</span><span class="line">4.0K    /media
+</span><span class="line">699M    /home
+</span><span class="line">20K     /lost+found
+</span><span class="line">4.0K    /srv
+</span><span class="line">15G     /</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>嗯, 从 <code>/</code> 中减掉 <code>/data</code> 目录下的 6.7G. 还有 8.3G.</p>
+
+<p>O_O’’’</p>
+
+<p><code>du</code> !!!! 你玩儿我呢吧… <code>df</code> 已经明确除了 <code>/data</code>, <code>/</code> 目录下应该还有 19G 文件. 是不是不想干了!!!</p>
+
+<h3 id="lsof">lsof</h3>
+
+<p>这时, <code>lsof</code> 主动站出来说话了: 逗逼攻城狮, <em>说不定是有进程在向已删除的文件写数据啊!</em></p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">ralph -&gt; lsof |grep delete
+</span><span class="line">grep      12574  ralph  txt       REG  202,1    106232  720903 /bin/grep (deleted)
+</span><span class="line">grep      12574  ralph    1u      CHR  136,2       0t0       5 /dev/pts/2 (deleted)
+</span><span class="line">grep      12574  ralph    2u      CHR  136,2       0t0       5 /dev/pts/2 (deleted)
+</span><span class="line">python    28230  ralph    3w      REG  202,1 734003200  401905 /home/ralph/tmp/write.log (deleted)</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>嗯~ 原来如此…杀掉这个 <code>28239</code> 这个 Python 进程后, 磁盘占用恢复正常</p>
+
+<h2 id="section-2">真相只有一个</h2>
+
+<ul>
+  <li>
+    <p>首先, 在 Linux 系统下, 当一个程序以 <code>写模式</code> 打开一个文件后, 会在进程中保留一个<code>文件描述符</code>, 以便进程对磁盘进行写操作. <code>文件描述符</code> 在 <code>/proc</code> 文件系统下, 表现为一个<code>软链接</code>, 只占用 64 个字节的空间.</p>
+  </li>
+  <li>
+    <p>其次, 而在 Linux 的文件系统中, 我们看到的所谓文件只是一个叫<code>硬链接</code>的东西, 而且可以有多个<code>硬链接</code>指向同一个文件(调..啊不,和 <code>ln</code> 妹纸沟通过就知道). 当指向某一文件块的所有<code>硬链接</code>被删除后, Linux 才会回收对相应磁盘空间的占用</p>
+  </li>
+</ul>
+
+<p>而此次事件的原因, 正好是<code>文件描述符</code>和<code>硬链接</code>指向同一块磁盘空间造成的.</p>
+
+<p>故事应该是这样发生的:</p>
+
+<ol>
+  <li>Python 进程打开了 <code>write.log</code> 的文件描述符, 进行写操作. 但却忘记关闭其描述符   </li>
+  <li>Linux 上部署的定时清理程序开始工作, 清理掉了 <code>write.log</code> 文件最后一个硬链接</li>
+  <li>因为 Python 进程的文件描述符没有关闭, Linux 内核”不敢”回收这块已经没有硬链接的磁盘空间.</li>
+  <li>磁盘空间仍被占用, 但对应目录下却没有<code>文件</code>.</li>
+</ol>
+
+<h2 id="section-3">现场还原</h2>
+
+<p>呃, 实际上, 公司的开发语言使用的是 java. 而且, 解决问题时并没有及时截图什么的. 所以, 上面那些数据就是用<code>Python</code> 还原现场时的数据了.</p>
+
+<p>这里再附上 Python 脚本.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="c">#!/usr/bin/env python</span>
+</span><span class="line">
+</span><span class="line"><span class="n">fobj</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;write.log&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">whil</span> <span class="bp">True</span><span class="p">:</span>
+</span><span class="line">    <span class="n">fobj</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>如果不想写太多数据出来, 可以用下面这个版本</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="c">#!/usr/bin/env python</span>
+</span><span class="line">
+</span><span class="line"><span class="n">fobj</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;write.log&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">fobj</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+</span><span class="line">    <span class="k">pass</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>死循环的目的都是为了模拟文件描述符占用</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[为 octopress 添加 TOC]]></title>
@@ -3142,124 +3331,6 @@ Cloud</a></p>
   <li><code>脚本</code> -&gt; <code>Python</code>, 因为<code>Python</code>是一种<code>脚本</code>语言</li>
   <li><code>Python</code> -&gt; <code>Java</code>, 因为<code>Java</code>和<code>Python</code>一样是强类型语言</li>
 </ul>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Java之Boxing和Unboxing]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/02/09/javazhi-boxinghe-unboxing/"/>
-    <updated>2014-02-09T22:07:16+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/02/09/javazhi-boxinghe-unboxing</id>
-    <content type="html"><![CDATA[<p>Java中有两大类数据类型： <strong>基本类型</strong>和<strong>引用类型</strong>。</p>
-
-<p>另外地，<strong>基本类型</strong>们都有其对应的<strong>封装类</strong>。</p>
-
-<p>比如： <code>int</code> -&gt; <code>Integer</code>
-<!--more--></p>
-
-<p>将<strong>基本类型</strong>转换成其对应的<strong>封装类</strong>的过程，就叫做装箱(Boxing)。</p>
-
-<p>反之，就叫拆箱(Unboxing)。</p>
-
-<h2 id="auto-boxing--unboxing">Auto Boxing &amp;&amp; Unboxing</h2>
-
-<p>因为每次显示的装箱、拆箱过于麻烦，从<code>JDK 5</code>开始，Java　提供了自动装箱、拆箱(Auto Boxing &amp; Unboxing)</p>
-
-<p>让下面这样的代码成立。</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="n">Integer</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span> <span class="c1">//Boxing</span>
-</span><span class="line"><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Integer</span><span class="o">(</span><span class="mi">100</span><span class="o">);</span> <span class="c1">//Unboxing</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>但是在装箱过程中，有个小特点需要注意一下。</p>
-
-<p>当装箱的<code>int</code>类型在 -128~127 之间时，装箱后的引用会指向同一对象。</p>
-
-<p>而不在这范围内的值，每次装箱都会产生一个新对象。</p>
-
-<p>类似的其它基本类型的范围：</p>
-
-<ul>
-  <li><code>boolean</code> : 装箱后总是指向同一对象</li>
-  <li><code>long</code> : -128L~127 之间，装箱后指向同一对象</li>
-  <li><code>float</code> : 总是产生新对象</li>
-  <li><code>double</code> : 总是产生新对象</li>
-</ul>
-
-<p>下面是测试代码：</p>
-<div><script src="https://gist.github.com/8900088.js"></script>
-<noscript><pre><code>public class Boxing {
-  public static void main(String[] args) {
-    // boolean
-    Boolean b1 = true;
-    Boolean b2 = true;
-    Boolean b3 = false;
-    Boolean b4 = false;
-
-    // int
-    Integer i1 = -129;
-    Integer i2 = -129;
-    Integer i3 = -128;
-    Integer i4 = -128;
-    Integer i5 = 127;
-    Integer i6 = 127;
-    Integer i7 = 128;
-    Integer i8 = 128;
-
-    // long
-    Long l1 = -129L;
-    Long l2 = -129L;
-    Long l3 = -128L;
-    Long l4 = -128L;
-    Long l5 = 127L;
-    Long l6 = 127L;
-    Long l7 = 128L;
-    Long l8 = 128L;
-
-    // float
-    Float f1 = 0.0f;
-    Float f2 = 0.0f;
-
-    // double
-    Double d1 = 0.0d;
-    Double d2 = 0.0d;
-
-    // output
-    System.out.println(&quot;true: &quot; + (b1 == b2));
-    System.out.println(&quot;false: &quot; + (b3 == b4));
-    System.out.println(&quot;-129: &quot; + (i1 == i2));
-    System.out.println(&quot;-129: &quot; + (i1 == i2));
-    System.out.println(&quot;-128: &quot; + (i3 == i4));
-    System.out.println(&quot;127: &quot; + (i5 == i6));
-    System.out.println(&quot;128: &quot; + (i7 == i8));
-    System.out.println(&quot;-129L: &quot; + (l1 == l2));
-    System.out.println(&quot;-129L: &quot; + (l1 == l2));
-    System.out.println(&quot;-128L: &quot; + (l3 == l4));
-    System.out.println(&quot;127L: &quot; + (l5 == l6));
-    System.out.println(&quot;128L: &quot; + (l7 == l8));
-    System.out.println(&quot;0.0f: &quot; + (f1 == f2));
-    System.out.println(&quot;0.0d: &quot; + (d1 == d2));
-  }
-}/* output:
-true: true
-false: true
--129: false
--129: false
--128: true
-127: true
-128: false
--129L: false
--129L: false
--128L: true
-127L: true
-128L: false
-0.0f: false
-0.0d: false
-*///:~
-</code></pre></noscript></div>
-
 ]]></content>
   </entry>
   
