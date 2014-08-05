@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: 多态 | Test Notes By _漏斗]]></title>
-  <link href="http://Ralph-Wang.github.io//tags/duo-tai/atom.xml" rel="self"/>
-  <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-08-05T19:38:23+08:00</updated>
-  <id>http://Ralph-Wang.github.io/</id>
+  <link href="http://ralph-wang.github.io//tags/duo-tai/atom.xml" rel="self"/>
+  <link href="http://ralph-wang.github.io/"/>
+  <updated>2014-08-06T02:06:35+08:00</updated>
+  <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[无节操地重新认识多态和IoC]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/"/>
     <updated>2014-07-27T23:41:34+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc</id>
+    <id>http://ralph-wang.github.io/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc</id>
     <content type="html"><![CDATA[<p>起源 <a href="http://weibo.com/1854716251/BfnE2jSR9">http://weibo.com/1854716251/BfnE2jSR9</a></p>
 
 <!--more-->

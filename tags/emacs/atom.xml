@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: Emacs | Test Notes By _漏斗]]></title>
-  <link href="http://Ralph-Wang.github.io//tags/emacs/atom.xml" rel="self"/>
-  <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-08-05T19:38:23+08:00</updated>
-  <id>http://Ralph-Wang.github.io/</id>
+  <link href="http://ralph-wang.github.io//tags/emacs/atom.xml" rel="self"/>
+  <link href="http://ralph-wang.github.io/"/>
+  <updated>2014-08-06T02:06:35+08:00</updated>
+  <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[从 vim 转到 emacs]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/07/25/cong-vim-zhuan-dao-emacs/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/07/25/cong-vim-zhuan-dao-emacs/"/>
     <updated>2014-07-25T21:24:43+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/07/25/cong-vim-zhuan-dao-emacs</id>
+    <id>http://ralph-wang.github.io/blog/2014/07/25/cong-vim-zhuan-dao-emacs</id>
     <content type="html"><![CDATA[<p>正式从 vim 切换到 emacs</p>
 
 <!--more-->

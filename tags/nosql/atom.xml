@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: NoSQL | Test Notes By _漏斗]]></title>
-  <link href="http://Ralph-Wang.github.io//tags/nosql/atom.xml" rel="self"/>
-  <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-08-05T19:38:23+08:00</updated>
-  <id>http://Ralph-Wang.github.io/</id>
+  <link href="http://ralph-wang.github.io//tags/nosql/atom.xml" rel="self"/>
+  <link href="http://ralph-wang.github.io/"/>
+  <updated>2014-08-06T02:06:35+08:00</updated>
+  <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[索引功能比较 MySQL 与 MongoDB]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/03/21/suo-yin-gong-neng-bi-jiao-mysql-yu-mongodb/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/03/21/suo-yin-gong-neng-bi-jiao-mysql-yu-mongodb/"/>
     <updated>2014-03-21T10:37:08+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/03/21/suo-yin-gong-neng-bi-jiao-mysql-yu-mongodb</id>
+    <id>http://ralph-wang.github.io/blog/2014/03/21/suo-yin-gong-neng-bi-jiao-mysql-yu-mongodb</id>
     <content type="html"><![CDATA[<p>索引是影响数据库性能的重要元素.</p>
 
 <p>这里比较一下 MySQL 与 MongoDB 中索引的基本使用, 也算复习一下这个数据库中的基本概念

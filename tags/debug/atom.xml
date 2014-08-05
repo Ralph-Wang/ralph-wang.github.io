@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: debug | Test Notes By _漏斗]]></title>
-  <link href="http://Ralph-Wang.github.io//tags/debug/atom.xml" rel="self"/>
-  <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-08-05T19:38:23+08:00</updated>
-  <id>http://Ralph-Wang.github.io/</id>
+  <link href="http://ralph-wang.github.io//tags/debug/atom.xml" rel="self"/>
+  <link href="http://ralph-wang.github.io/"/>
+  <updated>2014-08-06T02:06:35+08:00</updated>
+  <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Learning the Bash Shell 笔记-Debug]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/"/>
     <updated>2014-06-11T10:40:33+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug</id>
+    <id>http://ralph-wang.github.io/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug</id>
     <content type="html"><![CDATA[<p>任何开发测试工作都离不开的话题 – Debug. </p>
 
 <p>bash 脚本自然也不能免俗

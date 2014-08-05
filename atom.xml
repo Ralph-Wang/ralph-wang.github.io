@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Test Notes By _漏斗]]></title>
-  <link href="http://Ralph-Wang.github.io/atom.xml" rel="self"/>
-  <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-08-05T19:38:23+08:00</updated>
-  <id>http://Ralph-Wang.github.io/</id>
+  <link href="http://ralph-wang.github.io/atom.xml" rel="self"/>
+  <link href="http://ralph-wang.github.io/"/>
+  <updated>2014-08-06T02:06:35+08:00</updated>
+  <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[df 与 du 结果不匹配问题]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti/"/>
     <updated>2014-08-04T22:03:28+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti</id>
+    <id>http://ralph-wang.github.io/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti</id>
     <content type="html"><![CDATA[<p>du 与 df 与 文件描述符不得不说的故事</p>
 
 <!--more-->
@@ -204,9 +204,9 @@
   
   <entry>
     <title type="html"><![CDATA[为 octopress 添加 TOC]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/08/01/wei-octopress-tian-jia-toc/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/08/01/wei-octopress-tian-jia-toc/"/>
     <updated>2014-08-01T00:52:13+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/08/01/wei-octopress-tian-jia-toc</id>
+    <id>http://ralph-wang.github.io/blog/2014/08/01/wei-octopress-tian-jia-toc</id>
     <content type="html"><![CDATA[<p>添加一个 TOC 方便阅读</p>
 
 <!--more-->
@@ -328,9 +328,9 @@
   
   <entry>
     <title type="html"><![CDATA[无节操地重新认识多态和IoC]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/"/>
     <updated>2014-07-27T23:41:34+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc</id>
+    <id>http://ralph-wang.github.io/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc</id>
     <content type="html"><![CDATA[<p>起源 <a href="http://weibo.com/1854716251/BfnE2jSR9">http://weibo.com/1854716251/BfnE2jSR9</a></p>
 
 <!--more-->
@@ -444,9 +444,9 @@
   
   <entry>
     <title type="html"><![CDATA[从 vim 转到 emacs]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/07/25/cong-vim-zhuan-dao-emacs/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/07/25/cong-vim-zhuan-dao-emacs/"/>
     <updated>2014-07-25T21:24:43+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/07/25/cong-vim-zhuan-dao-emacs</id>
+    <id>http://ralph-wang.github.io/blog/2014/07/25/cong-vim-zhuan-dao-emacs</id>
     <content type="html"><![CDATA[<p>正式从 vim 切换到 emacs</p>
 
 <!--more-->
@@ -511,9 +511,9 @@ emacs 劣势: 快捷键均为组合键, 输入相对 vim 麻烦</p>
   
   <entry>
     <title type="html"><![CDATA[Learning the Bash Shell 笔记-Debug]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/"/>
     <updated>2014-06-11T10:40:33+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug</id>
+    <id>http://ralph-wang.github.io/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug</id>
     <content type="html"><![CDATA[<p>任何开发测试工作都离不开的话题 – Debug. </p>
 
 <p>bash 脚本自然也不能免俗
@@ -1056,9 +1056,9 @@ emacs 劣势: 快捷键均为组合键, 输入相对 vim 麻烦</p>
   
   <entry>
     <title type="html"><![CDATA[Learning the Bash Shell 笔记-杂项]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/"/>
     <updated>2014-06-05T09:49:16+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang</id>
+    <id>http://ralph-wang.github.io/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang</id>
     <content type="html"><![CDATA[<p>一些零散的内容
 <!--more-->
 ## getopts
@@ -1193,9 +1193,9 @@ FILE2</code> 用来比较两个文件修改时间</p>
   
   <entry>
     <title type="html"><![CDATA[Learning the Bash Shell 笔记-流控制]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi/"/>
     <updated>2014-05-22T21:19:21+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi</id>
+    <id>http://ralph-wang.github.io/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi</id>
     <content type="html"><![CDATA[<p>但凡是代码就逃不开的流控制话题
 <!--more--></p>
 
@@ -1391,9 +1391,9 @@ FILE2</code> 用来比较两个文件修改时间</p>
   
   <entry>
     <title type="html"><![CDATA[Learning The Bash Shell 笔记-变量]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/05/15/learning-the-bash-shell-du-shu-bi-ji-bian-liang/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/05/15/learning-the-bash-shell-du-shu-bi-ji-bian-liang/"/>
     <updated>2014-05-15T09:35:19+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/05/15/learning-the-bash-shell-du-shu-bi-ji-bian-liang</id>
+    <id>http://ralph-wang.github.io/blog/2014/05/15/learning-the-bash-shell-du-shu-bi-ji-bian-liang</id>
     <content type="html"><![CDATA[<!--more-->
 
 <h2 id="section">$* 和 $@</h2>
@@ -1567,9 +1567,9 @@ FILE2</code> 用来比较两个文件修改时间</p>
   
   <entry>
     <title type="html"><![CDATA[迂回的监控数据库连接数]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/05/09/yu-hui-de-jian-kong-shu-ju-ku-lian-jie-shu/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/05/09/yu-hui-de-jian-kong-shu-ju-ku-lian-jie-shu/"/>
     <updated>2014-05-09T09:45:51+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/05/09/yu-hui-de-jian-kong-shu-ju-ku-lian-jie-shu</id>
+    <id>http://ralph-wang.github.io/blog/2014/05/09/yu-hui-de-jian-kong-shu-ju-ku-lian-jie-shu</id>
     <content type="html"><![CDATA[<p>不能通过数据库工具监控到连接数时可用的迂回监控方法
 <!--more-->
 ## 原理
@@ -1629,15 +1629,15 @@ done
 
 <p>执行结果的样例:</p>
 
-<p><img src="http://Ralph-Wang.github.io/blogimgs/net_watch.png" alt="net_watch" /></p>
+<p><img src="http://ralph-wang.github.io/blogimgs/net_watch.png" alt="net_watch" /></p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[分析一个 Linux 命令]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/04/14/fen-xi-yi-ge-linux-ming-ling/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/04/14/fen-xi-yi-ge-linux-ming-ling/"/>
     <updated>2014-04-14T22:44:14+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/04/14/fen-xi-yi-ge-linux-ming-ling</id>
+    <id>http://ralph-wang.github.io/blog/2014/04/14/fen-xi-yi-ge-linux-ming-ling</id>
     <content type="html"><![CDATA[<p>通过拆解查看 CPU 信息的组合命令, 来学习每个独立命令
 <!--more--></p>
 
@@ -1695,9 +1695,9 @@ output ** .  输出所有选中的行</p>
   
   <entry>
     <title type="html"><![CDATA[WebDriver 之 Page Object 设计模式]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/04/11/webdriver-zhi-page-object-she-ji-mo-shi/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/04/11/webdriver-zhi-page-object-she-ji-mo-shi/"/>
     <updated>2014-04-11T21:17:47+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/04/11/webdriver-zhi-page-object-she-ji-mo-shi</id>
+    <id>http://ralph-wang.github.io/blog/2014/04/11/webdriver-zhi-page-object-she-ji-mo-shi</id>
     <content type="html"><![CDATA[<p>使用 Selenium Webdriver 最常用的设计模式 Page Object 规划页面
 <!--more-->
 例子页面:</p>
@@ -1892,9 +1892,9 @@ output ** .  输出所有选中的行</p>
   
   <entry>
     <title type="html"><![CDATA[Jmeter 安装]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/04/06/jmeter-an-zhuang/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/04/06/jmeter-an-zhuang/"/>
     <updated>2014-04-06T22:17:08+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/04/06/jmeter-an-zhuang</id>
+    <id>http://ralph-wang.github.io/blog/2014/04/06/jmeter-an-zhuang</id>
     <content type="html"><![CDATA[<p>跨平台工具赛高
 <!--more--></p>
 
@@ -1962,9 +1962,9 @@ $JMETER_HOME/lib/ext/ApacheJMeter_core.jar</p>
   
   <entry>
     <title type="html"><![CDATA[面试技术问题解答]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/03/25/mian-shi-wen-ti-jie-da/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/03/25/mian-shi-wen-ti-jie-da/"/>
     <updated>2014-03-25T19:49:37+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/03/25/mian-shi-wen-ti-jie-da</id>
+    <id>http://ralph-wang.github.io/blog/2014/03/25/mian-shi-wen-ti-jie-da</id>
     <content type="html"><![CDATA[<p>面试时没有完全回答上或有存疑的问题
 <!--more-->
 Linux
@@ -2366,9 +2366,9 @@ awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次�
   
   <entry>
     <title type="html"><![CDATA[索引功能比较 MySQL 与 MongoDB]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/03/21/suo-yin-gong-neng-bi-jiao-mysql-yu-mongodb/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/03/21/suo-yin-gong-neng-bi-jiao-mysql-yu-mongodb/"/>
     <updated>2014-03-21T10:37:08+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/03/21/suo-yin-gong-neng-bi-jiao-mysql-yu-mongodb</id>
+    <id>http://ralph-wang.github.io/blog/2014/03/21/suo-yin-gong-neng-bi-jiao-mysql-yu-mongodb</id>
     <content type="html"><![CDATA[<p>索引是影响数据库性能的重要元素.</p>
 
 <p>这里比较一下 MySQL 与 MongoDB 中索引的基本使用, 也算复习一下这个数据库中的基本概念
@@ -2758,9 +2758,9 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
   
   <entry>
     <title type="html"><![CDATA[nodejs Buffer性能优势]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/03/15/nodejs-bufferxing-neng-you-shi/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/03/15/nodejs-bufferxing-neng-you-shi/"/>
     <updated>2014-03-15T21:24:23+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/03/15/nodejs-bufferxing-neng-you-shi</id>
+    <id>http://ralph-wang.github.io/blog/2014/03/15/nodejs-bufferxing-neng-you-shi</id>
     <content type="html"><![CDATA[<p>最近在读朴大神的 <code>深入浅出 Nodejs</code>, 其中不乏性能相关话题.</p>
 
 <p>这里选一个出来做个测试
@@ -2850,7 +2850,7 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 <h2 id="section-1">测试结果</h2>
 <p>比较一下测试结果</p>
 
-<p><img src="http://Ralph-Wang.github.io/blogimgs/node-buffer-perf.png" alt="node-buffer-perf" /></p>
+<p><img src="http://ralph-wang.github.io/blogimgs/node-buffer-perf.png" alt="node-buffer-perf" /></p>
 
 <p>可以看到, 使用 Buffer 后 QPS 和传输率确实有一定提升.</p>
 
@@ -2858,7 +2858,7 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 
 <p>监控两次测试的 CPU 使用情况并统计: (统计时, 取 CPU 平稳的 6 次结果并计算用户态 CPU 平均值)</p>
 
-<p><img src="http://Ralph-Wang.github.io/blogimgs/node-buffer-cpu.png" alt="node-buffer-cpu" /></p>
+<p><img src="http://ralph-wang.github.io/blogimgs/node-buffer-cpu.png" alt="node-buffer-cpu" /></p>
 
 <p>两次测试中, CPU 利用率均达到了 100%, 但不使用 Buffer 时, 用户态的 CPU 更高一些.</p>
 
@@ -2874,9 +2874,9 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
   
   <entry>
     <title type="html"><![CDATA[用 awk 查看 PATH 环境变量]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/03/06/yong-awk-cha-kan-path-huan-jing-bian-liang/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/03/06/yong-awk-cha-kan-path-huan-jing-bian-liang/"/>
     <updated>2014-03-06T14:18:22+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/03/06/yong-awk-cha-kan-path-huan-jing-bian-liang</id>
+    <id>http://ralph-wang.github.io/blog/2014/03/06/yong-awk-cha-kan-path-huan-jing-bian-liang</id>
     <content type="html"><![CDATA[<!--more-->
 <p>查看 PATH 环境变量是件痛苦的事情.</p>
 
@@ -2888,7 +2888,7 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 </pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$echo</span> <span class="nv">$PATH</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p><img src="http://Ralph-Wang.github.io/blogimgs/path-normal.png" alt="path normal" /></p>
+<p><img src="http://ralph-wang.github.io/blogimgs/path-normal.png" alt="path normal" /></p>
 
 <p>看 <code>awk</code> 用法时, 记得可以用 <code>RS</code> 变量修改行标识, 于是试试</p>
 
@@ -2896,7 +2896,7 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 </pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$echo</span> <span class="nv">$PATH</span> | awk <span class="s1">&#39;BEGIN {RS=&quot;:&quot;} {print $0}&#39;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p><img src="http://Ralph-Wang.github.io/blogimgs/path-withawk.png" alt="path with awk" /></p>
+<p><img src="http://ralph-wang.github.io/blogimgs/path-withawk.png" alt="path with awk" /></p>
 
 <p>确实清晰不少.</p>
 
@@ -2913,9 +2913,9 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
   
   <entry>
     <title type="html"><![CDATA[用 jstack 线程定位初体验]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/03/01/yong-jstack-xian-cheng-ding-wei-chu-ti-yan/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/03/01/yong-jstack-xian-cheng-ding-wei-chu-ti-yan/"/>
     <updated>2014-03-01T22:42:48+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/03/01/yong-jstack-xian-cheng-ding-wei-chu-ti-yan</id>
+    <id>http://ralph-wang.github.io/blog/2014/03/01/yong-jstack-xian-cheng-ding-wei-chu-ti-yan</id>
     <content type="html"><![CDATA[<p>用 top + jstack 定位 java 线程问题
 <!--more--></p>
 
@@ -2923,7 +2923,7 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 
 <p>首先, 写一个用于计算并输出蜚波那契数列的 java 程序, 大致的输出信息如下.</p>
 
-<p><img src="http://Ralph-Wang.github.io/blogimgs/thread-fb.png" alt="Fibonacci" title="a Fibonacci Thread" /></p>
+<p><img src="http://ralph-wang.github.io/blogimgs/thread-fb.png" alt="Fibonacci" title="a Fibonacci Thread" /></p>
 
 <p>这里特意写成<strong>死循环</strong>, 让它不停地去消耗 CPU</p>
 
@@ -2937,7 +2937,7 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>看 <code>top</code> 命令的输出
-<img src="http://Ralph-Wang.github.io/blogimgs/thread-top.png" alt="use top" title="use top" />
+<img src="http://ralph-wang.github.io/blogimgs/thread-top.png" alt="use top" title="use top" />
 看到消耗 CPU 最高的就是一个 java 进程.</p>
 
 <p>OK, 记下进程号 <strong>100162</strong></p>
@@ -2964,7 +2964,7 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 </blockquote>
 
 <p>这次, 得到如下图的结果:
-<img src="http://Ralph-Wang.github.io/blogimgs/thread-topHp.png" alt="use top -H -p (pid)" title="use top -H -p &lt;pid&gt;" /></p>
+<img src="http://ralph-wang.github.io/blogimgs/thread-topHp.png" alt="use top -H -p (pid)" title="use top -H -p &lt;pid&gt;" /></p>
 
 <p>消耗 CPU 最高的不再是 100162 了. 可以清楚的看到是线程 <strong>100172</strong></p>
 
@@ -2984,13 +2984,13 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 
 <p>就是下面的 <strong>Thread-0</strong> 线程了</p>
 
-<p><img src="http://Ralph-Wang.github.io/blogimgs/thread-jstack.png" alt="use jstack" title="use jstack" /></p>
+<p><img src="http://ralph-wang.github.io/blogimgs/thread-jstack.png" alt="use jstack" title="use jstack" /></p>
 
 <p>全是 <code>Fibonacci.calcFibo (testJstack.java:28)</code></p>
 
 <p>定位源码文件 <code>testJstack.java</code> 第 28 行, 最土最慢最二的蜚波那契数列算法…</p>
 
-<p><img src="http://Ralph-Wang.github.io/blogimgs/thread-28.png" alt="get the criminal" title="get the criminal" /></p>
+<p><img src="http://ralph-wang.github.io/blogimgs/thread-28.png" alt="get the criminal" title="get the criminal" /></p>
 
 <p>问题定位结束</p>
 
@@ -3035,9 +3035,9 @@ class Fibonacci implements Runnable {
   
   <entry>
     <title type="html"><![CDATA[LR 关联之 Alfresco]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/02/18/lr-guan-lian-zhi-alfresco/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/02/18/lr-guan-lian-zhi-alfresco/"/>
     <updated>2014-02-18T00:39:11+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/02/18/lr-guan-lian-zhi-alfresco</id>
+    <id>http://ralph-wang.github.io/blog/2014/02/18/lr-guan-lian-zhi-alfresco</id>
     <content type="html"><![CDATA[<p>遇到一个比较特别的关联的例子. 
 <!--more-->
 项目是 <strong>Alfresco</strong>
@@ -3046,13 +3046,13 @@ class Fibonacci implements Runnable {
 <h3 id="section">问题</h3>
 <p>录制后, 简单参数化一下运行, 发现最后一步提交数据时, 返回的状态码为 500.</p>
 
-<p><img src="http://Ralph-Wang.github.io/blogimgs/alfresco-errmsg.png" alt="Error Message" title="Err Msg" /></p>
+<p><img src="http://ralph-wang.github.io/blogimgs/alfresco-errmsg.png" alt="Error Message" title="Err Msg" /></p>
 
 <p>会不会是系统出了什么毛病? 于是去手工操作业务, 却发现一切正常.</p>
 
 <p>再去翻看 LoadRunner 的 Test Result. 发现了好东西.</p>
 
-<p><img src="http://Ralph-Wang.github.io/blogimgs/alfresco-500page.png" alt="Test Result" title="500 Page" /></p>
+<p><img src="http://ralph-wang.github.io/blogimgs/alfresco-500page.png" alt="Test Result" title="500 Page" /></p>
 
 <p>如上图, 虽然请求返回的状态码是 500, 但返回页面仍是 Alfresco 的页面, </p>
 
@@ -3102,7 +3102,7 @@ class Fibonacci implements Runnable {
 
 <p>那就只有看看请求头了.</p>
 
-<p><img src="http://Ralph-Wang.github.io/blogimgs/alfresco-lr.png" alt="LR Log" title="Lr Log" /></p>
+<p><img src="http://ralph-wang.github.io/blogimgs/alfresco-lr.png" alt="LR Log" title="Lr Log" /></p>
 
 <p>这里发现了一个嫌疑犯: <code>Alfresco-CSRFToken</code></p>
 
@@ -3110,7 +3110,7 @@ class Fibonacci implements Runnable {
 
 <p>我们再用 <code>Fiddler</code> 来看下新请求里, 这个值是否发生了变化.</p>
 
-<p><img src="http://Ralph-Wang.github.io/blogimgs/alfresco-fiddler.png" alt="Fiddler" title="Fiddler" /></p>
+<p><img src="http://ralph-wang.github.io/blogimgs/alfresco-fiddler.png" alt="Fiddler" title="Fiddler" /></p>
 
 <p>果然发生了变化. 这下没错了, 它就是我们需要关联的对象.</p>
 
@@ -3118,7 +3118,7 @@ class Fibonacci implements Runnable {
 
 <p>依次查看各个请求后发现, 在进入用户管理页面时, 返回的请求头里有如下信息</p>
 
-<p><img src="http://Ralph-Wang.github.io/blogimgs/alfresco-tocor.png" alt="To Correlations" title="To Correlations" /></p>
+<p><img src="http://ralph-wang.github.io/blogimgs/alfresco-tocor.png" alt="To Correlations" title="To Correlations" /></p>
 
 <p>由于信息中的特殊符号被 <code>URL编码</code> 了, 导致在前后两个请求中看上去有些不一样.
 通过解码我们可以确认, 这里就是关联参数的来源</p>
@@ -3226,9 +3226,9 @@ class Fibonacci implements Runnable {
   
   <entry>
     <title type="html"><![CDATA[为 Octopress 添加 Tag 功能]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng/"/>
     <updated>2014-02-15T00:09:14+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng</id>
+    <id>http://ralph-wang.github.io/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng</id>
     <content type="html"><![CDATA[<p>对于博客文章来讲, 除了类别外, 另一个重要的标识属性便是<strong>标签</strong>.
 <!--more--></p>
 
@@ -3295,13 +3295,13 @@ Cloud</a></p>
   
   <entry>
     <title type="html"><![CDATA[联想接龙]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/02/11/lian-xiang-jie-long/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/02/11/lian-xiang-jie-long/"/>
     <updated>2014-02-11T23:18:09+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/02/11/lian-xiang-jie-long</id>
+    <id>http://ralph-wang.github.io/blog/2014/02/11/lian-xiang-jie-long</id>
     <content type="html"><![CDATA[<p><code>你的第一本思维导图操作书</code>中<code>自由联想练习</code>的第一个练习方法
 <!--more--></p>
 
-<p><img src="http://Ralph-Wang.github.io/blogimgs/brain_flow.png" alt="brain_flow" /></p>
+<p><img src="http://ralph-wang.github.io/blogimgs/brain_flow.png" alt="brain_flow" /></p>
 
 <p>由任意一个词开始, 依次联想, 直到填满七个节点</p>
 
@@ -3313,7 +3313,7 @@ Cloud</a></p>
 
 <p>我的联想结果如下:</p>
 
-<p><img src="http://Ralph-Wang.github.io/blogimgs/my_brain_flow.png" alt="my_brain_flow" /></p>
+<p><img src="http://ralph-wang.github.io/blogimgs/my_brain_flow.png" alt="my_brain_flow" /></p>
 
 <p>嗯… 其实, 这个练习是在下午 5 点左右进行的. 现在是 23:40.</p>
 

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: bash | Test Notes By _漏斗]]></title>
-  <link href="http://Ralph-Wang.github.io//tags/bash/atom.xml" rel="self"/>
-  <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-08-05T19:38:23+08:00</updated>
-  <id>http://Ralph-Wang.github.io/</id>
+  <link href="http://ralph-wang.github.io//tags/bash/atom.xml" rel="self"/>
+  <link href="http://ralph-wang.github.io/"/>
+  <updated>2014-08-06T02:06:35+08:00</updated>
+  <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Learning the Bash Shell 笔记-Debug]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/"/>
     <updated>2014-06-11T10:40:33+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug</id>
+    <id>http://ralph-wang.github.io/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug</id>
     <content type="html"><![CDATA[<p>任何开发测试工作都离不开的话题 – Debug. </p>
 
 <p>bash 脚本自然也不能免俗
@@ -371,9 +371,9 @@ done }
   
   <entry>
     <title type="html"><![CDATA[Learning the Bash Shell 笔记-杂项]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/"/>
     <updated>2014-06-05T09:49:16+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang</id>
+    <id>http://ralph-wang.github.io/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang</id>
     <content type="html"><![CDATA[<p>一些零散的内容
 <!--more-->
 ## getopts
@@ -467,9 +467,9 @@ FILE2</code> 用来比较两个文件修改时间</p>
   
   <entry>
     <title type="html"><![CDATA[Learning the Bash Shell 笔记-流控制]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi/"/>
     <updated>2014-05-22T21:19:21+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi</id>
+    <id>http://ralph-wang.github.io/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi</id>
     <content type="html"><![CDATA[<p>但凡是代码就逃不开的流控制话题
 <!--more--></p>
 
@@ -625,9 +625,9 @@ done
   
   <entry>
     <title type="html"><![CDATA[Learning The Bash Shell 笔记-变量]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/05/15/learning-the-bash-shell-du-shu-bi-ji-bian-liang/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/05/15/learning-the-bash-shell-du-shu-bi-ji-bian-liang/"/>
     <updated>2014-05-15T09:35:19+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/05/15/learning-the-bash-shell-du-shu-bi-ji-bian-liang</id>
+    <id>http://ralph-wang.github.io/blog/2014/05/15/learning-the-bash-shell-du-shu-bi-ji-bian-liang</id>
     <content type="html"><![CDATA[<!--more-->
 
 <h2 id="section">$* 和 $@</h2>

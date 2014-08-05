@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: init | Test Notes By _漏斗]]></title>
-  <link href="http://Ralph-Wang.github.io//tags/init/atom.xml" rel="self"/>
-  <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-08-05T19:38:23+08:00</updated>
-  <id>http://Ralph-Wang.github.io/</id>
+  <link href="http://ralph-wang.github.io//tags/init/atom.xml" rel="self"/>
+  <link href="http://ralph-wang.github.io/"/>
+  <updated>2014-08-06T02:06:35+08:00</updated>
+  <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[用 markdown 写作]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/01/27/yong-markdown-xie-zuo/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/01/27/yong-markdown-xie-zuo/"/>
     <updated>2014-01-27T18:14:13+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/01/27/yong-markdown-xie-zuo</id>
+    <id>http://ralph-wang.github.io/blog/2014/01/27/yong-markdown-xie-zuo</id>
     <content type="html"><![CDATA[<p><strong>这是用 octpress + github 写的第一篇博客</strong>
 <!--more--></p>
 

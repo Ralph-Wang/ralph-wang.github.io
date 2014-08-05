@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: markdown | Test Notes By _漏斗]]></title>
-  <link href="http://Ralph-Wang.github.io//tags/markdown/atom.xml" rel="self"/>
-  <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-08-05T19:38:23+08:00</updated>
-  <id>http://Ralph-Wang.github.io/</id>
+  <link href="http://ralph-wang.github.io//tags/markdown/atom.xml" rel="self"/>
+  <link href="http://ralph-wang.github.io/"/>
+  <updated>2014-08-06T02:06:35+08:00</updated>
+  <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[为 octopress 添加 TOC]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/08/01/wei-octopress-tian-jia-toc/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/08/01/wei-octopress-tian-jia-toc/"/>
     <updated>2014-08-01T00:52:13+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/08/01/wei-octopress-tian-jia-toc</id>
+    <id>http://ralph-wang.github.io/blog/2014/08/01/wei-octopress-tian-jia-toc</id>
     <content type="html"><![CDATA[<p>添加一个 TOC 方便阅读</p>
 
 <!--more-->

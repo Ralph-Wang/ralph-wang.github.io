@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: 文件描述符 | Test Notes By _漏斗]]></title>
-  <link href="http://Ralph-Wang.github.io//tags/wen-jian-miao-shu-fu/atom.xml" rel="self"/>
-  <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-08-05T19:38:23+08:00</updated>
-  <id>http://Ralph-Wang.github.io/</id>
+  <link href="http://ralph-wang.github.io//tags/wen-jian-miao-shu-fu/atom.xml" rel="self"/>
+  <link href="http://ralph-wang.github.io/"/>
+  <updated>2014-08-06T02:06:35+08:00</updated>
+  <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[df 与 du 结果不匹配问题]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti/"/>
     <updated>2014-08-04T22:03:28+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti</id>
+    <id>http://ralph-wang.github.io/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti</id>
     <content type="html"><![CDATA[<p>du 与 df 与 文件描述符不得不说的故事</p>
 
 <!--more-->

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: octopress | Test Notes By _漏斗]]></title>
-  <link href="http://Ralph-Wang.github.io//tags/octopress/atom.xml" rel="self"/>
-  <link href="http://Ralph-Wang.github.io/"/>
-  <updated>2014-08-05T19:38:23+08:00</updated>
-  <id>http://Ralph-Wang.github.io/</id>
+  <link href="http://ralph-wang.github.io//tags/octopress/atom.xml" rel="self"/>
+  <link href="http://ralph-wang.github.io/"/>
+  <updated>2014-08-06T02:06:35+08:00</updated>
+  <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[为 octopress 添加 TOC]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/08/01/wei-octopress-tian-jia-toc/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/08/01/wei-octopress-tian-jia-toc/"/>
     <updated>2014-08-01T00:52:13+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/08/01/wei-octopress-tian-jia-toc</id>
+    <id>http://ralph-wang.github.io/blog/2014/08/01/wei-octopress-tian-jia-toc</id>
     <content type="html"><![CDATA[<p>添加一个 TOC 方便阅读</p>
 
 <!--more-->
@@ -121,9 +121,9 @@ ul#markdown-toc {
   
   <entry>
     <title type="html"><![CDATA[为 Octopress 添加 Tag 功能]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng/"/>
     <updated>2014-02-15T00:09:14+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng</id>
+    <id>http://ralph-wang.github.io/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng</id>
     <content type="html"><![CDATA[<p>对于博客文章来讲, 除了类别外, 另一个重要的标识属性便是<strong>标签</strong>.
 <!--more--></p>
 
@@ -184,9 +184,9 @@ categories: octopress
   
   <entry>
     <title type="html"><![CDATA[octopress首页只显示摘要]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/02/06/octopressshou-ye-zhi-xian-shi-zhai-yao/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/02/06/octopressshou-ye-zhi-xian-shi-zhai-yao/"/>
     <updated>2014-02-06T00:30:36+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/02/06/octopressshou-ye-zhi-xian-shi-zhai-yao</id>
+    <id>http://ralph-wang.github.io/blog/2014/02/06/octopressshou-ye-zhi-xian-shi-zhai-yao</id>
     <content type="html"><![CDATA[<p>上一篇博客比较长，发现首页居然照样显示了全文</p>
 
 <p>于时查找了下如何只显示摘要
@@ -246,9 +246,9 @@ categories: octopress
   
   <entry>
     <title type="html"><![CDATA[octopress嵌入新浪微博边栏]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/02/04/octopressqian-ru-xin-lang-wei-bo-bian-lan/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/02/04/octopressqian-ru-xin-lang-wei-bo-bian-lan/"/>
     <updated>2014-02-04T18:26:31+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/02/04/octopressqian-ru-xin-lang-wei-bo-bian-lan</id>
+    <id>http://ralph-wang.github.io/blog/2014/02/04/octopressqian-ru-xin-lang-wei-bo-bian-lan</id>
     <content type="html"><![CDATA[<p>更换<a href="http://github.com/bkutil/bootstrap-theme"><code>boottrap-theme</code></a>后，边栏只有<strong>最近发表</strong>和<strong>文章分类</strong>两项内容显得有点寒碜。于是想着添加个新浪微博的边栏试试</p>
 
 <!--more-->
@@ -358,9 +358,9 @@ rake preview
   
   <entry>
     <title type="html"><![CDATA[用 markdown 写作]]></title>
-    <link href="http://Ralph-Wang.github.io/blog/2014/01/27/yong-markdown-xie-zuo/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/01/27/yong-markdown-xie-zuo/"/>
     <updated>2014-01-27T18:14:13+08:00</updated>
-    <id>http://Ralph-Wang.github.io/blog/2014/01/27/yong-markdown-xie-zuo</id>
+    <id>http://ralph-wang.github.io/blog/2014/01/27/yong-markdown-xie-zuo</id>
     <content type="html"><![CDATA[<p><strong>这是用 octpress + github 写的第一篇博客</strong>
 <!--more--></p>
 
