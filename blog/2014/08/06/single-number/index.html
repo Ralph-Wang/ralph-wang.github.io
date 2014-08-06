@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Single Number - 挨踢夜归人</title>
+  <meta name="author" content="_漏斗">
+
+  <meta name="description" content="leetcode 刷题第一道. Single Number">
+  <meta name="keywords" content="leetcode算法解题">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <!--<link rel="canonical" href="http://ralph-wang.github.io/blog/2014/08/06/single-number">-->
+  <link href="/favicon.png" type="image/png" rel="icon">
+  <link href="/atom.xml" rel="alternate" title="挨踢夜归人" type="application/atom+xml">
+
+  <link href="/assets/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+
+</head>
+
+  <body   >
+    <div id="wrap">
+      <header role="banner">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<a style="position:relative" href="https://github.com/Ralph-Wang/" id="fork">
+    <img style="position:absolute" src="/imgs/fork_me.png" width=149 height=149 alt="Fork me on Github" />
+</a>
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">挨踢夜归人</a>
+        </div>
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li >
+                    <a href="/">玄关</a>
+                </li>
+                <li >
+                    <a href="/blog/archives">历史事件</a>
+                </li>
+                <li >
+                    <a href="/about-me">这个逗[哔]</a>
+                </li>
+                <li>
+                <a title="把这个链接拖到你的Chrome收藏夹工具栏中"
+                    href='javascript:(function(){function c(){var
+                    e=document.createElement("link");e.setAttribute("type","text/css");e.setAttribute("rel","stylesheet");e.setAttribute("href",f);e.setAttribute("class",l);document.body.appendChild(e)}function
+                    h(){var e=document.getElementsByClassName(l);for(var
+                    t=0;t<e.length;t++){document.body.removeChild(e[t])}}function
+                    p(){var
+                    e=document.createElement("div");e.setAttribute("class",a);document.body.appendChild(e);setTimeout(function(){document.body.removeChild(e)},100)}function
+                    d(e){return{height:e.offsetHeight,width:e.offsetWidth}}function
+                    v(i){var s=d(i);return
+                    s.height>e&&s.height<n&&s.width>t&&s.width<r}function
+                    m(e){var t=e;var
+                    n=0;while(!!t){n+=t.offsetTop;t=t.offsetParent}return
+                    n}function g(){var
+                    e=document.documentElement;if(!!window.innerWidth){return
+                    window.innerHeight}else if(e&&!isNaN(e.clientHeight)){return
+                    e.clientHeight}return 0}function
+                    y(){if(window.pageYOffset){return window.pageYOffset}return
+                    Math.max(document.documentElement.scrollTop,document.body.scrollTop)}function
+                    E(e){var t=m(e);return t>=w&&t<=b+w}function S(){var
+                    e=document.createElement("audio");e.setAttribute("class",l);e.src=i;e.loop=false;e.addEventListener("canplay",function(){setTimeout(function(){x(k)},500);setTimeout(function(){N();p();for(var
+                    e=0;e<O.length;e++){T(O[e])}},15500)},true);e.addEventListener("ended",function(){N();h()},true);e.innerHTML="
+                    <p>If you are reading this, it is because your browser does
+                    not support the audio element. We recommend that you get a
+                    new browser.</p>
+                    <p>";document.body.appendChild(e);e.play()}function
+                    x(e){e.className+=" "+s+" "+o}function T(e){e.className+="
+                    "+s+" "+u[Math.floor(Math.random()*u.length)]}function
+                    N(){var e=document.getElementsByClassName(s);var t=new
+                    RegExp("\\b"+s+"\\b");for(var
+                    n=0;n<e.length;){e[n].className=e[n].className.replace(t,"")}}var
+                    e=30;var t=30;var n=350;var r=350;var
+                    i="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";var
+                    s="mw-harlem_shake_me";var o="im_first";var
+                    u=["im_drunk","im_baked","im_trippin","im_blown"];var
+                    a="mw-strobe_light";var
+                    f="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";var
+                    l="mw_added_css";var b=g();var w=y();var
+                    C=document.getElementsByTagName("*");var k=null;for(var
+                    L=0;L<C.length;L++){var
+                    A=C[L];if(v(A)){if(E(A)){k=A;break}}}if(A===null){console.warn("Could
+                    not find a node of the right size. Please try a different
+                    page.");return}c();S();var O=[];for(var
+                    L=0;L<C.length;L++){var
+                    A=C[L];if(v(A)){O.push(A)}}})()'>High一下!</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="subscribe-rss" href="/atom.xml" title="subscribe via RSS">
+                        <span class="visible-xs">RSS</span>
+                        <img class="hidden-xs" width=22 height=22 src="/images/rss.png" alt="RSS">
+                    </a>
+                </li>
+                
+            </ul>
+            
+                <form class="search navbar-form navbar-right" action="http://google.com/search" method="GET">
+                    <input type="hidden" name="q" value="site:ralph-wang.github.io">
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="q" placeholder="Search">
+                    </div>
+                </form>
+            
+        </div>
+    </div>
+</nav>
+
+
+      </header>
+      <div id="main" class="container">
+        <div id="content">
+          <div class="row">
+  <div class="page-content col-md-8">
+    <article class="hentry" role="article">
+      
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-08-06T16:44:56+08:00" pubdate data-updated="true">Aug 6<span>th</span>, 2014</time>
+        
+      </p>
+    
+    
+    <h1 class="entry-title">
+        Single Number
+        
+    </h1>
+    
+  </header>
+
+
+<div class="entry-content clearfix"><p>最近开始撸算法相关的东西. 于是在 LeetCode 上找一些题来练习</p>
+
+<!--more-->
+
+<ul id="markdown-toc">
+  <li><a href="#section">题目</a></li>
+  <li><a href="#section-1">我的解法</a></li>
+  <li><a href="#section-2">大触的解法</a>    <ul>
+      <li><a href="#section-3">异或</a></li>
+      <li><a href="#section-4">解</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="section">题目</h2>
+
+<p>第一题还是选择简单点的好了. 选择了一个 AC 率最高的题目.</p>
+
+<p>原题:</p>
+
+<p>Given an array of integers, every element appears twice except for one. Find that single one.</p>
+
+<p>Note: Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?</p>
+
+<p>翻译:</p>
+
+<p>一个整型数组, 其中所有元素都出现了<strong>两次</strong>, 只有一个例外. 找出这个例外</p>
+
+<p>注意:
+你的算法的时间复杂度必须是线性的. 能不能不使用额外的空间就实现它?</p>
+
+<h2 id="section-1">我的解法</h2>
+
+<p>使用 Cache 计数. 可以 AC, 但使用了额外空间.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+</span><span class="line">    <span class="c"># @param A, a list of integer</span>
+</span><span class="line">    <span class="c"># @return an integer</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
+</span><span class="line">        <span class="n">cached</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class="line">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span>  <span class="n">A</span><span class="p">:</span>
+</span><span class="line">            <span class="n">cached</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cached</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class="line">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cached</span><span class="p">:</span>
+</span><span class="line">            <span class="k">if</span> <span class="n">cached</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">i</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>这种方法算是比较通用的通用的解法吧. 重复的元素可以不限制于<strong>两次</strong></p>
+
+<p>也许, 正因为没有利用到<strong>两次</strong>这个条件, 所以才需要使用到额外空间?</p>
+
+<p>如果先排序的话倒是可以通过比较前后两个元素是否相等来寻找唯一元素.</p>
+
+<p>但是目前撸过的排序算法里面就没有线性复杂度的…所以放弃了..</p>
+
+<h2 id="section-2">大触的解法</h2>
+
+<p>之后浏览了下讨论区. 似乎使用 nlg(n) 复杂度的也 AC 了..</p>
+
+<p>不过看到一个相当 trick 的解法 – 使用<code>异或</code>计算<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+
+<h3 id="section-3">异或</h3>
+
+<p>简单说明下异或操作:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>             <span class="c"># 1 -&gt; 0x01 -&gt; 00000001</span>
+</span><span class="line"><span class="n">y</span> <span class="o">=</span> <span class="mi">2</span>             <span class="c"># 2 -&gt; 0x02 -&gt; 00000010</span>
+</span><span class="line"><span class="n">z</span> <span class="o">=</span> <span class="n">x</span> <span class="o">^</span> <span class="n">y</span>         <span class="c"># 3 -&gt; 0x03 -&gt; 00000011</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>把整型数按位进行计算. 同为0或1则得到0, 一个0一个1则得到1
+因此得到上面的 <code>1 ^ 2 = 3</code> 的计算</p>
+
+<p>关于异或, 比较特殊的计算</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">a</span> <span class="o">^</span> <span class="n">a</span> <span class="o">==</span> <span class="mi">0</span>
+</span><span class="line"><span class="n">a</span> <span class="o">^</span> <span class="mi">0</span> <span class="o">==</span> <span class="n">a</span>
+</span><span class="line"><span class="n">a</span> <span class="o">^</span> <span class="n">b</span> <span class="o">==</span> <span class="n">b</span> <span class="o">^</span> <span class="n">a</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>大触的解法里就用到了上面的公式</p>
+
+<h3 id="section-4">解</h3>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+</span><span class="line">    <span class="c"># @param A, a list of integer</span>
+</span><span class="line">    <span class="c"># @return an integer</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
+</span><span class="line">        <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class="line">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+</span><span class="line">            <span class="n">ans</span> <span class="o">^=</span> <span class="n">i</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">ans</span>
+</span><span class="line">
+</span><span class="line"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class="line">    <span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</span><span class="line">    <span class="n">s</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">()</span>
+</span><span class="line">    <span class="k">print</span> <span class="n">s</span><span class="o">.</span><span class="n">singleNumber</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>原理就是上面提到的特殊计算: (2^2) ^ (3^3) ^ (5^5) ^ 4 = 4</p>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>给大触们跪了 Orz<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+</div>
+
+
+      <footer>
+        <p class="meta text-muted">
+          
+  
+
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard">Posted by <span class="fn">_漏斗</span></span>
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-08-06T16:44:56+08:00" pubdate data-updated="true">Aug 6<span>th</span>, 2014</time>
+          
+
+<span class="glyphicon glyphicon-folder-open"></span>&nbsp;
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/leetcode/'>leetcode</a>
+  
+</span>
+
+
+          
+
+<br />
+<span class="glyphicon glyphicon-tags"></span>&nbsp;
+<span class="tags">
+    
+    <a class='tag' href='/tags/leetcode/'>leetcode</a>, <a class='tag' href='/tags/suan-fa/'>算法</a>
+    
+</span>
+
+
+        </p>
+        
+          <ul class="meta text-muted pager">
+            
+            <li class="previous"><a href="/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti/" title="Previous Post: df 与 du 结果不匹配问题">&laquo; df 与 du 结果不匹配问题</a></li>
+            
+            
+          </ul>
+        
+        
+          <div class="sharing">
+  
+  
+  
+  
+<!-- Baidu Share BEGIN -->
+<div class="bdsharebuttonbox"><a href="#" class="bds_more"
+    data-cmd="more">分享到：</a><a href="#" class="bds_qzone"
+    data-cmd="qzone" title="分享到QQ空间">QQ空间</a><a href="#"
+    class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a><a
+    href="#" class="bds_tqq" data-cmd="tqq"
+    title="分享到腾讯微博">腾讯微博</a><a href="#" class="bds_renren"
+    data-cmd="renren" title="分享到人人网">人人网</a><a href="#"
+    class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new
+Date()/36e5)];</script>
+<!-- Baidu Share END -->
+
+
+<!-- Duoshuo Comment BEGIN -->
+<div class="ds-thread" data-form-position="top" data-order="asc" data-limit=15 ></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"ralph-wang"};
+(function() {
+ var ds = document.createElement('script');
+ ds.type = 'text/javascript';ds.async = true;
+ ds.src = 'http://static.duoshuo.com/embed.js';
+ ds.charset = 'UTF-8';
+ (document.getElementsByTagName('head')[0] 
+  ||
+  document.getElementsByTagName('body')[0]).appendChild(ds);
+ })();
+</script>
+<!-- Duoshuo Comment END -->
+
+
+</div>
+
+        
+      </footer>
+    </article>
+    
+  </div>
+
+  
+  <aside class="sidebar col-md-4">
+    
+      
+<iframe width="100%" height="420" class="share_self"  frameborder="0"
+    scrolling="no"
+    src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=420&fansRow=2&ptype=0&speed=0&skin=1&isTitle=0&noborder=1&isWeibo=1&isFans=0&uid=1854716251&verifier=375b89d6&dpc=1"></iframe>
+
+<section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Recent Posts</h3>
+  </div>
+  
+  <div id="recent_posts" class="list-group">
+    
+    <a class="list-group-item active" href="/blog/2014/08/06/single-number/">Single Number</a>
+    
+    <a class="list-group-item " href="/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti/">Df 与 Du 结果不匹配问题</a>
+    
+    <a class="list-group-item " href="/blog/2014/08/01/wei-octopress-tian-jia-toc/">为 Octopress 添加 TOC</a>
+    
+    <a class="list-group-item " href="/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/">无节操地重新认识多态和IoC</a>
+    
+    <a class="list-group-item " href="/blog/2014/07/25/cong-vim-zhuan-dao-emacs/">从 Vim 转到 Emacs</a>
+    
+  </div>
+</section>
+<section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Categories</h3>
+  </div>
+  <div class="list-group">
+      <a class='list-group-item' href='/blog/categories/emacs/'>Emacs <span class='badge'>1</span></a>
+<a class='list-group-item' href='/blog/categories/linux/'>Linux <span class='badge'>8</span></a>
+<a class='list-group-item' href='/blog/categories/java/'>java <span class='badge'>4</span></a>
+<a class='list-group-item' href='/blog/categories/leetcode/'>leetcode <span class='badge'>1</span></a>
+<a class='list-group-item' href='/blog/categories/nodejs/'>nodejs <span class='badge'>1</span></a>
+<a class='list-group-item' href='/blog/categories/octopress/'>octopress <span class='badge'>5</span></a>
+<a class='list-group-item' href='/blog/categories/qi-ta/'>其它 <span class='badge'>2</span></a>
+<a class='list-group-item' href='/blog/categories/shu-ju-ku/'>数据库 <span class='badge'>1</span></a>
+<a class='list-group-item' href='/blog/categories/ce-shi-gong-ju/'>测试工具 <span class='badge'>3</span></a>
+<a class='list-group-item' href='/blog/categories/cheng-xu-she-ji-yu-suan-fa/'>程序设计与算法 <span class='badge'>1</span></a>
+
+  </div>
+</section>
+<section class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Tag Clouds</h3>
+    </div>
+    <ul class="tag-cloud" style="padding-left:10px">
+        <a style="font-size: 183%" href="/tags/bian-lan/">边栏</a>
+<a style="font-size: 100%" href="/tags/guan-lian/">关联</a>
+<a style="font-size: 293%" href="/tags/octopress/">octopress</a>
+<a style="font-size: 100%" href="/tags/awk/">awk</a>
+<a style="font-size: 100%" href="/tags/jian-kong/">监控</a>
+<a style="font-size: 100%" href="/tags/ioc/">IoC</a>
+<a style="font-size: 100%" href="/tags/xian-cheng/">线程</a>
+<a style="font-size: 100%" href="/tags/editor/">Editor</a>
+<a style="font-size: 100%" href="/tags/cheng-xu-she-ji/">程序设计</a>
+<a style="font-size: 100%" href="/tags/xing-neng-ce-shi/">性能测试</a>
+
+    </ul>
+</section>
+
+<section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Comments</h3>
+  </div>
+  <div id="recent_comments" class="list-group">
+    <ul class="ds-recent-comments"
+      data-num-items="10"
+      data-show-avatars="1"
+      data-show-time="1"
+      data-show-title="1"
+      data-show-admin="1"
+      data-excerpt-length="70"
+      style="padding-left:20px"
+      ></ul>
+  </div>
+</section>
+
+
+    
+  </aside>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+    <footer role="contentinfo"><div class="container">
+    <p class="text-muted credits">
+  Copyright &copy; 2014 - _漏斗<br>
+  <small>
+      <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>,
+      <span class="credit">customized with <a href="https://github.com/kAworu/octostrap3">octostrap3</a></span>.
+  </small>
+</p>
+
+</div>
+</footer>
+    <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
+<script src="/assets/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+<script src="/js/smoothscroll.js"></script>
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47787507-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -4,7 +4,7 @@
   <title><![CDATA[挨踢夜归人]]></title>
   <link href="http://ralph-wang.github.io/atom.xml" rel="self"/>
   <link href="http://ralph-wang.github.io/"/>
-  <updated>2014-08-06T14:41:42+08:00</updated>
+  <updated>2014-08-06T17:42:03+08:00</updated>
   <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,153 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Single Number]]></title>
+    <link href="http://ralph-wang.github.io/blog/2014/08/06/single-number/"/>
+    <updated>2014-08-06T16:44:56+08:00</updated>
+    <id>http://ralph-wang.github.io/blog/2014/08/06/single-number</id>
+    <content type="html"><![CDATA[<p>最近开始撸算法相关的东西. 于是在 LeetCode 上找一些题来练习</p>
+
+<!--more-->
+
+<ul id="markdown-toc">
+  <li><a href="#section">题目</a></li>
+  <li><a href="#section-1">我的解法</a></li>
+  <li><a href="#section-2">大触的解法</a>    <ul>
+      <li><a href="#section-3">异或</a></li>
+      <li><a href="#section-4">解</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="section">题目</h2>
+
+<p>第一题还是选择简单点的好了. 选择了一个 AC 率最高的题目.</p>
+
+<p>原题:</p>
+
+<p>Given an array of integers, every element appears twice except for one. Find that single one.</p>
+
+<p>Note: Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?</p>
+
+<p>翻译:</p>
+
+<p>一个整型数组, 其中所有元素都出现了<strong>两次</strong>, 只有一个例外. 找出这个例外</p>
+
+<p>注意:
+你的算法的时间复杂度必须是线性的. 能不能不使用额外的空间就实现它?</p>
+
+<h2 id="section-1">我的解法</h2>
+
+<p>使用 Cache 计数. 可以 AC, 但使用了额外空间.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+</span><span class="line">    <span class="c"># @param A, a list of integer</span>
+</span><span class="line">    <span class="c"># @return an integer</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
+</span><span class="line">        <span class="n">cached</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class="line">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span>  <span class="n">A</span><span class="p">:</span>
+</span><span class="line">            <span class="n">cached</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cached</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class="line">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cached</span><span class="p">:</span>
+</span><span class="line">            <span class="k">if</span> <span class="n">cached</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">i</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>这种方法算是比较通用的通用的解法吧. 重复的元素可以不限制于<strong>两次</strong></p>
+
+<p>也许, 正因为没有利用到<strong>两次</strong>这个条件, 所以才需要使用到额外空间?</p>
+
+<p>如果先排序的话倒是可以通过比较前后两个元素是否相等来寻找唯一元素.</p>
+
+<p>但是目前撸过的排序算法里面就没有线性复杂度的…所以放弃了..</p>
+
+<h2 id="section-2">大触的解法</h2>
+
+<p>之后浏览了下讨论区. 似乎使用 nlg(n) 复杂度的也 AC 了..</p>
+
+<p>不过看到一个相当 trick 的解法 – 使用<code>异或</code>计算<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+
+<h3 id="section-3">异或</h3>
+
+<p>简单说明下异或操作:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>             <span class="c"># 1 -&gt; 0x01 -&gt; 00000001</span>
+</span><span class="line"><span class="n">y</span> <span class="o">=</span> <span class="mi">2</span>             <span class="c"># 2 -&gt; 0x02 -&gt; 00000010</span>
+</span><span class="line"><span class="n">z</span> <span class="o">=</span> <span class="n">x</span> <span class="o">^</span> <span class="n">y</span>         <span class="c"># 3 -&gt; 0x03 -&gt; 00000011</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>把整型数按位进行计算. 同为0或1则得到0, 一个0一个1则得到1
+因此得到上面的 <code>1 ^ 2 = 3</code> 的计算</p>
+
+<p>关于异或, 比较特殊的计算</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">a</span> <span class="o">^</span> <span class="n">a</span> <span class="o">==</span> <span class="mi">0</span>
+</span><span class="line"><span class="n">a</span> <span class="o">^</span> <span class="mi">0</span> <span class="o">==</span> <span class="n">a</span>
+</span><span class="line"><span class="n">a</span> <span class="o">^</span> <span class="n">b</span> <span class="o">==</span> <span class="n">b</span> <span class="o">^</span> <span class="n">a</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>大触的解法里就用到了上面的公式</p>
+
+<h3 id="section-4">解</h3>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+</span><span class="line">    <span class="c"># @param A, a list of integer</span>
+</span><span class="line">    <span class="c"># @return an integer</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
+</span><span class="line">        <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class="line">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+</span><span class="line">            <span class="n">ans</span> <span class="o">^=</span> <span class="n">i</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">ans</span>
+</span><span class="line">
+</span><span class="line"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class="line">    <span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</span><span class="line">    <span class="n">s</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">()</span>
+</span><span class="line">    <span class="k">print</span> <span class="n">s</span><span class="o">.</span><span class="n">singleNumber</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>原理就是上面提到的特殊计算: (2^2) ^ (3^3) ^ (5^5) ^ 4 = 4</p>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>给大触们跪了 Orz<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[df 与 du 结果不匹配问题]]></title>
@@ -3290,47 +3437,6 @@ Cloud</a></p>
 </span><span class="line">tags: [octopress, 扩展, asides]
 </span><span class="line">categories: octopress
 </span><span class="line">----</span></code></pre></td></tr></table></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[联想接龙]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/02/11/lian-xiang-jie-long/"/>
-    <updated>2014-02-11T23:18:09+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/02/11/lian-xiang-jie-long</id>
-    <content type="html"><![CDATA[<p><code>你的第一本思维导图操作书</code>中<code>自由联想练习</code>的第一个练习方法
-<!--more--></p>
-
-<p><img src="http://ralph-wang.github.io/blogimgs/brain_flow.png" alt="brain_flow" /></p>
-
-<p>由任意一个词开始, 依次联想, 直到填满七个节点</p>
-
-<p>然后, 可以尝试一下回忆想到的这七个节点.</p>
-
-<p>书上用非常夸张的表达说明, 甚至从末尾开始向前回忆也可以完全回忆起来.</p>
-
-<p>原本不是很相信, 试了一下. </p>
-
-<p>我的联想结果如下:</p>
-
-<p><img src="http://ralph-wang.github.io/blogimgs/my_brain_flow.png" alt="my_brain_flow" /></p>
-
-<p>嗯… 其实, 这个练习是在下午 5 点左右进行的. 现在是 23:40.</p>
-
-<p>而这图是刚刚按下午的练习填上去的.</p>
-
-<p>不得不拜服!</p>
-
-<p>P.S. 我的联想思路:</p>
-
-<ul>
-  <li><code>系统</code> -&gt; <code>操作系统</code>, 因为<code>操作系统</code>是一种<code>软件系统</code></li>
-  <li><code>操作系统</code> -&gt; <code>Linux</code>, 因为<code>Linux</code>是著名的开源<code>操作系统</code></li>
-  <li><code>Linux</code> -&gt; <code>shell</code>, 因为<code>shell</code>是<code>Linux</code>的用户操作接口</li>
-  <li><code>shell</code> -&gt; <code>脚本</code>, 因为<code>shell</code>可以编写<code>脚本</code>运行</li>
-  <li><code>脚本</code> -&gt; <code>Python</code>, 因为<code>Python</code>是一种<code>脚本</code>语言</li>
-  <li><code>Python</code> -&gt; <code>Java</code>, 因为<code>Java</code>和<code>Python</code>一样是强类型语言</li>
-</ul>
 ]]></content>
   </entry>
   
