@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[标签: 二叉树 | 挨踢夜归人]]></title>
+  <link href="http://ralph-wang.github.io//tags/er-cha-shu/atom.xml" rel="self"/>
+  <link href="http://ralph-wang.github.io/"/>
+  <updated>2014-08-07T01:44:03+08:00</updated>
+  <id>http://ralph-wang.github.io/</id>
+  <author>
+    <name><![CDATA[_漏斗]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Binary Tree Preorder Traversal]]></title>
+    <link href="http://ralph-wang.github.io/blog/2014/08/07/binary-tree-preorder-traversal/"/>
+    <updated>2014-08-07T00:50:19+08:00</updated>
+    <id>http://ralph-wang.github.io/blog/2014/08/07/binary-tree-preorder-traversal</id>
+    <content type="html"><![CDATA[<p>算法倒是没犯错. 坑在 Python 的一个赋值语法上了</p>
+
+<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">题目</a>    <ul>
+      <li><a href="#section-1">翻译</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-2">我的解法</a>    <ul>
+      <li><a href="#dsf">迭代式(DSF)</a></li>
+      <li><a href="#section-3">递归式</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="section">题目</h2>
+
+<p>Given a binary tree, return the preorder traversal of its nodes’ values.</p>
+
+<p>For example: <br />
+Given binary tree {1,#,2,3},</p>
+
+<p><code>
+   1
+    \
+     2
+    /
+   3
+</code></p>
+
+<p>return [1,2,3].</p>
+
+<p>Note: Recursive solution is trivial, could you do it iteratively?</p>
+
+<h3 id="section-1">翻译</h3>
+
+<p>一颗二叉树. 返回按前序遍历排序的节点值列表</p>
+
+<p>例子:
+二叉树: {1, #, 2, 3}</p>
+
+<p><code>
+   1
+    \
+     2
+    /
+   3
+</code></p>
+
+<p>返回 [1, 2, 3]</p>
+
+<p>注: 递归式相当简单.试试迭代式?</p>
+
+<h2 id="section-2">我的解法</h2>
+
+<h3 id="dsf">迭代式(DSF)</h3>
+
+<p>最近正好在看图的遍历. 看了下二叉树前序遍历的定义. 自然就想到了用 DSF 算法.  <br />
+很快就把代码写好了. 但得到的不是 RunTime Error, 就是 Time Limited Exceeded…</p>
+
+<p>但是, 用 Java 实现却是直接就通过了…(忽略因为不熟 Java 各种类型造成的多次编译错误)</p>
+
+<p>!!!! 还能不能愉快的玩耍了…n</p>
+
+<p>把代码拷到本地调试后发现, 执行过程中 <code>discovered</code> 和 <code>ans</code> 是同一个列表  <br />
+回头看我的初始化代码</p>
+
+<p><code>python
+discovered = ans = []
+</code></p>
+
+<p>明白了…</p>
+
+<p>Python 里面这样的连等赋值是将同一对象坑给不同变量…  <br />
+因为以前这样赋值时多是<code>不变量</code>, 所以没什么问题.  <br />
+但列表是<code>容器</code>, 所以..就出现了问题</p>
+
+<p>修改初始化</p>
+
+<p><code>python
+discovered = []
+ans = []
+</code></p>
+
+<p>OK, 顺利通过~  <br />
+下面是完整代码:</p>
+
+<p>```python
+class TreeNode:
+    def <strong>init</strong>(self, x):
+        self.val = x
+        self.left = None
+        self.right = None</p>
+
+<p>class Solution:
+    # @param root, a tree node
+    # @return a list of integers
+    def preorderTraversal(self, root):
+        if root is None: # empty tree
+            return []
+        discovered = [] # error type: discovered = ans = []
+        ans = []
+        discovered.append(root)
+        while discovered != []:
+            v = discovered.pop()
+            ans.append(v.val)
+            if v.right is not None:
+                discovered.append(v.right)
+            if v.left is not None:
+                discovered.append(v.left)
+        return ans
+```</p>
+
+<h3 id="section-3">递归式</h3>
+
+<p>递归式也不是很难. 想清楚 Base Case 好了</p>
+
+<ul>
+  <li>Base Case: 以空树作为 Base Case, 返回空列表 <code>[]</code>    </li>
+  <li>Recursion: 如果有的话, 依次加上左子树和右子树的前序列表就可以了</li>
+</ul>
+
+<p><code>
+class Solution:
+    # @param root, a tree node
+    # @return a list of integers
+    def preorderTraversal(self, root):
+        if root is None:
+            return []
+        ans = [root.val]
+        if root.left is not None:
+            ans += self.preorderTraversal(root.left)
+        if root.right is not None:
+            ans += self.preorderTraversal(root.right)
+        return ans
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

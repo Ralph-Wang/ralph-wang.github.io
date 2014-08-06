@@ -4,7 +4,7 @@
   <title><![CDATA[挨踢夜归人]]></title>
   <link href="http://ralph-wang.github.io/atom.xml" rel="self"/>
   <link href="http://ralph-wang.github.io/"/>
-  <updated>2014-08-06T17:50:36+08:00</updated>
+  <updated>2014-08-07T01:44:03+08:00</updated>
   <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,190 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Binary Tree Preorder Traversal]]></title>
+    <link href="http://ralph-wang.github.io/blog/2014/08/07/binary-tree-preorder-traversal/"/>
+    <updated>2014-08-07T00:50:19+08:00</updated>
+    <id>http://ralph-wang.github.io/blog/2014/08/07/binary-tree-preorder-traversal</id>
+    <content type="html"><![CDATA[<p>算法倒是没犯错. 坑在 Python 的一个赋值语法上了</p>
+
+<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">题目</a>    <ul>
+      <li><a href="#section-1">翻译</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-2">我的解法</a>    <ul>
+      <li><a href="#dsf">迭代式(DSF)</a></li>
+      <li><a href="#section-3">递归式</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="section">题目</h2>
+
+<p>Given a binary tree, return the preorder traversal of its nodes’ values.</p>
+
+<p>For example: <br />
+Given binary tree {1,#,2,3},</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">   1
+</span><span class="line">    \
+</span><span class="line">     2
+</span><span class="line">    /
+</span><span class="line">   3</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>return [1,2,3].</p>
+
+<p>Note: Recursive solution is trivial, could you do it iteratively?</p>
+
+<h3 id="section-1">翻译</h3>
+
+<p>一颗二叉树. 返回按前序遍历排序的节点值列表</p>
+
+<p>例子:
+二叉树: {1, #, 2, 3}</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">   1
+</span><span class="line">    \
+</span><span class="line">     2
+</span><span class="line">    /
+</span><span class="line">   3</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>返回 [1, 2, 3]</p>
+
+<p>注: 递归式相当简单.试试迭代式?</p>
+
+<h2 id="section-2">我的解法</h2>
+
+<h3 id="dsf">迭代式(DSF)</h3>
+
+<p>最近正好在看图的遍历. 看了下二叉树前序遍历的定义. 自然就想到了用 DSF 算法.  <br />
+很快就把代码写好了. 但得到的不是 RunTime Error, 就是 Time Limited Exceeded…</p>
+
+<p>但是, 用 Java 实现却是直接就通过了…(忽略因为不熟 Java 各种类型造成的多次编译错误)</p>
+
+<p>!!!! 还能不能愉快的玩耍了…n</p>
+
+<p>把代码拷到本地调试后发现, 执行过程中 <code>discovered</code> 和 <code>ans</code> 是同一个列表  <br />
+回头看我的初始化代码</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">discovered</span> <span class="o">=</span> <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>明白了…</p>
+
+<p>Python 里面这样的连等赋值是将同一对象坑给不同变量…  <br />
+因为以前这样赋值时多是<code>不变量</code>, 所以没什么问题.  <br />
+但列表是<code>容器</code>, 所以..就出现了问题</p>
+
+<p>修改初始化</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">discovered</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class="line"><span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>OK, 顺利通过~  <br />
+下面是完整代码:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">TreeNode</span><span class="p">:</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">x</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class="line">
+</span><span class="line"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+</span><span class="line">    <span class="c"># @param root, a tree node</span>
+</span><span class="line">    <span class="c"># @return a list of integers</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">preorderTraversal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
+</span><span class="line">        <span class="k">if</span> <span class="n">root</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span> <span class="c"># empty tree</span>
+</span><span class="line">            <span class="k">return</span> <span class="p">[]</span>
+</span><span class="line">        <span class="n">discovered</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># error type: discovered = ans = []</span>
+</span><span class="line">        <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class="line">        <span class="n">discovered</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+</span><span class="line">        <span class="k">while</span> <span class="n">discovered</span> <span class="o">!=</span> <span class="p">[]:</span>
+</span><span class="line">            <span class="n">v</span> <span class="o">=</span> <span class="n">discovered</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span><span class="line">            <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">val</span><span class="p">)</span>
+</span><span class="line">            <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">right</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class="line">                <span class="n">discovered</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+</span><span class="line">            <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class="line">                <span class="n">discovered</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">ans</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h3 id="section-3">递归式</h3>
+
+<p>递归式也不是很难. 想清楚 Base Case 好了</p>
+
+<ul>
+  <li>Base Case: 以空树作为 Base Case, 返回空列表 <code>[]</code>    </li>
+  <li>Recursion: 如果有的话, 依次加上左子树和右子树的前序列表就可以了</li>
+</ul>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+</span><span class="line">    <span class="c"># @param root, a tree node</span>
+</span><span class="line">    <span class="c"># @return a list of integers</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">preorderTraversal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
+</span><span class="line">        <span class="k">if</span> <span class="n">root</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class="line">            <span class="k">return</span> <span class="p">[]</span>
+</span><span class="line">        <span class="n">ans</span> <span class="o">=</span> <span class="p">[</span><span class="n">root</span><span class="o">.</span><span class="n">val</span><span class="p">]</span>
+</span><span class="line">        <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class="line">            <span class="n">ans</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preorderTraversal</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+</span><span class="line">        <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class="line">            <span class="n">ans</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preorderTraversal</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">ans</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Single Number]]></title>
@@ -3368,75 +3552,6 @@ class Fibonacci implements Runnable {
 
 <p>那没有开发配合, 这脚本还真没法完成了.</p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[为 Octopress 添加 Tag 功能]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng/"/>
-    <updated>2014-02-15T00:09:14+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng</id>
-    <content type="html"><![CDATA[<p>对于博客文章来讲, 除了类别外, 另一个重要的标识属性便是<strong>标签</strong>.
-<!--more--></p>
-
-<p>诚如 <code>alswlx</code> 在 <a href="http://blog.log4d.com/2012/05/tag-cloud/">给 octopress 加上标签功能</a>
-描述的那样:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">分类 和 标签 分别代表了 有序/无序 两种不同的知识归纳方法.
-</span><span class="line">一篇文章只会属于一个分类, 但可以同时拥有多个标签.</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>而原生的 octopress 却不支持标签功能, 所以, 有必要为它添加上这个功能</p>
-
-<p>我选择的解决方案来自: </p>
-
-<p><a href="http://codemacro.com/2012/07/18/add-tag-to-octopress/">为octopress添加tag
-Cloud</a></p>
-
-<p>里面涉及到的两个插件都是 robbyedwards 写的, github 仓库附在下面:</p>
-
-<p><a href="https://github.com/robbyedwards/octopress-tag-pages">tag_pages</a></p>
-
-<p><a href="https://github.com/robbyedwards/octopress-tag-cloud">tag_cloud</a></p>
-
-<p>clone 这两个项目, 得到两个相同的目录结构:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">.
-</span><span class="line">|--plugins
-</span><span class="line">|--source
-</span><span class="line">|--CHANGELOG.md
-</span><span class="line">|--README.md</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>如果你用的是 octopress 原生的主题, 那么直接复制这两个文件夹到 octopress
-目录下即可.</p>
-
-<p>如果是自定义主题的话需要做一些修改一下, <code>source</code> 目录下的各个 <code>html</code>
-文件来适应你的主题. 既然都玩上自定义主题了,
-这里我就是赘述各个文件的修改方法了.</p>
-
-<p>如果你和我一样使用的是 <a href="https://github.com/kAworu/octostrap3">octostrap3</a>, 可以参考一下我的配置
-<a href="https://github.com/Ralph-Wang/octo-source">octo-source</a></p>
-
-<p>配置好之后, 在文章中添加标签了.</p>
-
-<p>使用方法就是在文章的头部配置部分添加 tags 属性即可.</p>
-
-<p>如下:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">-----
-</span><span class="line">tags: [octopress, 扩展, asides]
-</span><span class="line">categories: octopress
-</span><span class="line">----</span></code></pre></td></tr></table></div></figure></notextile></div>
 ]]></content>
   </entry>
   
