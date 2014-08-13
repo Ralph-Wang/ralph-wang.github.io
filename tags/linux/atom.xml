@@ -4,7 +4,7 @@
   <title><![CDATA[标签: Linux | 挨踢夜归人]]></title>
   <link href="http://ralph-wang.github.io//tags/linux/atom.xml" rel="self"/>
   <link href="http://ralph-wang.github.io/"/>
-  <updated>2014-08-07T01:44:03+08:00</updated>
+  <updated>2014-08-14T00:24:04+08:00</updated>
   <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,67 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Linux bash 的 C-s]]></title>
+    <link href="http://ralph-wang.github.io/blog/2014/08/13/linux-bash-de-c-s/"/>
+    <updated>2014-08-13T22:22:02+08:00</updated>
+    <id>http://ralph-wang.github.io/blog/2014/08/13/linux-bash-de-c-s</id>
+    <content type="html"><![CDATA[<p>putty 莫名不响应问题…</p>
+
+<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">事故</a></li>
+  <li><a href="#emacs">缘起 emacs</a></li>
+  <li><a href="#c-sc-q">C-s/C-q</a></li>
+</ul>
+
+<h2 id="section">事故</h2>
+
+<p>在 Windows 下, 一直使用 putty 作为连接远程 Linux 的工具.</p>
+
+<p>偶尔会出现 putty 不响应的现象. 一直不知道是什么总是.  <br />
+一般直接关闭重启 putty. 也就没有太理会它</p>
+
+<p>今天一次逗[哔]的尝试, 却找到了这个问题的源头:</p>
+
+<blockquote>
+  <p>该死的 C-s</p>
+</blockquote>
+
+<h2 id="emacs">缘起 emacs</h2>
+
+<p><code>emacs</code> 中 <code>C-s</code> 和 <code>C-r</code> 对应的<code>向下</code>搜索和<code>向上</code>搜索  <br />
+而 <code>bash</code> 的编辑快捷键默认采用的便是 emacs 模式.  <br />
+便试了试 <code>C-s</code>. 结果出现了不响应的情况.<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+
+<p>搜索到下<a href="http://tianya23.blog.51cto.com/1081650/740207">这篇文章</a></p>
+
+<h2 id="c-sc-q">C-s/C-q</h2>
+
+<p>bash 中 <code>C-s</code> 和 <code>C-q</code> 是代表了一对<code>流控制符</code>.  <br />
+其作用就是<code>停止</code>和<code>重启</code>从一个设备向另一个设备的输出流.  <br />
+以前是用来切断速率过低的传输过程的(具体有多低, 我也不知道)    </p>
+
+<p>现在的网络比以往要快很多,  <br />
+所以这两个控制符也就没什么大用了  <br />
+只需要记住, 误敲 <code>C-s</code> 导致 bash 不响应时,    </p>
+
+<blockquote>
+  <p>敲下<code>C-q</code> 即可恢复    </p>
+</blockquote>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>bash 中 <code>C-r</code> 仍是<code>向上</code>搜索. 不过,搜索目标是命令历史<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[df 与 du 结果不匹配问题]]></title>
@@ -770,140 +831,6 @@ do
 	echo ${path#</em>:}
 done
 ```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning The Bash Shell 笔记-变量]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/05/15/learning-the-bash-shell-du-shu-bi-ji-bian-liang/"/>
-    <updated>2014-05-15T09:35:19+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/05/15/learning-the-bash-shell-du-shu-bi-ji-bian-liang</id>
-    <content type="html"><![CDATA[<!--more-->
-
-<h2 id="section">$* 和 $@</h2>
-<p>这两个变量都可以得到脚本运行得到的所有参数.</p>
-
-<p>默认情况下, 这两个变量没有区别</p>
-
-<p>```bash sample.sh
-#!/bin/bash</p>
-
-<p>echo $*</p>
-
-<p>echo $@
-```</p>
-
-<p>运行上面的脚本, 传入多个参数. 得到的两行输出结果是一样的.</p>
-
-<p><code>bash
-$./sample.sh 1 2 3
-1 2 3
-1 2 3
-</code></p>
-
-<p>但是, 当给变量 IFS(internal field sperator) 赋上值并用双引号将 <code>$*</code> 和 <code>$@</code>
-括起来, 情况就不一样了.</p>
-
-<p>```bash sample2.sh
-#!/bin/bash</p>
-
-<p>IFS=,</p>
-
-<p>echo “$*”</p>
-
-<p>echo “$@”
-```</p>
-
-<p>这时候, 在 <code>$*</code> 中不再是以空格分割所有参数, 而是由 IFS 的值 (当前脚本中为逗号)来分割</p>
-
-<p>而 <code>$@</code> 则保持原样</p>
-
-<p><code>bash
-$./sample2.sh 1 2 3
-1,2,3
-1 2 3
-</code></p>
-
-<p>当用双引号括起来以后, <code>"$*"</code> 等价于 <code>"$1$IFS$2$IFS$3...$IFS$N"</code></p>
-
-<p>而 <code>"$@"</code> 等价于 <code>"$1" "$2" "$3"... "$N"</code></p>
-
-<h2 id="string-operator">String Operator</h2>
-
-<p>对于 shell 变量, 还有一些操作符可以让脚本变得更活</p>
-
-<ul>
-  <li>
-    <p><code>${var:-word}</code>: 如果 var 变量不存在或为 null, 则返回 word. var 变量仍然不存在或为 null</p>
-  </li>
-  <li>
-    <p><code>${var:=word}</code>: 如果 var 变量不存在或为 null, 则将 word 赋值给 var, 并返回 var 的新值(word)</p>
-  </li>
-  <li>
-    <p><code>${var:?msg}</code>: 如果 var 变量不存在或为 null, 则停止脚本, 并输出信息 <strong>var: msg</strong></p>
-  </li>
-  <li>
-    <p><code>${var:+word}</code>: 如果 var 变量存在并不为 null, 则返回 word. 否则, 返回 null</p>
-  </li>
-  <li>
-    <p><code>${var:offset:length}</code> 截取变量 var 从 offset 开始长度为 length 的字符串.  offset 从 0 开始. length 为 null 截取剩余全部.</p>
-  </li>
-</ul>
-
-<p>```bash sample3.sh
-#!/bin/bash</p>
-
-<p>echo ${var:-“minus”}</p>
-
-<p>echo ${var}</p>
-
-<p>echo ${var:=”equals”}</p>
-
-<p>echo ${var}</p>
-
-<p>echo ${var:+”plus”}</p>
-
-<p>echo ${var:2:2} #output ua</p>
-
-<p>echo ${theVar:?”should not be empty”}
-```</p>
-
-<p>输出:</p>
-
-<p>```
-minus</p>
-
-<p>equals
-equals
-plus
-ua
-sample3.sh: line 15: theVar: should not be empty
-```</p>
-
-<h2 id="section-1">一个练习</h2>
-<p>你收集了一专辑, 并已经统计出了不同歌手的专辑数量, 现在需要找出收集数量前 10 的歌手. 文件格式如下:</p>
-
-<p><code>text file
-5 Depeche Mode
-2 Split Enz
-3 Simple Minds
-1 Vivaldi, Antonio
-</code></p>
-
-<p>ok, 实现代码很简单 <code>sort -nr file | head -n 10</code></p>
-
-<p>不过, 书中的解答不得不说更好</p>
-
-<p>```bash
-#!/bin/bash</p>
-
-<p>filename=${1:?”filename missing”}
-howmany=${2:-10}</p>
-
-<p>sort -nr $filename | head -n $howmany
-```</p>
-
-<p>这样脚本化之后, 增加了可读性, 而且也不限于统计前 10.</p>
 ]]></content>
   </entry>
   

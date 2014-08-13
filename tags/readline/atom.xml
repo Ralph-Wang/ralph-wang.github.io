@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[标签: readline | 挨踢夜归人]]></title>
+  <link href="http://ralph-wang.github.io//tags/readline/atom.xml" rel="self"/>
+  <link href="http://ralph-wang.github.io/"/>
+  <updated>2014-08-14T00:24:04+08:00</updated>
+  <id>http://ralph-wang.github.io/</id>
+  <author>
+    <name><![CDATA[_漏斗]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Linux bash 的 C-s]]></title>
+    <link href="http://ralph-wang.github.io/blog/2014/08/13/linux-bash-de-c-s/"/>
+    <updated>2014-08-13T22:22:02+08:00</updated>
+    <id>http://ralph-wang.github.io/blog/2014/08/13/linux-bash-de-c-s</id>
+    <content type="html"><![CDATA[<p>putty 莫名不响应问题…</p>
+
+<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">事故</a></li>
+  <li><a href="#emacs">缘起 emacs</a></li>
+  <li><a href="#c-sc-q">C-s/C-q</a></li>
+</ul>
+
+<h2 id="section">事故</h2>
+
+<p>在 Windows 下, 一直使用 putty 作为连接远程 Linux 的工具.</p>
+
+<p>偶尔会出现 putty 不响应的现象. 一直不知道是什么总是.  <br />
+一般直接关闭重启 putty. 也就没有太理会它</p>
+
+<p>今天一次逗[哔]的尝试, 却找到了这个问题的源头:</p>
+
+<blockquote>
+  <p>该死的 C-s</p>
+</blockquote>
+
+<h2 id="emacs">缘起 emacs</h2>
+
+<p><code>emacs</code> 中 <code>C-s</code> 和 <code>C-r</code> 对应的<code>向下</code>搜索和<code>向上</code>搜索  <br />
+而 <code>bash</code> 的编辑快捷键默认采用的便是 emacs 模式.  <br />
+便试了试 <code>C-s</code>. 结果出现了不响应的情况.<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+
+<p>搜索到下<a href="http://tianya23.blog.51cto.com/1081650/740207">这篇文章</a></p>
+
+<h2 id="c-sc-q">C-s/C-q</h2>
+
+<p>bash 中 <code>C-s</code> 和 <code>C-q</code> 是代表了一对<code>流控制符</code>.  <br />
+其作用就是<code>停止</code>和<code>重启</code>从一个设备向另一个设备的输出流.  <br />
+以前是用来切断速率过低的传输过程的(具体有多低, 我也不知道)    </p>
+
+<p>现在的网络比以往要快很多,  <br />
+所以这两个控制符也就没什么大用了  <br />
+只需要记住, 误敲 <code>C-s</code> 导致 bash 不响应时,    </p>
+
+<blockquote>
+  <p>敲下<code>C-q</code> 即可恢复    </p>
+</blockquote>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>bash 中 <code>C-r</code> 仍是<code>向上</code>搜索. 不过,搜索目标是命令历史<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
+  
+</feed>

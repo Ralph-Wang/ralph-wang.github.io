@@ -4,7 +4,7 @@
   <title><![CDATA[挨踢夜归人]]></title>
   <link href="http://ralph-wang.github.io/atom.xml" rel="self"/>
   <link href="http://ralph-wang.github.io/"/>
-  <updated>2014-08-07T01:44:03+08:00</updated>
+  <updated>2014-08-14T00:24:04+08:00</updated>
   <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,67 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Linux bash 的 C-s]]></title>
+    <link href="http://ralph-wang.github.io/blog/2014/08/13/linux-bash-de-c-s/"/>
+    <updated>2014-08-13T22:22:02+08:00</updated>
+    <id>http://ralph-wang.github.io/blog/2014/08/13/linux-bash-de-c-s</id>
+    <content type="html"><![CDATA[<p>putty 莫名不响应问题…</p>
+
+<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">事故</a></li>
+  <li><a href="#emacs">缘起 emacs</a></li>
+  <li><a href="#c-sc-q">C-s/C-q</a></li>
+</ul>
+
+<h2 id="section">事故</h2>
+
+<p>在 Windows 下, 一直使用 putty 作为连接远程 Linux 的工具.</p>
+
+<p>偶尔会出现 putty 不响应的现象. 一直不知道是什么总是.  <br />
+一般直接关闭重启 putty. 也就没有太理会它</p>
+
+<p>今天一次逗[哔]的尝试, 却找到了这个问题的源头:</p>
+
+<blockquote>
+  <p>该死的 C-s</p>
+</blockquote>
+
+<h2 id="emacs">缘起 emacs</h2>
+
+<p><code>emacs</code> 中 <code>C-s</code> 和 <code>C-r</code> 对应的<code>向下</code>搜索和<code>向上</code>搜索  <br />
+而 <code>bash</code> 的编辑快捷键默认采用的便是 emacs 模式.  <br />
+便试了试 <code>C-s</code>. 结果出现了不响应的情况.<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+
+<p>搜索到下<a href="http://tianya23.blog.51cto.com/1081650/740207">这篇文章</a></p>
+
+<h2 id="c-sc-q">C-s/C-q</h2>
+
+<p>bash 中 <code>C-s</code> 和 <code>C-q</code> 是代表了一对<code>流控制符</code>.  <br />
+其作用就是<code>停止</code>和<code>重启</code>从一个设备向另一个设备的输出流.  <br />
+以前是用来切断速率过低的传输过程的(具体有多低, 我也不知道)    </p>
+
+<p>现在的网络比以往要快很多,  <br />
+所以这两个控制符也就没什么大用了  <br />
+只需要记住, 误敲 <code>C-s</code> 导致 bash 不响应时,    </p>
+
+<blockquote>
+  <p>敲下<code>C-q</code> 即可恢复    </p>
+</blockquote>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>bash 中 <code>C-r</code> 仍是<code>向上</code>搜索. 不过,搜索目标是命令历史<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Binary Tree Preorder Traversal]]></title>
@@ -3360,197 +3421,6 @@ class Fibonacci implements Runnable {
     }
 }
 </code></pre></noscript></div>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[LR 关联之 Alfresco]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/02/18/lr-guan-lian-zhi-alfresco/"/>
-    <updated>2014-02-18T00:39:11+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/02/18/lr-guan-lian-zhi-alfresco</id>
-    <content type="html"><![CDATA[<p>遇到一个比较特别的关联的例子. 
-<!--more-->
-项目是 <strong>Alfresco</strong>
-需要开发的脚本业务: 管理员新增用户.</p>
-
-<h3 id="section">问题</h3>
-<p>录制后, 简单参数化一下运行, 发现最后一步提交数据时, 返回的状态码为 500.</p>
-
-<p><img src="http://ralph-wang.github.io/blogimgs/alfresco-errmsg.png" alt="Error Message" title="Err Msg" /></p>
-
-<p>会不会是系统出了什么毛病? 于是去手工操作业务, 却发现一切正常.</p>
-
-<p>再去翻看 LoadRunner 的 Test Result. 发现了好东西.</p>
-
-<p><img src="http://ralph-wang.github.io/blogimgs/alfresco-500page.png" alt="Test Result" title="500 Page" /></p>
-
-<p>如上图, 虽然请求返回的状态码是 500, 但返回页面仍是 Alfresco 的页面, </p>
-
-<h3 id="section-1">分析</h3>
-
-<p>状态码 500, 返回页面为系统页面. 这说明 500 的状态码是系统主动返回的. </p>
-
-<p>一般来说, 这种情况都是系统需要验证了某些提交信息, 
-而这些信息是由前面的某个请求返回的. 回放时这些信息发生了变化, 导致请求失败.</p>
-
-<p>我们需要关联这些信息来保证请求的合法性.</p>
-
-<hr />
-
-<p>首先我们需要找到哪些信息是系统要验证的, 如果有开发配合, 问一嘴就好了.</p>
-
-<p>没有开发配合的话, 就得我们自己找了. 就像现在.</p>
-
-<p>我们先来看请求发出的信息. 首先从请求体里面找</p>
-
-<p>请求体是 <code>json</code> 格式的, 如下</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="p">{</span>   <span class="s2">&quot;userName&quot;</span><span class="o">:</span><span class="s2">&quot;www2&quot;</span><span class="p">,</span>
-</span><span class="line">	<span class="s2">&quot;password&quot;</span><span class="o">:</span><span class="s2">&quot;www2&quot;</span><span class="p">,</span>
-</span><span class="line">	<span class="s2">&quot;firstName&quot;</span><span class="o">:</span><span class="s2">&quot;www2&quot;</span><span class="p">,</span>
-</span><span class="line">	<span class="s2">&quot;lastName&quot;</span><span class="o">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-</span><span class="line">	<span class="s2">&quot;email&quot;</span><span class="o">:</span><span class="s2">&quot;www2@www.com&quot;</span><span class="p">,</span>
-</span><span class="line">	<span class="s2">&quot;disableAccount&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">,</span>
-</span><span class="line">	<span class="s2">&quot;quota&quot;</span><span class="o">:</span><span class="mi">127893619</span><span class="p">,</span>
-</span><span class="line">	<span class="s2">&quot;groups&quot;</span><span class="o">:</span><span class="p">[]</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p><code>userName</code> 是用户名, <code>password</code> 是用户密码, <code>firstName</code> 是名字, <code>lastName</code>
-是姓氏, <code>email</code> 是邮箱, <code>disableAccount</code> 是禁用选项, <code>quota</code> 是分配容量, <code>groups</code> 是用户所在组</p>
-
-<p>呃… 每个 key 都有对应的表单字段. 看来需要关联的验证信息并不在请求体中.</p>
-
-<p>那就只有看看请求头了.</p>
-
-<p><img src="http://ralph-wang.github.io/blogimgs/alfresco-lr.png" alt="LR Log" title="Lr Log" /></p>
-
-<p>这里发现了一个嫌疑犯: <code>Alfresco-CSRFToken</code></p>
-
-<p>看名字, 应该是用来防止 <code>CSRF</code> 攻击的. 应该是它没错.</p>
-
-<p>我们再用 <code>Fiddler</code> 来看下新请求里, 这个值是否发生了变化.</p>
-
-<p><img src="http://ralph-wang.github.io/blogimgs/alfresco-fiddler.png" alt="Fiddler" title="Fiddler" /></p>
-
-<p>果然发生了变化. 这下没错了, 它就是我们需要关联的对象.</p>
-
-<p>然后, 我们要找到系统是什么时候把这个信息发送给我们的.</p>
-
-<p>依次查看各个请求后发现, 在进入用户管理页面时, 返回的请求头里有如下信息</p>
-
-<p><img src="http://ralph-wang.github.io/blogimgs/alfresco-tocor.png" alt="To Correlations" title="To Correlations" /></p>
-
-<p>由于信息中的特殊符号被 <code>URL编码</code> 了, 导致在前后两个请求中看上去有些不一样.
-通过解码我们可以确认, 这里就是关联参数的来源</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nb">decodeURIComponent</span><span class="p">(</span><span class="s1">&#39;NPizHL2EuHsHN6VMml0sAfezFhPQmT5fynjkx%2fkqP88%3d&#39;</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="c1">// output: NPizHL2EuHsHN6VMml0sAfezFhPQmT5fynjkx/kqP88=</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<h3 id="section-2">解决方案</h3>
-
-<p>添加以下代码</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="n">web_reg_save_param</span><span class="p">(</span><span class="s">&quot;token&quot;</span><span class="p">,</span>
-</span><span class="line">		<span class="s">&quot;LB=CSRFToken=&quot;</span><span class="p">,</span>
-</span><span class="line">		<span class="s">&quot;RB=;&quot;</span><span class="p">,</span>
-</span><span class="line">		<span class="s">&quot;Search=Headers&quot;</span><span class="p">,</span>
-</span><span class="line">		<span class="n">LAST</span><span class="p">);</span>
-</span><span class="line"><span class="p">...</span>
-</span><span class="line"><span class="c1">// user requests codes</span>
-</span><span class="line"><span class="p">...</span>
-</span><span class="line">
-</span><span class="line"><span class="n">web_add_header</span><span class="p">(</span><span class="s">&quot;Alfresco-CSRFToken&quot;</span><span class="p">,</span> <span class="n">url_decode</span><span class="p">(</span><span class="n">lr_eval_string</span><span class="p">(</span><span class="s">&quot;{token}&quot;</span><span class="p">)));</span>
-</span><span class="line"><span class="p">...</span>
-</span><span class="line"><span class="c1">// submit requests codes</span>
-</span><span class="line"><span class="p">...</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>TIPS:</p>
-
-<ul>
-  <li>
-    <p>由于不能直接在请求中添加请求头信息, 所以我们需要调用 <code>web_add_header</code>
-函数来添加.</p>
-  </li>
-  <li>
-    <p>因为系统发送过来的 <code>token</code> 是 <code>URL编码</code> 的字符串, 而提交新增时发送回去的是解码过的. 所以我们在添加 header 时需要进行解码.  这就是 <code>url_decode</code> 函数的作用. 这个函数并不是 LR 自带的函数, 需要自行添加. 源代码及添加方法戳<a href="http://www.51testing.com/html/96/n-832896.html">这里</a></p>
-  </li>
-</ul>
-
-<hr />
-<p>关于 <code>URL编码</code> 问题, 后来又找到一个 LoadRunner 原生的解决方案如下:</p>
-
-<p><a href="http://blog.csdn.net/womengdoushizhongguo/article/details/8517598">http://blog.csdn.net/womengdoushizhongguo/article/details/8517598</a></p>
-
-<p>于是, 新增的代码可以修改为</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="n">web_reg_save_param</span><span class="p">(</span><span class="s">&quot;token&quot;</span><span class="p">,</span>
-</span><span class="line">		<span class="s">&quot;LB=CSRFToken=&quot;</span><span class="p">,</span>
-</span><span class="line">		<span class="s">&quot;RB=;&quot;</span><span class="p">,</span>
-</span><span class="line">		<span class="s">&quot;Search=Headers&quot;</span><span class="p">,</span>
-</span><span class="line">		<span class="n">LAST</span><span class="p">);</span>
-</span><span class="line"><span class="p">...</span>
-</span><span class="line"><span class="c1">// user requests codes</span>
-</span><span class="line"><span class="p">...</span>
-</span><span class="line">
-</span><span class="line"><span class="n">web_convert_param</span><span class="p">(</span><span class="s">&quot;token&quot;</span><span class="p">,</span> <span class="s">&quot;SourceEncoding=URL&quot;</span><span class="p">,</span> <span class="s">&quot;TargetEncoding=PLAIN&quot;</span><span class="p">,</span><span class="n">LAST</span> <span class="p">);</span>
-</span><span class="line"><span class="n">web_add_header</span><span class="p">(</span><span class="s">&quot;Alfresco-CSRFToken&quot;</span><span class="p">,</span> <span class="n">lr_eval_string</span><span class="p">(</span><span class="s">&quot;{token}&quot;</span><span class="p">));</span>
-</span><span class="line">
-</span><span class="line"><span class="p">...</span>
-</span><span class="line"><span class="c1">// submit requests codes</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<h2 id="section-3">02.24 更新</h2>
-
-<hr />
-<hr />
-
-<p>再往深了想一下, 如果前端通过某种自定义的算法加密的验证信息再返回系统.</p>
-
-<p>那没有开发配合, 这脚本还真没法完成了.</p>
 
 ]]></content>
   </entry>
