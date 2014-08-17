@@ -4,7 +4,7 @@
   <title><![CDATA[标签: readline | 挨踢夜归人]]></title>
   <link href="http://ralph-wang.github.io//tags/readline/atom.xml" rel="self"/>
   <link href="http://ralph-wang.github.io/"/>
-  <updated>2014-08-15T00:18:11+08:00</updated>
+  <updated>2014-08-17T20:20:32+08:00</updated>
   <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -31,8 +31,8 @@
 
 <p>在 Windows 下, 一直使用 putty 作为连接远程 Linux 的工具.</p>
 
-<p>偶尔会出现 putty 不响应的现象. 一直不知道是什么总是.  <br />
-一般直接关闭重启 putty. 也就没有太理会它</p>
+<p>偶尔会出现 putty 不响应的现象. 一直不知道是什么问题.  <br />
+遇到了也就是重启一下 putty. 也就没有太理会它</p>
 
 <p>今天一次逗[哔]的尝试, 却找到了这个问题的源头:</p>
 
