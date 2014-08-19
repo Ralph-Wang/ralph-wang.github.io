@@ -4,7 +4,7 @@
   <title><![CDATA[分类: 程序设计与算法 | 挨踢夜归人]]></title>
   <link href="http://ralph-wang.github.io//blog/categories/cheng-xu-she-ji-yu-suan-fa/atom.xml" rel="self"/>
   <link href="http://ralph-wang.github.io/"/>
-  <updated>2014-08-20T02:15:58+08:00</updated>
+  <updated>2014-08-20T02:24:09+08:00</updated>
   <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -18,13 +18,18 @@
     <link href="http://ralph-wang.github.io/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/"/>
     <updated>2014-07-27T23:41:34+08:00</updated>
     <id>http://ralph-wang.github.io/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc</id>
-    <content type="html"><![CDATA[<p>起源 <a href="http://weibo.com/1854716251/BfnE2jSR9">http://weibo.com/1854716251/BfnE2jSR9</a></p>
+    <content type="html"><![CDATA[<h2 id="section">起源</h2>
+
+<p>源自一则微博:</p>
+
+<p>详情戳<a href="http://weibo.com/1854716251/BfnE2jSR9">这里</a></p>
 
 <!--more-->
 
 <ul id="markdown-toc">
+  <li><a href="#section">起源</a></li>
   <li><a href="#ioc-">IoC 简介</a></li>
-  <li><a href="#section">无节操的例子</a></li>
+  <li><a href="#section-1">无节操的例子</a></li>
 </ul>
 
 <p>刚转这篇微博的时候, 确实只意识到它用了多态特性.</p>
@@ -37,7 +42,7 @@
 
 <p><a href="http://coolshell.cn/articles/9949.html" title="酷壳">酷壳</a>有一个比较好的例子, 我这里就不重复造轮子了.</p>
 
-<h2 id="section">无节操的例子</h2>
+<h2 id="section-1">无节操的例子</h2>
 
 <p>这里我们详细谈一下<a href="http://weibo.com/1854716251/BfnE2jSR9" title="PHP版">起源</a>里的例子是怎么回事:</p>
 
