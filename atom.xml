@@ -4,7 +4,7 @@
   <title><![CDATA[挨踢夜归人]]></title>
   <link href="http://ralph-wang.github.io/atom.xml" rel="self"/>
   <link href="http://ralph-wang.github.io/"/>
-  <updated>2014-08-17T20:20:32+08:00</updated>
+  <updated>2014-08-20T02:15:58+08:00</updated>
   <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -101,16 +101,11 @@
 <p>For example: <br />
 Given binary tree {1,#,2,3},</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">   1
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><pre><code class=""><span class="line">   1
 </span><span class="line">    \
 </span><span class="line">     2
 </span><span class="line">    /
-</span><span class="line">   3</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span><span class="line">   3</span></code></pre></div></figure></notextile></div>
 
 <p>return [1,2,3].</p>
 
@@ -123,16 +118,11 @@ Given binary tree {1,#,2,3},</p>
 <p>例子:
 二叉树: {1, #, 2, 3}</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">   1
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><pre><code class=""><span class="line">   1
 </span><span class="line">    \
 </span><span class="line">     2
 </span><span class="line">    /
-</span><span class="line">   3</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span><span class="line">   3</span></code></pre></div></figure></notextile></div>
 
 <p>返回 [1, 2, 3]</p>
 
@@ -152,9 +142,8 @@ Given binary tree {1,#,2,3},</p>
 <p>把代码拷到本地调试后发现, 执行过程中 <code>discovered</code> 和 <code>ans</code> 是同一个列表  <br />
 回头看我的初始化代码</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">discovered</span> <span class="o">=</span> <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="n">discovered</span> <span class="o">=</span> <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+</span></code></pre></div></figure></notextile></div>
 
 <p>明白了…</p>
 
@@ -164,39 +153,14 @@ Given binary tree {1,#,2,3},</p>
 
 <p>修改初始化</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">discovered</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="n">discovered</span> <span class="o">=</span> <span class="p">[]</span>
 </span><span class="line"><span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>OK, 顺利通过~  <br />
 下面是完整代码:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">TreeNode</span><span class="p">:</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">TreeNode</span><span class="p">:</span>
 </span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
 </span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">x</span>
 </span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">None</span>
@@ -219,7 +183,7 @@ Given binary tree {1,#,2,3},</p>
 </span><span class="line">            <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
 </span><span class="line">                <span class="n">discovered</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
 </span><span class="line">        <span class="k">return</span> <span class="n">ans</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <h3 id="section-3">递归式</h3>
 
@@ -230,19 +194,7 @@ Given binary tree {1,#,2,3},</p>
   <li>Recursion: 如果有的话, 依次加上左子树和右子树的前序列表就可以了</li>
 </ul>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
 </span><span class="line">    <span class="c"># @param root, a tree node</span>
 </span><span class="line">    <span class="c"># @return a list of integers</span>
 </span><span class="line">    <span class="k">def</span> <span class="nf">preorderTraversal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
@@ -254,7 +206,7 @@ Given binary tree {1,#,2,3},</p>
 </span><span class="line">        <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
 </span><span class="line">            <span class="n">ans</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preorderTraversal</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
 </span><span class="line">        <span class="k">return</span> <span class="n">ans</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 ]]></content>
   </entry>
   
@@ -298,17 +250,7 @@ Given binary tree {1,#,2,3},</p>
 
 <p>使用 Cache 计数. 可以 AC, 但使用了额外空间.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
 </span><span class="line">    <span class="c"># @param A, a list of integer</span>
 </span><span class="line">    <span class="c"># @return an integer</span>
 </span><span class="line">    <span class="k">def</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
@@ -318,7 +260,7 @@ Given binary tree {1,#,2,3},</p>
 </span><span class="line">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cached</span><span class="p">:</span>
 </span><span class="line">            <span class="k">if</span> <span class="n">cached</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
 </span><span class="line">                <span class="k">return</span> <span class="n">i</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>这种方法算是比较通用的通用的解法吧. 重复的元素可以不限制于<strong>两次</strong></p>
 
@@ -338,45 +280,26 @@ Given binary tree {1,#,2,3},</p>
 
 <p>简单说明下异或操作:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>             <span class="c"># 1 -&gt; 0x01 -&gt; 00000001</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>             <span class="c"># 1 -&gt; 0x01 -&gt; 00000001</span>
 </span><span class="line"><span class="n">y</span> <span class="o">=</span> <span class="mi">2</span>             <span class="c"># 2 -&gt; 0x02 -&gt; 00000010</span>
 </span><span class="line"><span class="n">z</span> <span class="o">=</span> <span class="n">x</span> <span class="o">^</span> <span class="n">y</span>         <span class="c"># 3 -&gt; 0x03 -&gt; 00000011</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>把整型数按位进行计算. 同为0或1则得到0, 一个0一个1则得到1
 因此得到上面的 <code>1 ^ 2 = 3</code> 的计算</p>
 
 <p>关于异或, 比较特殊的计算</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">a</span> <span class="o">^</span> <span class="n">a</span> <span class="o">==</span> <span class="mi">0</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="n">a</span> <span class="o">^</span> <span class="n">a</span> <span class="o">==</span> <span class="mi">0</span>
 </span><span class="line"><span class="n">a</span> <span class="o">^</span> <span class="mi">0</span> <span class="o">==</span> <span class="n">a</span>
 </span><span class="line"><span class="n">a</span> <span class="o">^</span> <span class="n">b</span> <span class="o">==</span> <span class="n">b</span> <span class="o">^</span> <span class="n">a</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>大触的解法里就用到了上面的公式</p>
 
 <h3 id="section-4">解</h3>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
 </span><span class="line">    <span class="c"># @param A, a list of integer</span>
 </span><span class="line">    <span class="c"># @return an integer</span>
 </span><span class="line">    <span class="k">def</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
@@ -389,7 +312,7 @@ Given binary tree {1,#,2,3},</p>
 </span><span class="line">    <span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
 </span><span class="line">    <span class="n">s</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">()</span>
 </span><span class="line">    <span class="k">print</span> <span class="n">s</span><span class="o">.</span><span class="n">singleNumber</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>原理就是上面提到的特殊计算: (2^2) ^ (3^3) ^ (5^5) ^ 4 = 4</p>
 
@@ -438,16 +361,11 @@ Given binary tree {1,#,2,3},</p>
 
 <p><code>df</code> 给出的调查报告如下</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">ralph -&gt; df -h
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><pre><code class=""><span class="line">ralph -&gt; df -h
 </span><span class="line">Filesystem      Size  Used Avail Use% Mounted on
 </span><span class="line">/dev/xvda1       20G   19G  972K 100% /
 </span><span class="line">tmpfs           245M     0  245M   0% /dev/shm
-</span><span class="line">/dev/xvdb1       40G  6.9G   31G  19% /data</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span><span class="line">/dev/xvdb1       40G  6.9G   31G  19% /data</span></code></pre></div></figure></notextile></div>
 
 <p>根据 <code>df</code> 先生的报告, 我们确认被占用的磁盘为 /dev/xvda1, 其挂载目录为 <code>/</code></p>
 
@@ -457,30 +375,7 @@ Given binary tree {1,#,2,3},</p>
 
 <p>我们先看他的第一次报告.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">ralph -&gt; du --max-depth=1 -h /
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><pre><code class=""><span class="line">ralph -&gt; du --max-depth=1 -h /
 </span><span class="line">164K    /dev
 </span><span class="line">5.9M    /bin
 </span><span class="line">0       /sys
@@ -502,7 +397,7 @@ Given binary tree {1,#,2,3},</p>
 </span><span class="line">699M    /home
 </span><span class="line">20K     /lost+found
 </span><span class="line">4.0K    /srv
-</span><span class="line">15G     /</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span><span class="line">15G     /</span></code></pre></div></figure></notextile></div>
 
 <p>嗯, 从 <code>/</code> 中减掉 <code>/data</code> 目录下的 6.7G. 还有 8.3G.</p>
 
@@ -514,16 +409,11 @@ Given binary tree {1,#,2,3},</p>
 
 <p>这时, <code>lsof</code> 主动站出来说话了: 逗逼攻城狮, <em>说不定是有进程在向已删除的文件写数据啊!</em></p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">ralph -&gt; lsof |grep delete
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><pre><code class=""><span class="line">ralph -&gt; lsof |grep delete
 </span><span class="line">grep      12574  ralph  txt       REG  202,1    106232  720903 /bin/grep (deleted)
 </span><span class="line">grep      12574  ralph    1u      CHR  136,2       0t0       5 /dev/pts/2 (deleted)
 </span><span class="line">grep      12574  ralph    2u      CHR  136,2       0t0       5 /dev/pts/2 (deleted)
-</span><span class="line">python    28230  ralph    3w      REG  202,1 734003200  401905 /home/ralph/tmp/write.log (deleted)</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span><span class="line">python    28230  ralph    3w      REG  202,1 734003200  401905 /home/ralph/tmp/write.log (deleted)</span></code></pre></div></figure></notextile></div>
 
 <p>嗯~ 原来如此…杀掉这个 <code>28239</code> 这个 Python 进程后, 磁盘占用恢复正常</p>
 
@@ -555,31 +445,17 @@ Given binary tree {1,#,2,3},</p>
 
 <p>这里再附上 Python 脚本.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="c">#!/usr/bin/env python</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="c">#!/usr/bin/env python</span>
 </span><span class="line">
 </span><span class="line"><span class="n">fobj</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;write.log&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
 </span><span class="line">
 </span><span class="line"><span class="n">whil</span> <span class="bp">True</span><span class="p">:</span>
 </span><span class="line">    <span class="n">fobj</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>如果不想写太多数据出来, 可以用下面这个版本</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="c">#!/usr/bin/env python</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="c">#!/usr/bin/env python</span>
 </span><span class="line">
 </span><span class="line"><span class="n">fobj</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;write.log&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
 </span><span class="line">
@@ -587,7 +463,7 @@ Given binary tree {1,#,2,3},</p>
 </span><span class="line">
 </span><span class="line"><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
 </span><span class="line">    <span class="k">pass</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>死循环的目的都是为了模拟文件描述符占用</p>
 
@@ -624,11 +500,9 @@ Given binary tree {1,#,2,3},</p>
 
 <p>如下:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>_config.yml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="yaml"><span class="line"><span class="l-Scalar-Plain">markdown</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">kramdown</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>_config.yml</span></figcaption><div class="highlight"><pre><code class="yaml"><span class="line"><span class="l-Scalar-Plain">markdown</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">kramdown</span>
 </span><span class="line">  <span class="l-Scalar-Plain">toc_levels</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">2..3</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>其中, <code>toc_levels</code> 是用来指定那些标题会进入目录.</p>
 
@@ -638,11 +512,9 @@ Given binary tree {1,#,2,3},</p>
 
 <p>完成配置后, 在文章中需要的地方添加以下两行</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>_config.yml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="yaml"><span class="line"><span class="err">*</span> <span class="l-Scalar-Plain">any list</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>_config.yml</span></figcaption><div class="highlight"><pre><code class="yaml"><span class="line"><span class="err">*</span> <span class="l-Scalar-Plain">any list</span>
 </span><span class="line"><span class="l-Scalar-Plain">{:toc}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p><code>kramdown</code> 引擎会帮我们把上面两行按配置解析成 toc, 也就是目录了.</p>
 
@@ -656,23 +528,7 @@ Given binary tree {1,#,2,3},</p>
 
 <p>kramdown 解析出来的 TOC 的 id 为 <code>markdown-toc</code>. 所以我们修改样式如下</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-</pre></td><td class="code"><pre><code class="css"><span class="line"><span class="nf">#markdown</span><span class="nd">:before</span> <span class="p">{</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="css"><span class="line"><span class="nf">#markdown</span><span class="nd">:before</span> <span class="p">{</span>
 </span><span class="line">    <span class="k">content</span><span class="o">:</span> <span class="s2">&quot;目录&quot;</span><span class="p">;</span>
 </span><span class="line">    <span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">;</span>
 </span><span class="line"><span class="p">}</span>
@@ -688,7 +544,7 @@ Given binary tree {1,#,2,3},</p>
 </span><span class="line">    <span class="k">border</span><span class="o">:</span> <span class="m">#fff</span> <span class="m">0.5em</span> <span class="k">solid</span><span class="p">;</span>
 </span><span class="line">    <span class="k">background-color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span>
 </span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>这样一个在文章左边悬停的 TOC 就做了好</p>
 
@@ -752,19 +608,13 @@ Given binary tree {1,#,2,3},</p>
 
 <p>这样如果用代码表示的话可能就是下面这样</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">meet</span><span class="p">(</span><span class="n">hanzi</span><span class="p">):</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">meet</span><span class="p">(</span><span class="n">hanzi</span><span class="p">):</span>
 </span><span class="line">   <span class="n">hanzi</span><span class="o">.</span><span class="n">flower</span><span class="p">()</span>
 </span><span class="line">   <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hanzi</span><span class="p">,</span> <span class="n">GFS</span><span class="p">):</span>
 </span><span class="line">       <span class="k">print</span> <span class="s">&#39;啪啪啪啪啪啪啪啪&#39;</span>
 </span><span class="line">   <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hanzi</span><span class="p">,</span> <span class="n">DS</span><span class="p">):</span>
 </span><span class="line">       <span class="k">print</span> <span class="s">&#39;啪&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>而 IoC 的理解思路却是这样的:</p>
 
@@ -774,36 +624,17 @@ Given binary tree {1,#,2,3},</p>
 
 <p>用代码来表达就是这样</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Meizi</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Meizi</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 </span><span class="line">    <span class="k">def</span> <span class="nf">meet</span><span class="p">(</span><span class="n">hanzi</span><span class="p">):</span>
 </span><span class="line">        <span class="n">hanzi</span><span class="o">.</span><span class="n">flower</span><span class="p">()</span>
 </span><span class="line">        <span class="n">hanzi</span><span class="o">.</span><span class="n">chu</span><span class="p">()</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p><code>Meizi</code> 这边的代码是不是就变得非常干净了, 那汉子在 chu 之后的结果就不在妹子这里控制了.</p>
 
 <p>至于发生了什么, 我们来看一下 <code>Hanzi</code> 们的具体实现</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Hanzi</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Hanzi</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 </span><span class="line">    <span class="s">&#39;Abstract class Hanzi&#39;</span>
 </span><span class="line">    <span class="k">def</span> <span class="nf">flower</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span class="line">        <span class="k">print</span> <span class="s">&#39;妹子笑了...&#39;</span>
@@ -818,7 +649,7 @@ Given binary tree {1,#,2,3},</p>
 </span><span class="line"><span class="k">class</span> <span class="nc">DS</span><span class="p">(</span><span class="n">Hanzi</span><span class="p">):</span>
 </span><span class="line">    <span class="k">def</span> <span class="nf">chu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span class="line">        <span class="k">print</span> <span class="s">&#39;啪&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p><strong>看, 结果的不同是因为 <code>Hanzi</code> 自己的属性, 而不是妹子的选择.</strong></p>
 
@@ -919,9 +750,8 @@ emacs 劣势: 快捷键均为组合键, 输入相对 vim 麻烦</p>
 
 <p>如果想让 bash 脚本运行时显示每行命令, 则需要在脚本开始添加如下命令:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nb">set</span> -o <span class="o">[</span>noexec|verbose|xtrace<span class="o">]</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nb">set</span> -o <span class="o">[</span>noexec|verbose|xtrace<span class="o">]</span>
+</span></code></pre></div></figure></notextile></div>
 
 <p>参数说明:</p>
 
@@ -943,41 +773,25 @@ emacs 劣势: 快捷键均为组合键, 输入相对 vim 麻烦</p>
 
 <p>在脚本退出时会触发该信号</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>exit.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>exit.sh</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
 </span><span class="line">
 </span><span class="line"><span class="nb">trap</span> <span class="s1">&#39;echo exiting the script&#39;</span> EXIT
 </span><span class="line">
 </span><span class="line"><span class="nb">echo</span> <span class="s1">&#39;starting the script&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>执行结果:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$.</span>/exit.sh
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$.</span>/exit.sh
 </span><span class="line">starting the script
 </span><span class="line">exiting the script
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <h3 id="debug">DEBUG</h3>
 
 <p>每一行命令执行前都会触发这个信号, 开启 <code>set -o functrace</code> 后函数内部也会触发</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>debug.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>debug.sh</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
 </span><span class="line">
 </span><span class="line"><span class="nb">trap</span> <span class="s1">&#39;echo execute $LINENO&#39;</span> DEBUG
 </span><span class="line">
@@ -985,22 +799,11 @@ emacs 劣势: 快捷键均为组合键, 输入相对 vim 麻烦</p>
 </span><span class="line"><span class="k">do</span>
 </span><span class="line"><span class="nb">echo</span> <span class="nv">$_i</span>
 </span><span class="line"><span class="k">done</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>执行结果:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$.</span>/debug.sh
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$.</span>/debug.sh
 </span><span class="line">execute 5
 </span><span class="line">execute 5
 </span><span class="line">execute 7
@@ -1011,22 +814,12 @@ emacs 劣势: 快捷键均为组合键, 输入相对 vim 麻烦</p>
 </span><span class="line">1
 </span><span class="line">execute 5
 </span><span class="line">execute 5
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <h3 id="err">ERR</h3>
 <p>当有命令执行后的返回值不是 0 时触发该信号</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>err.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>err.sh</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
 </span><span class="line">
 </span><span class="line"><span class="nb">trap</span> <span class="s1">&#39;echo Error with status $?&#39;</span> ERR
 </span><span class="line">
@@ -1036,46 +829,35 @@ emacs 劣势: 快捷键均为组合键, 输入相对 vim 麻烦</p>
 </span><span class="line"><span class="o">}</span>
 </span><span class="line">
 </span><span class="line">bad
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>执行结果</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$.</span>/err.sh
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$.</span>/err.sh
 </span><span class="line">Error with status 111
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <h3 id="return">RETURN</h3>
 <p>当用 <code>source</code> 执行脚本返回后触发该信号</p>
 
 <p>若执行 <code>set -o functrace</code>, 则函数返回后也能触发该信号</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>x.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nb">echo</span> <span class="s2">&quot;Hello World&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>x.sh</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nb">echo</span> <span class="s2">&quot;Hello World&quot;</span>
+</span></code></pre></div></figure></notextile></div>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>return.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>return.sh</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
 </span><span class="line"><span class="nb">trap</span> <span class="s1">&#39;echo debug occured&#39;</span> DEBUG
 </span><span class="line"><span class="nb">trap</span> <span class="s1">&#39;echo return occured&#39;</span> RETURN
 </span><span class="line">
 </span><span class="line"><span class="nb">source</span> ./x.sh
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>执行结果</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">debug occured
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line">debug occured
 </span><span class="line">Hello World
 </span><span class="line"><span class="k">return </span>occured
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <h2 id="debugger">一个简易的 Debugger</h2>
 
@@ -1126,34 +908,7 @@ emacs 劣势: 快捷键均为组合键, 输入相对 vim 麻烦</p>
   <p>bashdb.fns # 定义的函数们</p>
 </blockquote>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bashdb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bashdb</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
 </span><span class="line">
 </span><span class="line"><span class="nv">_dbname</span><span class="o">=</span><span class="k">${</span><span class="nv">0</span><span class="p">##*/</span><span class="k">}</span>
 </span><span class="line"><span class="nb">echo</span> <span class="s1">&#39;Bash Debugger Version 1.0&#39;</span>
@@ -1180,7 +935,7 @@ emacs 劣势: 快捷键均为组合键, 输入相对 vim 麻烦</p>
 </span><span class="line">
 </span><span class="line">cat <span class="nv">$_libdir</span>/bashdb.pre <span class="nv">$_guineapig</span> &gt; <span class="nv">$_debugfile</span>
 </span><span class="line"><span class="nb">exec </span>bash <span class="nv">$_debugfile</span> <span class="nv">$_guineapig</span> <span class="nv">$_tmpdir</span> <span class="nv">$_libdir</span> <span class="s2">&quot;$@&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <blockquote>
   <p>关于 <code>exec</code> 命令
@@ -1188,39 +943,7 @@ emacs 劣势: 快捷键均为组合键, 输入相对 vim 麻烦</p>
 &gt; 在 cli 中执行 exec 后… 当前 shell 会直接退出</p>
 </blockquote>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bashdb.pre</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bashdb.pre</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
 </span><span class="line">
 </span><span class="line"><span class="nv">_debugfile</span><span class="o">=</span><span class="nv">$0</span>
 </span><span class="line"><span class="nv">_guineapig</span><span class="o">=</span><span class="nv">$1</span>
@@ -1252,103 +975,9 @@ emacs 劣势: 快捷键均为组合键, 输入相对 vim 麻烦</p>
 </span><span class="line">
 </span><span class="line"><span class="c"># 减掉 bashdb.pre 的行数</span>
 </span><span class="line"><span class="nb">trap</span> <span class="s1">&#39;_steptrap $(($LINENO - 32))&#39;</span> DEBUG
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bashdb.fns</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-<span class="line-number">44</span>
-<span class="line-number">45</span>
-<span class="line-number">46</span>
-<span class="line-number">47</span>
-<span class="line-number">48</span>
-<span class="line-number">49</span>
-<span class="line-number">50</span>
-<span class="line-number">51</span>
-<span class="line-number">52</span>
-<span class="line-number">53</span>
-<span class="line-number">54</span>
-<span class="line-number">55</span>
-<span class="line-number">56</span>
-<span class="line-number">57</span>
-<span class="line-number">58</span>
-<span class="line-number">59</span>
-<span class="line-number">60</span>
-<span class="line-number">61</span>
-<span class="line-number">62</span>
-<span class="line-number">63</span>
-<span class="line-number">64</span>
-<span class="line-number">65</span>
-<span class="line-number">66</span>
-<span class="line-number">67</span>
-<span class="line-number">68</span>
-<span class="line-number">69</span>
-<span class="line-number">70</span>
-<span class="line-number">71</span>
-<span class="line-number">72</span>
-<span class="line-number">73</span>
-<span class="line-number">74</span>
-<span class="line-number">75</span>
-<span class="line-number">76</span>
-<span class="line-number">77</span>
-<span class="line-number">78</span>
-<span class="line-number">79</span>
-<span class="line-number">80</span>
-<span class="line-number">81</span>
-<span class="line-number">82</span>
-<span class="line-number">83</span>
-<span class="line-number">84</span>
-<span class="line-number">85</span>
-<span class="line-number">86</span>
-<span class="line-number">87</span>
-<span class="line-number">88</span>
-<span class="line-number">89</span>
-<span class="line-number">90</span>
-<span class="line-number">91</span>
-<span class="line-number">92</span>
-<span class="line-number">93</span>
-<span class="line-number">94</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bashdb.fns</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
 </span><span class="line">
 </span><span class="line"><span class="c"># Debugger 的主要函数 _steptrap</span>
 </span><span class="line"><span class="c"># 每一行代码执行前, 这个函数都会被调用</span>
@@ -1442,7 +1071,7 @@ emacs 劣势: 快捷键均为组合键, 输入相对 vim 麻烦</p>
 </span><span class="line"><span class="o">}</span>
 </span><span class="line">
 </span><span class="line"><span class="c">## 其它函数这里省略</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 ]]></content>
   </entry>
   
@@ -1458,28 +1087,7 @@ getopts 主要用来定义和解析脚本支持的命令行选项.</p>
 
 <p>简单用法如下:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="k">while </span><span class="nb">getopts</span> <span class="s2">&quot;:ab:c&quot;</span> opt
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="k">while </span><span class="nb">getopts</span> <span class="s2">&quot;:ab:c&quot;</span> opt
 </span><span class="line"><span class="k">do</span>
 </span><span class="line"><span class="k">	case</span> <span class="nv">$opt</span> in
 </span><span class="line">		a <span class="o">)</span>
@@ -1500,7 +1108,7 @@ getopts 主要用来定义和解析脚本支持的命令行选项.</p>
 </span><span class="line"><span class="nb">shift</span> <span class="k">$((</span><span class="nv">$OPTIND</span> <span class="o">-</span> <span class="m">1</span><span class="k">))</span>
 </span><span class="line">
 </span><span class="line">main scripts
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <ul>
   <li>
@@ -1519,29 +1127,7 @@ getopts 主要用来定义和解析脚本支持的命令行选项.</p>
 <h2 id="shell--make">shell 实现极简 make</h2>
 <p>没有变量支持什么, 只是解释命令和依赖</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
 </span><span class="line">
 </span><span class="line"><span class="c">#set -o verbose</span>
 </span><span class="line">
@@ -1563,7 +1149,7 @@ getopts 主要用来定义和解析脚本支持的命令行选项.</p>
 </span><span class="line"><span class="o">}</span>
 </span><span class="line">
 </span><span class="line">makecmd &lt; Makefile
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <ul>
   <li>
@@ -1630,16 +1216,7 @@ FILE2</code> 用来比较两个文件修改时间</p>
 
 <h2 id="ifelifelse">if..elif..else</h2>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="k">if </span>condition
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="k">if </span>condition
 </span><span class="line"><span class="k">then</span>
 </span><span class="line"><span class="k">	</span>statements
 </span><span class="line"><span class="o">[</span><span class="k">elif </span>condition
@@ -1648,20 +1225,11 @@ FILE2</code> 用来比较两个文件修改时间</p>
 </span><span class="line"><span class="o">[</span><span class="k">else</span>
 </span><span class="line"><span class="k">	</span>statements<span class="o">]</span>
 </span><span class="line"><span class="k">fi</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <h2 id="case">case</h2>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="k">case </span>epxr in
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="k">case </span>epxr in
 </span><span class="line">	pattern1 <span class="o">)</span>
 </span><span class="line">		statements
 </span><span class="line">		;;
@@ -1670,7 +1238,7 @@ FILE2</code> 用来比较两个文件修改时间</p>
 </span><span class="line">		;;
 </span><span class="line">	...
 </span><span class="line"><span class="k">esac</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 <p><em>pattern1/2</em> 支持 bash 的通配符, 也支持 | 来表示多模式匹配</p>
 
 <p><code>;;</code> 类似于其它语言中的 break</p>
@@ -1679,17 +1247,12 @@ FILE2</code> 用来比较两个文件修改时间</p>
 
 <h2 id="select">select</h2>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="k">select case</span> <span class="o">[</span>in caselist<span class="o">]</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="k">select case</span> <span class="o">[</span>in caselist<span class="o">]</span>
 </span><span class="line"><span class="k">do</span>
 </span><span class="line"><span class="k">	</span>statements about <span class="nv">$case</span>
 </span><span class="line">	<span class="o">[</span><span class="nb">break</span><span class="o">]</span>
 </span><span class="line"><span class="k">done</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>用 caselist 里的所有项生成一个简单的选择菜单</p>
 
@@ -1699,62 +1262,43 @@ FILE2</code> 用来比较两个文件修改时间</p>
 
 <h2 id="for">for</h2>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="k">for</span> <span class="o">((</span>expr1;expr2;expr3<span class="o">))</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="k">for</span> <span class="o">((</span>expr1;expr2;expr3<span class="o">))</span>
 </span><span class="line">	statements
 </span><span class="line">end
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>这个比较类似 Java 里的 for</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="k">for </span>i <span class="o">[</span>in list<span class="o">]</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="k">for </span>i <span class="o">[</span>in list<span class="o">]</span>
 </span><span class="line"><span class="k">do</span>
 </span><span class="line"><span class="k">	</span>statements
 </span><span class="line"><span class="k">done</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>这个感觉更像 python 里的 for</p>
 
 <p>若省略 [in list] 的话, 则默认从 $@ 中取值</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="k">for </span>i in <span class="o">{</span>start..end..step<span class="o">}</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="k">for </span>i in <span class="o">{</span>start..end..step<span class="o">}</span>
 </span><span class="line"><span class="k">do</span>
 </span><span class="line"><span class="k">	</span>statements
 </span><span class="line"><span class="k">done</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 <p>bash 4.0 以上才有的语法</p>
 
 <h2 id="while--until">while &amp; until</h2>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="k">while </span>condition
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="k">while </span>condition
 </span><span class="line"><span class="k">do</span>
 </span><span class="line"><span class="k">	</span>statements
 </span><span class="line"><span class="k">done</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="k">until </span>condition
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="k">until </span>condition
 </span><span class="line"><span class="k">do</span>
 </span><span class="line"><span class="k">	</span>statements
 </span><span class="line"><span class="k">done</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>while condition 等价于 until ! condition</p>
 
@@ -1763,21 +1307,14 @@ FILE2</code> 用来比较两个文件修改时间</p>
 <h2 id="section-3">附:</h2>
 <p>又一个友好地显示 PATH 的方法</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>showpath.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">path</span><span class="o">=</span><span class="nv">$PATH</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>showpath.sh</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">path</span><span class="o">=</span><span class="nv">$PATH</span>
 </span><span class="line">
 </span><span class="line"><span class="k">while</span> <span class="o">[</span> <span class="nv">$path</span> <span class="o">]</span>;
 </span><span class="line"><span class="k">do</span>
 </span><span class="line"><span class="k">	</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">path</span><span class="p">%%:*</span><span class="k">}</span>
 </span><span class="line">	<span class="nb">echo</span> <span class="k">${</span><span class="nv">path</span><span class="p">#*:</span><span class="k">}</span>
 </span><span class="line"><span class="k">done</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 ]]></content>
   </entry>
   
@@ -1793,58 +1330,40 @@ FILE2</code> 用来比较两个文件修改时间</p>
 
 <p>默认情况下, 这两个变量没有区别</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>sample.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c">#!/bin/bash</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>sample.sh</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/bash</span>
 </span><span class="line">
 </span><span class="line"><span class="nb">echo</span> <span class="nv">$*</span>
 </span><span class="line">
 </span><span class="line"><span class="nb">echo</span> <span class="nv">$@</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>运行上面的脚本, 传入多个参数. 得到的两行输出结果是一样的.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$.</span>/sample.sh 1 2 3
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$.</span>/sample.sh 1 2 3
 </span><span class="line">1 2 3
 </span><span class="line">1 2 3
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>但是, 当给变量 IFS(internal field sperator) 赋上值并用双引号将 <code>$*</code> 和 <code>$@</code>
 括起来, 情况就不一样了.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>sample2.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c">#!/bin/bash</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>sample2.sh</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/bash</span>
 </span><span class="line">
 </span><span class="line"><span class="nv">IFS</span><span class="o">=</span>,
 </span><span class="line">
 </span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;$*&quot;</span>
 </span><span class="line">
 </span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;$@&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>这时候, 在 <code>$*</code> 中不再是以空格分割所有参数, 而是由 IFS 的值 (当前脚本中为逗号)来分割</p>
 
 <p>而 <code>$@</code> 则保持原样</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$.</span>/sample2.sh 1 2 3
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$.</span>/sample2.sh 1 2 3
 </span><span class="line">1,2,3
 </span><span class="line">1 2 3
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>当用双引号括起来以后, <code>"$*"</code> 等价于 <code>"$1$IFS$2$IFS$3...$IFS$N"</code></p>
 
@@ -1872,22 +1391,7 @@ FILE2</code> 用来比较两个文件修改时间</p>
   </li>
 </ul>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>sample3.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c">#!/bin/bash</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>sample3.sh</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/bash</span>
 </span><span class="line">
 </span><span class="line"><span class="nb">echo</span> <span class="k">${</span><span class="nv">var</span><span class="k">:-</span><span class="s2">&quot;minus&quot;</span><span class="k">}</span>
 </span><span class="line">
@@ -1902,56 +1406,39 @@ FILE2</code> 用来比较两个文件修改时间</p>
 </span><span class="line"><span class="nb">echo</span> <span class="k">${</span><span class="nv">var</span><span class="p">:</span><span class="nv">2</span><span class="p">:</span><span class="nv">2</span><span class="k">}</span> <span class="c">#output ua</span>
 </span><span class="line">
 </span><span class="line"><span class="nb">echo</span> <span class="k">${</span><span class="nv">theVar</span><span class="p">:?</span><span class="s2">&quot;should not be empty&quot;</span><span class="k">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>输出:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>sample3.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">minus
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>sample3.sh</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line">minus
 </span><span class="line">
 </span><span class="line">equals
 </span><span class="line">equals
 </span><span class="line">plus
 </span><span class="line">ua
 </span><span class="line">sample3.sh: line 15: theVar: should not be empty
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <h2 id="section-1">一个练习</h2>
 <p>你收集了一专辑, 并已经统计出了不同歌手的专辑数量, 现在需要找出收集数量前 10 的歌手. 文件格式如下:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>file</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="text"><span class="line">5 Depeche Mode
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>file</span></figcaption><div class="highlight"><pre><code class="text"><span class="line">5 Depeche Mode
 </span><span class="line">2 Split Enz
 </span><span class="line">3 Simple Minds
 </span><span class="line">1 Vivaldi, Antonio
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>ok, 实现代码很简单 <code>sort -nr file | head -n 10</code></p>
 
 <p>不过, 书中的解答不得不说更好</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c">#!/bin/bash</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/bash</span>
 </span><span class="line">
 </span><span class="line"><span class="nv">filename</span><span class="o">=</span><span class="k">${</span><span class="nv">1</span><span class="p">:?</span><span class="s2">&quot;filename missing&quot;</span><span class="k">}</span>
 </span><span class="line"><span class="nv">howmany</span><span class="o">=</span><span class="k">${</span><span class="nv">2</span><span class="k">:-</span><span class="nv">10</span><span class="k">}</span>
 </span><span class="line">
 </span><span class="line">sort -nr <span class="nv">$filename</span> | head -n <span class="nv">$howmany</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>这样脚本化之后, 增加了可读性, 而且也不限于统计前 10.</p>
 ]]></content>
@@ -1999,11 +1486,9 @@ done
 
 <p>核心就一行, 摘出来看看:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">netstat -an |awk <span class="s1">&#39;{gsub(&quot;::ffff:&quot;,&quot;&quot;); print $5}&#39;</span>|grep <span class="s2">&quot;$port&quot;</span> |sort | uniq -c
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line">netstat -an |awk <span class="s1">&#39;{gsub(&quot;::ffff:&quot;,&quot;&quot;); print $5}&#39;</span>|grep <span class="s2">&quot;$port&quot;</span> |sort | uniq -c
 </span><span class="line">|sed <span class="s2">&quot;s/^/$current_date/g&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>各个命令在干什么: </p>
 
@@ -2036,9 +1521,8 @@ done
 <h2 id="cpu-">查看 CPU 型号及数量</h2>
 <p>原命令</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line">cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c
+</span></code></pre></div></figure></notextile></div>
 
 <p>cat 和 grep 就不多说了
 ### cut:
@@ -2099,24 +1583,7 @@ output ** .  输出所有选中的行</p>
 <p>用户名: test 密码: test</p>
 
 <h2 id="section">一般写法</h2>
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
 </span><span class="line">
 </span><span class="line"><span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">()</span>
 </span><span class="line">
@@ -2133,7 +1600,7 @@ output ** .  输出所有选中的行</p>
 </span><span class="line"><span class="c"># 验证登录</span>
 </span><span class="line"><span class="n">alert</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">switch_to_alert</span><span class="p">()</span>
 </span><span class="line"><span class="k">assert</span> <span class="s">&#39;succ&#39;</span> <span class="ow">in</span> <span class="n">alert</span><span class="o">.</span><span class="n">text</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>这样的写法的代码复用和管理都会成为麻烦.</p>
 
@@ -2147,18 +1614,7 @@ output ** .  输出所有选中的行</p>
 
 <p>先需要两个基类: <code>BrowserContainer</code>, <code>BasePage</code></p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>Base.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">BrowserContainer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>Base.py</span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">BrowserContainer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 </span><span class="line">	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">se</span>	<span class="n">lf</span><span class="p">,</span> <span class="n">driver</span><span class="p">,</span> <span class="n">baseURL</span><span class="p">):</span>
 </span><span class="line">		<span class="bp">self</span><span class="o">.</span><span class="n">driver</span> <span class="o">=</span> <span class="n">driver</span>
 </span><span class="line">		<span class="bp">self</span><span class="o">.</span><span class="n">baseURL</span> <span class="o">=</span> <span class="n">baseURL</span>
@@ -2169,29 +1625,12 @@ output ** .  输出所有选中的行</p>
 </span><span class="line">		<span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="c">## 页面路径</span>
 </span><span class="line">	<span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span class="line">		<span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">baseURL</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 <p><code>BrowserContainer</code> 是一个抽象类, 用来存储 driver 和测试站点的 baseURL</p>
 
 <p><code>BasePage</code> 也是一个抽象类, 继承自 BrowserContainer, 后续所有测试页面都继承自它</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>Site.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="kn">import</span> <span class="nn">page.Base</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>Site.py</span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="kn">import</span> <span class="nn">page.Base</span>
 </span><span class="line">
 </span><span class="line"><span class="k">class</span> <span class="nc">Site</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">Base</span><span class="o">.</span><span class="n">BrowserContainer</span><span class="p">):</span>
 </span><span class="line">	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driver</span><span class="p">,</span> <span class="n">baseURL</span><span class="p">):</span>
@@ -2208,40 +1647,14 @@ output ** .  输出所有选中的行</p>
 </span><span class="line">		<span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&#39;username&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
 </span><span class="line">		<span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&#39;pwd&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">pwd</span><span class="p">)</span>
 </span><span class="line">		<span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&#39;ok&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 <p><code>Site</code> 是一个工厂类, 用来取得各个测试页面的实例</p>
 
 <p><code>LoginPage</code> 就对应我们的测试页面 <code>/login_test.html</code></p>
 
 <p>这样, 我们可以把环境因素 baseURL 和 项目因素 path 分离, 这样更方便的实现多环境复用</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>case.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="kn">import</span> <span class="nn">unittest</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>case.py</span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="kn">import</span> <span class="nn">unittest</span>
 </span><span class="line"><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
 </span><span class="line">
 </span><span class="line"><span class="kn">import</span> <span class="nn">page.Site</span>
@@ -2267,7 +1680,7 @@ output ** .  输出所有选中的行</p>
 </span><span class="line">
 </span><span class="line"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
 </span><span class="line">	<span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 <p>最后我们再用 <code>unittest</code> 模块组织我们的测试用例.</p>
 
 <p>这样我们增加了不少代码, 但用例部分的可读性提升了不少.</p>
@@ -2297,29 +1710,20 @@ output ** .  输出所有选中的行</p>
 
 <p>完成安装后配置上相应的环境变量</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">JAVA_HOME</span><span class="o">=</span>/where/you/install/jdk
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">JAVA_HOME</span><span class="o">=</span>/where/you/install/jdk
 </span><span class="line"><span class="nv">CLASSPATH</span><span class="o">=</span><span class="nv">$JAVA_HOME</span>/lib/dt.jar:<span class="nv">$JAVA_HOME</span>/lib/tools.jar
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>可以用下面代码测试安装成功与否</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>Test.java</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kn">import</span> <span class="nn">java.util.Date</span><span class="o">;</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>Test.java</span></figcaption><div class="highlight"><pre><code class="java"><span class="line"><span class="kn">import</span> <span class="nn">java.util.Date</span><span class="o">;</span>
 </span><span class="line">
 </span><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
 </span><span class="line">	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 </span><span class="line">		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">new</span> <span class="n">Date</span><span class="o">());</span>
 </span><span class="line">	<span class="o">}</span>
 </span><span class="line"><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <h2 id="jmeter">安装 Jmeter</h2>
 <p>去 Apache 官网<a href="http://jmeter.apache.org/download_jmeter.cgi">下载</a> Jmeter</p>
@@ -2334,11 +1738,9 @@ output ** .  输出所有选中的行</p>
   <p>配置 Jmeter 环境变量</p>
 </blockquote>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">JMETER_HOME</span><span class="o">=</span>/where/you/put/apache-jmeter-*.*
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">JMETER_HOME</span><span class="o">=</span>/where/you/put/apache-jmeter-*.*
 </span><span class="line"><span class="nv">CLASSPATH</span><span class="o">=</span><span class="nv">$CLASSPATH</span>:<span class="nv">$JMETER_HOME</span>/lib/logkit-2.0.jar:<span class="nv">$JMETER_HOME</span>/lib/jorphan.jar:<span class="nv">$JMETER_HOME</span>/lib/ext/ApacheJMeter_core.jar
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <blockquote>
   <p>其实就是在 <code>CLASSPATH</code> 中添加三个 jar 包: <em>(07-31更新: 可以不用配置)</em>
@@ -2366,19 +1768,13 @@ Linux
 
 <p>文本样例:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>sample</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="text"><span class="line">ralph, ralph
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>sample</span></figcaption><div class="highlight"><pre><code class="text"><span class="line">ralph, ralph
 </span><span class="line">Hello, ralph, HaHA
 </span><span class="line">No such word
 </span><span class="line">Hey
 </span><span class="line">ralph again.
 </span><span class="line">two times ralph ,ralph
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>统计文中 <code>ralph</code> 出现的次数</p>
 
@@ -2391,18 +1787,16 @@ Linux
 
 <h3 id="grep---o-">方法 1: grep 的 -o 选项</h3>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">cat sample | grep -o ralph | wc -l
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line">cat sample | grep -o ralph | wc -l
+</span></code></pre></div></figure></notextile></div>
 <p>解释:</p>
 
 <p>给 <code>grep</code> 加上 <code>-o</code> 选项后, 它只会打印出匹配到的字符串, 并且每匹配一次就打印一行. </p>
 
 <h3 id="awk--rs">方法 2: 神器 awk 之 RS</h3>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">awk -v <span class="nv">RS</span><span class="o">=</span><span class="s1">&#39;ralph&#39;</span> <span class="s1">&#39;END {print NR-1}&#39;</span> sample
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line">awk -v <span class="nv">RS</span><span class="o">=</span><span class="s1">&#39;ralph&#39;</span> <span class="s1">&#39;END {print NR-1}&#39;</span> sample
+</span></code></pre></div></figure></notextile></div>
 
 <p>解释:</p>
 
@@ -2412,9 +1806,8 @@ Linux
 
 <h3 id="awk--gsub">方法 3: 神器 awk 之 gsub</h3>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">awk <span class="s1">&#39;{count+=gsub(/ralph/, &quot;#&quot;)} END {print count}&#39;</span> sample
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line">awk <span class="s1">&#39;{count+=gsub(/ralph/, &quot;#&quot;)} END {print count}&#39;</span> sample
+</span></code></pre></div></figure></notextile></div>
 <p>解释:
 awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次数求和即可.</p>
 
@@ -2435,17 +1828,7 @@ awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次�
   <li>查看慢查询是否开启</li>
 </ul>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-</pre></td><td class="code"><pre><code class="mysql"><span class="line"><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">show</span> <span class="n">variables</span> <span class="k">like</span> <span class="s1">&#39;%slow%&#39;</span><span class="p">;</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="mysql"><span class="line"><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">show</span> <span class="n">variables</span> <span class="k">like</span> <span class="s1">&#39;%slow%&#39;</span><span class="p">;</span>
 </span><span class="line"><span class="o">|</span> <span class="n">Variable_name</span>       <span class="o">|</span> <span class="n">Value</span>
 </span><span class="line"><span class="o">|</span> <span class="n">log_slow_queries</span>    <span class="o">|</span> <span class="n">OFF</span>
 </span><span class="line"><span class="o">|</span> <span class="n">slow_launch_time</span>    <span class="o">|</span> <span class="mi">2</span>
@@ -2455,21 +1838,17 @@ awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次�
 </span><span class="line"><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">show</span> <span class="n">variables</span> <span class="k">like</span> <span class="s1">&#39;long%&#39;</span><span class="p">;</span>
 </span><span class="line"><span class="o">|</span> <span class="n">Variable_name</span>   <span class="o">|</span> <span class="n">Value</span>    <span class="o">|</span>
 </span><span class="line"><span class="o">|</span> <span class="n">long_query_time</span> <span class="o">|</span> <span class="mi">1</span><span class="p">.</span><span class="mi">000000</span> <span class="o">|</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <ul>
   <li>在 my.cnf 中配置开启慢查询跟踪</li>
 </ul>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>my.cnf</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="ini"><span class="line"><span class="k">[mysqld]</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>my.cnf</span></figcaption><div class="highlight"><pre><code class="ini"><span class="line"><span class="k">[mysqld]</span>
 </span><span class="line"><span class="na">log-slow-queries</span> <span class="o">=</span> <span class="s">**** # 日志存放目录, 一般放到 MySQL 数据库的地方</span>
 </span><span class="line"><span class="na">long-query-time</span> <span class="o">=</span> <span class="s">2 # 超过这个时间(单位:秒) 的查询为慢查询</span>
 </span><span class="line"><span class="err">log-queries-not-using-indexes</span> <span class="c1"># 记录下没有使用索引的查询</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>产生慢查询日志后可以使用 mysqldumpslow 工具进行分析查看了.</p>
 
@@ -2479,97 +1858,7 @@ awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次�
 <p>### 问题 1 链表倒序
 …面试时, 想到去 clone next.. 为毛当时就没想到多给个变量呢…</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>List.java</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-<span class="line-number">44</span>
-<span class="line-number">45</span>
-<span class="line-number">46</span>
-<span class="line-number">47</span>
-<span class="line-number">48</span>
-<span class="line-number">49</span>
-<span class="line-number">50</span>
-<span class="line-number">51</span>
-<span class="line-number">52</span>
-<span class="line-number">53</span>
-<span class="line-number">54</span>
-<span class="line-number">55</span>
-<span class="line-number">56</span>
-<span class="line-number">57</span>
-<span class="line-number">58</span>
-<span class="line-number">59</span>
-<span class="line-number">60</span>
-<span class="line-number">61</span>
-<span class="line-number">62</span>
-<span class="line-number">63</span>
-<span class="line-number">64</span>
-<span class="line-number">65</span>
-<span class="line-number">66</span>
-<span class="line-number">67</span>
-<span class="line-number">68</span>
-<span class="line-number">69</span>
-<span class="line-number">70</span>
-<span class="line-number">71</span>
-<span class="line-number">72</span>
-<span class="line-number">73</span>
-<span class="line-number">74</span>
-<span class="line-number">75</span>
-<span class="line-number">76</span>
-<span class="line-number">77</span>
-<span class="line-number">78</span>
-<span class="line-number">79</span>
-<span class="line-number">80</span>
-<span class="line-number">81</span>
-<span class="line-number">82</span>
-<span class="line-number">83</span>
-<span class="line-number">84</span>
-<span class="line-number">85</span>
-<span class="line-number">86</span>
-<span class="line-number">87</span>
-<span class="line-number">88</span>
-<span class="line-number">89</span>
-<span class="line-number">90</span>
-</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span> <span class="c1">// 后进先出列表</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>List.java</span></figcaption><div class="highlight"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span> <span class="c1">// 后进先出列表</span>
 </span><span class="line">	<span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
 </span><span class="line">		<span class="kd">private</span> <span class="n">T</span> <span class="n">item</span><span class="o">;</span>
 </span><span class="line">		<span class="kd">private</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">next</span><span class="o">;</span>
@@ -2659,7 +1948,7 @@ awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次�
 </span><span class="line">		<span class="o">}</span>
 </span><span class="line">	<span class="o">}</span>
 </span><span class="line"><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 <p>算法还是弱项…</p>
 
 <h3 id="section-1">问题 2 文本替换</h3>
@@ -2671,47 +1960,7 @@ awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次�
 
 <p>如 AAABBBAAACCADDD -&gt; ABAACAD</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="java"><span class="line"><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 </span><span class="line">
 </span><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Sub</span> <span class="o">{</span>
 </span><span class="line">	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
@@ -2751,7 +2000,7 @@ awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次�
 </span><span class="line">		<span class="k">return</span> <span class="n">res</span><span class="o">;</span>
 </span><span class="line">	<span class="o">}</span>
 </span><span class="line"><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 <p>若使用 <code>String</code> 作为输入, 则用 charAt 方法获取字符</p>
 ]]></content>
   </entry>
@@ -2775,16 +2024,7 @@ awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次�
 
 <p>MySQL 怎么建表, 插数据就不多说了</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="mysql"><span class="line"><span class="c1">-- 建表</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="mysql"><span class="line"><span class="c1">-- 建表</span>
 </span><span class="line"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="nf">tbl</span> <span class="p">(</span>
 </span><span class="line">	<span class="n">id</span> <span class="kt">int</span><span class="p">,</span>
 </span><span class="line">	<span class="n">value</span> <span class="kt">int</span><span class="p">,</span>
@@ -2793,18 +2033,15 @@ awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次�
 </span><span class="line">
 </span><span class="line"><span class="c1">-- 插入5条极简数据</span>
 </span><span class="line"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">tbl</span> <span class="k">VALUES</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>MongoDB 不需要显式的创建 集合 (Collection, 与 MySQL 中表是同一级概念)
 所以直接插入数据.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="javascript"><span class="line"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
 </span><span class="line">		<span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span> <span class="nx">_id</span> <span class="o">:</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">value</span> <span class="o">:</span> <span class="nx">v</span> <span class="p">});</span>
 </span><span class="line">	<span class="p">})</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <h2 id="crd">索引的 CRD</h2>
 <p>### 创建索引.</p>
@@ -2813,57 +2050,36 @@ awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次�
 
 <p>如果是在建表同时创建, 需要将上面的建表语句修改一下</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="mysql"><span class="line"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="nf">tbl</span> <span class="p">(</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="mysql"><span class="line"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="nf">tbl</span> <span class="p">(</span>
 </span><span class="line">	<span class="n">id</span> <span class="kt">int</span><span class="p">,</span>
 </span><span class="line">	<span class="n">value</span> <span class="kt">int</span><span class="p">,</span>
 </span><span class="line">	<span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">(</span><span class="n">id</span><span class="p">),</span> <span class="c1">-- 创建主键索引</span>
 </span><span class="line">	<span class="k">KEY</span> <span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="c1">-- 创建一般索引</span>
 </span><span class="line"><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>建表后则用 <code>ALTER TABLE</code> 或 <code>CREATE INDEX</code> 创建</p>
 
 <p>下面两种方式均可以在 tbl 表的 value 字段上创建一个名为 idx_value 的索引.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="mysql"><span class="line"><span class="c1">-- ALFTER TABLE 式</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="mysql"><span class="line"><span class="c1">-- ALFTER TABLE 式</span>
 </span><span class="line"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">tbl</span> <span class="k">ADD</span> <span class="k">KEY</span> <span class="nf">idx_value</span> <span class="p">(</span><span class="n">value</span><span class="p">);</span>
 </span><span class="line">
 </span><span class="line"><span class="c1">-- CREATE INDEX 式</span>
 </span><span class="line"><span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">idx_value</span> <span class="k">ON</span> <span class="nf">tbl</span> <span class="p">(</span><span class="n">value</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>MongoDB 则只留出了一个 createIndex 的接口来创建索引</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">createIndex</span><span class="p">({</span><span class="nx">value</span> <span class="o">:</span> <span class="mi">1</span><span class="p">})</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="javascript"><span class="line"><span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">createIndex</span><span class="p">({</span><span class="nx">value</span> <span class="o">:</span> <span class="mi">1</span><span class="p">})</span>
+</span></code></pre></div></figure></notextile></div>
 <p>另外要注意的是, MongoDB 允许在暂时不存在的集合或不存在的字段上添加索引.</p>
 
 <p>如果集合名或字段字敲错了, mongoshell 可不会报错.</p>
 
 <p>在 mongoshell 中有一个助手方法, <code>ensureIndex</code></p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="o">&gt;</span><span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">ensureIndex</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="javascript"><span class="line"><span class="o">&gt;</span><span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">ensureIndex</span>
 </span><span class="line"><span class="kd">function</span> <span class="p">(</span> <span class="nx">keys</span> <span class="p">,</span> <span class="nx">options</span> <span class="p">){</span>
 </span><span class="line">	<span class="k">this</span><span class="p">.</span><span class="nx">createIndex</span><span class="p">(</span><span class="nx">keys</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
 </span><span class="line">	<span class="nx">err</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getDB</span><span class="p">().</span><span class="nx">getLastErrorObj</span><span class="p">();</span>
@@ -2872,7 +2088,7 @@ awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次�
 </span><span class="line">	<span class="p">}</span>
 </span><span class="line">	<span class="c1">// nothing returned on success</span>
 </span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>可以看到, 其实 <code>ensureIndex</code> 仍然通过调用 <code>createIndex</code> 来完成索引创建</p>
 
@@ -2885,46 +2101,34 @@ create</p>
 
 <p>MySQL 使用 <code>show index</code> 命令即可查看, 同时可以使用 where 子句进行过滤</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="mysql"><span class="line"><span class="k">SHOW</span> <span class="k">INDEX</span> <span class="k">FROM</span> <span class="n">tbl</span> <span class="k">WHERE</span> <span class="n">KEY_NAME</span> <span class="o">=</span> <span class="s1">&#39;idx_value&#39;</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="mysql"><span class="line"><span class="k">SHOW</span> <span class="k">INDEX</span> <span class="k">FROM</span> <span class="n">tbl</span> <span class="k">WHERE</span> <span class="n">KEY_NAME</span> <span class="o">=</span> <span class="s1">&#39;idx_value&#39;</span><span class="p">;</span>
+</span></code></pre></div></figure></notextile></div>
 
 <p>MongoDB 则不能进行条件过滤, 只能使用 <code>getIndexes</code> 查看所有的索引信息.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">getIndexes</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="javascript"><span class="line"><span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">getIndexes</span><span class="p">();</span>
+</span></code></pre></div></figure></notextile></div>
 
 <h3 id="section-2">删除索引.</h3>
 
 <p>在 MySQL 中删除索引时, 和创建一样可以用 <code>ALTER TABLE</code> 或 <code>DROP INDEX</code> 两种方法</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="mysql"><span class="line"><span class="c1">-- ALTER TABLE 式</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="mysql"><span class="line"><span class="c1">-- ALTER TABLE 式</span>
 </span><span class="line"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">tbl</span> <span class="k">DROP</span> <span class="k">INDEX</span> <span class="n">idx_value</span><span class="p">;</span>
 </span><span class="line"><span class="c1">-- DROP INDEX 式</span>
 </span><span class="line"><span class="k">DROP</span> <span class="k">INDEX</span> <span class="n">idx_value</span> <span class="k">ON</span> <span class="n">tbl</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>而 MongoDB 则是允许用 <code>dropIndexes</code> 一次性删除全部索引, 也可以用 <code>dropIndex</code>
 删除指定索引</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="c1">// 删除全部索引</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="javascript"><span class="line"><span class="c1">// 删除全部索引</span>
 </span><span class="line"><span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">dropIndexes</span><span class="p">();</span>
 </span><span class="line"><span class="c1">// 通过索引字段删除指定索引</span>
 </span><span class="line"><span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">dropIndex</span><span class="p">({</span> <span class="nx">value</span> <span class="o">:</span> <span class="mi">1</span><span class="p">});</span>
 </span><span class="line"><span class="c1">// 通过索引名称删除指定索引</span>
 </span><span class="line"><span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">dropIndex</span><span class="p">(</span><span class="s1">&#39;value_1&#39;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <h2 id="section-3">索引在执行计划中的表现</h2>
 <p>### 没有使用索引的情况
@@ -2932,13 +2136,10 @@ create</p>
 
 <p>使用 explain 命令可以获得 MySQL 中 SQL 语句的执行计划.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="mysql"><span class="line"><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">explain</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">tbl</span> <span class="k">where</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="mysql"><span class="line"><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">explain</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">tbl</span> <span class="k">where</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 </span><span class="line"><span class="o">|</span> <span class="n">id</span> <span class="o">|</span> <span class="n">select_type</span> <span class="o">|</span> <span class="k">table</span> <span class="o">|</span> <span class="n">type</span> <span class="o">|</span> <span class="n">possible_keys</span> <span class="o">|</span> <span class="k">key</span>  <span class="o">|</span> <span class="n">key_len</span> <span class="o">|</span> <span class="n">ref</span>  <span class="o">|</span> <span class="n">rows</span> <span class="o">|</span> <span class="n">Extra</span>       <span class="o">|</span>
 </span><span class="line"><span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="n">SIMPLE</span>      <span class="o">|</span> <span class="n">tbl</span>   <span class="o">|</span> <span class="k">ALL</span>  <span class="o">|</span> <span class="no">NULL</span>          <span class="o">|</span> <span class="no">NULL</span> <span class="o">|</span> <span class="no">NULL</span>    <span class="o">|</span> <span class="no">NULL</span> <span class="o">|</span> <span class="mi">5</span>    <span class="o">|</span> <span class="k">Using</span> <span class="k">where</span> <span class="o">|</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 <p>type 字段中的 <code>ALL</code> 就表示了这次查询是全表扫描, 而 key_len 字段则明确的告诉我们没有使用索引</p>
 
 <blockquote>
@@ -2947,16 +2148,7 @@ create</p>
 
 <p>类似的,MongoDB允许使用 <code>explain</code> 方法获取查询的执行计划</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="o">&gt;</span><span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nx">value</span> <span class="o">:</span> <span class="mi">1</span><span class="p">}).</span><span class="nx">explain</span><span class="p">();</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="javascript"><span class="line"><span class="o">&gt;</span><span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nx">value</span> <span class="o">:</span> <span class="mi">1</span><span class="p">}).</span><span class="nx">explain</span><span class="p">();</span>
 </span><span class="line"><span class="p">{</span>
 </span><span class="line">	<span class="s2">&quot;cursor&quot;</span> <span class="o">:</span> <span class="s2">&quot;BasicCursor&quot;</span><span class="p">,</span>
 </span><span class="line">	<span class="s2">&quot;isMultiKey&quot;</span> <span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
@@ -2965,7 +2157,7 @@ create</p>
 </span><span class="line">	<span class="s2">&quot;nscanned&quot;</span> <span class="o">:</span> <span class="mi">5</span>
 </span><span class="line">	<span class="c1">// ... 一些其它字段</span>
 </span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>其中 <code>cursor</code> 的值为 <code>BasicCursor</code>, 已经说明这次查询没有使用索引</p>
 
@@ -2975,11 +2167,9 @@ create</p>
 
 <p>MySQL 使用索引查询时的执行计划</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="mysql"><span class="line"><span class="o">|</span> <span class="n">id</span> <span class="o">|</span> <span class="n">select_type</span> <span class="o">|</span> <span class="k">table</span> <span class="o">|</span> <span class="n">type</span> <span class="o">|</span> <span class="n">possible_keys</span> <span class="o">|</span> <span class="k">key</span>       <span class="o">|</span> <span class="n">key_len</span> <span class="o">|</span> <span class="n">ref</span>   <span class="o">|</span> <span class="n">rows</span> <span class="o">|</span> <span class="n">Extra</span>       <span class="o">|</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="mysql"><span class="line"><span class="o">|</span> <span class="n">id</span> <span class="o">|</span> <span class="n">select_type</span> <span class="o">|</span> <span class="k">table</span> <span class="o">|</span> <span class="n">type</span> <span class="o">|</span> <span class="n">possible_keys</span> <span class="o">|</span> <span class="k">key</span>       <span class="o">|</span> <span class="n">key_len</span> <span class="o">|</span> <span class="n">ref</span>   <span class="o">|</span> <span class="n">rows</span> <span class="o">|</span> <span class="n">Extra</span>       <span class="o">|</span>
 </span><span class="line"><span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="n">SIMPLE</span>      <span class="o">|</span> <span class="n">tbl</span>   <span class="o">|</span> <span class="n">ref</span>  <span class="o">|</span> <span class="n">idx_value</span>     <span class="o">|</span> <span class="n">idx_value</span> <span class="o">|</span> <span class="mi">5</span>       <span class="o">|</span> <span class="n">const</span> <span class="o">|</span>    <span class="mi">1</span> <span class="o">|</span> <span class="k">Using</span> <span class="k">where</span> <span class="o">|</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>type 显示为 <code>ref</code>, 说明是在使用一般索引查询( 若使用主键索引, 则显示为 <code>const</code>)
 rows 字段由之前的 5 变为 1, 扫描行数变少了.
@@ -2987,15 +2177,7 @@ key, key_len 说明了使用了什么索引以及这个索引有多长</p>
 
 <p>MongoDB</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="p">{</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="javascript"><span class="line"><span class="p">{</span>
 </span><span class="line">	<span class="s2">&quot;cursor&quot;</span> <span class="o">:</span> <span class="s2">&quot;BtreeCursor value_1&quot;</span><span class="p">,</span>
 </span><span class="line">	<span class="s2">&quot;isMultiKey&quot;</span> <span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
 </span><span class="line">	<span class="s2">&quot;n&quot;</span> <span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
@@ -3003,7 +2185,7 @@ key, key_len 说明了使用了什么索引以及这个索引有多长</p>
 </span><span class="line">	<span class="s2">&quot;nscanned&quot;</span> <span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
 </span><span class="line">	<span class="c1">// 其它字段</span>
 </span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>cursor 值为 <code>BtreeCursor value_1</code>, 表示使用了名为 <code>value_1</code> 的索引进行查询
 nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前为 5, 现在变为 1.</p>
@@ -3016,33 +2198,14 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 
 <p>MySQL 中, 如果出现这样的情况, 会在 Extra 字段中显示 <code>using index</code> 信息, 如下</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="mysql"><span class="line"><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">explain</span> <span class="k">select</span> <span class="n">value</span> <span class="k">from</span> <span class="n">tbl</span> <span class="k">where</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="mysql"><span class="line"><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">explain</span> <span class="k">select</span> <span class="n">value</span> <span class="k">from</span> <span class="n">tbl</span> <span class="k">where</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 </span><span class="line"><span class="o">|</span> <span class="n">id</span> <span class="o">|</span> <span class="n">select_type</span> <span class="o">|</span> <span class="k">table</span> <span class="o">|</span> <span class="n">type</span> <span class="o">|</span> <span class="n">possible_keys</span> <span class="o">|</span> <span class="k">key</span>       <span class="o">|</span> <span class="n">key_len</span> <span class="o">|</span> <span class="n">ref</span>   <span class="o">|</span> <span class="n">rows</span> <span class="o">|</span> <span class="n">Extra</span>                    <span class="o">|</span>
 </span><span class="line"><span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="n">SIMPLE</span>      <span class="o">|</span> <span class="n">tbl</span>   <span class="o">|</span> <span class="n">ref</span>  <span class="o">|</span> <span class="n">idx_value</span>     <span class="o">|</span> <span class="n">idx_value</span> <span class="o">|</span> <span class="mi">5</span>       <span class="o">|</span> <span class="n">const</span> <span class="o">|</span>    <span class="mi">1</span> <span class="o">|</span> <span class="k">Using</span> <span class="k">where</span><span class="p">;</span> <span class="k">Using</span> <span class="k">index</span> <span class="o">|</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>而 MongoDB 中, 则是将 indexOnly 字段置为 <code>true</code>, 并且 <code>nscannedObjects</code> 为 0</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nx">value</span> <span class="o">:</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="nx">_id</span> <span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">value</span> <span class="o">:</span> <span class="mi">1</span><span class="p">}).</span><span class="nx">explain</span><span class="p">()</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="javascript"><span class="line"><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nx">value</span> <span class="o">:</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="nx">_id</span> <span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">value</span> <span class="o">:</span> <span class="mi">1</span><span class="p">}).</span><span class="nx">explain</span><span class="p">()</span>
 </span><span class="line"><span class="p">{</span>
 </span><span class="line">	<span class="s2">&quot;cursor&quot;</span> <span class="o">:</span> <span class="s2">&quot;BtreeCursor value_1&quot;</span><span class="p">,</span>
 </span><span class="line">	<span class="s2">&quot;isMultiKey&quot;</span> <span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
@@ -3058,7 +2221,7 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 </span><span class="line">	<span class="s2">&quot;millis&quot;</span> <span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
 </span><span class="line">	<span class="c1">// 其它字段</span>
 </span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <h3 id="mongodb">MongoDB中排序使用索引</h3>
 
@@ -3068,35 +2231,7 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 
 <p>直接上执行计划.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">sort</span><span class="p">({</span><span class="nx">value</span> <span class="o">:</span> <span class="mi">1</span><span class="p">}).</span><span class="nx">explain</span><span class="p">()</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="javascript"><span class="line"><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">sort</span><span class="p">({</span><span class="nx">value</span> <span class="o">:</span> <span class="mi">1</span><span class="p">}).</span><span class="nx">explain</span><span class="p">()</span>
 </span><span class="line"><span class="p">{</span>
 </span><span class="line">	<span class="s2">&quot;cursor&quot;</span> <span class="o">:</span> <span class="s2">&quot;BtreeCursor value_1&quot;</span><span class="p">,</span>
 </span><span class="line">		<span class="s2">&quot;isMultiKey&quot;</span> <span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
@@ -3124,7 +2259,7 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 </span><span class="line">		<span class="p">},</span>
 </span><span class="line">		<span class="s2">&quot;server&quot;</span> <span class="o">:</span> <span class="s2">&quot;AY14031520284347468cZ:27017&quot;</span>
 </span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>可以看到, 没有任何查询条件, 只进行排序确实是使用了索引.</p>
 
@@ -3136,15 +2271,13 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 
 <p>MySQL 中 使用 use index 子句</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="mysql"><span class="line"><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">tbl</span> <span class="k">use</span> <span class="k">index</span> <span class="p">(</span><span class="n">idx_value</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="mysql"><span class="line"><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">tbl</span> <span class="k">use</span> <span class="k">index</span> <span class="p">(</span><span class="n">idx_value</span><span class="p">);</span>
+</span></code></pre></div></figure></notextile></div>
 
 <p>MongoDB 中则使用 hint 方法</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">hint</span><span class="p">({</span><span class="nx">value</span> <span class="o">:</span> <span class="mi">1</span><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="javascript"><span class="line"><span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">hint</span><span class="p">({</span><span class="nx">value</span> <span class="o">:</span> <span class="mi">1</span><span class="p">});</span>
+</span></code></pre></div></figure></notextile></div>
 ]]></content>
   </entry>
   
@@ -3167,20 +2300,7 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 
 <p>先上源码:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>server1.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>server1.js</span></figcaption><div class="highlight"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
 </span><span class="line">
 </span><span class="line"><span class="kd">var</span> <span class="nx">size</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">;</span> <span class="c1">// 10K</span>
 </span><span class="line">
@@ -3193,24 +2313,9 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 </span><span class="line">	<span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
 </span><span class="line">	<span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">helloworld</span><span class="p">);</span>
 </span><span class="line"><span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8888</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>server2.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>server2.js</span></figcaption><div class="highlight"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
 </span><span class="line">
 </span><span class="line"><span class="kd">var</span> <span class="nx">size</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">;</span> <span class="c1">// 10K</span>
 </span><span class="line">
@@ -3225,7 +2330,7 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 </span><span class="line">	<span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
 </span><span class="line">	<span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">helloworld</span><span class="p">);</span>
 </span><span class="line"><span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8888</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>server1 和 server2 的差别就只有那一句 <code>helloworld = new Buffer(helloworld)</code>.</p>
 
@@ -3233,11 +2338,9 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 
 <p>并用 ab 测试, 同时将结果分别保存到 res1.txt 和 res2.txt</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">ab -c 200 -t http://100 10.161.130.110:8888/ &gt; res1.txt
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line">ab -c 200 -t http://100 10.161.130.110:8888/ &gt; res1.txt
 </span><span class="line">ab -c 200 -t http://100 10.161.130.110:8888/ &gt; res2.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <h2 id="section-1">测试结果</h2>
 <p>比较一下测试结果</p>
@@ -3276,17 +2379,15 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 
 <p>如下图</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$echo</span> <span class="nv">$PATH</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$echo</span> <span class="nv">$PATH</span>
+</span></code></pre></div></figure></notextile></div>
 
 <p><img src="http://ralph-wang.github.io/blogimgs/path-normal.png" alt="path normal" /></p>
 
 <p>看 <code>awk</code> 用法时, 记得可以用 <code>RS</code> 变量修改行标识, 于是试试</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$echo</span> <span class="nv">$PATH</span> | awk <span class="s1">&#39;BEGIN {RS=&quot;:&quot;} {print $0}&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$echo</span> <span class="nv">$PATH</span> | awk <span class="s1">&#39;BEGIN {RS=&quot;:&quot;} {print $0}&#39;</span>
+</span></code></pre></div></figure></notextile></div>
 
 <p><img src="http://ralph-wang.github.io/blogimgs/path-withawk.png" alt="path with awk" /></p>
 
@@ -3297,9 +2398,8 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 <h4 id="section">2014-05-11 更新</h4>
 <p>今天才发现, 其实有更简单的办法… Orz</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nb">echo</span> <span class="nv">$PAHT</span> |tr : <span class="s1">&#39;\n&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nb">echo</span> <span class="nv">$PAHT</span> |tr : <span class="s1">&#39;\n&#39;</span>
+</span></code></pre></div></figure></notextile></div>
 ]]></content>
   </entry>
   
@@ -3324,9 +2424,8 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 
 <p>直接在命令行中输入</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$top</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$top</span>
+</span></code></pre></div></figure></notextile></div>
 
 <p>看 <code>top</code> 命令的输出
 <img src="http://ralph-wang.github.io/blogimgs/thread-top.png" alt="use top" title="use top" />
@@ -3347,9 +2446,8 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 
 <p>再次使用 <code>top</code> 命令, 不过, 这次我们加上 <code>-H -p</code> 参数来查看线程运行情况.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>top -H -p 100162
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$ </span>top -H -p 100162
+</span></code></pre></div></figure></notextile></div>
 
 <blockquote>
   <p>注: <em>也可以 <code>top -p &lt;pid&gt;</code> 后再敲 H 打开子线程信息</em></p>
@@ -3363,9 +2461,8 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 <h3 id="jstack-">4. 用 jstack 定位到代码行</h3>
 <p>下面, 就可以用 <code>jstack</code> 来导出进程的堆栈信息了.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$jstack</span> 100162
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$jstack</span> 100162
+</span></code></pre></div></figure></notextile></div>
 
 <ul>
   <li>这里不能直接使用 <code>jstack 100172</code>的形式, jstack 似乎只能对<strong>主线程</strong>使用</li>

@@ -20,9 +20,8 @@
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="挨踢夜归人" type="application/atom+xml">
 
-  <link href="/assets/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="/assets/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
-<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/screen.css" rel="stylesheet" type="text/css">
+<link href="/css/style.css" rel="stylesheet" type="text/css">
 
 
 </head>
@@ -30,110 +29,92 @@
   <body   >
     <div id="wrap">
       <header role="banner">
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <header class="head" role="navigation">
 <a style="position:relative" href="https://github.com/Ralph-Wang/" id="fork">
-    <img style="position:absolute" src="/imgs/fork_me.png" width=149 height=149 alt="Fork me on Github" />
-</a>
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">挨踢夜归人</a>
-        </div>
-
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li >
-                    <a href="/">玄关</a>
-                </li>
-                <li >
-                    <a href="/blog/archives">历史事件</a>
-                </li>
-                <li >
-                    <a href="/about-me">这个逗[哔]</a>
-                </li>
-                <li >
-                <a href="/NotFound">404Help</a>
-                </li>
-                <li>
-                <a title="把这个链接拖到你的Chrome收藏夹工具栏中"
-                    href='javascript:(function(){function c(){var
-                    e=document.createElement("link");e.setAttribute("type","text/css");e.setAttribute("rel","stylesheet");e.setAttribute("href",f);e.setAttribute("class",l);document.body.appendChild(e)}function
-                    h(){var e=document.getElementsByClassName(l);for(var
-                    t=0;t<e.length;t++){document.body.removeChild(e[t])}}function
-                    p(){var
-                    e=document.createElement("div");e.setAttribute("class",a);document.body.appendChild(e);setTimeout(function(){document.body.removeChild(e)},100)}function
-                    d(e){return{height:e.offsetHeight,width:e.offsetWidth}}function
-                    v(i){var s=d(i);return
-                    s.height>e&&s.height<n&&s.width>t&&s.width<r}function
-                    m(e){var t=e;var
-                    n=0;while(!!t){n+=t.offsetTop;t=t.offsetParent}return
-                    n}function g(){var
-                    e=document.documentElement;if(!!window.innerWidth){return
-                    window.innerHeight}else if(e&&!isNaN(e.clientHeight)){return
-                    e.clientHeight}return 0}function
-                    y(){if(window.pageYOffset){return window.pageYOffset}return
-                    Math.max(document.documentElement.scrollTop,document.body.scrollTop)}function
-                    E(e){var t=m(e);return t>=w&&t<=b+w}function S(){var
-                    e=document.createElement("audio");e.setAttribute("class",l);e.src=i;e.loop=false;e.addEventListener("canplay",function(){setTimeout(function(){x(k)},500);setTimeout(function(){N();p();for(var
-                    e=0;e<O.length;e++){T(O[e])}},15500)},true);e.addEventListener("ended",function(){N();h()},true);e.innerHTML="
-                    <p>If you are reading this, it is because your browser does
-                    not support the audio element. We recommend that you get a
-                    new browser.</p>
-                    <p>";document.body.appendChild(e);e.play()}function
-                    x(e){e.className+=" "+s+" "+o}function T(e){e.className+="
-                    "+s+" "+u[Math.floor(Math.random()*u.length)]}function
-                    N(){var e=document.getElementsByClassName(s);var t=new
-                    RegExp("\\b"+s+"\\b");for(var
-                    n=0;n<e.length;){e[n].className=e[n].className.replace(t,"")}}var
-                    e=30;var t=30;var n=350;var r=350;var
-                    i="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";var
-                    s="mw-harlem_shake_me";var o="im_first";var
-                    u=["im_drunk","im_baked","im_trippin","im_blown"];var
-                    a="mw-strobe_light";var
-                    f="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";var
-                    l="mw_added_css";var b=g();var w=y();var
-                    C=document.getElementsByTagName("*");var k=null;for(var
-                    L=0;L<C.length;L++){var
-                    A=C[L];if(v(A)){if(E(A)){k=A;break}}}if(A===null){console.warn("Could
-                    not find a node of the right size. Please try a different
-                    page.");return}c();S();var O=[];for(var
-                    L=0;L<C.length;L++){var
-                    A=C[L];if(v(A)){O.push(A)}}})()'>High一下!</a>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a class="subscribe-rss" href="/atom.xml" title="subscribe via RSS">
-                        <span class="visible-xs">RSS</span>
-                        <img class="hidden-xs" width=22 height=22 src="/images/rss.png" alt="RSS">
-                    </a>
-                </li>
-                
-            </ul>
-            
-                <form class="search navbar-form navbar-right" action="http://google.com/search" method="GET">
-                    <input type="hidden" name="q" value="site:ralph-wang.github.io">
-                    <div class="form-group">
-                        <input class="form-control" type="text" name="q" placeholder="Search">
-                    </div>
-                </form>
-            
+    <img style="position:absolute" src="/imgs/fork_me.png" width=149 height=149 alt="Fork me on Github" /></a>
+<div class="header fn-clear">
+    <section class="header-cnt fn-clear">
+    <div class="logo">
+        <div class="logo-cnt">
+            <h1><a href="">挨踢夜归人</a></h1>
+            <h2>Write as a Doubi.  ╮(￣▽ ￣)╭</h2>
         </div>
     </div>
-</nav>
+    <nav class="nav">
+    <ul>
+        <li >
+        <a href="/">玄关</a>
+        </li>
+        <li >
+        <a href="/blog/archives">历史事件</a>
+        </li>
+        <li >
+        <a href="/about-me">这个逗[哔]</a>
+        </li>
+        <li >
+        <a href="/NotFound">404Help</a>
+        </li>
+        <li>
+        <a title="把这个链接拖到你的Chrome收藏夹工具栏中"
+            href='javascript:(function(){function c(){var
+            e=document.createElement("link");e.setAttribute("type","text/css");e.setAttribute("rel","stylesheet");e.setAttribute("href",f);e.setAttribute("class",l);document.body.appendChild(e)}function
+            h(){var e=document.getElementsByClassName(l);for(var
+            t=0;t<e.length;t++){document.body.removeChild(e[t])}}function
+            p(){var
+            e=document.createElement("div");e.setAttribute("class",a);document.body.appendChild(e);setTimeout(function(){document.body.removeChild(e)},100)}function
+            d(e){return{height:e.offsetHeight,width:e.offsetWidth}}function
+            v(i){var s=d(i);return
+            s.height>e&&s.height<n&&s.width>t&&s.width<r}function
+            m(e){var t=e;var
+            n=0;while(!!t){n+=t.offsetTop;t=t.offsetParent}return
+            n}function g(){var
+            e=document.documentElement;if(!!window.innerWidth){return
+            window.innerHeight}else if(e&&!isNaN(e.clientHeight)){return
+            e.clientHeight}return 0}function
+            y(){if(window.pageYOffset){return window.pageYOffset}return
+            Math.max(document.documentElement.scrollTop,document.body.scrollTop)}function
+            E(e){var t=m(e);return t>=w&&t<=b+w}function S(){var
+            e=document.createElement("audio");e.setAttribute("class",l);e.src=i;e.loop=false;e.addEventListener("canplay",function(){setTimeout(function(){x(k)},500);setTimeout(function(){N();p();for(var
+            e=0;e<O.length;e++){T(O[e])}},15500)},true);e.addEventListener("ended",function(){N();h()},true);e.innerHTML="
+            <p>If you are reading this, it is because your browser does
+            not support the audio element. We recommend that you get a
+            new browser.</p>
+            <p>";document.body.appendChild(e);e.play()}function
+            x(e){e.className+=" "+s+" "+o}function T(e){e.className+="
+            "+s+" "+u[Math.floor(Math.random()*u.length)]}function
+            N(){var e=document.getElementsByClassName(s);var t=new
+            RegExp("\\b"+s+"\\b");for(var
+            n=0;n<e.length;){e[n].className=e[n].className.replace(t,"")}}var
+            e=30;var t=30;var n=350;var r=350;var
+            i="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";var
+            s="mw-harlem_shake_me";var o="im_first";var
+            u=["im_drunk","im_baked","im_trippin","im_blown"];var
+            a="mw-strobe_light";var
+            f="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";var
+            l="mw_added_css";var b=g();var w=y();var
+            C=document.getElementsByTagName("*");var k=null;for(var
+            L=0;L<C.length;L++){var
+            A=C[L];if(v(A)){if(E(A)){k=A;break}}}if(A===null){console.warn("Could
+            not find a node of the right size. Please try a different
+            page.");return}c();S();var O=[];for(var
+            L=0;L<C.length;L++){var
+            A=C[L];if(v(A)){O.push(A)}}})()'>High一下!</a>
+        </li>
+    </ul>
+    </nav>
+    </section>
+</div>
+</header>
 
 
       </header>
       <div id="main" class="container">
         <div id="content">
-          <div class="row">
-  <div class="page-content col-md-8">
-    <article class="hentry" role="article">
-      
+          <section class="content">
+<div class="content-cnt fn-clear">
+    <div class="main fn-clear">
+        <article class="entry" role="article">
+        
   <header class="page-header">
     
       <p class="meta text-muted text-uppercase">
@@ -192,19 +173,13 @@
 
 <p>这样如果用代码表示的话可能就是下面这样</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">meet</span><span class="p">(</span><span class="n">hanzi</span><span class="p">):</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">meet</span><span class="p">(</span><span class="n">hanzi</span><span class="p">):</span>
 </span><span class="line">   <span class="n">hanzi</span><span class="o">.</span><span class="n">flower</span><span class="p">()</span>
 </span><span class="line">   <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hanzi</span><span class="p">,</span> <span class="n">GFS</span><span class="p">):</span>
 </span><span class="line">       <span class="k">print</span> <span class="s">&#39;啪啪啪啪啪啪啪啪&#39;</span>
 </span><span class="line">   <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hanzi</span><span class="p">,</span> <span class="n">DS</span><span class="p">):</span>
 </span><span class="line">       <span class="k">print</span> <span class="s">&#39;啪&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p>而 IoC 的理解思路却是这样的:</p>
 
@@ -214,36 +189,17 @@
 
 <p>用代码来表达就是这样</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Meizi</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Meizi</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 </span><span class="line">    <span class="k">def</span> <span class="nf">meet</span><span class="p">(</span><span class="n">hanzi</span><span class="p">):</span>
 </span><span class="line">        <span class="n">hanzi</span><span class="o">.</span><span class="n">flower</span><span class="p">()</span>
 </span><span class="line">        <span class="n">hanzi</span><span class="o">.</span><span class="n">chu</span><span class="p">()</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p><code>Meizi</code> 这边的代码是不是就变得非常干净了, 那汉子在 chu 之后的结果就不在妹子这里控制了.</p>
 
 <p>至于发生了什么, 我们来看一下 <code>Hanzi</code> 们的具体实现</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Hanzi</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Hanzi</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 </span><span class="line">    <span class="s">&#39;Abstract class Hanzi&#39;</span>
 </span><span class="line">    <span class="k">def</span> <span class="nf">flower</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span class="line">        <span class="k">print</span> <span class="s">&#39;妹子笑了...&#39;</span>
@@ -258,7 +214,7 @@
 </span><span class="line"><span class="k">class</span> <span class="nc">DS</span><span class="p">(</span><span class="n">Hanzi</span><span class="p">):</span>
 </span><span class="line">    <span class="k">def</span> <span class="nf">chu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span class="line">        <span class="k">print</span> <span class="s">&#39;啪&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code></pre></div></figure></notextile></div>
 
 <p><strong>看, 结果的不同是因为 <code>Hanzi</code> 自己的属性, 而不是妹子的选择.</strong></p>
 
@@ -274,14 +230,14 @@
 </div>
 
 
-      <footer>
+        <footer>
         <p class="meta text-muted">
-          
+        
   
 
 <span class="glyphicon glyphicon-user"></span> <span class="byline author vcard">Posted by <span class="fn">_漏斗</span></span>
 
-          
+        
 
 
 
@@ -295,7 +251,7 @@
 
 
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-07-27T23:41:34+08:00" pubdate data-updated="true">Jul 27<span>th</span>, 2014</time>
-          
+        
 
 <span class="glyphicon glyphicon-folder-open"></span>&nbsp;
 <span class="categories">
@@ -305,7 +261,7 @@
 </span>
 
 
-          
+        
 
 <br />
 <span class="glyphicon glyphicon-tags"></span>&nbsp;
@@ -318,17 +274,18 @@
 
         </p>
         
-          <ul class="meta text-muted pager">
+        <nav class="pagination-link">
             
-            <li class="previous"><a href="/blog/2014/07/25/cong-vim-zhuan-dao-emacs/" title="Previous Post: 从 vim 转到 emacs">&laquo; 从 vim 转到 emacs</a></li>
+            <a class="prev" href="/blog/2014/07/25/cong-vim-zhuan-dao-emacs/"
+                title="Previous Post: 从 vim 转到 emacs">&laquo; 从 vim 转到 emacs</a>
             
             
-            <li class="next"><a href="/blog/2014/08/01/wei-octopress-tian-jia-toc/" title="Next Post: 为 octopress 添加 TOC">为 octopress 添加 TOC &raquo;</a></li>
+            <a class="next" href="/blog/2014/08/01/wei-octopress-tian-jia-toc/" title="Next Post: 为 octopress 添加 TOC">为 octopress 添加 TOC &raquo;</a>
             
-          </ul>
+        </nav>
         
         
-          <div class="sharing">
+        <div class="sharing">
   
   
   
@@ -367,97 +324,93 @@ var duoshuoQuery = {short_name:"ralph-wang"};
 </div>
 
         
-      </footer>
-    </article>
-    
-  </div>
+        </footer>
+        </article>
+        
+    </div>
 
-  
-  <aside class="sidebar col-md-4">
-    
-      
+    <div class="aside fn-clear">
+        
+        <aside>
+        
+        
 <iframe width="100%" height="420" class="share_self"  frameborder="0"
     scrolling="no"
     src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=420&fansRow=2&ptype=0&speed=0&skin=1&isTitle=0&noborder=1&isWeibo=1&isFans=0&uid=1854716251&verifier=375b89d6&dpc=1"></iframe>
 
-<section class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Recent Posts</h3>
-  </div>
+<section>
+  <div class="box fn-clear">
+    <h3 class="title">Recent Posts</h3>
   
-  <div id="recent_posts" class="list-group">
     
-    <a class="list-group-item " href="/blog/2014/08/13/linux-bash-de-c-s/">Linux Bash 的 C-s</a>
+    <li>&#8227;<a class="list-group-item " href="/blog/2014/08/13/linux-bash-de-c-s/">Linux Bash 的 C-s</a></li>
     
-    <a class="list-group-item " href="/blog/2014/08/07/binary-tree-preorder-traversal/">Binary Tree Preorder Traversal</a>
+    <li>&#8227;<a class="list-group-item " href="/blog/2014/08/07/binary-tree-preorder-traversal/">Binary Tree Preorder Traversal</a></li>
     
-    <a class="list-group-item " href="/blog/2014/08/06/single-number/">Single Number</a>
+    <li>&#8227;<a class="list-group-item " href="/blog/2014/08/06/single-number/">Single Number</a></li>
     
-    <a class="list-group-item " href="/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti/">Df 与 Du 结果不匹配问题</a>
+    <li>&#8227;<a class="list-group-item " href="/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti/">Df 与 Du 结果不匹配问题</a></li>
     
-    <a class="list-group-item " href="/blog/2014/08/01/wei-octopress-tian-jia-toc/">为 Octopress 添加 TOC</a>
+    <li>&#8227;<a class="list-group-item " href="/blog/2014/08/01/wei-octopress-tian-jia-toc/">为 Octopress 添加 TOC</a></li>
     
   </div>
 </section>
 <section class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Categories</h3>
-  </div>
-  <div class="list-group">
-      <a class='list-group-item' href='/blog/categories/emacs/'>Emacs <span class='badge'>1</span></a>
-<a class='list-group-item' href='/blog/categories/linux/'>Linux <span class='badge'>9</span></a>
-<a class='list-group-item' href='/blog/categories/java/'>java <span class='badge'>4</span></a>
-<a class='list-group-item' href='/blog/categories/leetcode/'>leetCode <span class='badge'>1</span></a>
-<a class='list-group-item' href='/blog/categories/leetcode/'>leetcode <span class='badge'>1</span></a>
-<a class='list-group-item' href='/blog/categories/nodejs/'>nodejs <span class='badge'>1</span></a>
-<a class='list-group-item' href='/blog/categories/octopress/'>octopress <span class='badge'>5</span></a>
-<a class='list-group-item' href='/blog/categories/qi-ta/'>其它 <span class='badge'>2</span></a>
-<a class='list-group-item' href='/blog/categories/shu-ju-ku/'>数据库 <span class='badge'>1</span></a>
-<a class='list-group-item' href='/blog/categories/ce-shi-gong-ju/'>测试工具 <span class='badge'>3</span></a>
-<a class='list-group-item' href='/blog/categories/cheng-xu-she-ji-yu-suan-fa/'>程序设计与算法 <span class='badge'>1</span></a>
+  <div class="box fn-clear">
+    <h3 class="title">Categories</h3>
+  <ul>
+      <li>&#8227<a class='list-group-item' href='/blog/categories/emacs/'>Emacs <span class='badge'>1</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/linux/'>Linux <span class='badge'>9</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/java/'>java <span class='badge'>4</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/leetcode/'>leetcode <span class='badge'>2</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/nodejs/'>nodejs <span class='badge'>1</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/octopress/'>octopress <span class='badge'>5</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/qi-ta/'>其它 <span class='badge'>2</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/shu-ju-ku/'>数据库 <span class='badge'>1</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/ce-shi-gong-ju/'>测试工具 <span class='badge'>3</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/cheng-xu-she-ji-yu-suan-fa/'>程序设计与算法 <span class='badge'>1</span></a></li>
 
+  </ul>
   </div>
 </section>
 <section class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Tag Clouds</h3>
-    </div>
+<div class="box fn-clear">
+    <h3 class="title">Tag Clouds</h3>
     <ul class="tag-cloud" style="padding-left:10px">
-        <a style="font-size: 100%" href="/tags/loadrunner/">LoadRunner</a>
-<a style="font-size: 258%" href="/tags/java/">java</a>
-<a style="font-size: 100%" href="/tags/python/">python</a>
-<a style="font-size: 100%" href="/tags/init/">init</a>
-<a style="font-size: 100%" href="/tags/chai-xiang/">拆箱</a>
-<a style="font-size: 100%" href="/tags/bian-li/">遍历</a>
-<a style="font-size: 100%" href="/tags/suo-yin/">索引</a>
-<a style="font-size: 100%" href="/tags/markdown/">markdown</a>
-<a style="font-size: 258%" href="/tags/shell/">shell</a>
-<a style="font-size: 100%" href="/tags/qian-xu-bian-li/">前序遍历</a>
+        <a style="color:#d8d8d8;font-size: 100%" href="/tags/zhuang-xiang/">装箱</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/rdbms/">RDBMS</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/guan-dao/">管道</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/shu-ju-lei-xing/">数据类型</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/jstack/">jstack</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/dui-zhan/">堆栈</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/ci-pan/">磁盘</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/linux/">linux</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/wang-luo-lian-jie-shu/">网络连接数</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/an-zhuang/">安装</a>
 
     </ul>
+</div>
 </section>
 
-    
-  </aside>
-  
+        
+        </aside>
+        
+    </div>
 </div>
+</section>
 
         </div>
       </div>
     </div>
-    <footer role="contentinfo"><div class="container">
-    <p class="text-muted credits">
-  Copyright &copy; 2014 - _漏斗<br>
-  <small>
-      <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>,
-      <span class="credit">customized with <a href="https://github.com/kAworu/octostrap3">octostrap3</a></span>.
-  </small>
-</p>
+    <footer role="contentinfo"><div class="foot-btn">
+    <div class="foot-btn-det">
+        <p class="copyright"> Copyright &copy; 2014 - _漏斗</p>
+<p class="author">Powered by <a href="http://octopress.org">Octopress</a>, Inspired by <a href="https://github.com/pizn/blogTheme/tree/master/BlackCubeTheme">BlackCube</a>.</p>
 
+    </div>
 </div>
 </footer>
     <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
-<script src="/assets/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="/javascripts/modernizr-2.0.js"></script>
 <script src="/js/smoothscroll.js"></script>
 
@@ -472,15 +425,6 @@ var duoshuoQuery = {short_name:"ralph-wang"};
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
-
-
-
-
-
-
-
-
-
 
 
 
