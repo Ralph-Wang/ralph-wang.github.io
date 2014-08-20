@@ -4,7 +4,7 @@
   <title><![CDATA[标签: Linux | 挨踢夜归人]]></title>
   <link href="http://ralph-wang.github.io//tags/linux/atom.xml" rel="self"/>
   <link href="http://ralph-wang.github.io/"/>
-  <updated>2014-08-20T08:56:47+08:00</updated>
+  <updated>2014-08-21T00:56:21+08:00</updated>
   <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,144 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[blockdev 命令及相关概念]]></title>
+    <link href="http://ralph-wang.github.io/blog/2014/08/20/blockdev-ming-ling-ji-xiang-guan-gai-nian/"/>
+    <updated>2014-08-20T23:36:02+08:00</updated>
+    <id>http://ralph-wang.github.io/blog/2014/08/20/blockdev-ming-ling-ji-xiang-guan-gai-nian</id>
+    <content type="html"><![CDATA[<ul id="markdown-toc">
+  <li><a href="#section">命令本身</a></li>
+  <li><a href="#report-">report 的内容</a></li>
+</ul>
+
+<h2 id="section">命令本身</h2>
+
+<p><code>blockdev</code> 是直接调用 <code>ioctl</code> 函数的一个命令.</p>
+
+<p>其原生帮助如下:</p>
+
+<p>```bash
+$ blockdev</p>
+
+<p>用法:
+  blockdev -V
+  blockdev –report [devices]
+  blockdev [-v|-q] commands devices</p>
+
+<p>可用命令:
+    # 这里暂时省略.
+```</p>
+
+<ul>
+  <li><code>-V</code> 自然是查看版本号了, 这里就不多说    </li>
+  <li><code>--report</code> 用来查看硬盘的相关配置参数, 不传硬盘的话, 会显示所有硬盘    </li>
+  <li>最后一种用法, 就是调用各种命令, 对硬盘进行设置. 或单个参数的查看.</li>
+</ul>
+
+<h2 id="report-">report 的内容</h2>
+
+<p><code>bash
+$ blockdev --report
+RO    RA    SSZ    BSZ    StartSec          Size    Device
+rw   256    512   4096           0   21474836480    /dev/xvda
+</code></p>
+
+<p>调用 blockdev 时需要注意使用 <code>root</code> 用户, 或者 <code>sudo</code></p>
+
+<p>现在来看一下这些字段都是些什么含义</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>字段</td>
+      <td>全称</td>
+      <td>含义</td>
+    </tr>
+    <tr>
+      <td>RO</td>
+      <td>readonly</td>
+      <td>硬盘的读写状态. <code>rw</code> 表示可读可写, <code>ro</code> 则表示只读</td>
+    </tr>
+    <tr>
+      <td>RA</td>
+      <td>readahead</td>
+      <td><code>预读</code> 的大小. Linux 实际大小为 readahead * 2 (KB)</td>
+    </tr>
+    <tr>
+      <td>SSZ</td>
+      <td>sector size</td>
+      <td>Linux 中<code>扇区</code>(sector) 大小, 单位 <code>byte</code></td>
+    </tr>
+    <tr>
+      <td>BSZ</td>
+      <td>block size</td>
+      <td>Linux 中<code>块</code>大小 , 单位 <code>byte</code></td>
+    </tr>
+    <tr>
+      <td>StarcSec</td>
+      <td>start sector</td>
+      <td>当前设备是从第几个 sector 开始的</td>
+    </tr>
+    <tr>
+      <td>Size</td>
+      <td>…</td>
+      <td>设备的大小, 不支持 -h 参数变得可读 Orz</td>
+    </tr>
+    <tr>
+      <td>Device</td>
+      <td>…</td>
+      <td>硬盘对应的设备文件</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>想必你现在和我一样, 表格里面的东西看得晕晕乎乎的.</p>
+
+<p>下面我们简单说明一下</p>
+
+<h4 id="section-1">预读</h4>
+
+<p>当 Linux 向磁盘发起 IO 时, 会进行所谓的<code>预读</code>操作.
+即, 会比 CPU 操作需要的内容多从读取一小块内容.</p>
+
+<blockquote>
+  <p>当然, 如果发现下一次 IO 是随机的, 便会中断当前预读</p>
+</blockquote>
+
+<p>而 <code>readahead</code> 项, 就是配置需要提前读取的内容大小</p>
+
+<p>在 tuning<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 数据服务器, 需要关注这个参数  <br />
+不过, 一般情况下, 使用默认的 256 (即预读 512KB) 就足够了.</p>
+
+<h4 id="section-2">扇区</h4>
+
+<p><code>扇区</code>是硬盘的物理属性. 也是操作系统读取数据的最小单位.</p>
+
+<h4 id="section-3">块</h4>
+
+<p><code>块</code> 是操作系统在存储文件时的最小单位. 不论文件真实大小, 其占据的硬盘空间一定是块的整数倍.</p>
+
+<p>一个只有一个字符的文件却占据 4K 空间, 就是这个原因</p>
+
+<p><code>bash
+$ cat txt
+1
+$ du -h txt
+4.0K    txt
+</code></p>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>不知道怎么翻译好… 有调优的意思, 但又有试探性<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Linux bash 的 C-s]]></title>
@@ -673,164 +811,6 @@ FILE2</code> 用来比较两个文件修改时间</p>
     <p>eval “string” 将 string 作为 bash 命令解析</p>
   </li>
 </ul>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning the Bash Shell 笔记-流控制]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi/"/>
-    <updated>2014-05-22T21:19:21+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi</id>
-    <content type="html"><![CDATA[<p>但凡是代码就逃不开的流控制话题
-<!--more--></p>
-
-<h2 id="section">条件</h2>
-
-<p>bash 中的条件值以数字 0 表示真, 非0 则为假, 并不存在布尔类型</p>
-
-<p>其中有三种条件形式可以得到条件值</p>
-
-<h3 id="section-1">命令的退出状态</h3>
-<p>一般来说, Linux 的命令若执行成功, 则退出状态为 0, 不成功则返回 1-255</p>
-
-<blockquote>
-  <p><em>diff 命令除外, diff 返回 0 表示两个文件没有差别, 1 表示有差别, 2+
-表示发生错误</em></p>
-</blockquote>
-
-<h3 id="section-2">脚本或函数的返回值</h3>
-
-<p>在脚本或函数中, 用 return 表示结束并返回</p>
-
-<p>当然, 在 bash 中只能返回数字类型, 返回字符串的话脚本会出错</p>
-
-<p>另外, return 写返回值的话, 默认返回 0</p>
-
-<blockquote>
-  <p>脚本或函数中若没有用 return 返回值时, 则以最后一条命令的退出状态作为返回值</p>
-</blockquote>
-
-<h3 id="test">测试 test</h3>
-
-<p>bash 中测试有两种写法</p>
-
-<ul>
-  <li>test condition</li>
-  <li>[ condition ] <em>[ ] 两个方括号和中间条件之间必须要有一个空格</em></li>
-</ul>
-
-<p>两种写法是等价的, 详细的写法可参考 <code>man test</code></p>
-
-<h2 id="ifelifelse">if..elif..else</h2>
-
-<p><code>bash
-if condition
-then
-	statements
-[elif condition
-then
-	statements]
-[else
-	statements]
-fi
-</code></p>
-
-<h2 id="case">case</h2>
-
-<p><code>bash
-case epxr in
-	pattern1 )
-		statements
-		;;
-	pattern2 )
-		statements
-		;;
-	...
-esac
-</code>
-<em>pattern1/2</em> 支持 bash 的通配符, 也支持 | 来表示多模式匹配</p>
-
-<p><code>;;</code> 类似于其它语言中的 break</p>
-
-<p>因为匹配是从上到下的, 所以可以用 <code>*)</code> 来表示 default</p>
-
-<h2 id="select">select</h2>
-
-<p><code>bash
-select case [in caselist]
-do
-	statements about $case
-	[break]
-done
-</code></p>
-
-<p>用 caselist 里的所有项生成一个简单的选择菜单</p>
-
-<p>statements 中 $case 就是选择的项</p>
-
-<p>完成一次 statements 后, 若没有遇到 break 则会继续下一次 select</p>
-
-<h2 id="for">for</h2>
-
-<p><code>bash
-for ((expr1;expr2;expr3))
-	statements
-end
-</code></p>
-
-<p>这个比较类似 Java 里的 for</p>
-
-<p><code>bash
-for i [in list]
-do
-	statements
-done
-</code></p>
-
-<p>这个感觉更像 python 里的 for</p>
-
-<p>若省略 [in list] 的话, 则默认从 $@ 中取值</p>
-
-<p><code>bash
-for i in {start..end..step}
-do
-	statements
-done
-</code>
-bash 4.0 以上才有的语法</p>
-
-<h2 id="while--until">while &amp; until</h2>
-
-<p><code>bash
-while condition
-do
-	statements
-done
-</code></p>
-
-<p><code>bash
-until condition
-do
-	statements
-done
-</code></p>
-
-<p>while condition 等价于 until ! condition</p>
-
-<p>两者没有其它区别</p>
-
-<h2 id="section-3">附:</h2>
-<p>又一个友好地显示 PATH 的方法</p>
-
-<p>```bash showpath.sh
-path=$PATH</p>
-
-<p>while [ $path ];
-do
-	echo ${path%%:<em>}
-	echo ${path#</em>:}
-done
-```</p>
 ]]></content>
   </entry>
   

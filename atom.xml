@@ -4,7 +4,7 @@
   <title><![CDATA[挨踢夜归人]]></title>
   <link href="http://ralph-wang.github.io/atom.xml" rel="self"/>
   <link href="http://ralph-wang.github.io/"/>
-  <updated>2014-08-20T08:56:47+08:00</updated>
+  <updated>2014-08-21T00:56:21+08:00</updated>
   <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,141 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[blockdev 命令及相关概念]]></title>
+    <link href="http://ralph-wang.github.io/blog/2014/08/20/blockdev-ming-ling-ji-xiang-guan-gai-nian/"/>
+    <updated>2014-08-20T23:36:02+08:00</updated>
+    <id>http://ralph-wang.github.io/blog/2014/08/20/blockdev-ming-ling-ji-xiang-guan-gai-nian</id>
+    <content type="html"><![CDATA[<ul id="markdown-toc">
+  <li><a href="#section">命令本身</a></li>
+  <li><a href="#report-">report 的内容</a></li>
+</ul>
+
+<h2 id="section">命令本身</h2>
+
+<p><code>blockdev</code> 是直接调用 <code>ioctl</code> 函数的一个命令.</p>
+
+<p>其原生帮助如下:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$ </span>blockdev
+</span><span class="line">
+</span><span class="line">用法:
+</span><span class="line">  blockdev -V
+</span><span class="line">  blockdev --report <span class="o">[</span>devices<span class="o">]</span>
+</span><span class="line">  blockdev <span class="o">[</span>-v|-q<span class="o">]</span> commands devices
+</span><span class="line">
+</span><span class="line">可用命令:
+</span><span class="line">    <span class="c"># 这里暂时省略.</span>
+</span></code></pre></div></figure></notextile></div>
+
+<ul>
+  <li><code>-V</code> 自然是查看版本号了, 这里就不多说    </li>
+  <li><code>--report</code> 用来查看硬盘的相关配置参数, 不传硬盘的话, 会显示所有硬盘    </li>
+  <li>最后一种用法, 就是调用各种命令, 对硬盘进行设置. 或单个参数的查看.</li>
+</ul>
+
+<h2 id="report-">report 的内容</h2>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$ </span>blockdev --report
+</span><span class="line">RO    RA    SSZ    BSZ    StartSec          Size    Device
+</span><span class="line">rw   256    512   4096           0   21474836480    /dev/xvda
+</span></code></pre></div></figure></notextile></div>
+
+<p>调用 blockdev 时需要注意使用 <code>root</code> 用户, 或者 <code>sudo</code></p>
+
+<p>现在来看一下这些字段都是些什么含义</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>字段</td>
+      <td>全称</td>
+      <td>含义</td>
+    </tr>
+    <tr>
+      <td>RO</td>
+      <td>readonly</td>
+      <td>硬盘的读写状态. <code>rw</code> 表示可读可写, <code>ro</code> 则表示只读</td>
+    </tr>
+    <tr>
+      <td>RA</td>
+      <td>readahead</td>
+      <td><code>预读</code> 的大小. Linux 实际大小为 readahead * 2 (KB)</td>
+    </tr>
+    <tr>
+      <td>SSZ</td>
+      <td>sector size</td>
+      <td>Linux 中<code>扇区</code>(sector) 大小, 单位 <code>byte</code></td>
+    </tr>
+    <tr>
+      <td>BSZ</td>
+      <td>block size</td>
+      <td>Linux 中<code>块</code>大小 , 单位 <code>byte</code></td>
+    </tr>
+    <tr>
+      <td>StarcSec</td>
+      <td>start sector</td>
+      <td>当前设备是从第几个 sector 开始的</td>
+    </tr>
+    <tr>
+      <td>Size</td>
+      <td>…</td>
+      <td>设备的大小, 不支持 -h 参数变得可读 Orz</td>
+    </tr>
+    <tr>
+      <td>Device</td>
+      <td>…</td>
+      <td>硬盘对应的设备文件</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>想必你现在和我一样, 表格里面的东西看得晕晕乎乎的.</p>
+
+<p>下面我们简单说明一下</p>
+
+<h4 id="section-1">预读</h4>
+
+<p>当 Linux 向磁盘发起 IO 时, 会进行所谓的<code>预读</code>操作.
+即, 会比 CPU 操作需要的内容多从读取一小块内容.</p>
+
+<blockquote>
+  <p>当然, 如果发现下一次 IO 是随机的, 便会中断当前预读</p>
+</blockquote>
+
+<p>而 <code>readahead</code> 项, 就是配置需要提前读取的内容大小</p>
+
+<p>在 tuning<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 数据服务器, 需要关注这个参数  <br />
+不过, 一般情况下, 使用默认的 256 (即预读 512KB) 就足够了.</p>
+
+<h4 id="section-2">扇区</h4>
+
+<p><code>扇区</code>是硬盘的物理属性. 也是操作系统读取数据的最小单位.</p>
+
+<h4 id="section-3">块</h4>
+
+<p><code>块</code> 是操作系统在存储文件时的最小单位. 不论文件真实大小, 其占据的硬盘空间一定是块的整数倍.</p>
+
+<p>一个只有一个字符的文件却占据 4K 空间, 就是这个原因</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$ </span>cat txt
+</span><span class="line">1
+</span><span class="line"><span class="nv">$ </span>du -h txt
+</span><span class="line">4.0K    txt
+</span></code></pre></div></figure></notextile></div>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>不知道怎么翻译好… 有调优的意思, 但又有试探性<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Linux bash 的 C-s]]></title>
@@ -2405,125 +2540,6 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nb">echo</span> <span class="nv">$PAHT</span> |tr : <span class="s1">&#39;\n&#39;</span>
 </span></code></pre></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[用 jstack 线程定位初体验]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/03/01/yong-jstack-xian-cheng-ding-wei-chu-ti-yan/"/>
-    <updated>2014-03-01T22:42:48+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/03/01/yong-jstack-xian-cheng-ding-wei-chu-ti-yan</id>
-    <content type="html"><![CDATA[<p>用 top + jstack 定位 java 线程问题
-<!--more--></p>
-
-<h3 id="section">1. 需要定位的程序</h3>
-
-<p>首先, 写一个用于计算并输出蜚波那契数列的 java 程序, 大致的输出信息如下.</p>
-
-<p><img src="http://ralph-wang.github.io/blogimgs/thread-fb.png" alt="Fibonacci" title="a Fibonacci Thread" /></p>
-
-<p>这里特意写成<strong>死循环</strong>, 让它不停地去消耗 CPU</p>
-
-<h3 id="top-">2. 用 top 命令定位进程号</h3>
-<p>程序运行起来之后, 就该 <code>top</code> 命令出场了.</p>
-
-<p>直接在命令行中输入</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$top</span>
-</span></code></pre></div></figure></notextile></div>
-
-<p>看 <code>top</code> 命令的输出
-<img src="http://ralph-wang.github.io/blogimgs/thread-top.png" alt="use top" title="use top" />
-看到消耗 CPU 最高的就是一个 java 进程.</p>
-
-<p>OK, 记下进程号 <strong>100162</strong></p>
-
-<blockquote>
-  <p>补充:  <br />
-&gt; <code>top</code> 添加 -c 参数可以查看到命令的参数信息  <br />
-&gt; 这样可以看到 java 具体执行的类, 定位更准确</p>
-</blockquote>
-
-<h3 id="top--h--p-">3. 用 top -H -p 命令定位到线程号</h3>
-<p>现在, 我们知道消耗 CPU 最高的进程是哪个了. </p>
-
-<p>但我们还不知道具体是哪个线程的问题, 所以不着急用 <code>jstack</code> 去获取 java 进程快照. </p>
-
-<p>再次使用 <code>top</code> 命令, 不过, 这次我们加上 <code>-H -p</code> 参数来查看线程运行情况.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$ </span>top -H -p 100162
-</span></code></pre></div></figure></notextile></div>
-
-<blockquote>
-  <p>注: <em>也可以 <code>top -p &lt;pid&gt;</code> 后再敲 H 打开子线程信息</em></p>
-</blockquote>
-
-<p>这次, 得到如下图的结果:
-<img src="http://ralph-wang.github.io/blogimgs/thread-topHp.png" alt="use top -H -p (pid)" title="use top -H -p &lt;pid&gt;" /></p>
-
-<p>消耗 CPU 最高的不再是 100162 了. 可以清楚的看到是线程 <strong>100172</strong></p>
-
-<h3 id="jstack-">4. 用 jstack 定位到代码行</h3>
-<p>下面, 就可以用 <code>jstack</code> 来导出进程的堆栈信息了.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$jstack</span> 100162
-</span></code></pre></div></figure></notextile></div>
-
-<ul>
-  <li>这里不能直接使用 <code>jstack 100172</code>的形式, jstack 似乎只能对<strong>主线程</strong>使用</li>
-  <li>jstack 不能导出堆栈问题解决: <a href="http://www.haply.info/blog/archives/305">jstack 不能导出堆栈</a></li>
-</ul>
-
-<p>然后, 在堆栈信息中找到 nid=0x27bc(100172 的 16 进制) 的线程.</p>
-
-<p>就是下面的 <strong>Thread-0</strong> 线程了</p>
-
-<p><img src="http://ralph-wang.github.io/blogimgs/thread-jstack.png" alt="use jstack" title="use jstack" /></p>
-
-<p>全是 <code>Fibonacci.calcFibo (testJstack.java:28)</code></p>
-
-<p>定位源码文件 <code>testJstack.java</code> 第 28 行, 最土最慢最二的蜚波那契数列算法…</p>
-
-<p><img src="http://ralph-wang.github.io/blogimgs/thread-28.png" alt="get the criminal" title="get the criminal" /></p>
-
-<p>问题定位结束</p>
-
-<p>上完整源码</p>
-
-<div><script src="https://gist.github.com/9290490.js?file=testJstack.java"></script>
-<noscript><pre><code>public class testJstack {
-    public static void main(String[] args) {
-        Thread t = new Thread(new Fibonacci());
-        t.start();
-    }
-}
-
-class Fibonacci implements Runnable {
-    public void run() {
-        while (true) {
-            for (int i = 0; i &lt; 20; i++) {
-                System.out.println(calcFibo(i));
-            }
-        }
-    }
-    
-    /**
-     * 最土最慢的蜚波那契计算函数.
-     * @return int
-     */
-    private int  calcFibo(final int n) {
-
-        if (n == 0) {
-            return 0;
-        } else if (n == 1) {
-            return 1;
-        } else {
-            return calcFibo(n-1) + calcFibo(n-2);
-        }
-    }
-}
-</code></pre></noscript></div>
-
 ]]></content>
   </entry>
   
