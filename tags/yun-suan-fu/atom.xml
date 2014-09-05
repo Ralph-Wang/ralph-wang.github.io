@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[标签: 运算符 | 挨踢夜归人]]></title>
+  <link href="http://ralph-wang.github.io//tags/yun-suan-fu/atom.xml" rel="self"/>
+  <link href="http://ralph-wang.github.io/"/>
+  <updated>2014-09-05T20:30:13+08:00</updated>
+  <id>http://ralph-wang.github.io/</id>
+  <author>
+    <name><![CDATA[_漏斗]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[python 中的三元运算符]]></title>
+    <link href="http://ralph-wang.github.io/blog/2014/09/05/python-zhong-de-san-yuan-yun-suan-fu/"/>
+    <updated>2014-09-05T11:08:30+08:00</updated>
+    <id>http://ralph-wang.github.io/blog/2014/09/05/python-zhong-de-san-yuan-yun-suan-fu</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">方法介绍</a>    <ul>
+      <li><a href="#if-1">IF 块</a></li>
+      <li><a href="#section-1">逻辑运算</a></li>
+      <li><a href="#if">内联 IF</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-3">基准测试</a></li>
+</ul>
+
+<h2 id="section">方法介绍</h2>
+
+<p>Python 原生是不支持三元运算符: <code>(expresion):val1?val2</code>  <br />
+但 Python 提供了一些语法糖在模拟三元运算符的操作</p>
+
+<p>就以下面这样一个用例来看看 Python 中可以怎么处理三元运算</p>
+
+<p><code>c
+(val &gt; 0)?1:(val &lt; 0)?-1:0
+</code></p>
+
+<p>运算含义: val 值为正则返回 1, 为负则返回 -1, 为 0 则返回 0</p>
+
+<h3 id="if-1">IF 块<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></h3>
+
+<p>这个是最笨拙的方法. 用 <code>if...else...</code> 块实现</p>
+
+<p>写出来后代码如下:</p>
+
+<p><code>python
+def if_block(val):
+    if val &gt; 0:
+        return 1
+    elif val &lt; 0:
+        return -1
+    else:
+        return 0
+</code></p>
+
+<p>因为是直接用 <code>if...else...</code> 描述出三元描述符的运算过程.  <br />
+所以这种实现方法是最容易理解的.</p>
+
+<h3 id="section-1">逻辑运算</h3>
+
+<p><code>IF 块</code> 的方法虽然很容易理解, 但是相对的代码行数略微多了点.</p>
+
+<p>那能不能一行就搞定呢.  <br />
+当然是可以的.</p>
+
+<p>用<code>逻辑运算</code>来处理它</p>
+
+<p><code>python
+def and_or(val):
+    return (val &gt; 0) and 1 or (val &lt; 0) and -1 or 0
+</code></p>
+
+<p>这种方法阅读起来并不是那么的直观, 但是三种方法中最接近原始表达.  <br />
+其中<code>逻辑符号</code>和<code>运算符</code>对应关系如下表</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">逻辑符号</th>
+      <th style="text-align: center">运算符号</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><code>and</code></td>
+      <td style="text-align: center"><code>?</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>or</code></td>
+      <td style="text-align: center"><code>:</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="section-2">不过…</h4>
+
+<p>这种方法有一个缺点, <code>and</code> 后的值对应的布尔量必须为真.
+像下面这个条件, 返回值总会是 -1</p>
+
+<p><code>
+(val == 0) and 0 or -1
+</code></p>
+
+<p>嘛, 毕竟它只是<code>逻辑运算</code></p>
+
+<h3 id="if">内联 IF</h3>
+
+<p>虽然用<code>逻辑运算</code>去 hack 是最接近三元运算最原始的表达的. 但毕竟有一个缺陷.</p>
+
+<p>于是, 就是最后一种内联IF的写法. 很类似列表表达式</p>
+
+<p><code>python
+def if_inline(val):
+    return 1 if val &gt; 0 else -1 if val &lt; 0 else 0
+</code></p>
+
+<p>就可读性来说, 这种写法是比较差的, 但没有逻辑运算那样的缺陷.
+同时, 也不像 block 版那样写三遍 return</p>
+
+<h2 id="section-3">基准测试</h2>
+
+<p>既然有三种不同的写法, 那三种写法的执行效率是否是样呢.</p>
+
+<p>于是写了如下测试脚本:</p>
+
+<p>```python ternary.py
+#!/usr/bin/env python
+import random</p>
+
+<p>def if_block(val):
+    ‘use if block for ternary operation’
+    if val &gt; 0:
+        return 1
+    elif val &lt; 0:
+        return -1
+    else:
+        return 0</p>
+
+<p>def if_inline(val):
+    ‘use if inline for ternary operation’
+    return 1 if val &gt; 0 else -1 if val &lt; 0 else 0</p>
+
+<p>def and_or(val):
+    ‘use and/or for ternary operation’
+    return val &gt; 0 and 1 or val &lt; 0 and -1 or 0</p>
+
+<p>def test():
+    import timeit
+    import dis
+    print ‘if_block:’
+    dis.dis(if_block)
+    print timeit.timeit(‘if_block(random.randrange(-10,11))’,
+                        ‘from <strong>main</strong> import if_block, random’)
+    print ‘-‘ * 20</p>
+
+<pre><code>print 'if_inline:'
+dis.dis(if_inline)
+print timeit.timeit('if_inline(random.randrange(-10,11))',
+                    'from __main__ import if_inline, random')
+print '-' * 20
+
+print 'and_or:'
+dis.dis(and_or)
+print timeit.timeit('and_or(random.randrange(-10,11))',
+                    'from __main__ import and_or, random')
+print '-' * 20
+</code></pre>
+
+<p>test()
+```</p>
+
+<p>脚本执行结果如下:  <br />
+可以很清楚的看到, 三种写法编译后的指令数是一样的.  <br />
+执行时间相差也不大, 多次执行时会有一定浮动
+(果然应该把 timeit 次数设置大一点么)</p>
+
+<blockquote>
+  <p><code>if_block</code> 最后多出来 2 条指令是因为 Python 中函数最后默认返回 None. 实际调用时, 不可能会执行到这两条指令</p>
+</blockquote>
+
+<p>```text
+if_block:
+  8           0 LOAD_FAST                0 (val)
+              3 LOAD_CONST               1 (0)
+              6 COMPARE_OP               4 (&gt;)
+              9 POP_JUMP_IF_FALSE       16</p>
+
+<p>9          12 LOAD_CONST               2 (1)
+             15 RETURN_VALUE</p>
+
+<p>10     »   16 LOAD_FAST                0 (val)
+             19 LOAD_CONST               1 (0)
+             22 COMPARE_OP               0 (&lt;)
+             25 POP_JUMP_IF_FALSE       32</p>
+
+<p>11          28 LOAD_CONST               3 (-1)
+             31 RETURN_VALUE</p>
+
+<p>13     »   32 LOAD_CONST               1 (0)
+             35 RETURN_VALUE
+             36 LOAD_CONST               4 (None)
+             39 RETURN_VALUE
+1.25232696533
+——————–
+if_inline:
+ 18           0 LOAD_FAST                0 (val)
+              3 LOAD_CONST               1 (0)
+              6 COMPARE_OP               4 (&gt;)
+              9 POP_JUMP_IF_FALSE       16
+             12 LOAD_CONST               2 (1)
+             15 RETURN_VALUE
+        »   16 LOAD_FAST                0 (val)
+             19 LOAD_CONST               1 (0)
+             22 COMPARE_OP               0 (&lt;)
+             25 POP_JUMP_IF_FALSE       32
+             28 LOAD_CONST               3 (-1)
+             31 RETURN_VALUE
+        »   32 LOAD_CONST               1 (0)
+             35 RETURN_VALUE
+1.26190900803
+——————–
+and_or:
+ 23           0 LOAD_FAST                0 (val)
+              3 LOAD_CONST               1 (0)
+              6 COMPARE_OP               4 (&gt;)
+              9 POP_JUMP_IF_FALSE       18
+             12 LOAD_CONST               2 (1)
+             15 JUMP_IF_TRUE_OR_POP     39
+        »   18 LOAD_FAST                0 (val)
+             21 LOAD_CONST               1 (0)
+             24 COMPARE_OP               0 (&lt;)
+             27 POP_JUMP_IF_FALSE       36
+             30 LOAD_CONST               3 (-1)
+             33 JUMP_IF_TRUE_OR_POP     39
+        »   36 LOAD_CONST               1 (0)
+        »   39 RETURN_VALUE
+1.27082109451
+——————–
+```</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>这三个名称都不是官方名称…<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
+  
+</feed>

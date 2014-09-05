@@ -4,7 +4,7 @@
   <title><![CDATA[挨踢夜归人]]></title>
   <link href="http://ralph-wang.github.io/atom.xml" rel="self"/>
   <link href="http://ralph-wang.github.io/"/>
-  <updated>2014-09-03T21:27:13+08:00</updated>
+  <updated>2014-09-05T20:30:13+08:00</updated>
   <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,242 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[python 中的三元运算符]]></title>
+    <link href="http://ralph-wang.github.io/blog/2014/09/05/python-zhong-de-san-yuan-yun-suan-fu/"/>
+    <updated>2014-09-05T11:08:30+08:00</updated>
+    <id>http://ralph-wang.github.io/blog/2014/09/05/python-zhong-de-san-yuan-yun-suan-fu</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">方法介绍</a>    <ul>
+      <li><a href="#if-1">IF 块</a></li>
+      <li><a href="#section-1">逻辑运算</a></li>
+      <li><a href="#if">内联 IF</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-3">基准测试</a></li>
+</ul>
+
+<h2 id="section">方法介绍</h2>
+
+<p>Python 原生是不支持三元运算符: <code>(expresion):val1?val2</code>  <br />
+但 Python 提供了一些语法糖在模拟三元运算符的操作</p>
+
+<p>就以下面这样一个用例来看看 Python 中可以怎么处理三元运算</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="c"><span class="line"><span class="p">(</span><span class="n">val</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">?</span><span class="mi">1</span><span class="o">:</span><span class="p">(</span><span class="n">val</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">?-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>运算含义: val 值为正则返回 1, 为负则返回 -1, 为 0 则返回 0</p>
+
+<h3 id="if-1">IF 块<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></h3>
+
+<p>这个是最笨拙的方法. 用 <code>if...else...</code> 块实现</p>
+
+<p>写出来后代码如下:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">if_block</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+</span><span class="line">    <span class="k">if</span> <span class="n">val</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class="line">        <span class="k">return</span> <span class="mi">1</span>
+</span><span class="line">    <span class="k">elif</span> <span class="n">val</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class="line">        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</span><span class="line">    <span class="k">else</span><span class="p">:</span>
+</span><span class="line">        <span class="k">return</span> <span class="mi">0</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>因为是直接用 <code>if...else...</code> 描述出三元描述符的运算过程.  <br />
+所以这种实现方法是最容易理解的.</p>
+
+<h3 id="section-1">逻辑运算</h3>
+
+<p><code>IF 块</code> 的方法虽然很容易理解, 但是相对的代码行数略微多了点.</p>
+
+<p>那能不能一行就搞定呢.  <br />
+当然是可以的.</p>
+
+<p>用<code>逻辑运算</code>来处理它</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">and_or</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+</span><span class="line">    <span class="k">return</span> <span class="p">(</span><span class="n">val</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="mi">1</span> <span class="ow">or</span> <span class="p">(</span><span class="n">val</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="mi">0</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>这种方法阅读起来并不是那么的直观, 但是三种方法中最接近原始表达.  <br />
+其中<code>逻辑符号</code>和<code>运算符</code>对应关系如下表</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">逻辑符号</th>
+      <th style="text-align: center">运算符号</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><code>and</code></td>
+      <td style="text-align: center"><code>?</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>or</code></td>
+      <td style="text-align: center"><code>:</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="section-2">不过…</h4>
+
+<p>这种方法有一个缺点, <code>and</code> 后的值对应的布尔量必须为真.
+像下面这个条件, 返回值总会是 -1</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="p">(</span><span class="n">val</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="mi">0</span> <span class="ow">or</span> <span class="o">-</span><span class="mi">1</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>嘛, 毕竟它只是<code>逻辑运算</code></p>
+
+<h3 id="if">内联 IF</h3>
+
+<p>虽然用<code>逻辑运算</code>去 hack 是最接近三元运算最原始的表达的. 但毕竟有一个缺陷.</p>
+
+<p>于是, 就是最后一种内联IF的写法. 很类似列表表达式</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">if_inline</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+</span><span class="line">    <span class="k">return</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">val</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">val</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>就可读性来说, 这种写法是比较差的, 但没有逻辑运算那样的缺陷.
+同时, 也不像 block 版那样写三遍 return</p>
+
+<h2 id="section-3">基准测试</h2>
+
+<p>既然有三种不同的写法, 那三种写法的执行效率是否是样呢.</p>
+
+<p>于是写了如下测试脚本:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>ternary.py</span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="c">#!/usr/bin/env python</span>
+</span><span class="line"><span class="kn">import</span> <span class="nn">random</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">if_block</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+</span><span class="line">    <span class="s">&#39;use if block for ternary operation&#39;</span>
+</span><span class="line">    <span class="k">if</span> <span class="n">val</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class="line">        <span class="k">return</span> <span class="mi">1</span>
+</span><span class="line">    <span class="k">elif</span> <span class="n">val</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class="line">        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</span><span class="line">    <span class="k">else</span><span class="p">:</span>
+</span><span class="line">        <span class="k">return</span> <span class="mi">0</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">if_inline</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+</span><span class="line">    <span class="s">&#39;use if inline for ternary operation&#39;</span>
+</span><span class="line">    <span class="k">return</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">val</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">val</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">and_or</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+</span><span class="line">    <span class="s">&#39;use and/or for ternary operation&#39;</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">val</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">val</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="mi">0</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
+</span><span class="line">    <span class="kn">import</span> <span class="nn">timeit</span>
+</span><span class="line">    <span class="kn">import</span> <span class="nn">dis</span>
+</span><span class="line">    <span class="k">print</span> <span class="s">&#39;if_block:&#39;</span>
+</span><span class="line">    <span class="n">dis</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">if_block</span><span class="p">)</span>
+</span><span class="line">    <span class="k">print</span> <span class="n">timeit</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="s">&#39;if_block(random.randrange(-10,11))&#39;</span><span class="p">,</span>
+</span><span class="line">                        <span class="s">&#39;from __main__ import if_block, random&#39;</span><span class="p">)</span>
+</span><span class="line">    <span class="k">print</span> <span class="s">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">20</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">print</span> <span class="s">&#39;if_inline:&#39;</span>
+</span><span class="line">    <span class="n">dis</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">if_inline</span><span class="p">)</span>
+</span><span class="line">    <span class="k">print</span> <span class="n">timeit</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="s">&#39;if_inline(random.randrange(-10,11))&#39;</span><span class="p">,</span>
+</span><span class="line">                        <span class="s">&#39;from __main__ import if_inline, random&#39;</span><span class="p">)</span>
+</span><span class="line">    <span class="k">print</span> <span class="s">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">20</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">print</span> <span class="s">&#39;and_or:&#39;</span>
+</span><span class="line">    <span class="n">dis</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">and_or</span><span class="p">)</span>
+</span><span class="line">    <span class="k">print</span> <span class="n">timeit</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="s">&#39;and_or(random.randrange(-10,11))&#39;</span><span class="p">,</span>
+</span><span class="line">                        <span class="s">&#39;from __main__ import and_or, random&#39;</span><span class="p">)</span>
+</span><span class="line">    <span class="k">print</span> <span class="s">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">20</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="n">test</span><span class="p">()</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>脚本执行结果如下:  <br />
+可以很清楚的看到, 三种写法编译后的指令数是一样的.  <br />
+执行时间相差也不大, 多次执行时会有一定浮动
+(果然应该把 timeit 次数设置大一点么)</p>
+
+<blockquote>
+  <p><code>if_block</code> 最后多出来 2 条指令是因为 Python 中函数最后默认返回 None. 实际调用时, 不可能会执行到这两条指令</p>
+</blockquote>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="text"><span class="line">if_block:
+</span><span class="line">  8           0 LOAD_FAST                0 (val)
+</span><span class="line">              3 LOAD_CONST               1 (0)
+</span><span class="line">              6 COMPARE_OP               4 (&gt;)
+</span><span class="line">              9 POP_JUMP_IF_FALSE       16
+</span><span class="line">
+</span><span class="line">  9          12 LOAD_CONST               2 (1)
+</span><span class="line">             15 RETURN_VALUE
+</span><span class="line">
+</span><span class="line"> 10     &gt;&gt;   16 LOAD_FAST                0 (val)
+</span><span class="line">             19 LOAD_CONST               1 (0)
+</span><span class="line">             22 COMPARE_OP               0 (&lt;)
+</span><span class="line">             25 POP_JUMP_IF_FALSE       32
+</span><span class="line">
+</span><span class="line"> 11          28 LOAD_CONST               3 (-1)
+</span><span class="line">             31 RETURN_VALUE
+</span><span class="line">
+</span><span class="line"> 13     &gt;&gt;   32 LOAD_CONST               1 (0)
+</span><span class="line">             35 RETURN_VALUE
+</span><span class="line">             36 LOAD_CONST               4 (None)
+</span><span class="line">             39 RETURN_VALUE
+</span><span class="line">1.25232696533
+</span><span class="line">--------------------
+</span><span class="line">if_inline:
+</span><span class="line"> 18           0 LOAD_FAST                0 (val)
+</span><span class="line">              3 LOAD_CONST               1 (0)
+</span><span class="line">              6 COMPARE_OP               4 (&gt;)
+</span><span class="line">              9 POP_JUMP_IF_FALSE       16
+</span><span class="line">             12 LOAD_CONST               2 (1)
+</span><span class="line">             15 RETURN_VALUE
+</span><span class="line">        &gt;&gt;   16 LOAD_FAST                0 (val)
+</span><span class="line">             19 LOAD_CONST               1 (0)
+</span><span class="line">             22 COMPARE_OP               0 (&lt;)
+</span><span class="line">             25 POP_JUMP_IF_FALSE       32
+</span><span class="line">             28 LOAD_CONST               3 (-1)
+</span><span class="line">             31 RETURN_VALUE
+</span><span class="line">        &gt;&gt;   32 LOAD_CONST               1 (0)
+</span><span class="line">             35 RETURN_VALUE
+</span><span class="line">1.26190900803
+</span><span class="line">--------------------
+</span><span class="line">and_or:
+</span><span class="line"> 23           0 LOAD_FAST                0 (val)
+</span><span class="line">              3 LOAD_CONST               1 (0)
+</span><span class="line">              6 COMPARE_OP               4 (&gt;)
+</span><span class="line">              9 POP_JUMP_IF_FALSE       18
+</span><span class="line">             12 LOAD_CONST               2 (1)
+</span><span class="line">             15 JUMP_IF_TRUE_OR_POP     39
+</span><span class="line">        &gt;&gt;   18 LOAD_FAST                0 (val)
+</span><span class="line">             21 LOAD_CONST               1 (0)
+</span><span class="line">             24 COMPARE_OP               0 (&lt;)
+</span><span class="line">             27 POP_JUMP_IF_FALSE       36
+</span><span class="line">             30 LOAD_CONST               3 (-1)
+</span><span class="line">             33 JUMP_IF_TRUE_OR_POP     39
+</span><span class="line">        &gt;&gt;   36 LOAD_CONST               1 (0)
+</span><span class="line">        &gt;&gt;   39 RETURN_VALUE
+</span><span class="line">1.27082109451
+</span><span class="line">--------------------
+</span></code></pre></div></figure></notextile></div>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>这三个名称都不是官方名称…<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[blockdev 命令及相关概念]]></title>
@@ -2473,125 +2709,6 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nb">echo</span> <span class="nv">$PAHT</span> |tr : <span class="s1">&#39;\n&#39;</span>
 </span></code></pre></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[用 jstack 线程定位初体验]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/03/01/yong-jstack-xian-cheng-ding-wei-chu-ti-yan/"/>
-    <updated>2014-03-01T22:42:48+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/03/01/yong-jstack-xian-cheng-ding-wei-chu-ti-yan</id>
-    <content type="html"><![CDATA[<p>用 top + jstack 定位 java 线程问题
-<!--more--></p>
-
-<h3 id="section">1. 需要定位的程序</h3>
-
-<p>首先, 写一个用于计算并输出蜚波那契数列的 java 程序, 大致的输出信息如下.</p>
-
-<p><img src="http://ralph-wang.github.io/blogimgs/thread-fb.png" alt="Fibonacci" title="a Fibonacci Thread" /></p>
-
-<p>这里特意写成<strong>死循环</strong>, 让它不停地去消耗 CPU</p>
-
-<h3 id="top-">2. 用 top 命令定位进程号</h3>
-<p>程序运行起来之后, 就该 <code>top</code> 命令出场了.</p>
-
-<p>直接在命令行中输入</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$top</span>
-</span></code></pre></div></figure></notextile></div>
-
-<p>看 <code>top</code> 命令的输出
-<img src="http://ralph-wang.github.io/blogimgs/thread-top.png" alt="use top" title="use top" />
-看到消耗 CPU 最高的就是一个 java 进程.</p>
-
-<p>OK, 记下进程号 <strong>100162</strong></p>
-
-<blockquote>
-  <p>补充:  <br />
-&gt; <code>top</code> 添加 -c 参数可以查看到命令的参数信息  <br />
-&gt; 这样可以看到 java 具体执行的类, 定位更准确</p>
-</blockquote>
-
-<h3 id="top--h--p-">3. 用 top -H -p 命令定位到线程号</h3>
-<p>现在, 我们知道消耗 CPU 最高的进程是哪个了. </p>
-
-<p>但我们还不知道具体是哪个线程的问题, 所以不着急用 <code>jstack</code> 去获取 java 进程快照. </p>
-
-<p>再次使用 <code>top</code> 命令, 不过, 这次我们加上 <code>-H -p</code> 参数来查看线程运行情况.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$ </span>top -H -p 100162
-</span></code></pre></div></figure></notextile></div>
-
-<blockquote>
-  <p>注: <em>也可以 <code>top -p &lt;pid&gt;</code> 后再敲 H 打开子线程信息</em></p>
-</blockquote>
-
-<p>这次, 得到如下图的结果:
-<img src="http://ralph-wang.github.io/blogimgs/thread-topHp.png" alt="use top -H -p (pid)" title="use top -H -p &lt;pid&gt;" /></p>
-
-<p>消耗 CPU 最高的不再是 100162 了. 可以清楚的看到是线程 <strong>100172</strong></p>
-
-<h3 id="jstack-">4. 用 jstack 定位到代码行</h3>
-<p>下面, 就可以用 <code>jstack</code> 来导出进程的堆栈信息了.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$jstack</span> 100162
-</span></code></pre></div></figure></notextile></div>
-
-<ul>
-  <li>这里不能直接使用 <code>jstack 100172</code>的形式, jstack 似乎只能对<strong>主线程</strong>使用</li>
-  <li>jstack 不能导出堆栈问题解决: <a href="http://www.haply.info/blog/archives/305">jstack 不能导出堆栈</a></li>
-</ul>
-
-<p>然后, 在堆栈信息中找到 nid=0x27bc(100172 的 16 进制) 的线程.</p>
-
-<p>就是下面的 <strong>Thread-0</strong> 线程了</p>
-
-<p><img src="http://ralph-wang.github.io/blogimgs/thread-jstack.png" alt="use jstack" title="use jstack" /></p>
-
-<p>全是 <code>Fibonacci.calcFibo (testJstack.java:28)</code></p>
-
-<p>定位源码文件 <code>testJstack.java</code> 第 28 行, 最土最慢最二的蜚波那契数列算法…</p>
-
-<p><img src="http://ralph-wang.github.io/blogimgs/thread-28.png" alt="get the criminal" title="get the criminal" /></p>
-
-<p>问题定位结束</p>
-
-<p>上完整源码</p>
-
-<div><script src="https://gist.github.com/9290490.js?file=testJstack.java"></script>
-<noscript><pre><code>public class testJstack {
-    public static void main(String[] args) {
-        Thread t = new Thread(new Fibonacci());
-        t.start();
-    }
-}
-
-class Fibonacci implements Runnable {
-    public void run() {
-        while (true) {
-            for (int i = 0; i &lt; 20; i++) {
-                System.out.println(calcFibo(i));
-            }
-        }
-    }
-    
-    /**
-     * 最土最慢的蜚波那契计算函数.
-     * @return int
-     */
-    private int  calcFibo(final int n) {
-
-        if (n == 0) {
-            return 0;
-        } else if (n == 1) {
-            return 1;
-        } else {
-            return calcFibo(n-1) + calcFibo(n-2);
-        }
-    }
-}
-</code></pre></noscript></div>
-
 ]]></content>
   </entry>
   
