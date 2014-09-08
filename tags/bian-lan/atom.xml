@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: 边栏 | 挨踢夜归人]]></title>
-  <link href="http://ralph-wang.github.io//tags/bian-lan/atom.xml" rel="self"/>
-  <link href="http://ralph-wang.github.io/"/>
-  <updated>2014-09-05T20:31:16+08:00</updated>
-  <id>http://ralph-wang.github.io/</id>
+  <link href="http://blog.loudou.info//tags/bian-lan/atom.xml" rel="self"/>
+  <link href="http://blog.loudou.info/"/>
+  <updated>2014-09-09T03:31:05+08:00</updated>
+  <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[为 Octopress 添加 Tag 功能]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng/"/>
+    <link href="http://blog.loudou.info/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng/"/>
     <updated>2014-02-15T00:09:14+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng</id>
+    <id>http://blog.loudou.info/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng</id>
     <content type="html"><![CDATA[<p>对于博客文章来讲, 除了类别外, 另一个重要的标识属性便是<strong>标签</strong>.
 <!--more--></p>
 
@@ -78,9 +78,9 @@ categories: octopress
   
   <entry>
     <title type="html"><![CDATA[octopress嵌入新浪微博边栏]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/02/04/octopressqian-ru-xin-lang-wei-bo-bian-lan/"/>
+    <link href="http://blog.loudou.info/blog/2014/02/04/octopressqian-ru-xin-lang-wei-bo-bian-lan/"/>
     <updated>2014-02-04T18:26:31+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/02/04/octopressqian-ru-xin-lang-wei-bo-bian-lan</id>
+    <id>http://blog.loudou.info/blog/2014/02/04/octopressqian-ru-xin-lang-wei-bo-bian-lan</id>
     <content type="html"><![CDATA[<p>更换<a href="http://github.com/bkutil/bootstrap-theme"><code>boottrap-theme</code></a>后，边栏只有<strong>最近发表</strong>和<strong>文章分类</strong>两项内容显得有点寒碜。于是想着添加个新浪微博的边栏试试</p>
 
 <!--more-->

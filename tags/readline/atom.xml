@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: readline | 挨踢夜归人]]></title>
-  <link href="http://ralph-wang.github.io//tags/readline/atom.xml" rel="self"/>
-  <link href="http://ralph-wang.github.io/"/>
-  <updated>2014-09-05T20:31:16+08:00</updated>
-  <id>http://ralph-wang.github.io/</id>
+  <link href="http://blog.loudou.info//tags/readline/atom.xml" rel="self"/>
+  <link href="http://blog.loudou.info/"/>
+  <updated>2014-09-09T03:31:05+08:00</updated>
+  <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Linux bash 的 C-s]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/08/13/linux-bash-de-c-s/"/>
+    <link href="http://blog.loudou.info/blog/2014/08/13/linux-bash-de-c-s/"/>
     <updated>2014-08-13T22:22:02+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/08/13/linux-bash-de-c-s</id>
+    <id>http://blog.loudou.info/blog/2014/08/13/linux-bash-de-c-s</id>
     <content type="html"><![CDATA[<p>putty 莫名不响应问题…</p>
 
 <!--more-->
@@ -25,6 +25,7 @@
   <li><a href="#section">事故</a></li>
   <li><a href="#emacs">缘起 emacs</a></li>
   <li><a href="#c-sc-q">C-s/C-q</a></li>
+  <li><a href="#c-s-">取消 C-s 绑定</a></li>
 </ul>
 
 <h2 id="section">事故</h2>
@@ -61,6 +62,14 @@
 <blockquote>
   <p>敲下<code>C-q</code> 即可恢复    </p>
 </blockquote>
+
+<p>—2014-09-05—</p>
+
+<h2 id="c-s-">取消 C-s 绑定</h2>
+
+<p><code>stty stop undef</code></p>
+
+<p>若要长期生效, 可以写到个人 profile 中</p>
 
 <hr />
 

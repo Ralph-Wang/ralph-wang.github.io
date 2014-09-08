@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[挨踢夜归人]]></title>
-  <link href="http://ralph-wang.github.io/atom.xml" rel="self"/>
-  <link href="http://ralph-wang.github.io/"/>
-  <updated>2014-09-05T20:31:16+08:00</updated>
-  <id>http://ralph-wang.github.io/</id>
+  <link href="http://blog.loudou.info/atom.xml" rel="self"/>
+  <link href="http://blog.loudou.info/"/>
+  <updated>2014-09-09T03:31:05+08:00</updated>
+  <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[python 中的三元运算符]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/09/05/python-zhong-de-san-yuan-yun-suan-fu/"/>
+    <link href="http://blog.loudou.info/blog/2014/09/05/python-zhong-de-san-yuan-yun-suan-fu/"/>
     <updated>2014-09-05T11:08:30+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/09/05/python-zhong-de-san-yuan-yun-suan-fu</id>
+    <id>http://blog.loudou.info/blog/2014/09/05/python-zhong-de-san-yuan-yun-suan-fu</id>
     <content type="html"><![CDATA[<!--more-->
 <ul id="markdown-toc">
   <li><a href="#section">方法介绍</a>    <ul>
@@ -251,9 +251,9 @@
   
   <entry>
     <title type="html"><![CDATA[blockdev 命令及相关概念]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/08/20/blockdev-ming-ling-ji-xiang-guan-gai-nian/"/>
+    <link href="http://blog.loudou.info/blog/2014/08/20/blockdev-ming-ling-ji-xiang-guan-gai-nian/"/>
     <updated>2014-08-20T23:36:02+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/08/20/blockdev-ming-ling-ji-xiang-guan-gai-nian</id>
+    <id>http://blog.loudou.info/blog/2014/08/20/blockdev-ming-ling-ji-xiang-guan-gai-nian</id>
     <content type="html"><![CDATA[<ul id="markdown-toc">
   <li><a href="#section">命令本身</a></li>
   <li><a href="#report-">report 的内容</a></li>
@@ -386,9 +386,9 @@
   
   <entry>
     <title type="html"><![CDATA[Linux bash 的 C-s]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/08/13/linux-bash-de-c-s/"/>
+    <link href="http://blog.loudou.info/blog/2014/08/13/linux-bash-de-c-s/"/>
     <updated>2014-08-13T22:22:02+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/08/13/linux-bash-de-c-s</id>
+    <id>http://blog.loudou.info/blog/2014/08/13/linux-bash-de-c-s</id>
     <content type="html"><![CDATA[<p>putty 莫名不响应问题…</p>
 
 <!--more-->
@@ -396,6 +396,7 @@
   <li><a href="#section">事故</a></li>
   <li><a href="#emacs">缘起 emacs</a></li>
   <li><a href="#c-sc-q">C-s/C-q</a></li>
+  <li><a href="#c-s-">取消 C-s 绑定</a></li>
 </ul>
 
 <h2 id="section">事故</h2>
@@ -433,6 +434,14 @@
   <p>敲下<code>C-q</code> 即可恢复    </p>
 </blockquote>
 
+<p>—2014-09-05—</p>
+
+<h2 id="c-s-">取消 C-s 绑定</h2>
+
+<p><code>stty stop undef</code></p>
+
+<p>若要长期生效, 可以写到个人 profile 中</p>
+
 <hr />
 
 <div class="footnotes">
@@ -447,9 +456,9 @@
   
   <entry>
     <title type="html"><![CDATA[Binary Tree Preorder Traversal]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/08/07/binary-tree-preorder-traversal/"/>
+    <link href="http://blog.loudou.info/blog/2014/08/07/binary-tree-preorder-traversal/"/>
     <updated>2014-08-07T00:50:19+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/08/07/binary-tree-preorder-traversal</id>
+    <id>http://blog.loudou.info/blog/2014/08/07/binary-tree-preorder-traversal</id>
     <content type="html"><![CDATA[<p>算法倒是没犯错. 坑在 Python 的一个赋值语法上了</p>
 
 <!--more-->
@@ -583,9 +592,9 @@ Given binary tree {1,#,2,3},</p>
   
   <entry>
     <title type="html"><![CDATA[Single Number]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/08/06/single-number/"/>
+    <link href="http://blog.loudou.info/blog/2014/08/06/single-number/"/>
     <updated>2014-08-06T16:44:56+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/08/06/single-number</id>
+    <id>http://blog.loudou.info/blog/2014/08/06/single-number</id>
     <content type="html"><![CDATA[<p>最近开始撸算法相关的东西. 于是在 LeetCode 上找一些题来练习</p>
 
 <!--more-->
@@ -701,9 +710,9 @@ Given binary tree {1,#,2,3},</p>
   
   <entry>
     <title type="html"><![CDATA[df 与 du 结果不匹配问题]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti/"/>
+    <link href="http://blog.loudou.info/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti/"/>
     <updated>2014-08-04T22:03:28+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti</id>
+    <id>http://blog.loudou.info/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti</id>
     <content type="html"><![CDATA[<p>du 与 df 与 文件描述符不得不说的故事</p>
 
 <!--more-->
@@ -843,9 +852,9 @@ Given binary tree {1,#,2,3},</p>
   
   <entry>
     <title type="html"><![CDATA[为 octopress 添加 TOC]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/08/01/wei-octopress-tian-jia-toc/"/>
+    <link href="http://blog.loudou.info/blog/2014/08/01/wei-octopress-tian-jia-toc/"/>
     <updated>2014-08-01T00:52:13+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/08/01/wei-octopress-tian-jia-toc</id>
+    <id>http://blog.loudou.info/blog/2014/08/01/wei-octopress-tian-jia-toc</id>
     <content type="html"><![CDATA[<p>添加一个 TOC 方便阅读</p>
 
 <!--more-->
@@ -947,9 +956,9 @@ Given binary tree {1,#,2,3},</p>
   
   <entry>
     <title type="html"><![CDATA[无节操地重新认识多态和IoC]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/"/>
+    <link href="http://blog.loudou.info/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/"/>
     <updated>2014-07-27T23:41:34+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc</id>
+    <id>http://blog.loudou.info/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc</id>
     <content type="html"><![CDATA[<h2 id="section">起源</h2>
 
 <p>源自一则微博:</p>
@@ -1043,9 +1052,9 @@ Given binary tree {1,#,2,3},</p>
   
   <entry>
     <title type="html"><![CDATA[Learning the Bash Shell 笔记-Debug]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/"/>
+    <link href="http://blog.loudou.info/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/"/>
     <updated>2014-06-11T10:40:33+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug</id>
+    <id>http://blog.loudou.info/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug</id>
     <content type="html"><![CDATA[<p>任何开发测试工作都离不开的话题 – Debug. </p>
 
 <p>bash 脚本自然也不能免俗
@@ -1386,9 +1395,9 @@ Given binary tree {1,#,2,3},</p>
   
   <entry>
     <title type="html"><![CDATA[Learning the Bash Shell 笔记-杂项]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/"/>
+    <link href="http://blog.loudou.info/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/"/>
     <updated>2014-06-05T09:49:16+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang</id>
+    <id>http://blog.loudou.info/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang</id>
     <content type="html"><![CDATA[<p>一些零散的内容
 <!--more-->
 ## getopts
@@ -1480,9 +1489,9 @@ FILE2</code> 用来比较两个文件修改时间</p>
   
   <entry>
     <title type="html"><![CDATA[Learning the Bash Shell 笔记-流控制]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi/"/>
+    <link href="http://blog.loudou.info/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi/"/>
     <updated>2014-05-22T21:19:21+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi</id>
+    <id>http://blog.loudou.info/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi</id>
     <content type="html"><![CDATA[<p>但凡是代码就逃不开的流控制话题
 <!--more--></p>
 
@@ -1629,9 +1638,9 @@ FILE2</code> 用来比较两个文件修改时间</p>
   
   <entry>
     <title type="html"><![CDATA[Learning The Bash Shell 笔记-变量]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/05/15/learning-the-bash-shell-du-shu-bi-ji-bian-liang/"/>
+    <link href="http://blog.loudou.info/blog/2014/05/15/learning-the-bash-shell-du-shu-bi-ji-bian-liang/"/>
     <updated>2014-05-15T09:35:19+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/05/15/learning-the-bash-shell-du-shu-bi-ji-bian-liang</id>
+    <id>http://blog.loudou.info/blog/2014/05/15/learning-the-bash-shell-du-shu-bi-ji-bian-liang</id>
     <content type="html"><![CDATA[<!--more-->
 
 <h2 id="section">$* 和 $@</h2>
@@ -1755,9 +1764,9 @@ FILE2</code> 用来比较两个文件修改时间</p>
   
   <entry>
     <title type="html"><![CDATA[迂回的监控数据库连接数]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/05/09/yu-hui-de-jian-kong-shu-ju-ku-lian-jie-shu/"/>
+    <link href="http://blog.loudou.info/blog/2014/05/09/yu-hui-de-jian-kong-shu-ju-ku-lian-jie-shu/"/>
     <updated>2014-05-09T09:45:51+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/05/09/yu-hui-de-jian-kong-shu-ju-ku-lian-jie-shu</id>
+    <id>http://blog.loudou.info/blog/2014/05/09/yu-hui-de-jian-kong-shu-ju-ku-lian-jie-shu</id>
     <content type="html"><![CDATA[<p>不能通过数据库工具监控到连接数时可用的迂回监控方法
 <!--more-->
 ## 原理
@@ -1815,15 +1824,15 @@ done
 
 <p>执行结果的样例:</p>
 
-<p><img src="http://ralph-wang.github.io/blogimgs/net_watch.png" alt="net_watch" /></p>
+<p><img src="http://blog.loudou.info/blogimgs/net_watch.png" alt="net_watch" /></p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[分析一个 Linux 命令]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/04/14/fen-xi-yi-ge-linux-ming-ling/"/>
+    <link href="http://blog.loudou.info/blog/2014/04/14/fen-xi-yi-ge-linux-ming-ling/"/>
     <updated>2014-04-14T22:44:14+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/04/14/fen-xi-yi-ge-linux-ming-ling</id>
+    <id>http://blog.loudou.info/blog/2014/04/14/fen-xi-yi-ge-linux-ming-ling</id>
     <content type="html"><![CDATA[<p>通过拆解查看 CPU 信息的组合命令, 来学习每个独立命令
 <!--more--></p>
 
@@ -1880,9 +1889,9 @@ output ** .  输出所有选中的行</p>
   
   <entry>
     <title type="html"><![CDATA[WebDriver 之 Page Object 设计模式]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/04/11/webdriver-zhi-page-object-she-ji-mo-shi/"/>
+    <link href="http://blog.loudou.info/blog/2014/04/11/webdriver-zhi-page-object-she-ji-mo-shi/"/>
     <updated>2014-04-11T21:17:47+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/04/11/webdriver-zhi-page-object-she-ji-mo-shi</id>
+    <id>http://blog.loudou.info/blog/2014/04/11/webdriver-zhi-page-object-she-ji-mo-shi</id>
     <content type="html"><![CDATA[<p>使用 Selenium Webdriver 最常用的设计模式 Page Object 规划页面
 <!--more-->
 例子页面:</p>
@@ -2006,9 +2015,9 @@ output ** .  输出所有选中的行</p>
   
   <entry>
     <title type="html"><![CDATA[Jmeter 安装]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/04/06/jmeter-an-zhuang/"/>
+    <link href="http://blog.loudou.info/blog/2014/04/06/jmeter-an-zhuang/"/>
     <updated>2014-04-06T22:17:08+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/04/06/jmeter-an-zhuang</id>
+    <id>http://blog.loudou.info/blog/2014/04/06/jmeter-an-zhuang</id>
     <content type="html"><![CDATA[<p>跨平台工具赛高
 <!--more--></p>
 
@@ -2065,9 +2074,9 @@ $JMETER_HOME/lib/ext/ApacheJMeter_core.jar</p>
   
   <entry>
     <title type="html"><![CDATA[面试技术问题解答]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/03/25/mian-shi-wen-ti-jie-da/"/>
+    <link href="http://blog.loudou.info/blog/2014/03/25/mian-shi-wen-ti-jie-da/"/>
     <updated>2014-03-25T19:49:37+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/03/25/mian-shi-wen-ti-jie-da</id>
+    <id>http://blog.loudou.info/blog/2014/03/25/mian-shi-wen-ti-jie-da</id>
     <content type="html"><![CDATA[<p>面试时没有完全回答上或有存疑的问题
 <!--more-->
 Linux
@@ -2316,9 +2325,9 @@ awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次�
   
   <entry>
     <title type="html"><![CDATA[索引功能比较 MySQL 与 MongoDB]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/03/21/suo-yin-gong-neng-bi-jiao-mysql-yu-mongodb/"/>
+    <link href="http://blog.loudou.info/blog/2014/03/21/suo-yin-gong-neng-bi-jiao-mysql-yu-mongodb/"/>
     <updated>2014-03-21T10:37:08+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/03/21/suo-yin-gong-neng-bi-jiao-mysql-yu-mongodb</id>
+    <id>http://blog.loudou.info/blog/2014/03/21/suo-yin-gong-neng-bi-jiao-mysql-yu-mongodb</id>
     <content type="html"><![CDATA[<p>索引是影响数据库性能的重要元素.</p>
 
 <p>这里比较一下 MySQL 与 MongoDB 中索引的基本使用, 也算复习一下这个数据库中的基本概念
@@ -2592,9 +2601,9 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
   
   <entry>
     <title type="html"><![CDATA[nodejs Buffer性能优势]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/03/15/nodejs-bufferxing-neng-you-shi/"/>
+    <link href="http://blog.loudou.info/blog/2014/03/15/nodejs-bufferxing-neng-you-shi/"/>
     <updated>2014-03-15T21:24:23+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/03/15/nodejs-bufferxing-neng-you-shi</id>
+    <id>http://blog.loudou.info/blog/2014/03/15/nodejs-bufferxing-neng-you-shi</id>
     <content type="html"><![CDATA[<p>最近在读朴大神的 <code>深入浅出 Nodejs</code>, 其中不乏性能相关话题.</p>
 
 <p>这里选一个出来做个测试
@@ -2654,7 +2663,7 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 <h2 id="section-1">测试结果</h2>
 <p>比较一下测试结果</p>
 
-<p><img src="http://ralph-wang.github.io/blogimgs/node-buffer-perf.png" alt="node-buffer-perf" /></p>
+<p><img src="http://blog.loudou.info/blogimgs/node-buffer-perf.png" alt="node-buffer-perf" /></p>
 
 <p>可以看到, 使用 Buffer 后 QPS 和传输率确实有一定提升.</p>
 
@@ -2662,7 +2671,7 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 
 <p>监控两次测试的 CPU 使用情况并统计: (统计时, 取 CPU 平稳的 6 次结果并计算用户态 CPU 平均值)</p>
 
-<p><img src="http://ralph-wang.github.io/blogimgs/node-buffer-cpu.png" alt="node-buffer-cpu" /></p>
+<p><img src="http://blog.loudou.info/blogimgs/node-buffer-cpu.png" alt="node-buffer-cpu" /></p>
 
 <p>两次测试中, CPU 利用率均达到了 100%, 但不使用 Buffer 时, 用户态的 CPU 更高一些.</p>
 
@@ -2678,9 +2687,9 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
   
   <entry>
     <title type="html"><![CDATA[用 awk 查看 PATH 环境变量]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/03/06/yong-awk-cha-kan-path-huan-jing-bian-liang/"/>
+    <link href="http://blog.loudou.info/blog/2014/03/06/yong-awk-cha-kan-path-huan-jing-bian-liang/"/>
     <updated>2014-03-06T14:18:22+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/03/06/yong-awk-cha-kan-path-huan-jing-bian-liang</id>
+    <id>http://blog.loudou.info/blog/2014/03/06/yong-awk-cha-kan-path-huan-jing-bian-liang</id>
     <content type="html"><![CDATA[<!--more-->
 <p>查看 PATH 环境变量是件痛苦的事情.</p>
 
@@ -2691,14 +2700,14 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$echo</span> <span class="nv">$PATH</span>
 </span></code></pre></div></figure></notextile></div>
 
-<p><img src="http://ralph-wang.github.io/blogimgs/path-normal.png" alt="path normal" /></p>
+<p><img src="http://blog.loudou.info/blogimgs/path-normal.png" alt="path normal" /></p>
 
 <p>看 <code>awk</code> 用法时, 记得可以用 <code>RS</code> 变量修改行标识, 于是试试</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$echo</span> <span class="nv">$PATH</span> | awk <span class="s1">&#39;BEGIN {RS=&quot;:&quot;} {print $0}&#39;</span>
 </span></code></pre></div></figure></notextile></div>
 
-<p><img src="http://ralph-wang.github.io/blogimgs/path-withawk.png" alt="path with awk" /></p>
+<p><img src="http://blog.loudou.info/blogimgs/path-withawk.png" alt="path with awk" /></p>
 
 <p>确实清晰不少.</p>
 

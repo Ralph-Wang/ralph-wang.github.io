@@ -1,173 +1,163 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://ralph-wang.github.io/blog/2014/01/27/yong-markdown-xie-zuo/</loc>
+        <loc>http://blog.loudou.info/blog/2014/01/27/yong-markdown-xie-zuo/</loc>
         <lastmod>2014-08-20T02:10:10+08:00</lastmod>
     </url>
     <url>
         <loc>
-            http://ralph-wang.github.io/blog/2014/02/04/octopressqian-ru-xin-lang-wei-bo-bian-lan/
+            http://blog.loudou.info/blog/2014/02/04/octopressqian-ru-xin-lang-wei-bo-bian-lan/
+        </loc>
+        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.loudou.info/blog/2014/02/06/octopressshou-ye-zhi-xian-shi-zhai-yao/</loc>
+        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://blog.loudou.info/blog/2014/02/06/yong-jvisualvmjian-kong-yuan-cheng-javajin-cheng/
+        </loc>
+        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.loudou.info/blog/2014/02/08/javaxian-cheng-zhuang-tai/</loc>
+        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.loudou.info/blog/2014/02/09/javazhi-boxinghe-unboxing/</loc>
+        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.loudou.info/blog/2014/02/11/lian-xiang-jie-long/</loc>
+        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.loudou.info/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng/</loc>
+        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.loudou.info/blog/2014/02/18/lr-guan-lian-zhi-alfresco/</loc>
+        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://blog.loudou.info/blog/2014/03/01/yong-jstack-xian-cheng-ding-wei-chu-ti-yan/
         </loc>
         <lastmod>2014-08-20T02:10:10+08:00</lastmod>
     </url>
     <url>
         <loc>
-            http://ralph-wang.github.io/blog/2014/02/06/octopressshou-ye-zhi-xian-shi-zhai-yao/
+            http://blog.loudou.info/blog/2014/03/06/yong-awk-cha-kan-path-huan-jing-bian-liang/
+        </loc>
+        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.loudou.info/blog/2014/03/15/nodejs-bufferxing-neng-you-shi/</loc>
+        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://blog.loudou.info/blog/2014/03/21/suo-yin-gong-neng-bi-jiao-mysql-yu-mongodb/
+        </loc>
+        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.loudou.info/blog/2014/03/25/mian-shi-wen-ti-jie-da/</loc>
+        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.loudou.info/blog/2014/04/06/jmeter-an-zhuang/</loc>
+        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://blog.loudou.info/blog/2014/04/11/webdriver-zhi-page-object-she-ji-mo-shi/
+        </loc>
+        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.loudou.info/blog/2014/04/14/fen-xi-yi-ge-linux-ming-ling/</loc>
+        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://blog.loudou.info/blog/2014/05/09/yu-hui-de-jian-kong-shu-ju-ku-lian-jie-shu/
         </loc>
         <lastmod>2014-08-20T02:10:10+08:00</lastmod>
     </url>
     <url>
         <loc>
-            http://ralph-wang.github.io/blog/2014/02/06/yong-jvisualvmjian-kong-yuan-cheng-javajin-cheng/
-        </loc>
-        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://ralph-wang.github.io/blog/2014/02/08/javaxian-cheng-zhuang-tai/</loc>
-        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://ralph-wang.github.io/blog/2014/02/09/javazhi-boxinghe-unboxing/</loc>
-        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://ralph-wang.github.io/blog/2014/02/11/lian-xiang-jie-long/</loc>
-        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://ralph-wang.github.io/blog/2014/02/15/wei-octopress-tian-jia-tag-gong-neng/
-        </loc>
-        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://ralph-wang.github.io/blog/2014/02/18/lr-guan-lian-zhi-alfresco/</loc>
-        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://ralph-wang.github.io/blog/2014/03/01/yong-jstack-xian-cheng-ding-wei-chu-ti-yan/
+            http://blog.loudou.info/blog/2014/05/15/learning-the-bash-shell-du-shu-bi-ji-bian-liang/
         </loc>
         <lastmod>2014-08-20T02:10:10+08:00</lastmod>
     </url>
     <url>
         <loc>
-            http://ralph-wang.github.io/blog/2014/03/06/yong-awk-cha-kan-path-huan-jing-bian-liang/
+            http://blog.loudou.info/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi/
         </loc>
         <lastmod>2014-08-20T02:10:10+08:00</lastmod>
     </url>
     <url>
-        <loc>http://ralph-wang.github.io/blog/2014/03/15/nodejs-bufferxing-neng-you-shi/</loc>
+        <loc>http://blog.loudou.info/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/</loc>
         <lastmod>2014-08-20T02:10:10+08:00</lastmod>
     </url>
     <url>
-        <loc>
-            http://ralph-wang.github.io/blog/2014/03/21/suo-yin-gong-neng-bi-jiao-mysql-yu-mongodb/
-        </loc>
+        <loc>http://blog.loudou.info/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/</loc>
         <lastmod>2014-08-20T02:10:10+08:00</lastmod>
     </url>
     <url>
-        <loc>http://ralph-wang.github.io/blog/2014/03/25/mian-shi-wen-ti-jie-da/</loc>
-        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://ralph-wang.github.io/blog/2014/04/06/jmeter-an-zhuang/</loc>
-        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://ralph-wang.github.io/blog/2014/04/11/webdriver-zhi-page-object-she-ji-mo-shi/
-        </loc>
-        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://ralph-wang.github.io/blog/2014/04/14/fen-xi-yi-ge-linux-ming-ling/</loc>
-        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://ralph-wang.github.io/blog/2014/05/09/yu-hui-de-jian-kong-shu-ju-ku-lian-jie-shu/
-        </loc>
-        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://ralph-wang.github.io/blog/2014/05/15/learning-the-bash-shell-du-shu-bi-ji-bian-liang/
-        </loc>
-        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://ralph-wang.github.io/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi/
-        </loc>
-        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://ralph-wang.github.io/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/
-        </loc>
-        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://ralph-wang.github.io/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/
-        </loc>
-        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://ralph-wang.github.io/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/</loc>
+        <loc>http://blog.loudou.info/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/</loc>
         <lastmod>2014-08-20T02:19:25+08:00</lastmod>
     </url>
     <url>
-        <loc>http://ralph-wang.github.io/blog/2014/08/01/wei-octopress-tian-jia-toc/</loc>
+        <loc>http://blog.loudou.info/blog/2014/08/01/wei-octopress-tian-jia-toc/</loc>
         <lastmod>2014-08-20T02:10:10+08:00</lastmod>
     </url>
     <url>
-        <loc>http://ralph-wang.github.io/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti/</loc>
+        <loc>http://blog.loudou.info/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti/</loc>
         <lastmod>2014-08-20T02:10:10+08:00</lastmod>
     </url>
     <url>
-        <loc>http://ralph-wang.github.io/blog/2014/08/06/single-number/</loc>
+        <loc>http://blog.loudou.info/blog/2014/08/06/single-number/</loc>
         <lastmod>2014-08-20T02:10:10+08:00</lastmod>
     </url>
     <url>
-        <loc>http://ralph-wang.github.io/blog/2014/08/07/binary-tree-preorder-traversal/</loc>
+        <loc>http://blog.loudou.info/blog/2014/08/07/binary-tree-preorder-traversal/</loc>
         <lastmod>2014-08-20T02:10:10+08:00</lastmod>
     </url>
     <url>
-        <loc>http://ralph-wang.github.io/blog/2014/08/13/linux-bash-de-c-s/</loc>
-        <lastmod>2014-08-20T02:10:10+08:00</lastmod>
+        <loc>http://blog.loudou.info/blog/2014/08/13/linux-bash-de-c-s/</loc>
+        <lastmod>2014-09-06T23:49:03+08:00</lastmod>
     </url>
     <url>
         <loc>
-            http://ralph-wang.github.io/blog/2014/08/20/blockdev-ming-ling-ji-xiang-guan-gai-nian/
+            http://blog.loudou.info/blog/2014/08/20/blockdev-ming-ling-ji-xiang-guan-gai-nian/
         </loc>
         <lastmod>2014-08-21T00:55:22+08:00</lastmod>
     </url>
     <url>
-        <loc>
-            http://ralph-wang.github.io/blog/2014/09/05/python-zhong-de-san-yuan-yun-suan-fu/
-        </loc>
+        <loc>http://blog.loudou.info/blog/2014/09/05/python-zhong-de-san-yuan-yun-suan-fu/</loc>
         <lastmod>2014-09-05T20:28:37+08:00</lastmod>
     </url>
     <url>
-        <loc>http://ralph-wang.github.io/404.html</loc>
+        <loc>http://blog.loudou.info/404.html</loc>
         <lastmod>2014-08-20T02:15:57+08:00</lastmod>
     </url>
     <url>
-        <loc>http://ralph-wang.github.io/about-me/</loc>
+        <loc>http://blog.loudou.info/about-me/</loc>
         <lastmod>2014-08-20T02:10:10+08:00</lastmod>
     </url>
     <url>
-        <loc>http://ralph-wang.github.io/blog/archives/</loc>
-        <lastmod>2014-09-05T20:28:37+08:00</lastmod>
+        <loc>http://blog.loudou.info/blog/archives/</loc>
+        <lastmod>2014-09-06T23:49:03+08:00</lastmod>
     </url>
     <url>
-        <loc>http://ralph-wang.github.io/</loc>
-        <lastmod>2014-09-05T20:28:37+08:00</lastmod>
+        <loc>http://blog.loudou.info/</loc>
+        <lastmod>2014-09-06T23:49:03+08:00</lastmod>
     </url>
     <url>
-        <loc>http://ralph-wang.github.io/robots.txt</loc>
+        <loc>http://blog.loudou.info/robots.txt</loc>
         <lastmod>2014-08-19T20:44:30+08:00</lastmod>
     </url>
 </urlset>

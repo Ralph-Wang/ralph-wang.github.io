@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[分类: Python | 挨踢夜归人]]></title>
-  <link href="http://ralph-wang.github.io//blog/categories/python/atom.xml" rel="self"/>
-  <link href="http://ralph-wang.github.io/"/>
-  <updated>2014-09-05T20:31:16+08:00</updated>
-  <id>http://ralph-wang.github.io/</id>
+  <link href="http://blog.loudou.info//blog/categories/python/atom.xml" rel="self"/>
+  <link href="http://blog.loudou.info/"/>
+  <updated>2014-09-09T03:31:05+08:00</updated>
+  <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[python 中的三元运算符]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/09/05/python-zhong-de-san-yuan-yun-suan-fu/"/>
+    <link href="http://blog.loudou.info/blog/2014/09/05/python-zhong-de-san-yuan-yun-suan-fu/"/>
     <updated>2014-09-05T11:08:30+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/09/05/python-zhong-de-san-yuan-yun-suan-fu</id>
+    <id>http://blog.loudou.info/blog/2014/09/05/python-zhong-de-san-yuan-yun-suan-fu</id>
     <content type="html"><![CDATA[<!--more-->
 <ul id="markdown-toc">
   <li><a href="#section">方法介绍</a>    <ul>

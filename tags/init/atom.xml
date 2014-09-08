@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: init | 挨踢夜归人]]></title>
-  <link href="http://ralph-wang.github.io//tags/init/atom.xml" rel="self"/>
-  <link href="http://ralph-wang.github.io/"/>
-  <updated>2014-09-05T20:31:16+08:00</updated>
-  <id>http://ralph-wang.github.io/</id>
+  <link href="http://blog.loudou.info//tags/init/atom.xml" rel="self"/>
+  <link href="http://blog.loudou.info/"/>
+  <updated>2014-09-09T03:31:05+08:00</updated>
+  <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[用 markdown 写作]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/01/27/yong-markdown-xie-zuo/"/>
+    <link href="http://blog.loudou.info/blog/2014/01/27/yong-markdown-xie-zuo/"/>
     <updated>2014-01-27T18:14:13+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/01/27/yong-markdown-xie-zuo</id>
+    <id>http://blog.loudou.info/blog/2014/01/27/yong-markdown-xie-zuo</id>
     <content type="html"><![CDATA[<p><strong>这是用 octpress + github 写的第一篇博客</strong>
 <!--more--></p>
 

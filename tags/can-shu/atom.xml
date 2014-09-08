@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: 参数 | 挨踢夜归人]]></title>
-  <link href="http://ralph-wang.github.io//tags/can-shu/atom.xml" rel="self"/>
-  <link href="http://ralph-wang.github.io/"/>
-  <updated>2014-09-05T20:31:16+08:00</updated>
-  <id>http://ralph-wang.github.io/</id>
+  <link href="http://blog.loudou.info//tags/can-shu/atom.xml" rel="self"/>
+  <link href="http://blog.loudou.info/"/>
+  <updated>2014-09-09T03:31:05+08:00</updated>
+  <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[blockdev 命令及相关概念]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/08/20/blockdev-ming-ling-ji-xiang-guan-gai-nian/"/>
+    <link href="http://blog.loudou.info/blog/2014/08/20/blockdev-ming-ling-ji-xiang-guan-gai-nian/"/>
     <updated>2014-08-20T23:36:02+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/08/20/blockdev-ming-ling-ji-xiang-guan-gai-nian</id>
+    <id>http://blog.loudou.info/blog/2014/08/20/blockdev-ming-ling-ji-xiang-guan-gai-nian</id>
     <content type="html"><![CDATA[<ul id="markdown-toc">
   <li><a href="#section">命令本身</a></li>
   <li><a href="#report-">report 的内容</a></li>

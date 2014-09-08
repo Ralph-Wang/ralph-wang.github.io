@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[分类: Linux | 挨踢夜归人]]></title>
-  <link href="http://ralph-wang.github.io//blog/categories/linux/atom.xml" rel="self"/>
-  <link href="http://ralph-wang.github.io/"/>
-  <updated>2014-09-05T20:31:16+08:00</updated>
-  <id>http://ralph-wang.github.io/</id>
+  <link href="http://blog.loudou.info//blog/categories/linux/atom.xml" rel="self"/>
+  <link href="http://blog.loudou.info/"/>
+  <updated>2014-09-09T03:31:05+08:00</updated>
+  <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[blockdev 命令及相关概念]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/08/20/blockdev-ming-ling-ji-xiang-guan-gai-nian/"/>
+    <link href="http://blog.loudou.info/blog/2014/08/20/blockdev-ming-ling-ji-xiang-guan-gai-nian/"/>
     <updated>2014-08-20T23:36:02+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/08/20/blockdev-ming-ling-ji-xiang-guan-gai-nian</id>
+    <id>http://blog.loudou.info/blog/2014/08/20/blockdev-ming-ling-ji-xiang-guan-gai-nian</id>
     <content type="html"><![CDATA[<ul id="markdown-toc">
   <li><a href="#section">命令本身</a></li>
   <li><a href="#report-">report 的内容</a></li>
@@ -153,9 +153,9 @@ $ du -h txt
   
   <entry>
     <title type="html"><![CDATA[Linux bash 的 C-s]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/08/13/linux-bash-de-c-s/"/>
+    <link href="http://blog.loudou.info/blog/2014/08/13/linux-bash-de-c-s/"/>
     <updated>2014-08-13T22:22:02+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/08/13/linux-bash-de-c-s</id>
+    <id>http://blog.loudou.info/blog/2014/08/13/linux-bash-de-c-s</id>
     <content type="html"><![CDATA[<p>putty 莫名不响应问题…</p>
 
 <!--more-->
@@ -163,6 +163,7 @@ $ du -h txt
   <li><a href="#section">事故</a></li>
   <li><a href="#emacs">缘起 emacs</a></li>
   <li><a href="#c-sc-q">C-s/C-q</a></li>
+  <li><a href="#c-s-">取消 C-s 绑定</a></li>
 </ul>
 
 <h2 id="section">事故</h2>
@@ -200,6 +201,14 @@ $ du -h txt
   <p>敲下<code>C-q</code> 即可恢复    </p>
 </blockquote>
 
+<p>—2014-09-05—</p>
+
+<h2 id="c-s-">取消 C-s 绑定</h2>
+
+<p><code>stty stop undef</code></p>
+
+<p>若要长期生效, 可以写到个人 profile 中</p>
+
 <hr />
 
 <div class="footnotes">
@@ -214,9 +223,9 @@ $ du -h txt
   
   <entry>
     <title type="html"><![CDATA[df 与 du 结果不匹配问题]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti/"/>
+    <link href="http://blog.loudou.info/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti/"/>
     <updated>2014-08-04T22:03:28+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti</id>
+    <id>http://blog.loudou.info/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti</id>
     <content type="html"><![CDATA[<p>du 与 df 与 文件描述符不得不说的故事</p>
 
 <!--more-->
@@ -364,9 +373,9 @@ python    28230  ralph    3w      REG  202,1 734003200  401905 /home/ralph/tmp/w
   
   <entry>
     <title type="html"><![CDATA[Learning the Bash Shell 笔记-Debug]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/"/>
+    <link href="http://blog.loudou.info/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/"/>
     <updated>2014-06-11T10:40:33+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug</id>
+    <id>http://blog.loudou.info/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug</id>
     <content type="html"><![CDATA[<p>任何开发测试工作都离不开的话题 – Debug. </p>
 
 <p>bash 脚本自然也不能免俗
@@ -720,9 +729,9 @@ done }
   
   <entry>
     <title type="html"><![CDATA[Learning the Bash Shell 笔记-杂项]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/"/>
+    <link href="http://blog.loudou.info/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/"/>
     <updated>2014-06-05T09:49:16+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang</id>
+    <id>http://blog.loudou.info/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang</id>
     <content type="html"><![CDATA[<p>一些零散的内容
 <!--more-->
 ## getopts

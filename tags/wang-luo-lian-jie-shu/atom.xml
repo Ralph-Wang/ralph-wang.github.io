@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: 网络连接数 | 挨踢夜归人]]></title>
-  <link href="http://ralph-wang.github.io//tags/wang-luo-lian-jie-shu/atom.xml" rel="self"/>
-  <link href="http://ralph-wang.github.io/"/>
-  <updated>2014-09-05T20:31:16+08:00</updated>
-  <id>http://ralph-wang.github.io/</id>
+  <link href="http://blog.loudou.info//tags/wang-luo-lian-jie-shu/atom.xml" rel="self"/>
+  <link href="http://blog.loudou.info/"/>
+  <updated>2014-09-09T03:31:05+08:00</updated>
+  <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[迂回的监控数据库连接数]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/05/09/yu-hui-de-jian-kong-shu-ju-ku-lian-jie-shu/"/>
+    <link href="http://blog.loudou.info/blog/2014/05/09/yu-hui-de-jian-kong-shu-ju-ku-lian-jie-shu/"/>
     <updated>2014-05-09T09:45:51+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/05/09/yu-hui-de-jian-kong-shu-ju-ku-lian-jie-shu</id>
+    <id>http://blog.loudou.info/blog/2014/05/09/yu-hui-de-jian-kong-shu-ju-ku-lian-jie-shu</id>
     <content type="html"><![CDATA[<p>不能通过数据库工具监控到连接数时可用的迂回监控方法
 <!--more-->
 ## 原理

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: 数据类型 | 挨踢夜归人]]></title>
-  <link href="http://ralph-wang.github.io//tags/shu-ju-lei-xing/atom.xml" rel="self"/>
-  <link href="http://ralph-wang.github.io/"/>
-  <updated>2014-09-05T20:31:16+08:00</updated>
-  <id>http://ralph-wang.github.io/</id>
+  <link href="http://blog.loudou.info//tags/shu-ju-lei-xing/atom.xml" rel="self"/>
+  <link href="http://blog.loudou.info/"/>
+  <updated>2014-09-09T03:31:05+08:00</updated>
+  <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Java之Boxing和Unboxing]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/02/09/javazhi-boxinghe-unboxing/"/>
+    <link href="http://blog.loudou.info/blog/2014/02/09/javazhi-boxinghe-unboxing/"/>
     <updated>2014-02-09T22:07:16+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/02/09/javazhi-boxinghe-unboxing</id>
+    <id>http://blog.loudou.info/blog/2014/02/09/javazhi-boxinghe-unboxing</id>
     <content type="html"><![CDATA[<p>Java中有两大类数据类型： <strong>基本类型</strong>和<strong>引用类型</strong>。</p>
 
 <p>另外地，<strong>基本类型</strong>们都有其对应的<strong>封装类</strong>。</p>

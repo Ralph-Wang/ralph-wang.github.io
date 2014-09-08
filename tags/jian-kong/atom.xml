@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: 监控 | 挨踢夜归人]]></title>
-  <link href="http://ralph-wang.github.io//tags/jian-kong/atom.xml" rel="self"/>
-  <link href="http://ralph-wang.github.io/"/>
-  <updated>2014-09-05T20:31:16+08:00</updated>
-  <id>http://ralph-wang.github.io/</id>
+  <link href="http://blog.loudou.info//tags/jian-kong/atom.xml" rel="self"/>
+  <link href="http://blog.loudou.info/"/>
+  <updated>2014-09-09T03:31:05+08:00</updated>
+  <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[用jvisualvm监控远程java进程]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/02/06/yong-jvisualvmjian-kong-yuan-cheng-javajin-cheng/"/>
+    <link href="http://blog.loudou.info/blog/2014/02/06/yong-jvisualvmjian-kong-yuan-cheng-javajin-cheng/"/>
     <updated>2014-02-06T21:48:26+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/02/06/yong-jvisualvmjian-kong-yuan-cheng-javajin-cheng</id>
+    <id>http://blog.loudou.info/blog/2014/02/06/yong-jvisualvmjian-kong-yuan-cheng-javajin-cheng</id>
     <content type="html"><![CDATA[<p><strong>jvisualvm</strong>是从<strong>jdk1.6</strong>开始添加到JDK包中的图形化监控工具。</p>
 
 <!--more-->

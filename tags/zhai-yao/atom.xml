@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: 摘要 | 挨踢夜归人]]></title>
-  <link href="http://ralph-wang.github.io//tags/zhai-yao/atom.xml" rel="self"/>
-  <link href="http://ralph-wang.github.io/"/>
-  <updated>2014-09-05T20:31:16+08:00</updated>
-  <id>http://ralph-wang.github.io/</id>
+  <link href="http://blog.loudou.info//tags/zhai-yao/atom.xml" rel="self"/>
+  <link href="http://blog.loudou.info/"/>
+  <updated>2014-09-09T03:31:05+08:00</updated>
+  <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[octopress首页只显示摘要]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/02/06/octopressshou-ye-zhi-xian-shi-zhai-yao/"/>
+    <link href="http://blog.loudou.info/blog/2014/02/06/octopressshou-ye-zhi-xian-shi-zhai-yao/"/>
     <updated>2014-02-06T00:30:36+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/02/06/octopressshou-ye-zhi-xian-shi-zhai-yao</id>
+    <id>http://blog.loudou.info/blog/2014/02/06/octopressshou-ye-zhi-xian-shi-zhai-yao</id>
     <content type="html"><![CDATA[<p>上一篇博客比较长，发现首页居然照样显示了全文</p>
 
 <p>于时查找了下如何只显示摘要

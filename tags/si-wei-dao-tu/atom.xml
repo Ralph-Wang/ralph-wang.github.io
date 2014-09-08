@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: 思维导图 | 挨踢夜归人]]></title>
-  <link href="http://ralph-wang.github.io//tags/si-wei-dao-tu/atom.xml" rel="self"/>
-  <link href="http://ralph-wang.github.io/"/>
-  <updated>2014-09-05T20:31:16+08:00</updated>
-  <id>http://ralph-wang.github.io/</id>
+  <link href="http://blog.loudou.info//tags/si-wei-dao-tu/atom.xml" rel="self"/>
+  <link href="http://blog.loudou.info/"/>
+  <updated>2014-09-09T03:31:05+08:00</updated>
+  <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[联想接龙]]></title>
-    <link href="http://ralph-wang.github.io/blog/2014/02/11/lian-xiang-jie-long/"/>
+    <link href="http://blog.loudou.info/blog/2014/02/11/lian-xiang-jie-long/"/>
     <updated>2014-02-11T23:18:09+08:00</updated>
-    <id>http://ralph-wang.github.io/blog/2014/02/11/lian-xiang-jie-long</id>
+    <id>http://blog.loudou.info/blog/2014/02/11/lian-xiang-jie-long</id>
     <content type="html"><![CDATA[<p><code>你的第一本思维导图操作书</code>中<code>自由联想练习</code>的第一个练习方法
 <!--more--></p>
 
