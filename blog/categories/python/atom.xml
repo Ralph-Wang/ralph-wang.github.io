@@ -4,7 +4,7 @@
   <title><![CDATA[分类: Python | 挨踢夜归人]]></title>
   <link href="http://blog.loudou.info//blog/categories/python/atom.xml" rel="self"/>
   <link href="http://blog.loudou.info/"/>
-  <updated>2014-09-09T03:31:05+08:00</updated>
+  <updated>2014-09-26T09:50:37+08:00</updated>
   <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -99,7 +99,7 @@ def and_or(val):
 
 <h4 id="section-2">不过…</h4>
 
-<p>这种方法有一个缺点, <code>and</code> 后的值对应的布尔量必须为真.
+<p>这种方法有一个缺点, <code>and</code> 后的值对应的布尔值必须为真.
 像下面这个条件, 返回值总会是 -1</p>
 
 <p><code>
