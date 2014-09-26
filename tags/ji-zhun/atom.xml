@@ -4,7 +4,7 @@
   <title><![CDATA[标签: 基准 | 挨踢夜归人]]></title>
   <link href="http://blog.loudou.info//tags/ji-zhun/atom.xml" rel="self"/>
   <link href="http://blog.loudou.info/"/>
-  <updated>2014-09-26T09:50:37+08:00</updated>
+  <updated>2014-09-26T10:02:54+08:00</updated>
   <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -124,7 +124,7 @@ def if_inline(val):
 
 <h2 id="section-3">基准测试</h2>
 
-<p>既然有三种不同的写法, 那三种写法的执行效率是否是样呢.</p>
+<p>既然有三种不同的写法, 那三种写法的执行效率是否一样呢.</p>
 
 <p>于是写了如下测试脚本:</p>
 
