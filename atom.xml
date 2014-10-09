@@ -4,7 +4,7 @@
   <title><![CDATA[挨踢夜归人]]></title>
   <link href="http://blog.loudou.info/atom.xml" rel="self"/>
   <link href="http://blog.loudou.info/"/>
-  <updated>2014-10-09T17:58:06+08:00</updated>
+  <updated>2014-10-09T21:04:40+08:00</updated>
   <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -37,7 +37,8 @@
 <p>发现原来 bash 也支持正则表达式(误).   <br />
 大概说法是这样的. 在 <code>[[ ]]</code> 中写正则就可以了. 下面是一个例子</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><pre><code class=""><span class="line">if [[ 1 =~ [0-9] ]];then echo 0;fi</span></code></pre></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="k">if</span> <span class="o">[[</span> <span class="nv">1</span> <span class="o">=</span>~ <span class="o">[</span>0-9<span class="o">]</span> <span class="o">]]</span>;<span class="k">then </span><span class="nb">echo </span>0;fi
+</span></code></pre></div></figure></notextile></div>
 
 <p>于是用这种方式, 完成了最初那个 ip 格式判断的需求…</p>
 
@@ -52,7 +53,8 @@
 <p>一般来说, 需求完成了. 我们就可以收工了.  <br />
 但本着逗[哔]的探究精神, 对 <code>[[ ]]</code> 做了如下测试</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><pre><code class=""><span class="line">if [[ 1 = [0-9] ]]];then echo 0;fi</span></code></pre></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="k">if</span> <span class="o">[[</span> <span class="nv">1</span> <span class="o">=</span> <span class="o">[</span>0-9<span class="o">]</span> <span class="o">]]]</span>;<span class="k">then </span><span class="nb">echo </span>0;fi
+</span></code></pre></div></figure></notextile></div>
 
 <p>结果输出: 0.</p>
 
@@ -61,8 +63,9 @@
 <p>正则的话, 除了 match 还有 search 方式.  <br />
 Ok, 测试下:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><pre><code class=""><span class="line">if [[ abc123ddd = [0-9] ]];then echo 0;fi
-</span><span class="line">if [[ abc123ddd =~ [0-9] ]];then echo 0;fi</span></code></pre></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="k">if</span> <span class="o">[[</span> <span class="nv">abc123ddd</span> <span class="o">=</span> <span class="o">[</span>0-9<span class="o">]</span> <span class="o">]]</span>;<span class="k">then </span><span class="nb">echo </span>0;fi
+</span><span class="line"><span class="k">if</span> <span class="o">[[</span> <span class="nv">abc123ddd</span> <span class="o">=</span>~ <span class="o">[</span>0-9<span class="o">]</span> <span class="o">]]</span>;<span class="k">then </span><span class="nb">echo </span>0;fi
+</span></code></pre></div></figure></notextile></div>
 
 <p>第一行无输出, 第二行输出: 0.</p>
 
@@ -70,20 +73,23 @@ Ok, 测试下:</p>
 
 <p>好了, 再来试一下其它元字符</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><pre><code class=""><span class="line">if [[ 12 = [0-9]. ]];then echo 0;fi</span></code></pre></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="k">if</span> <span class="o">[[</span> <span class="nv">12</span> <span class="o">=</span> <span class="o">[</span>0-9<span class="o">]</span>. <span class="o">]]</span>;<span class="k">then </span><span class="nb">echo </span>0;fi
+</span></code></pre></div></figure></notextile></div>
 
 <p>没结果输出</p>
 
 <p>哇嚓, 这又是怎么回事…</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><pre><code class=""><span class="line">if [[ 12 = [0-9]* ]];then echo 0;fi</span></code></pre></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="k">if</span> <span class="o">[[</span> <span class="nv">12</span> <span class="o">=</span> <span class="o">[</span>0-9<span class="o">]</span>* <span class="o">]]</span>;<span class="k">then </span><span class="nb">echo </span>0;fi
+</span></code></pre></div></figure></notextile></div>
 
 <p>输出: 0.</p>
 
 <p>难道…</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><pre><code class=""><span class="line">if [[ 12 = ?? ]];then echo 0;fi
-</span><span class="line">if [[ 12 = * ]];then echo 0;fi</span></code></pre></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="k">if</span> <span class="o">[[</span> <span class="nv">12</span> <span class="o">=</span> ?? <span class="o">]]</span>;<span class="k">then </span><span class="nb">echo </span>0;fi
+</span><span class="line"><span class="k">if</span> <span class="o">[[</span> <span class="nv">12</span> <span class="o">=</span> * <span class="o">]]</span>;<span class="k">then </span><span class="nb">echo </span>0;fi
+</span></code></pre></div></figure></notextile></div>
 
 <p>以上两行均有输出.</p>
 
