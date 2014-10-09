@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>BASH 中 的正则表达式(误) - 挨踢夜归人</title>
+  <meta name="author" content="_漏斗">
+
+  <meta name="description" content="在 bash 中使用 glob 表达式进行字符串匹配">
+  <meta name="keywords" content="bashglob正则">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <!--<link rel="canonical" href="http://blog.loudou.info/blog/2014/10/09/bash-zhong-de-zheng-ze-biao-da-shi-wu">-->
+  <link href="/favicon.png" type="image/png" rel="icon">
+  <link href="/atom.xml" rel="alternate" title="挨踢夜归人" type="application/atom+xml">
+
+  <link href="/css/style.css" rel="stylesheet" type="text/css">
+<link href="/stylesheets/screen.css" rel="stylesheet" type="text/css">
+
+
+</head>
+
+  <body   >
+    <div id="wrap">
+      <header role="banner">
+        <header class="head" role="navigation">
+<a style="position:relative" href="https://github.com/Ralph-Wang/" id="fork">
+    <img style="position:absolute" src="/imgs/fork_me.png" width=149 height=149 alt="Fork me on Github" /></a>
+<div class="header fn-clear">
+    <section class="header-cnt fn-clear">
+    <div class="logo">
+        <div class="logo-cnt">
+            <h1><a href="">挨踢夜归人</a></h1>
+            <h2>Write as a Doubi.  ╮(￣▽ ￣)╭</h2>
+        </div>
+    </div>
+    <nav class="nav">
+    <ul>
+        <li >
+        <a href="/">玄关</a>
+        </li>
+        <li >
+        <a href="/blog/archives">历史事件</a>
+        </li>
+        <li >
+        <a href="/about-me">这个逗[哔]</a>
+        </li>
+        <li >
+        <a href="/NotFound">404Help</a>
+        </li>
+        <li>
+        <a title="把这个链接拖到你的Chrome收藏夹工具栏中"
+            href='javascript:(function(){function c(){var
+            e=document.createElement("link");e.setAttribute("type","text/css");e.setAttribute("rel","stylesheet");e.setAttribute("href",f);e.setAttribute("class",l);document.body.appendChild(e)}function
+            h(){var e=document.getElementsByClassName(l);for(var
+            t=0;t<e.length;t++){document.body.removeChild(e[t])}}function
+            p(){var
+            e=document.createElement("div");e.setAttribute("class",a);document.body.appendChild(e);setTimeout(function(){document.body.removeChild(e)},100)}function
+            d(e){return{height:e.offsetHeight,width:e.offsetWidth}}function
+            v(i){var s=d(i);return
+            s.height>e&&s.height<n&&s.width>t&&s.width<r}function
+            m(e){var t=e;var
+            n=0;while(!!t){n+=t.offsetTop;t=t.offsetParent}return
+            n}function g(){var
+            e=document.documentElement;if(!!window.innerWidth){return
+            window.innerHeight}else if(e&&!isNaN(e.clientHeight)){return
+            e.clientHeight}return 0}function
+            y(){if(window.pageYOffset){return window.pageYOffset}return
+            Math.max(document.documentElement.scrollTop,document.body.scrollTop)}function
+            E(e){var t=m(e);return t>=w&&t<=b+w}function S(){var
+            e=document.createElement("audio");e.setAttribute("class",l);e.src=i;e.loop=false;e.addEventListener("canplay",function(){setTimeout(function(){x(k)},500);setTimeout(function(){N();p();for(var
+            e=0;e<O.length;e++){T(O[e])}},15500)},true);e.addEventListener("ended",function(){N();h()},true);e.innerHTML="
+            <p>If you are reading this, it is because your browser does
+            not support the audio element. We recommend that you get a
+            new browser.</p>
+            <p>";document.body.appendChild(e);e.play()}function
+            x(e){e.className+=" "+s+" "+o}function T(e){e.className+="
+            "+s+" "+u[Math.floor(Math.random()*u.length)]}function
+            N(){var e=document.getElementsByClassName(s);var t=new
+            RegExp("\\b"+s+"\\b");for(var
+            n=0;n<e.length;){e[n].className=e[n].className.replace(t,"")}}var
+            e=30;var t=30;var n=350;var r=350;var
+            i="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";var
+            s="mw-harlem_shake_me";var o="im_first";var
+            u=["im_drunk","im_baked","im_trippin","im_blown"];var
+            a="mw-strobe_light";var
+            f="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";var
+            l="mw_added_css";var b=g();var w=y();var
+            C=document.getElementsByTagName("*");var k=null;for(var
+            L=0;L<C.length;L++){var
+            A=C[L];if(v(A)){if(E(A)){k=A;break}}}if(A===null){console.warn("Could
+            not find a node of the right size. Please try a different
+            page.");return}c();S();var O=[];for(var
+            L=0;L<C.length;L++){var
+            A=C[L];if(v(A)){O.push(A)}}})()'>High一下!</a>
+        </li>
+    </ul>
+    </nav>
+    </section>
+</div>
+</header>
+
+
+      </header>
+      <div id="main" class="container">
+        <div id="content">
+          <section class="content">
+<div class="content-cnt fn-clear">
+    <div class="main fn-clear">
+        <article class="entry" role="article">
+        
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-10-09T14:45:30+08:00" pubdate data-updated="true">Oct 9<span>th</span>, 2014</time>
+        
+      </p>
+    
+    
+    <h1 class="entry-title">
+        BASH 中 的正则表达式(误)
+        
+    </h1>
+    
+  </header>
+
+
+<div class="entry-content clearfix"><!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">源</a></li>
+  <li><a href="#section-1">思考</a></li>
+  <li><a href="#section-2">总结</a></li>
+</ul>
+
+<h2 id="section">源</h2>
+
+<p>今天在写一个 bash 脚本时, 有一部分需要判断 ip 的格式.  <br />
+这样的功能自然就想到了高大上的<code>正则表达式</code>同学.</p>
+
+<p>但记得 bash 并不直接支持正则表达式. 于是用 <code>sed</code> 实现了这个功能.</p>
+
+<p>不过, 因为好奇大牛们是怎么处理类似问题的, 仍然去搜索了一下.</p>
+
+<p>发现原来 bash 也支持正则表达式(误).   <br />
+大概说法是这样的. 在 <code>[[ ]]</code> 中写正则就可以了. 下面是一个例子</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><pre><code class=""><span class="line">if [[ 1 =~ [0-9] ]];then echo 0;fi</span></code></pre></div></figure></notextile></div>
+
+<p>于是用这种方式, 完成了最初那个 ip 格式判断的需求…</p>
+
+<p>好吧, 我承认是直接抄这里的: <a href="http://openwares.net/linux/bash_regex_ip_port.html">BASH脚本中使用正则表达式检查IP地址和端口号</a></p>
+
+<blockquote>
+  <p>PS. 测试过 255.255.255.256 这样的 ip 是不通过的 : )</p>
+</blockquote>
+
+<h2 id="section-1">思考</h2>
+
+<p>一般来说, 需求完成了. 我们就可以收工了.  <br />
+但本着逗[哔]的探究精神, 对 <code>[[ ]]</code> 做了如下测试</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><pre><code class=""><span class="line">if [[ 1 = [0-9] ]]];then echo 0;fi</span></code></pre></div></figure></notextile></div>
+
+<p>结果输出: 0.</p>
+
+<p>哇嚓, 所以 <code>=</code> 就可以了吗? 那 <code>=~</code> 是用来干嘛的???</p>
+
+<p>正则的话, 除了 match 还有 search 方式.  <br />
+Ok, 测试下:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><pre><code class=""><span class="line">if [[ abc123ddd = [0-9] ]];then echo 0;fi
+</span><span class="line">if [[ abc123ddd =~ [0-9] ]];then echo 0;fi</span></code></pre></div></figure></notextile></div>
+
+<p>第一行无输出, 第二行输出: 0.</p>
+
+<p>明了: <code>=</code> 是完全匹配, 即 match; <code>=~</code> 部分匹配, 即 search</p>
+
+<p>好了, 再来试一下其它元字符</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><pre><code class=""><span class="line">if [[ 12 = [0-9]. ]];then echo 0;fi</span></code></pre></div></figure></notextile></div>
+
+<p>没结果输出</p>
+
+<p>哇嚓, 这又是怎么回事…</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><pre><code class=""><span class="line">if [[ 12 = [0-9]* ]];then echo 0;fi</span></code></pre></div></figure></notextile></div>
+
+<p>输出: 0.</p>
+
+<p>难道…</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><pre><code class=""><span class="line">if [[ 12 = ?? ]];then echo 0;fi
+</span><span class="line">if [[ 12 = * ]];then echo 0;fi</span></code></pre></div></figure></notextile></div>
+
+<p>以上两行均有输出.</p>
+
+<p>原来如此, <code>[[ ]]</code> 并不支持正则表达式.
+它所支持的是 <code>glob</code> 表达式, 也就是我们常说的 <code>通配符</code></p>
+
+<h2 id="section-2">总结</h2>
+
+<p>探索结束. 总结一下</p>
+
+<ol>
+  <li><code>[[ expression ]]</code> 并不支持正则表达式, 其支持的是 <code>glob</code> 表达式</li>
+  <li><code>[[ ]]</code> 中可以用 <code>=</code> 表达匹配, 要示左侧字符串和右侧 <code>glob</code> 完全匹配</li>
+  <li>也可以使用 <code>=~</code> 进行搜索, 只要左侧字符串有部分与右侧匹配即可</li>
+</ol>
+
+<hr />
+</div>
+
+
+        <footer>
+        <p class="meta text-muted">
+        
+  
+
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard">Posted by <span class="fn">_漏斗</span></span>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-10-09T14:45:30+08:00" pubdate data-updated="true">Oct 9<span>th</span>, 2014</time>
+        
+
+<span class="glyphicon glyphicon-folder-open"></span>&nbsp;
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>Linux</a>
+  
+</span>
+
+
+        
+
+<br />
+<span class="glyphicon glyphicon-tags"></span>&nbsp;
+<span class="tags">
+    
+    <a class='tag' href='/tags/bash/'>bash</a>, <a class='tag' href='/tags/glob/'>glob</a>, <a class='tag' href='/tags/zheng-ze/'>正则</a>
+    
+</span>
+
+
+        </p>
+        
+        <nav class="pagination-link">
+            
+            <a class="prev" href="/blog/2014/09/05/python-zhong-de-san-yuan-yun-suan-fu/"
+                title="Previous Post: python 中的三元运算符">&laquo; python 中的三元运算符</a>
+            
+            
+        </nav>
+        
+        
+        <div class="sharing">
+  
+  
+  
+  
+<!-- Baidu Share BEGIN -->
+<div class="bdsharebuttonbox"><a href="#" class="bds_more"
+    data-cmd="more">分享到：</a><a href="#" class="bds_qzone"
+    data-cmd="qzone" title="分享到QQ空间">QQ空间</a><a href="#"
+    class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a><a
+    href="#" class="bds_tqq" data-cmd="tqq"
+    title="分享到腾讯微博">腾讯微博</a><a href="#" class="bds_renren"
+    data-cmd="renren" title="分享到人人网">人人网</a><a href="#"
+    class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new
+Date()/36e5)];</script>
+<!-- Baidu Share END -->
+
+
+<!-- Duoshuo Comment BEGIN -->
+<div class="ds-thread" data-form-position="top" data-order="asc" data-limit=15 ></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"ralph-wang"};
+(function() {
+ var ds = document.createElement('script');
+ ds.type = 'text/javascript';ds.async = true;
+ ds.src = 'http://static.duoshuo.com/embed.js';
+ ds.charset = 'UTF-8';
+ (document.getElementsByTagName('head')[0] 
+  ||
+  document.getElementsByTagName('body')[0]).appendChild(ds);
+ })();
+</script>
+<!-- Duoshuo Comment END -->
+
+
+</div>
+
+        
+        </footer>
+        </article>
+        
+    </div>
+
+    <div class="aside fn-clear">
+        
+        <aside>
+        
+        
+<iframe width="100%" height="420" class="share_self"  frameborder="0"
+    scrolling="no"
+    src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=420&fansRow=2&ptype=0&speed=0&skin=1&isTitle=0&noborder=1&isWeibo=1&isFans=0&uid=1854716251&verifier=375b89d6&dpc=1"></iframe>
+
+<section>
+<div class="box fn-clear">
+    <h3 class="title">Recent Posts</h3>
+    
+
+    
+    <ul>
+        <li>&#9830;<a href="/blog/2014/10/09/bash-zhong-de-zheng-ze-biao-da-shi-wu/">BASH 中 的正则表达式(误)</a></li>
+        
+    <ul>
+        <li>&#8227;<a href="/blog/2014/09/05/python-zhong-de-san-yuan-yun-suan-fu/">Python 中的三元运算符</a></li>
+        
+    <ul>
+        <li>&#8227;<a href="/blog/2014/08/20/blockdev-ming-ling-ji-xiang-guan-gai-nian/">Blockdev 命令及相关概念</a></li>
+        
+    <ul>
+        <li>&#8227;<a href="/blog/2014/08/13/linux-bash-de-c-s/">Linux Bash 的 C-s</a></li>
+        
+    <ul>
+        <li>&#8227;<a href="/blog/2014/08/07/binary-tree-preorder-traversal/">Binary Tree Preorder Traversal</a></li>
+        
+    </ul>
+</div>
+</section>
+<section class="panel panel-default">
+  <div class="box fn-clear">
+    <h3 class="title">Categories</h3>
+  <ul>
+      <li>&#8227<a class='list-group-item' href='/blog/categories/linux/'>Linux <span class='badge'>11</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/python/'>Python <span class='badge'>1</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/java/'>java <span class='badge'>4</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/leetcode/'>leetcode <span class='badge'>2</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/nodejs/'>nodejs <span class='badge'>1</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/octopress/'>octopress <span class='badge'>5</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/qi-ta/'>其它 <span class='badge'>2</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/shu-ju-ku/'>数据库 <span class='badge'>1</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/ce-shi-gong-ju/'>测试工具 <span class='badge'>3</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/cheng-xu-she-ji-yu-suan-fa/'>程序设计与算法 <span class='badge'>1</span></a></li>
+
+  </ul>
+  </div>
+</section>
+<section class="panel panel-default">
+<div class="box fn-clear">
+    <h3 class="title">Tag Clouds</h3>
+    <ul class="tag-cloud" style="padding-left:10px">
+        <a style="color:#d8d8d8;font-size: 100%" href="/tags/gong-ju/">工具</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/jian-kong/">监控</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/top/">top</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/java/">Java</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/xian-cheng/">线程</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/cheng-xu-she-ji/">程序设计</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/rdbms/">RDBMS</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/markdown/">markdown</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/si-wei-xun-lian/">思维训练</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/python/">python</a>
+
+    </ul>
+</div>
+</section>
+
+        
+        </aside>
+        
+    </div>
+</div>
+</section>
+
+        </div>
+      </div>
+    </div>
+    <footer role="contentinfo"><div class="foot-btn">
+    <div class="foot-btn-det">
+        <p class="copyright"> Copyright &copy; 2014 - _漏斗</p>
+<p class="author">Powered by <a href="http://octopress.org">Octopress</a>, Inspired by <a href="https://github.com/pizn/blogTheme/tree/master/BlackCubeTheme">BlackCube</a>.</p>
+
+    </div>
+</div>
+</footer>
+    <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+<script src="/js/smoothscroll.js"></script>
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47787507-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+  </body>
+</html>
