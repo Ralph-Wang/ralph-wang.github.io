@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[标签: 线程安全 | 挨踢夜归人]]></title>
+  <link href="http://blog.loudou.info//tags/xian-cheng-an-quan/atom.xml" rel="self"/>
+  <link href="http://blog.loudou.info/"/>
+  <updated>2014-10-10T15:31:48+08:00</updated>
+  <id>http://blog.loudou.info/</id>
+  <author>
+    <name><![CDATA[_漏斗]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[count += 1 不是原子级的]]></title>
+    <link href="http://blog.loudou.info/blog/2014/10/10/count-plus-equals-1-bu-shi-yuan-zi-ji-de/"/>
+    <updated>2014-10-10T12:04:09+08:00</updated>
+    <id>http://blog.loudou.info/blog/2014/10/10/count-plus-equals-1-bu-shi-yuan-zi-ji-de</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">怀疑</a></li>
+  <li><a href="#section-1">测试</a></li>
+  <li><a href="#section-2">分析</a></li>
+  <li><a href="#section-3">扩展</a></li>
+</ul>
+
+<h2 id="section">怀疑</h2>
+
+<p>一直以为 Python 中类似 <code>count += 1</code> 的操作是原子级的…</p>
+
+<p>于是在看到如下代码时, 产生了怀疑</p>
+
+<p><code>python
+done_num = 0
+lock = threading.RLock()
+# 省略...
+class Trans(threading.Thread):
+    def run(self):
+        global count
+        # ...
+        lock.acquire()
+        count += 1
+        lock.release()
+        # ...
+</code></p>
+
+<p>看到这部分代码时, 第一反应是为毛这种统计要用全局变量做啊…  <br />
+且不说这种用全局变量的行为; 为毛做个计数 + 1 也要锁一下啊. 难道计数不是原子级的吗!!!</p>
+
+<h2 id="section-1">测试</h2>
+
+<p>本着, <code>如果不出代码出过问题, 不会在这么逗[哔][^1]的地方加锁</code> 的想法. 用以下代码进行了测试.</p>
+
+<p>```python</p>
+
+<p>count = 0</p>
+
+<p>class GlobalCount(threading.Thread):
+    def <strong>init</strong>(self):
+        super(GlobalCount, self).<strong>init</strong>()</p>
+
+<pre><code>def run(self):
+    global count
+    for dummy_i in xrange(10):
+        count += 1
+</code></pre>
+
+<p>threads = []
+threads_num = 100000</p>
+
+<p>for dummy_i in xrange(threads_num):
+    threads.append(GlobalCount())</p>
+
+<p>for thread in threads:
+    thread.start()</p>
+
+<p>for thread in threads:
+    thread.join()</p>
+
+<p>print count
+```</p>
+
+<p>如果 count += 1 是线程安全的话, 上面这段脚本执行完成后输出应该是 <code>1000000</code>. 不会多, 也不会少</p>
+
+<p>执行以上脚本三次的结果:</p>
+
+<p><code>bash
+999990
+999982
+999940
+</code></p>
+
+<p>哇嚓嘞, 还真是线程不安全的…</p>
+
+<h2 id="section-2">分析</h2>
+
+<p>好吧, 即然线程不安全了, 那为什么呢? 为什么做个加法会线程不安全呢?</p>
+
+<p>来看下 <code>count += 1</code> 的编译码:</p>
+
+<p><code>
+3 LOAD_CONST               1 (1)
+6 INPLACE_ADD
+7 STORE_GLOBAL             0 (count)
+</code></p>
+
+<p>假设如下场景:  <br />
+1. 如果有那个一个线程完成 <code>3 LOAD_CONST</code> 后, 因为时间片消耗完了停了一小会儿. 我们假设这时 count 为 999  <br />
+2. 这时候, 其它线程正常进行, 并且 count 已经增加到 1003 或者更大.  <br />
+3. <code>1.</code>中的线程又得到的时间片, 完成后续步骤. 这时 count 被改回到 1000.  <br />
+4. 其它线程的计数被抹掉了…</p>
+
+<h2 id="section-3">扩展</h2>
+
+<p>类似的在其它语言中 <code>count++</code> 等操作也有不是线程安全的</p>
+
+<p>相关阅读: <a href="https://www.google.com/?gws_rd=ssl#q=i%2B%2B+%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8">来自Google</a></p>
+
+<hr />
+
+]]></content>
+  </entry>
+  
+</feed>

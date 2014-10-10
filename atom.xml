@@ -4,7 +4,7 @@
   <title><![CDATA[挨踢夜归人]]></title>
   <link href="http://blog.loudou.info/atom.xml" rel="self"/>
   <link href="http://blog.loudou.info/"/>
-  <updated>2014-10-09T21:04:40+08:00</updated>
+  <updated>2014-10-10T15:31:48+08:00</updated>
   <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,110 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[count += 1 不是原子级的]]></title>
+    <link href="http://blog.loudou.info/blog/2014/10/10/count-plus-equals-1-bu-shi-yuan-zi-ji-de/"/>
+    <updated>2014-10-10T12:04:09+08:00</updated>
+    <id>http://blog.loudou.info/blog/2014/10/10/count-plus-equals-1-bu-shi-yuan-zi-ji-de</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">怀疑</a></li>
+  <li><a href="#section-1">测试</a></li>
+  <li><a href="#section-2">分析</a></li>
+  <li><a href="#section-3">扩展</a></li>
+</ul>
+
+<h2 id="section">怀疑</h2>
+
+<p>一直以为 Python 中类似 <code>count += 1</code> 的操作是原子级的…</p>
+
+<p>于是在看到如下代码时, 产生了怀疑</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="n">done_num</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class="line"><span class="n">lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">RLock</span><span class="p">()</span>
+</span><span class="line"><span class="c"># 省略...</span>
+</span><span class="line"><span class="k">class</span> <span class="nc">Trans</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">global</span> <span class="n">count</span>
+</span><span class="line">        <span class="c"># ...</span>
+</span><span class="line">        <span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+</span><span class="line">        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class="line">        <span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+</span><span class="line">        <span class="c"># ...</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>看到这部分代码时, 第一反应是为毛这种统计要用全局变量做啊…  <br />
+且不说这种用全局变量的行为; 为毛做个计数 + 1 也要锁一下啊. 难道计数不是原子级的吗!!!</p>
+
+<h2 id="section-1">测试</h2>
+
+<p>本着, <code>如果不出代码出过问题, 不会在这么逗[哔][^1]的地方加锁</code> 的想法. 用以下代码进行了测试.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class="line">
+</span><span class="line"><span class="k">class</span> <span class="nc">GlobalCount</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="nb">super</span><span class="p">(</span><span class="n">GlobalCount</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">global</span> <span class="n">count</span>
+</span><span class="line">        <span class="k">for</span> <span class="n">dummy_i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+</span><span class="line">            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class="line">
+</span><span class="line"><span class="n">threads</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class="line"><span class="n">threads_num</span> <span class="o">=</span> <span class="mi">100000</span>
+</span><span class="line">
+</span><span class="line"><span class="k">for</span> <span class="n">dummy_i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">threads_num</span><span class="p">):</span>
+</span><span class="line">    <span class="n">threads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">GlobalCount</span><span class="p">())</span>
+</span><span class="line">
+</span><span class="line"><span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+</span><span class="line">    <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</span><span class="line">
+</span><span class="line"><span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+</span><span class="line">    <span class="n">thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="n">count</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>如果 count += 1 是线程安全的话, 上面这段脚本执行完成后输出应该是 <code>1000000</code>. 不会多, 也不会少</p>
+
+<p>执行以上脚本三次的结果:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line">999990
+</span><span class="line">999982
+</span><span class="line">999940
+</span></code></pre></div></figure></notextile></div>
+
+<p>哇嚓嘞, 还真是线程不安全的…</p>
+
+<h2 id="section-2">分析</h2>
+
+<p>好吧, 即然线程不安全了, 那为什么呢? 为什么做个加法会线程不安全呢?</p>
+
+<p>来看下 <code>count += 1</code> 的编译码:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line">3 LOAD_CONST               1 <span class="o">(</span>1<span class="o">)</span>
+</span><span class="line">6 INPLACE_ADD
+</span><span class="line">7 STORE_GLOBAL             0 <span class="o">(</span>count<span class="o">)</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>假设如下场景:  <br />
+1. 如果有那个一个线程完成 <code>3 LOAD_CONST</code> 后, 因为时间片消耗完了停了一小会儿. 我们假设这时 count 为 999  <br />
+2. 这时候, 其它线程正常进行, 并且 count 已经增加到 1003 或者更大.  <br />
+3. <code>1.</code>中的线程又得到的时间片, 完成后续步骤. 这时 count 被改回到 1000.  <br />
+4. 其它线程的计数被抹掉了…</p>
+
+<h2 id="section-3">扩展</h2>
+
+<p>类似的在其它语言中 <code>count++</code> 等操作也有不是线程安全的</p>
+
+<p>相关阅读: <a href="https://www.google.com/?gws_rd=ssl#q=i%2B%2B+%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8">来自Google</a></p>
+
+<hr />
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[BASH 中 的正则表达式(误)]]></title>
@@ -2693,92 +2797,6 @@ nscannedObjects 表示最终结果中查询过的对象数, 使用索引之前�
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="javascript"><span class="line"><span class="nx">db</span><span class="p">.</span><span class="nx">tbl</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">hint</span><span class="p">({</span><span class="nx">value</span> <span class="o">:</span> <span class="mi">1</span><span class="p">});</span>
 </span></code></pre></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[nodejs Buffer性能优势]]></title>
-    <link href="http://blog.loudou.info/blog/2014/03/15/nodejs-bufferxing-neng-you-shi/"/>
-    <updated>2014-03-15T21:24:23+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/03/15/nodejs-bufferxing-neng-you-shi</id>
-    <content type="html"><![CDATA[<p>最近在读朴大神的 <code>深入浅出 Nodejs</code>, 其中不乏性能相关话题.</p>
-
-<p>这里选一个出来做个测试
-<!--more--></p>
-
-<h2 id="section">准备</h2>
-<p>在 Buffer 一章中, 有这么一个测试.</p>
-
-<p>在 Web 服务中, 使用 Buffer 进行数据传输, 效率要比直接使用字符串快.</p>
-
-<p>光看结果还是不太信服, 于是来做个验证.</p>
-
-<p>先上源码:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>server1.js</span></figcaption><div class="highlight"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">size</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">;</span> <span class="c1">// 10K</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">helloworld</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
-</span><span class="line"><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">size</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">	<span class="nx">helloworld</span> <span class="o">+=</span> <span class="s1">&#39;a&#39;</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">	<span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
-</span><span class="line">	<span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">helloworld</span><span class="p">);</span>
-</span><span class="line"><span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8888</span><span class="p">);</span>
-</span></code></pre></div></figure></notextile></div>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>server2.js</span></figcaption><div class="highlight"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">size</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">;</span> <span class="c1">// 10K</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">helloworld</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
-</span><span class="line"><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">size</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">	<span class="nx">helloworld</span> <span class="o">+=</span> <span class="s1">&#39;a&#39;</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">helloworld</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Buffer</span><span class="p">(</span><span class="nx">helloworld</span><span class="p">);</span> <span class="c1">// 改用 Buffer 进行传输</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">	<span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
-</span><span class="line">	<span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">helloworld</span><span class="p">);</span>
-</span><span class="line"><span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8888</span><span class="p">);</span>
-</span></code></pre></div></figure></notextile></div>
-
-<p>server1 和 server2 的差别就只有那一句 <code>helloworld = new Buffer(helloworld)</code>.</p>
-
-<p>现在分别启动 server1 和 server2</p>
-
-<p>并用 ab 测试, 同时将结果分别保存到 res1.txt 和 res2.txt</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line">ab -c 200 -t http://100 10.161.130.110:8888/ &gt; res1.txt
-</span><span class="line">ab -c 200 -t http://100 10.161.130.110:8888/ &gt; res2.txt
-</span></code></pre></div></figure></notextile></div>
-
-<h2 id="section-1">测试结果</h2>
-<p>比较一下测试结果</p>
-
-<p><img src="http://blog.loudou.info/blogimgs/node-buffer-perf.png" alt="node-buffer-perf" /></p>
-
-<p>可以看到, 使用 Buffer 后 QPS 和传输率确实有一定提升.</p>
-
-<h2 id="cpu-">CPU 利用率</h2>
-
-<p>监控两次测试的 CPU 使用情况并统计: (统计时, 取 CPU 平稳的 6 次结果并计算用户态 CPU 平均值)</p>
-
-<p><img src="http://blog.loudou.info/blogimgs/node-buffer-cpu.png" alt="node-buffer-cpu" /></p>
-
-<p>两次测试中, CPU 利用率均达到了 100%, 但不使用 Buffer 时, 用户态的 CPU 更高一些.</p>
-
-<p>高出来这一部分, 应该就是进行额外的 Buffer/String 转换消耗掉的.</p>
-
-<p>&#8212;&#8212;&#8212;&#8212;&#8212;</p>
-
-<p>2014-04-12 更新</p>
-
-<p>awk 脚本中 <code>sum/6</code> 应该改为 <code>sum/NR</code> 这样更通用</p>
 ]]></content>
   </entry>
   
