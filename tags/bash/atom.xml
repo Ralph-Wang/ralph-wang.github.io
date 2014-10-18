@@ -4,7 +4,7 @@
   <title><![CDATA[标签: bash | 挨踢夜归人]]></title>
   <link href="http://blog.loudou.info//tags/bash/atom.xml" rel="self"/>
   <link href="http://blog.loudou.info/"/>
-  <updated>2014-10-10T15:31:48+08:00</updated>
+  <updated>2014-10-18T22:39:04+08:00</updated>
   <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,99 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[BASH 特别的 Patch 技巧]]></title>
+    <link href="http://blog.loudou.info/blog/2014/10/18/bash-te-bie-de-patch-ji-qiao/"/>
+    <updated>2014-10-18T21:43:24+08:00</updated>
+    <id>http://blog.loudou.info/blog/2014/10/18/bash-te-bie-de-patch-ji-qiao</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">问题</a></li>
+  <li><a href="#section-1">解决方案</a></li>
+  <li><a href="#section-2">相关工具</a></li>
+</ul>
+
+<h2 id="section">问题</h2>
+
+<p>9 月底爆出的 bash 漏洞, Mac 自然也受到影响.</p>
+
+<p>但当时并没有找到苹果官方的解决方案,  <br />
+而 bash 官方释出的补丁方式完全看不懂怎么用…  <br />
+再加上就快升级 10.10 了.</p>
+
+<p>想着也许会在升级时把补丁打上呢.  <br />
+(呃, 其实是懒得研究官方补丁怎么用)  <br />
+也就放着没管了</p>
+
+<p>但昨天升级完后, 却发现并没有打上补丁.</p>
+
+<p>只好硬着头皮上了.</p>
+
+<h2 id="section-1">解决方案<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></h2>
+
+<p>因为官方的补丁都是打在源码上的,  <br />
+所以我们需要去 <a href="http://ftp.gnu.org/gnu/bash/">http://ftp.gnu.org/gnu/bash/</a> 下载 bash 的源码</p>
+
+<p>没什么特别的需求的话, 就直接选最新的 4.3 版本好了. 懒人点 <a href="http://ftp.gnu.org/gnu/bash/bash-4.3.tar.gz">这里</a></p>
+
+<p>下载完成后直接解压即可</p>
+
+<p><code>bash
+$ tar zxvf bash-4.3.tar.gz
+</code></p>
+
+<p>现在不着急编译安装, 因为我们还需要在源码上打补丁.</p>
+
+<p>我们需要到 <a href="http://ftp.gnu.org/gnu/bash/bash-4.3-patches/">bash-4.3-patches</a> 目录下把 01~30 补丁全部下载下来.</p>
+
+<p>因为不想一个一个点, 所以玩了点小花样:</p>
+
+<p><code>bash
+$ seq -f %02g 30| xargs -Ix curl -O &lt;path-of-patches&gt;/bash43-0x
+</code></p>
+
+<p>好了, 把下载好的这些个补丁放到 bash 的源码目录下. 用 patch “一个一个”把补丁打上吧.</p>
+
+<p><code>bash
+$ for i in `seq -f %02g 30`; do patch -p0 &lt; bash43-0$i;done
+</code></p>
+
+<blockquote>
+  <p>这里因为变量在重定向符后面, 所以不能用 xargs 进行</p>
+</blockquote>
+
+<p>好了, 接下来就是编译安装 -&gt; 替换原有 bash, 就好了</p>
+
+<h2 id="section-2">相关工具</h2>
+
+<p>patch: <a href="http://blog.chinaunix.net/uid-9525959-id-2001542.html">这里</a>有一篇文章讲得蛮详细的, 就不重新造轮子了.</p>
+
+<p>两个 bug 的测试代码:</p>
+
+<p><code>bash
+env x='() { :;}; echo Your bash is Fucked'  bash -c "echo just test"
+</code></p>
+
+<p>没漏洞的 bash 是不会被 Fuck 的</p>
+
+<p><code>bash
+env X='() { (a)=&gt;\' bash -c "echo date"; cat echo} 
+</code></p>
+
+<p>没漏洞的 bash 看到的是 date 字样.</p>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>因为是用官方源码打补丁, 所以 *NIX 系统通用<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[BASH 中 的正则表达式(误)]]></title>
@@ -635,164 +728,6 @@ FILE2</code> 用来比较两个文件修改时间</p>
     <p>eval “string” 将 string 作为 bash 命令解析</p>
   </li>
 </ul>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning the Bash Shell 笔记-流控制]]></title>
-    <link href="http://blog.loudou.info/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi/"/>
-    <updated>2014-05-22T21:19:21+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi</id>
-    <content type="html"><![CDATA[<p>但凡是代码就逃不开的流控制话题
-<!--more--></p>
-
-<h2 id="section">条件</h2>
-
-<p>bash 中的条件值以数字 0 表示真, 非0 则为假, 并不存在布尔类型</p>
-
-<p>其中有三种条件形式可以得到条件值</p>
-
-<h3 id="section-1">命令的退出状态</h3>
-<p>一般来说, Linux 的命令若执行成功, 则退出状态为 0, 不成功则返回 1-255</p>
-
-<blockquote>
-  <p><em>diff 命令除外, diff 返回 0 表示两个文件没有差别, 1 表示有差别, 2+
-表示发生错误</em></p>
-</blockquote>
-
-<h3 id="section-2">脚本或函数的返回值</h3>
-
-<p>在脚本或函数中, 用 return 表示结束并返回</p>
-
-<p>当然, 在 bash 中只能返回数字类型, 返回字符串的话脚本会出错</p>
-
-<p>另外, return 写返回值的话, 默认返回 0</p>
-
-<blockquote>
-  <p>脚本或函数中若没有用 return 返回值时, 则以最后一条命令的退出状态作为返回值</p>
-</blockquote>
-
-<h3 id="test">测试 test</h3>
-
-<p>bash 中测试有两种写法</p>
-
-<ul>
-  <li>test condition</li>
-  <li>[ condition ] <em>[ ] 两个方括号和中间条件之间必须要有一个空格</em></li>
-</ul>
-
-<p>两种写法是等价的, 详细的写法可参考 <code>man test</code></p>
-
-<h2 id="ifelifelse">if..elif..else</h2>
-
-<p><code>bash
-if condition
-then
-	statements
-[elif condition
-then
-	statements]
-[else
-	statements]
-fi
-</code></p>
-
-<h2 id="case">case</h2>
-
-<p><code>bash
-case epxr in
-	pattern1 )
-		statements
-		;;
-	pattern2 )
-		statements
-		;;
-	...
-esac
-</code>
-<em>pattern1/2</em> 支持 bash 的通配符, 也支持 | 来表示多模式匹配</p>
-
-<p><code>;;</code> 类似于其它语言中的 break</p>
-
-<p>因为匹配是从上到下的, 所以可以用 <code>*)</code> 来表示 default</p>
-
-<h2 id="select">select</h2>
-
-<p><code>bash
-select case [in caselist]
-do
-	statements about $case
-	[break]
-done
-</code></p>
-
-<p>用 caselist 里的所有项生成一个简单的选择菜单</p>
-
-<p>statements 中 $case 就是选择的项</p>
-
-<p>完成一次 statements 后, 若没有遇到 break 则会继续下一次 select</p>
-
-<h2 id="for">for</h2>
-
-<p><code>bash
-for ((expr1;expr2;expr3))
-	statements
-end
-</code></p>
-
-<p>这个比较类似 Java 里的 for</p>
-
-<p><code>bash
-for i [in list]
-do
-	statements
-done
-</code></p>
-
-<p>这个感觉更像 python 里的 for</p>
-
-<p>若省略 [in list] 的话, 则默认从 $@ 中取值</p>
-
-<p><code>bash
-for i in {start..end..step}
-do
-	statements
-done
-</code>
-bash 4.0 以上才有的语法</p>
-
-<h2 id="while--until">while &amp; until</h2>
-
-<p><code>bash
-while condition
-do
-	statements
-done
-</code></p>
-
-<p><code>bash
-until condition
-do
-	statements
-done
-</code></p>
-
-<p>while condition 等价于 until ! condition</p>
-
-<p>两者没有其它区别</p>
-
-<h2 id="section-3">附:</h2>
-<p>又一个友好地显示 PATH 的方法</p>
-
-<p>```bash showpath.sh
-path=$PATH</p>
-
-<p>while [ $path ];
-do
-	echo ${path%%:<em>}
-	echo ${path#</em>:}
-done
-```</p>
 ]]></content>
   </entry>
   

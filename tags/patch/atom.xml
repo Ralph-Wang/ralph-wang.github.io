@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[标签: patch | 挨踢夜归人]]></title>
+  <link href="http://blog.loudou.info//tags/patch/atom.xml" rel="self"/>
+  <link href="http://blog.loudou.info/"/>
+  <updated>2014-10-18T22:39:04+08:00</updated>
+  <id>http://blog.loudou.info/</id>
+  <author>
+    <name><![CDATA[_漏斗]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[BASH 特别的 Patch 技巧]]></title>
+    <link href="http://blog.loudou.info/blog/2014/10/18/bash-te-bie-de-patch-ji-qiao/"/>
+    <updated>2014-10-18T21:43:24+08:00</updated>
+    <id>http://blog.loudou.info/blog/2014/10/18/bash-te-bie-de-patch-ji-qiao</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">问题</a></li>
+  <li><a href="#section-1">解决方案</a></li>
+  <li><a href="#section-2">相关工具</a></li>
+</ul>
+
+<h2 id="section">问题</h2>
+
+<p>9 月底爆出的 bash 漏洞, Mac 自然也受到影响.</p>
+
+<p>但当时并没有找到苹果官方的解决方案,  <br />
+而 bash 官方释出的补丁方式完全看不懂怎么用…  <br />
+再加上就快升级 10.10 了.</p>
+
+<p>想着也许会在升级时把补丁打上呢.  <br />
+(呃, 其实是懒得研究官方补丁怎么用)  <br />
+也就放着没管了</p>
+
+<p>但昨天升级完后, 却发现并没有打上补丁.</p>
+
+<p>只好硬着头皮上了.</p>
+
+<h2 id="section-1">解决方案<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></h2>
+
+<p>因为官方的补丁都是打在源码上的,  <br />
+所以我们需要去 <a href="http://ftp.gnu.org/gnu/bash/">http://ftp.gnu.org/gnu/bash/</a> 下载 bash 的源码</p>
+
+<p>没什么特别的需求的话, 就直接选最新的 4.3 版本好了. 懒人点 <a href="http://ftp.gnu.org/gnu/bash/bash-4.3.tar.gz">这里</a></p>
+
+<p>下载完成后直接解压即可</p>
+
+<p><code>bash
+$ tar zxvf bash-4.3.tar.gz
+</code></p>
+
+<p>现在不着急编译安装, 因为我们还需要在源码上打补丁.</p>
+
+<p>我们需要到 <a href="http://ftp.gnu.org/gnu/bash/bash-4.3-patches/">bash-4.3-patches</a> 目录下把 01~30 补丁全部下载下来.</p>
+
+<p>因为不想一个一个点, 所以玩了点小花样:</p>
+
+<p><code>bash
+$ seq -f %02g 30| xargs -Ix curl -O &lt;path-of-patches&gt;/bash43-0x
+</code></p>
+
+<p>好了, 把下载好的这些个补丁放到 bash 的源码目录下. 用 patch “一个一个”把补丁打上吧.</p>
+
+<p><code>bash
+$ for i in `seq -f %02g 30`; do patch -p0 &lt; bash43-0$i;done
+</code></p>
+
+<blockquote>
+  <p>这里因为变量在重定向符后面, 所以不能用 xargs 进行</p>
+</blockquote>
+
+<p>好了, 接下来就是编译安装 -&gt; 替换原有 bash, 就好了</p>
+
+<h2 id="section-2">相关工具</h2>
+
+<p>patch: <a href="http://blog.chinaunix.net/uid-9525959-id-2001542.html">这里</a>有一篇文章讲得蛮详细的, 就不重新造轮子了.</p>
+
+<p>两个 bug 的测试代码:</p>
+
+<p><code>bash
+env x='() { :;}; echo Your bash is Fucked'  bash -c "echo just test"
+</code></p>
+
+<p>没漏洞的 bash 是不会被 Fuck 的</p>
+
+<p><code>bash
+env X='() { (a)=&gt;\' bash -c "echo date"; cat echo} 
+</code></p>
+
+<p>没漏洞的 bash 看到的是 date 字样.</p>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>因为是用官方源码打补丁, 所以 *NIX 系统通用<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
+  
+</feed>

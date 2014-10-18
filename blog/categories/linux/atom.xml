@@ -4,7 +4,7 @@
   <title><![CDATA[分类: Linux | 挨踢夜归人]]></title>
   <link href="http://blog.loudou.info//blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://blog.loudou.info/"/>
-  <updated>2014-10-10T15:31:48+08:00</updated>
+  <updated>2014-10-18T22:39:04+08:00</updated>
   <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,99 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[BASH 特别的 Patch 技巧]]></title>
+    <link href="http://blog.loudou.info/blog/2014/10/18/bash-te-bie-de-patch-ji-qiao/"/>
+    <updated>2014-10-18T21:43:24+08:00</updated>
+    <id>http://blog.loudou.info/blog/2014/10/18/bash-te-bie-de-patch-ji-qiao</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">问题</a></li>
+  <li><a href="#section-1">解决方案</a></li>
+  <li><a href="#section-2">相关工具</a></li>
+</ul>
+
+<h2 id="section">问题</h2>
+
+<p>9 月底爆出的 bash 漏洞, Mac 自然也受到影响.</p>
+
+<p>但当时并没有找到苹果官方的解决方案,  <br />
+而 bash 官方释出的补丁方式完全看不懂怎么用…  <br />
+再加上就快升级 10.10 了.</p>
+
+<p>想着也许会在升级时把补丁打上呢.  <br />
+(呃, 其实是懒得研究官方补丁怎么用)  <br />
+也就放着没管了</p>
+
+<p>但昨天升级完后, 却发现并没有打上补丁.</p>
+
+<p>只好硬着头皮上了.</p>
+
+<h2 id="section-1">解决方案<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></h2>
+
+<p>因为官方的补丁都是打在源码上的,  <br />
+所以我们需要去 <a href="http://ftp.gnu.org/gnu/bash/">http://ftp.gnu.org/gnu/bash/</a> 下载 bash 的源码</p>
+
+<p>没什么特别的需求的话, 就直接选最新的 4.3 版本好了. 懒人点 <a href="http://ftp.gnu.org/gnu/bash/bash-4.3.tar.gz">这里</a></p>
+
+<p>下载完成后直接解压即可</p>
+
+<p><code>bash
+$ tar zxvf bash-4.3.tar.gz
+</code></p>
+
+<p>现在不着急编译安装, 因为我们还需要在源码上打补丁.</p>
+
+<p>我们需要到 <a href="http://ftp.gnu.org/gnu/bash/bash-4.3-patches/">bash-4.3-patches</a> 目录下把 01~30 补丁全部下载下来.</p>
+
+<p>因为不想一个一个点, 所以玩了点小花样:</p>
+
+<p><code>bash
+$ seq -f %02g 30| xargs -Ix curl -O &lt;path-of-patches&gt;/bash43-0x
+</code></p>
+
+<p>好了, 把下载好的这些个补丁放到 bash 的源码目录下. 用 patch “一个一个”把补丁打上吧.</p>
+
+<p><code>bash
+$ for i in `seq -f %02g 30`; do patch -p0 &lt; bash43-0$i;done
+</code></p>
+
+<blockquote>
+  <p>这里因为变量在重定向符后面, 所以不能用 xargs 进行</p>
+</blockquote>
+
+<p>好了, 接下来就是编译安装 -&gt; 替换原有 bash, 就好了</p>
+
+<h2 id="section-2">相关工具</h2>
+
+<p>patch: <a href="http://blog.chinaunix.net/uid-9525959-id-2001542.html">这里</a>有一篇文章讲得蛮详细的, 就不重新造轮子了.</p>
+
+<p>两个 bug 的测试代码:</p>
+
+<p><code>bash
+env x='() { :;}; echo Your bash is Fucked'  bash -c "echo just test"
+</code></p>
+
+<p>没漏洞的 bash 是不会被 Fuck 的</p>
+
+<p><code>bash
+env X='() { (a)=&gt;\' bash -c "echo date"; cat echo} 
+</code></p>
+
+<p>没漏洞的 bash 看到的是 date 字样.</p>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>因为是用官方源码打补丁, 所以 *NIX 系统通用<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[BASH 中 的正则表达式(误)]]></title>
@@ -471,362 +564,6 @@ python    28230  ralph    3w      REG  202,1 734003200  401905 /home/ralph/tmp/w
 
 <p>死循环的目的都是为了模拟文件描述符占用</p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning the Bash Shell 笔记-Debug]]></title>
-    <link href="http://blog.loudou.info/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/"/>
-    <updated>2014-06-11T10:40:33+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug</id>
-    <content type="html"><![CDATA[<p>任何开发测试工作都离不开的话题 – Debug. </p>
-
-<p>bash 脚本自然也不能免俗
-<!--more--></p>
-
-<h2 id="section">显示每一步执行的命令</h2>
-
-<p>默认情况下, bash 脚本执行时不会像 Windows 的 bat 一样显示每一次执行的命令.
-虽然说这功能在执行时比较难看, 但在 Debug
-时可以帮助我们查看脚本是执行到哪一行出现的问题</p>
-
-<p>如果想让 bash 脚本运行时显示每行命令, 则需要在脚本开始添加如下命令:</p>
-
-<p><code>bash
-set -o [noexec|verbose|xtrace]
-</code></p>
-
-<p>参数说明:</p>
-
-<ul>
-  <li>
-    <p><code>noexec</code>	不执行脚本, 只检查语法错误</p>
-  </li>
-  <li>
-    <p><code>verbose</code>	显示每一行命令 (开启这个功能后 bash 就和 bat 很像了)</p>
-  </li>
-  <li>
-    <p><code>xtrace</code>	比 verbose 更详细的显示, 具体显示信息由 <code>PS4</code> 变量配置</p>
-  </li>
-</ul>
-
-<h2 id="fake-signal">几个 fake signal</h2>
-
-<h3 id="exit">EXIT</h3>
-
-<p>在脚本退出时会触发该信号</p>
-
-<p>```bash exit.sh
-#!/bin/sh</p>
-
-<p>trap ‘echo exiting the script’ EXIT</p>
-
-<p>echo ‘starting the script’
-```</p>
-
-<p>执行结果:</p>
-
-<p><code>bash
-$./exit.sh
-starting the script
-exiting the script
-</code></p>
-
-<h3 id="debug">DEBUG</h3>
-
-<p>每一行命令执行前都会触发这个信号, 开启 <code>set -o functrace</code> 后函数内部也会触发</p>
-
-<p>```bash debug.sh
-#!/bin/sh</p>
-
-<p>trap ‘echo execute $LINENO’ DEBUG</p>
-
-<p>for ((_i=0;_i&lt;2;_i++))
-do
-echo $_i
-done
-```</p>
-
-<p>执行结果:</p>
-
-<p><code>bash
-$./debug.sh
-execute 5
-execute 5
-execute 7
-0
-execute 5
-execute 5
-execute 7
-1
-execute 5
-execute 5
-</code></p>
-
-<h3 id="err">ERR</h3>
-<p>当有命令执行后的返回值不是 0 时触发该信号</p>
-
-<p>```bash err.sh
-#!/bin/sh</p>
-
-<p>trap ‘echo Error with status $?’ ERR</p>
-
-<p>function bad
-{
-	return 111
-}</p>
-
-<p>bad
-```</p>
-
-<p>执行结果</p>
-
-<p><code>bash
-$./err.sh
-Error with status 111
-</code></p>
-
-<h3 id="return">RETURN</h3>
-<p>当用 <code>source</code> 执行脚本返回后触发该信号</p>
-
-<p>若执行 <code>set -o functrace</code>, 则函数返回后也能触发该信号</p>
-
-<p><code>bash x.sh
-echo "Hello World"
-</code></p>
-
-<p>```bash return.sh
-#!/bin/sh
-trap ‘echo debug occured’ DEBUG
-trap ‘echo return occured’ RETURN</p>
-
-<p>source ./x.sh
-```</p>
-
-<p>执行结果</p>
-
-<p><code>bash
-debug occured
-Hello World
-return occured
-</code></p>
-
-<h2 id="debugger">一个简易的 Debugger</h2>
-
-<p>一个 Debugger 需要的功能点:</p>
-
-<ul>
-  <li>
-    <p>断点</p>
-  </li>
-  <li>
-    <p>逐步执行</p>
-  </li>
-  <li>
-    <p>变量监视</p>
-  </li>
-  <li>
-    <p>显示当前执行位置和断点位置</p>
-  </li>
-  <li>
-    <p>不需要改动源码即可进行 Debug</p>
-  </li>
-</ul>
-
-<h2 id="section-1">实现原理:</h2>
-<p>利用 <code>DEBUG</code> 信号中断执行. 进而进入 debug 命令行</p>
-
-<h2 id="section-2">核心数组:</h2>
-<ul>
-  <li>
-    <p><code>_lines</code> 用来存储所有 Debug 脚本的代码</p>
-  </li>
-  <li>
-    <p><code>_linebp</code> 用来存储断点行号</p>
-  </li>
-</ul>
-
-<p>文件结构:</p>
-
-<blockquote>
-  <p>bashdb  # 主脚本, 即驱动器</p>
-</blockquote>
-
-<blockquote>
-  <p>bashdb.pre # 添加到原脚本头的部分</p>
-</blockquote>
-
-<blockquote>
-  <p>bashdb.fns # 定义的函数们</p>
-</blockquote>
-
-<p>```bash bashdb
-#!/bin/sh</p>
-
-<p>_dbname=${0##*/}
-echo ‘Bash Debugger Version 1.0’</p>
-
-<p>if (( $# &lt; 1 ))
-then
-	echo “$_dbname Usage: $_dbname filename.” &gt;&amp;2
-	exit 1
-fi</p>
-
-<p>_guineapig=$1</p>
-
-<p>if [ -r $_guineapig ]
-then
-	echo “$_dbname: file ‘$1’ is not readable.” &gt;&amp;2
-	exit 1
-fi</p>
-
-<p>shift</p>
-
-<p>_tmpdir=/tmp
-_libdir=.
-_debugfile=$_tmpdir/bashdb.$$ # tmp file for script debugged</p>
-
-<p>cat $_libdir/bashdb.pre $_guineapig &gt; $_debugfile
-exec bash $_debugfile $_guineapig $_tmpdir $_libdir “$@”
-```</p>
-
-<blockquote>
-  <p>关于 <code>exec</code> 命令
-&gt; 执行其参数, 用其并替代当前进程. 脚本中在 <code>exec</code> 后的命令都不会执行
-&gt; 在 cli 中执行 exec 后… 当前 shell 会直接退出</p>
-</blockquote>
-
-<p>```bash bashdb.pre
-#!/bin/sh</p>
-
-<p>_debugfile=$0
-_guineapig=$1</p>
-
-<p>_tmpdir=$2
-_libdir=$3</p>
-
-<p>shift 3</p>
-
-<h1 id="section-3">将所有函数加载进来</h1>
-<p>source $_libdir/bashdb.fns</p>
-
-<p>_linebp=
-let _trace=0
-let _i=0</p>
-
-<p>{
-	while read
-	do
-		_line[$_i]=$REPLY
-		let _i=$_i+1
-	done
-} &lt; $_guineapig</p>
-
-<h1 id="section-4">退出时清除临时文件</h1>
-<p>trap _cleanup EXIT</p>
-
-<p>let _steps=1</p>
-
-<h1 id="bashdbpre-">减掉 bashdb.pre 的行数</h1>
-<p>trap ‘_steptrap $(($LINENO - 32))’ DEBUG
-```</p>
-
-<p>```bash bashdb.fns
-#!/bin/sh</p>
-
-<h1 id="debugger--steptrap">Debugger 的主要函数 _steptrap</h1>
-<p># 每一行代码执行前, 这个函数都会被调用</p>
-
-<p>function _steptrap
-{
-	_curlline=$1
-	(( $trace )) &amp;&amp; _msg “Line $_curlline: ${_lines[$_curlline]}”</p>
-
-<pre><code>if (( $_steps &gt;= 0 ))
-then
-	let _steps=$_steps-1
-fi
-
-# check if there is a breakpoint
-if _at_linenumbp
-then
-	_msg "Reached breakpoint at $_curlline"
-	_cmdloop
-fi
-
-# check if there is a break condition
-if [ -n "$_brcond" ] &amp;&amp; eval $_brcond 
-then
-	_msg "Break condition $_brcond true at line $_curlline"
-	_cmdloop
-
-# check if there are no more steps
-if (( $_steps == 0 ))
-then
-	_msg "Stopped at line $_curlline"
-	_cmdloop
-fi }
-</code></pre>
-
-<h1 id="cmdloop">命令处理函数 _cmdloop</h1>
-
-<p>function _cmdloop
-{
-	local cmd args</p>
-
-<pre><code>while read -e -p "bash&gt; " cmd args
-do
-	case $cmd in
-		\?|h ) # 显示命令菜单
-			_menu ;;
-		bc ) # 设置中断条件
-			_setbc $args ;;
-		bp ) # 设置断点
-			_setbp $args ;;
-		cb ) # 清除一个或全部断点
-			_clearbp $args ;;
-		ds ) # 显示脚本和断点
-			_displayscript ;;
-		g ) # 运行脚本直到断点
-			return ;;
-		q ) # 退出
-			exit ;;
-		s ) # 执行 N 行, 默认 1 行
-			let _steps=${args:-1}
-		x ) # 开关显示所在行
-			_xtrace ;;
-		!* ) # 执行 shell 命令
-			eval ${cmd#!} $args;;
-		* )
-			_msg "Invalid command: '$cmd'" ;;
-	esac
-done }
-</code></pre>
-
-<h1 id="setbp">设置断点命令对应函数 _setbp</h1>
-
-<p>functrace _setbp
-{
-	# 没有参数就显示断点信息
-	if [ -z “$1” ]
-	then
-		_listbp
-	elif [ $(echo $1 | grep ‘^[0-9]*’) ]
-	then
-		if [ -n “${list[$1]” ]
-		then # 将新断点与旧断点重新排序放入 _linebp
-			_linebp=($(echo $( (for i in ${_linebp[@]} $1;do
-			echo $i; done) | sort -n) ))
-		else # 空行不能设置断点
-			_msg “Breakpoints can only be set on non-blank lines”
-		fi
-	else
-		_msg “Please specify a numeric line number”
-	fi
-}</p>
-
-<h2 id="section-5">其它函数这里省略</h2>
-<p>```</p>
 ]]></content>
   </entry>
   
