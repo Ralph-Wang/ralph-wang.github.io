@@ -4,7 +4,7 @@
   <title><![CDATA[分类: Python | 挨踢夜归人]]></title>
   <link href="http://blog.loudou.info//blog/categories/python/atom.xml" rel="self"/>
   <link href="http://blog.loudou.info/"/>
-  <updated>2014-10-19T10:50:36+08:00</updated>
+  <updated>2014-11-13T21:24:12+08:00</updated>
   <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,164 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Python 名称空间对性能的影响]]></title>
+    <link href="http://blog.loudou.info/blog/2014/11/13/python-ming-cheng-kong-jian-dui-xing-neng-de-ying-xiang/"/>
+    <updated>2014-11-13T20:03:05+08:00</updated>
+    <id>http://blog.loudou.info/blog/2014/11/13/python-ming-cheng-kong-jian-dui-xing-neng-de-ying-xiang</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">名称空间</a></li>
+  <li><a href="#section-1">变量寻址</a></li>
+  <li><a href="#section-2">循环优化</a></li>
+</ul>
+
+<h2 id="section">名称空间</h2>
+
+<p>Python 中变量的作用域有一个特别的名字叫做<code>名称空间</code></p>
+
+<p><code>名称空间</code>呢, 有以下这些特点:</p>
+
+<ul>
+  <li>每一个模块, 函数, 类, 实例, 都拥有一个独立的名称空间.    </li>
+  <li>每一个变量都会处在一个名称空间下.     </li>
+  <li>名称空间可以相互包含, 或者说有上下级关系</li>
+  <li>在下级名称空间中可以访问上级名称空间的变量</li>
+</ul>
+
+<p>用代码来举例子:</p>
+
+<p>```python namespace.py
+in_module = ‘in module’</p>
+
+<p>def method():
+    in_method = ‘in method’
+```</p>
+
+<p>在上面这段代码中, 一共有 个名称空间, 分别是:</p>
+
+<ul>
+  <li>文件, 就是 <code>namespace.py</code> 里面, 有<code>in_module</code> 变量</li>
+  <li>函数, 就是 <code>method</code> 里面, 有<code>in_method</code> 变量</li>
+</ul>
+
+<p>以上名称空间, 从上向下都是包含关系.</p>
+
+<h2 id="section-1">变量寻址</h2>
+
+<p>一般来讲, 在一个名称空间中, 只能访问到属于这个名称空间的变量</p>
+
+<p>所以对于上面的代码来讲:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>名称空间</th>
+      <th>可见变量</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>namespace.py</td>
+      <td><code>in_module</code></td>
+    </tr>
+    <tr>
+      <td>method</td>
+      <td><code>in_method</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>同时, 下级名称空间是可以访问到上级名称空间中的变量的.  <br />
+于是上表就变成了</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>名称空间</th>
+      <th>可见变量</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>namespace.py</td>
+      <td><code>in_module</code></td>
+    </tr>
+    <tr>
+      <td>method</td>
+      <td><code>in_method</code>, <code>in_module</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>所以现在可以在 <code>method</code> 中访问所有 <code>in_*</code> 变量  <br />
+就像下面这样</p>
+
+<p><code>python
+def method():
+    in_method = 'in method'
+    print in_method
+    print in_module
+</code></p>
+
+<p>所谓<code>变量寻址</code>, 指的就是</p>
+
+<blockquote>
+  <p>Python 在当前名称空间下找不到变量定义时,
+会继续搜索上一层名称空间, 直到顶层.</p>
+</blockquote>
+
+<p>这件事了.</p>
+
+<p>概念说了一大堆, 和性能优化好像都没啥关系. 下面就进入正题</p>
+
+<h2 id="section-2">循环优化</h2>
+
+<p>在日常代码编写中, 我们有时会写类似这样的代码:</p>
+
+<p>```python
+import math</p>
+
+<p>def foo(lst):
+    for i in xrange(len(lst)):
+        lst[i] = math.sin(lst[i])
+```</p>
+
+<p>上面代码中, <code>foo</code> 里并没有定义 <code>math</code>.
+它是通过<code>变量寻址</code>在上一层找到了引入进来的<code>math</code>进行操作</p>
+
+<p>并且, 在循环内部, 每访问一次 <code>math</code> 就会发生一次<code>变量寻址</code>.
+这对性能有一定的损耗.</p>
+
+<p>我们可以创建一个<code>foo</code>内部的变量直接指向我们要用的<code>math.sin</code>
+然后再进入循环, 这样可以节省不少时间</p>
+
+<p><code>python
+def woo(lst):
+    sin = math.sin
+    for i in xrange(len(lst)):
+        lst[i] = sin(lst[i])
+</code></p>
+
+<p>当然, 类似这样重复调用外部方法的函数, 我们可以直接用 <code>map</code> 来代替</p>
+
+<p><code>python
+def moo(lst):
+    return map(math.sin, lst)
+</code></p>
+
+<p>下面是用 <code>timeit</code> 模块跑的基准测试结果:</p>
+
+<p><code>
+foo: 20.8992490768
+woo: 15.5716171265
+moo: 12.033983945
+</code></p>
+
+<hr />
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[count += 1 不是原子级的]]></title>

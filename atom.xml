@@ -4,7 +4,7 @@
   <title><![CDATA[挨踢夜归人]]></title>
   <link href="http://blog.loudou.info/atom.xml" rel="self"/>
   <link href="http://blog.loudou.info/"/>
-  <updated>2014-10-19T10:50:36+08:00</updated>
+  <updated>2014-11-13T21:24:12+08:00</updated>
   <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,158 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Python 名称空间对性能的影响]]></title>
+    <link href="http://blog.loudou.info/blog/2014/11/13/python-ming-cheng-kong-jian-dui-xing-neng-de-ying-xiang/"/>
+    <updated>2014-11-13T20:03:05+08:00</updated>
+    <id>http://blog.loudou.info/blog/2014/11/13/python-ming-cheng-kong-jian-dui-xing-neng-de-ying-xiang</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">名称空间</a></li>
+  <li><a href="#section-1">变量寻址</a></li>
+  <li><a href="#section-2">循环优化</a></li>
+</ul>
+
+<h2 id="section">名称空间</h2>
+
+<p>Python 中变量的作用域有一个特别的名字叫做<code>名称空间</code></p>
+
+<p><code>名称空间</code>呢, 有以下这些特点:</p>
+
+<ul>
+  <li>每一个模块, 函数, 类, 实例, 都拥有一个独立的名称空间.    </li>
+  <li>每一个变量都会处在一个名称空间下.     </li>
+  <li>名称空间可以相互包含, 或者说有上下级关系</li>
+  <li>在下级名称空间中可以访问上级名称空间的变量</li>
+</ul>
+
+<p>用代码来举例子:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>namespace.py</span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="n">in_module</span> <span class="o">=</span> <span class="s">&#39;in module&#39;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">method</span><span class="p">():</span>
+</span><span class="line">    <span class="n">in_method</span> <span class="o">=</span> <span class="s">&#39;in method&#39;</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>在上面这段代码中, 一共有 个名称空间, 分别是:</p>
+
+<ul>
+  <li>文件, 就是 <code>namespace.py</code> 里面, 有<code>in_module</code> 变量</li>
+  <li>函数, 就是 <code>method</code> 里面, 有<code>in_method</code> 变量</li>
+</ul>
+
+<p>以上名称空间, 从上向下都是包含关系.</p>
+
+<h2 id="section-1">变量寻址</h2>
+
+<p>一般来讲, 在一个名称空间中, 只能访问到属于这个名称空间的变量</p>
+
+<p>所以对于上面的代码来讲:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>名称空间</th>
+      <th>可见变量</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>namespace.py</td>
+      <td><code>in_module</code></td>
+    </tr>
+    <tr>
+      <td>method</td>
+      <td><code>in_method</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>同时, 下级名称空间是可以访问到上级名称空间中的变量的.  <br />
+于是上表就变成了</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>名称空间</th>
+      <th>可见变量</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>namespace.py</td>
+      <td><code>in_module</code></td>
+    </tr>
+    <tr>
+      <td>method</td>
+      <td><code>in_method</code>, <code>in_module</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>所以现在可以在 <code>method</code> 中访问所有 <code>in_*</code> 变量  <br />
+就像下面这样</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">method</span><span class="p">():</span>
+</span><span class="line">    <span class="n">in_method</span> <span class="o">=</span> <span class="s">&#39;in method&#39;</span>
+</span><span class="line">    <span class="k">print</span> <span class="n">in_method</span>
+</span><span class="line">    <span class="k">print</span> <span class="n">in_module</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>所谓<code>变量寻址</code>, 指的就是</p>
+
+<blockquote>
+  <p>Python 在当前名称空间下找不到变量定义时,
+会继续搜索上一层名称空间, 直到顶层.</p>
+</blockquote>
+
+<p>这件事了.</p>
+
+<p>概念说了一大堆, 和性能优化好像都没啥关系. 下面就进入正题</p>
+
+<h2 id="section-2">循环优化</h2>
+
+<p>在日常代码编写中, 我们有时会写类似这样的代码:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="kn">import</span> <span class="nn">math</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)):</span>
+</span><span class="line">        <span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>上面代码中, <code>foo</code> 里并没有定义 <code>math</code>.
+它是通过<code>变量寻址</code>在上一层找到了引入进来的<code>math</code>进行操作</p>
+
+<p>并且, 在循环内部, 每访问一次 <code>math</code> 就会发生一次<code>变量寻址</code>.
+这对性能有一定的损耗.</p>
+
+<p>我们可以创建一个<code>foo</code>内部的变量直接指向我们要用的<code>math.sin</code>
+然后再进入循环, 这样可以节省不少时间</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">woo</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span><span class="line">    <span class="n">sin</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)):</span>
+</span><span class="line">        <span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>当然, 类似这样重复调用外部方法的函数, 我们可以直接用 <code>map</code> 来代替</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">moo</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span><span class="line">    <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">,</span> <span class="n">lst</span><span class="p">)</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>下面是用 <code>timeit</code> 模块跑的基准测试结果:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="n">foo</span><span class="p">:</span> <span class="mf">20.8992490768</span>
+</span><span class="line"><span class="n">woo</span><span class="p">:</span> <span class="mf">15.5716171265</span>
+</span><span class="line"><span class="n">moo</span><span class="p">:</span> <span class="mf">12.033983945</span>
+</span></code></pre></div></figure></notextile></div>
+
+<hr />
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[BASH 特别的 Patch 技巧]]></title>
@@ -2358,257 +2510,6 @@ $JMETER_HOME/lib/ext/ApacheJMeter_core.jar</p>
 
 <h2 id="jmeter-1">启动 Jmeter</h2>
 <p>运行 $JMETER_HOME/bin 目录下的 jmeter (Windows 环境运行 jmeter.bat)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[面试技术问题解答]]></title>
-    <link href="http://blog.loudou.info/blog/2014/03/25/mian-shi-wen-ti-jie-da/"/>
-    <updated>2014-03-25T19:49:37+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/03/25/mian-shi-wen-ti-jie-da</id>
-    <content type="html"><![CDATA[<p>面试时没有完全回答上或有存疑的问题
-<!--more-->
-Linux
-——
-### 统计文本中某字符串出现次数
-前提: 一行中要查找的字符串可能出现多次.</p>
-
-<p>文本样例:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>sample</span></figcaption><div class="highlight"><pre><code class="text"><span class="line">ralph, ralph
-</span><span class="line">Hello, ralph, HaHA
-</span><span class="line">No such word
-</span><span class="line">Hey
-</span><span class="line">ralph again.
-</span><span class="line">two times ralph ,ralph
-</span></code></pre></div></figure></notextile></div>
-
-<p>统计文中 <code>ralph</code> 出现的次数</p>
-
-<p>如果确定 ralph 在每行只出现一次的话, 可以通过 <code>cat sample | grep ralph | wc
--l</code>解决</p>
-
-<p>但因为一行里可以关键词可以出现多次, 这种方式会漏掉一些. 所以并不是好的解决方案</p>
-
-<p>遂搜索之.  得如下解法</p>
-
-<h3 id="grep---o-">方法 1: grep 的 -o 选项</h3>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line">cat sample | grep -o ralph | wc -l
-</span></code></pre></div></figure></notextile></div>
-<p>解释:</p>
-
-<p>给 <code>grep</code> 加上 <code>-o</code> 选项后, 它只会打印出匹配到的字符串, 并且每匹配一次就打印一行. </p>
-
-<h3 id="awk--rs">方法 2: 神器 awk 之 RS</h3>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line">awk -v <span class="nv">RS</span><span class="o">=</span><span class="s1">&#39;ralph&#39;</span> <span class="s1">&#39;END {print NR-1}&#39;</span> sample
-</span></code></pre></div></figure></notextile></div>
-
-<p>解释:</p>
-
-<p>awk 中 RS 变量为行分隔符, 用目标字符串分隔行, 则总行数 = 出现次数 + 1.</p>
-
-<p>在 END 中访问 NR 则为最后一行的行号, awk 起始行为 1, 所以此时总行数 = NR</p>
-
-<h3 id="awk--gsub">方法 3: 神器 awk 之 gsub</h3>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line">awk <span class="s1">&#39;{count+=gsub(/ralph/, &quot;#&quot;)} END {print count}&#39;</span> sample
-</span></code></pre></div></figure></notextile></div>
-<p>解释:
-awk 中的 <code>gsub</code> 返回文本的替换次数, 对每行的替换次数求和即可.</p>
-
-<p>另外, awk 中的 <code>sub</code> 函数在每行中只完成一次替换.</p>
-
-<h2 id="java">Java</h2>
-<p>### 反射
-参考<a href="http://www.cnblogs.com/rollenholt/archive/2011/09/02/2163758.html">反射案例</a></p>
-
-<h2 id="mysql">MySQL</h2>
-<p>MySQL 相关的性能问题, 关于<strong>执行计划</strong>的倒是 OK.</p>
-
-<p>但一直没时间整理下关于慢查询日志的知识点. 所以这几次都只能回答说知道这个概念, 具体的配置参数却不记得了.</p>
-
-<p>在这里整理一下, 权当备忘</p>
-
-<ul>
-  <li>查看慢查询是否开启</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="mysql"><span class="line"><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">show</span> <span class="n">variables</span> <span class="k">like</span> <span class="s1">&#39;%slow%&#39;</span><span class="p">;</span>
-</span><span class="line"><span class="o">|</span> <span class="n">Variable_name</span>       <span class="o">|</span> <span class="n">Value</span>
-</span><span class="line"><span class="o">|</span> <span class="n">log_slow_queries</span>    <span class="o">|</span> <span class="n">OFF</span>
-</span><span class="line"><span class="o">|</span> <span class="n">slow_launch_time</span>    <span class="o">|</span> <span class="mi">2</span>
-</span><span class="line"><span class="o">|</span> <span class="n">slow_query_log</span>      <span class="o">|</span> <span class="n">OFF</span>
-</span><span class="line"><span class="o">|</span> <span class="n">slow_query_log_file</span> <span class="o">|</span> <span class="o">***</span>
-</span><span class="line">
-</span><span class="line"><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">show</span> <span class="n">variables</span> <span class="k">like</span> <span class="s1">&#39;long%&#39;</span><span class="p">;</span>
-</span><span class="line"><span class="o">|</span> <span class="n">Variable_name</span>   <span class="o">|</span> <span class="n">Value</span>    <span class="o">|</span>
-</span><span class="line"><span class="o">|</span> <span class="n">long_query_time</span> <span class="o">|</span> <span class="mi">1</span><span class="p">.</span><span class="mi">000000</span> <span class="o">|</span>
-</span></code></pre></div></figure></notextile></div>
-
-<ul>
-  <li>在 my.cnf 中配置开启慢查询跟踪</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>my.cnf</span></figcaption><div class="highlight"><pre><code class="ini"><span class="line"><span class="k">[mysqld]</span>
-</span><span class="line"><span class="na">log-slow-queries</span> <span class="o">=</span> <span class="s">**** # 日志存放目录, 一般放到 MySQL 数据库的地方</span>
-</span><span class="line"><span class="na">long-query-time</span> <span class="o">=</span> <span class="s">2 # 超过这个时间(单位:秒) 的查询为慢查询</span>
-</span><span class="line"><span class="err">log-queries-not-using-indexes</span> <span class="c1"># 记录下没有使用索引的查询</span>
-</span></code></pre></div></figure></notextile></div>
-
-<p>产生慢查询日志后可以使用 mysqldumpslow 工具进行分析查看了.</p>
-
-<p>接下来的事就交给 <code>explain</code> 吧.</p>
-
-<h2 id="section">算法</h2>
-<p>### 问题 1 链表倒序
-…面试时, 想到去 clone next.. 为毛当时就没想到多给个变量呢…</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>List.java</span></figcaption><div class="highlight"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span> <span class="c1">// 后进先出列表</span>
-</span><span class="line">	<span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
-</span><span class="line">		<span class="kd">private</span> <span class="n">T</span> <span class="n">item</span><span class="o">;</span>
-</span><span class="line">		<span class="kd">private</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">next</span><span class="o">;</span>
-</span><span class="line">		<span class="cm">/** init a end Node */</span>
-</span><span class="line">		<span class="kd">public</span> <span class="nf">Node</span><span class="o">()</span> <span class="o">{</span>
-</span><span class="line">			<span class="n">item</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class="line">			<span class="n">next</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class="line">		<span class="o">}</span>
-</span><span class="line">
-</span><span class="line">		<span class="cm">/** normal Node */</span>
-</span><span class="line">		<span class="kd">public</span> <span class="nf">Node</span><span class="o">(</span><span class="n">T</span> <span class="n">item</span><span class="o">,</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">next</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">			<span class="k">this</span><span class="o">.</span><span class="na">item</span> <span class="o">=</span> <span class="n">item</span><span class="o">;</span>
-</span><span class="line">			<span class="k">this</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">next</span><span class="o">;</span>
-</span><span class="line">		<span class="o">}</span>
-</span><span class="line">
-</span><span class="line">		<span class="kd">private</span> <span class="n">T</span> <span class="nf">getItem</span><span class="o">()</span> <span class="o">{</span>
-</span><span class="line">			<span class="k">return</span> <span class="n">item</span><span class="o">;</span>
-</span><span class="line">		<span class="o">}</span>
-</span><span class="line">
-</span><span class="line">		<span class="kd">private</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">getNext</span><span class="o">()</span> <span class="o">{</span>
-</span><span class="line">			<span class="k">return</span> <span class="n">next</span><span class="o">;</span>
-</span><span class="line">		<span class="o">}</span>
-</span><span class="line">
-</span><span class="line">		<span class="kd">private</span> <span class="kt">void</span> <span class="nf">setNext</span><span class="o">(</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">next</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">			<span class="k">this</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">next</span><span class="o">;</span>
-</span><span class="line">		<span class="o">}</span>
-</span><span class="line">
-</span><span class="line">		<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isEnd</span><span class="o">()</span> <span class="o">{</span>
-</span><span class="line">			<span class="k">return</span> <span class="o">(</span><span class="n">next</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">item</span> <span class="o">==</span> <span class="kc">null</span><span class="o">);</span>
-</span><span class="line">		<span class="o">}</span>
-</span><span class="line">	<span class="o">}</span>
-</span><span class="line">
-</span><span class="line">	<span class="kd">private</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">top</span><span class="o">;</span>
-</span><span class="line">
-</span><span class="line">	<span class="kd">public</span> <span class="nf">List</span><span class="o">()</span> <span class="o">{</span>
-</span><span class="line">		<span class="n">top</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;();</span> <span class="c1">//init a end Node for list</span>
-</span><span class="line">	<span class="o">}</span>
-</span><span class="line">
-</span><span class="line">	<span class="cm">/** push a item to the top */</span>
-</span><span class="line">	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">		<span class="n">top</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;(</span><span class="n">item</span><span class="o">,</span> <span class="n">top</span><span class="o">);</span>
-</span><span class="line">	<span class="o">}</span>
-</span><span class="line">
-</span><span class="line">	<span class="cm">/** pop the top item */</span>
-</span><span class="line">	<span class="kd">public</span> <span class="n">T</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
-</span><span class="line">		<span class="n">T</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class="line">		<span class="k">if</span> <span class="o">(</span><span class="n">top</span><span class="o">.</span><span class="na">isEnd</span><span class="o">())</span> <span class="o">{</span>
-</span><span class="line">			<span class="k">return</span> <span class="n">result</span><span class="o">;</span>
-</span><span class="line">		<span class="o">}</span>
-</span><span class="line">		<span class="n">result</span> <span class="o">=</span> <span class="n">top</span><span class="o">.</span><span class="na">getItem</span><span class="o">();</span>
-</span><span class="line">		<span class="n">top</span> <span class="o">=</span> <span class="n">top</span><span class="o">.</span><span class="na">getNext</span><span class="o">();</span>
-</span><span class="line">		<span class="k">return</span> <span class="n">result</span><span class="o">;</span>
-</span><span class="line">	<span class="o">}</span>
-</span><span class="line">
-</span><span class="line">	<span class="cm">/** reverse the list */</span>
-</span><span class="line">	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">reverse</span><span class="o">()</span> <span class="o">{</span>
-</span><span class="line">		<span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">top</span><span class="o">;</span>
-</span><span class="line">		<span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">next</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="na">getNext</span><span class="o">();</span>
-</span><span class="line">		<span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">pre</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class="line">		<span class="k">if</span> <span class="o">(</span><span class="n">cur</span><span class="o">.</span><span class="na">isEnd</span><span class="o">())</span> <span class="o">{</span> <span class="c1">// Empty list</span>
-</span><span class="line">			<span class="k">return</span><span class="o">;</span>
-</span><span class="line">		<span class="o">}</span>
-</span><span class="line">
-</span><span class="line">		<span class="n">top</span><span class="o">.</span><span class="na">setNext</span><span class="o">(</span><span class="k">new</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;());</span> <span class="c1">// a new sentinel</span>
-</span><span class="line">		<span class="k">do</span> <span class="o">{</span>
-</span><span class="line">			<span class="n">pre</span> <span class="o">=</span> <span class="n">cur</span><span class="o">;</span>
-</span><span class="line">			<span class="n">cur</span> <span class="o">=</span> <span class="n">next</span><span class="o">;</span>
-</span><span class="line">			<span class="n">next</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="na">getNext</span><span class="o">();</span>
-</span><span class="line">			<span class="n">cur</span><span class="o">.</span><span class="na">setNext</span><span class="o">(</span><span class="n">pre</span><span class="o">);</span>
-</span><span class="line">		<span class="o">}</span> <span class="k">while</span><span class="o">(!</span><span class="n">next</span><span class="o">.</span><span class="na">isEnd</span><span class="o">());</span>
-</span><span class="line">		<span class="c1">// reset top</span>
-</span><span class="line">		<span class="n">top</span> <span class="o">=</span> <span class="n">cur</span><span class="o">;</span>
-</span><span class="line">	<span class="o">}</span>
-</span><span class="line">
-</span><span class="line">	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">		<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="k">new</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;();</span>
-</span><span class="line">		<span class="n">l</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="s">&quot;a&quot;</span><span class="o">);</span>
-</span><span class="line">		<span class="n">l</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="s">&quot;B&quot;</span><span class="o">);</span>
-</span><span class="line">		<span class="n">l</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="s">&quot;c&quot;</span><span class="o">);</span>
-</span><span class="line">		<span class="n">l</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="s">&quot;D&quot;</span><span class="o">);</span>
-</span><span class="line">		<span class="n">l</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="s">&quot;e&quot;</span><span class="o">);</span>
-</span><span class="line">		<span class="n">l</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="s">&quot;F&quot;</span><span class="o">);</span>
-</span><span class="line">		<span class="n">l</span><span class="o">.</span><span class="na">reverse</span><span class="o">();</span>
-</span><span class="line">		<span class="n">String</span> <span class="n">res</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class="line">		<span class="k">while</span> <span class="o">((</span><span class="n">res</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="na">pop</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">res</span><span class="o">);</span>
-</span><span class="line">		<span class="o">}</span>
-</span><span class="line">	<span class="o">}</span>
-</span><span class="line"><span class="o">}</span>
-</span></code></pre></div></figure></notextile></div>
-<p>算法还是弱项…</p>
-
-<h3 id="section-1">问题 2 文本替换</h3>
-<p>今天太晚了, 明天再继续</p>
-
-<p>—<em>** 2014-04-06 更新 **</em>—</p>
-
-<p>需求, 字符串或字符数组, 如 <code>AAABBBAAACCADDD</code>, 取出连续的字符, 第N次出现取出连续N个, 不足则跳过</p>
-
-<p>如 AAABBBAAACCADDD -&gt; ABAACAD</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="java"><span class="line"><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Sub</span> <span class="o">{</span>
-</span><span class="line">	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">		<span class="kt">char</span><span class="o">[]</span> <span class="n">t</span> <span class="o">=</span> <span class="o">{</span><span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;B&#39;</span><span class="o">,</span> <span class="sc">&#39;B&#39;</span><span class="o">,</span> <span class="sc">&#39;B&#39;</span><span class="o">,</span><span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;C&#39;</span><span class="o">,</span>
-</span><span class="line">			<span class="sc">&#39;C&#39;</span><span class="o">,</span> <span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;D&#39;</span><span class="o">,</span> <span class="sc">&#39;D&#39;</span><span class="o">,</span> <span class="sc">&#39;D&#39;</span><span class="o">};</span>
-</span><span class="line">		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sub</span><span class="o">(</span><span class="n">t</span><span class="o">));</span>
-</span><span class="line">	<span class="o">}</span><span class="cm">/* output:</span>
-</span><span class="line"><span class="cm">		ABAACAD</span>
-</span><span class="line"><span class="cm">	  */</span><span class="c1">//:~</span>
-</span><span class="line">
-</span><span class="line">	<span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">sub</span><span class="o">(</span><span class="kd">final</span> <span class="kt">char</span><span class="o">[]</span> <span class="n">charArray</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">		<span class="n">String</span> <span class="n">res</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
-</span><span class="line">		<span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">count</span> <span class="o">=</span>
-</span><span class="line">			<span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;();</span>
-</span><span class="line">		<span class="kt">int</span> <span class="n">seq</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-</span><span class="line">		<span class="kt">int</span> <span class="n">curCount</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-</span><span class="line">		<span class="kt">char</span> <span class="n">pre</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="o">;</span>
-</span><span class="line">		<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">charArray</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-</span><span class="line">			<span class="k">if</span> <span class="o">(</span><span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">==</span> <span class="n">pre</span> <span class="o">&amp;&amp;</span> <span class="n">curCount</span> <span class="o">&gt;=</span> <span class="n">seq</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">				<span class="k">continue</span><span class="o">;</span>
-</span><span class="line">			<span class="o">}</span>
-</span><span class="line">			<span class="k">if</span> <span class="o">(</span><span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">!=</span> <span class="n">pre</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// recount the new char</span>
-</span><span class="line">				<span class="n">curCount</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-</span><span class="line">				<span class="c1">// get the sequence of the char</span>
-</span><span class="line">				<span class="k">if</span> <span class="o">(</span><span class="n">count</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">					<span class="n">seq</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
-</span><span class="line">				<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-</span><span class="line">					<span class="n">seq</span> <span class="o">=</span> <span class="n">count</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
-</span><span class="line">				<span class="o">}</span>
-</span><span class="line">				<span class="c1">// cache the char sequence</span>
-</span><span class="line">				<span class="n">count</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">seq</span><span class="o">);</span>
-</span><span class="line">			<span class="o">}</span>
-</span><span class="line">			<span class="n">res</span> <span class="o">=</span> <span class="n">res</span> <span class="o">+</span> <span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
-</span><span class="line">			<span class="n">curCount</span><span class="o">++;</span>
-</span><span class="line">			<span class="n">pre</span> <span class="o">=</span> <span class="n">charArray</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
-</span><span class="line">		<span class="o">}</span>
-</span><span class="line">		<span class="k">return</span> <span class="n">res</span><span class="o">;</span>
-</span><span class="line">	<span class="o">}</span>
-</span><span class="line"><span class="o">}</span>
-</span></code></pre></div></figure></notextile></div>
-<p>若使用 <code>String</code> 作为输入, 则用 charAt 方法获取字符</p>
 ]]></content>
   </entry>
   
