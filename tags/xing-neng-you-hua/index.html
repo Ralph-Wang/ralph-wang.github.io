@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>用 jstack 线程定位初体验 - 挨踢夜归人</title>
+  <title>标签: 性能优化 - 挨踢夜归人</title>
   <meta name="author" content="_漏斗">
 
-  <meta name="description" content="用 top + jstack 定位 java 进程问题, 定位到代码行号.">
-  <meta name="keywords" content="java, jstack, 线程, 堆栈, 分析, 问题定位, 瓶颈定位">
+  <meta name="description" content="Tag: 性能优化">
+  
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -16,7 +16,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <!--<link rel="canonical" href="http://blog.loudou.info/blog/2014/03/01/yong-jstack-xian-cheng-ding-wei-chu-ti-yan">-->
+  <!--<link rel="canonical" href="http://blog.loudou.info/tags/xing-neng-you-hua">-->
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="挨踢夜归人" type="application/atom+xml">
 
@@ -130,190 +130,39 @@
 
 
 
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-03-01T22:42:48+08:00" pubdate data-updated="true">Mar 1<span>st</span>, 2014</time>
         
       </p>
     
     
     <h1 class="entry-title">
-        用 Jstack 线程定位初体验
+        标签: 性能优化
         
     </h1>
     
   </header>
 
 
-<div class="entry-content clearfix"><p>用 top + jstack 定位 java 线程问题
-<!--more--></p>
+<div class="entry-content clearfix"><div id="blog-archives" class="tag">
 
-<h3 id="section">1. 需要定位的程序</h3>
 
-<p>首先, 写一个用于计算并输出蜚波那契数列的 java 程序, 大致的输出信息如下.</p>
 
-<p><img src="/blogimgs/thread-fb.png" alt="Fibonacci" title="a Fibonacci Thread" /></p>
+  
+  <h2>2014</h2>
 
-<p>这里特意写成<strong>死循环</strong>, 让它不停地去消耗 CPU</p>
+<article>
+  
+<h4 style="margin-top:0px;padding-top:0px"><a href="/blog/2014/11/13/python-ming-cheng-kong-jian-dui-xing-neng-de-ying-xiang/">Python 名称空间对性能的影响</a></h4>
 
-<h3 id="top-">2. 用 top 命令定位进程号</h3>
-<p>程序运行起来之后, 就该 <code>top</code> 命令出场了.</p>
+</article>
 
-<p>直接在命令行中输入</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$top</span>
-</span></code></pre></div></figure></notextile></div>
-
-<p>看 <code>top</code> 命令的输出
-<img src="/blogimgs/thread-top.png" alt="use top" title="use top" />
-看到消耗 CPU 最高的就是一个 java 进程.</p>
-
-<p>OK, 记下进程号 <strong>100162</strong></p>
-
-<blockquote>
-  <p>补充:  <br />
-&gt; <code>top</code> 添加 -c 参数可以查看到命令的参数信息  <br />
-&gt; 这样可以看到 java 具体执行的类, 定位更准确</p>
-</blockquote>
-
-<h3 id="top--h--p-">3. 用 top -H -p 命令定位到线程号</h3>
-<p>现在, 我们知道消耗 CPU 最高的进程是哪个了. </p>
-
-<p>但我们还不知道具体是哪个线程的问题, 所以不着急用 <code>jstack</code> 去获取 java 进程快照. </p>
-
-<p>再次使用 <code>top</code> 命令, 不过, 这次我们加上 <code>-H -p</code> 参数来查看线程运行情况.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$ </span>top -H -p 100162
-</span></code></pre></div></figure></notextile></div>
-
-<blockquote>
-  <p>注: <em>也可以 <code>top -p &lt;pid&gt;</code> 后再敲 H 打开子线程信息</em></p>
-</blockquote>
-
-<p>这次, 得到如下图的结果:
-<img src="/blogimgs/thread-topHp.png" alt="use top -H -p (pid)" title="use top -H -p &lt;pid&gt;" /></p>
-
-<p>消耗 CPU 最高的不再是 100162 了. 可以清楚的看到是线程 <strong>100172</strong></p>
-
-<h3 id="jstack-">4. 用 jstack 定位到代码行</h3>
-<p>下面, 就可以用 <code>jstack</code> 来导出进程的堆栈信息了.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$jstack</span> 100162
-</span></code></pre></div></figure></notextile></div>
-
-<ul>
-  <li>这里不能直接使用 <code>jstack 100172</code>的形式, jstack 似乎只能对<strong>主线程</strong>使用</li>
-  <li>jstack 不能导出堆栈问题解决: <a href="http://www.haply.info/blog/archives/305">jstack 不能导出堆栈</a></li>
-</ul>
-
-<p>然后, 在堆栈信息中找到 nid=0x27bc(100172 的 16 进制) 的线程.</p>
-
-<p>就是下面的 <strong>Thread-0</strong> 线程了</p>
-
-<p><img src="/blogimgs/thread-jstack.png" alt="use jstack" title="use jstack" /></p>
-
-<p>全是 <code>Fibonacci.calcFibo (testJstack.java:28)</code></p>
-
-<p>定位源码文件 <code>testJstack.java</code> 第 28 行, 最土最慢最二的蜚波那契数列算法…</p>
-
-<p><img src="/blogimgs/thread-28.png" alt="get the criminal" title="get the criminal" /></p>
-
-<p>问题定位结束</p>
-
-<p>上完整源码</p>
-
-<div><script src="https://gist.github.com/9290490.js?file=testJstack.java"></script>
-<noscript><pre><code>public class testJstack {
-    public static void main(String[] args) {
-        Thread t = new Thread(new Fibonacci());
-        t.start();
-    }
-}
-
-class Fibonacci implements Runnable {
-    public void run() {
-        while (true) {
-            for (int i = 0; i &lt; 20; i++) {
-                System.out.println(calcFibo(i));
-            }
-        }
-    }
-    
-    /**
-     * 最土最慢的蜚波那契计算函数.
-     * @return int
-     */
-    private int  calcFibo(final int n) {
-
-        if (n == 0) {
-            return 0;
-        } else if (n == 1) {
-            return 1;
-        } else {
-            return calcFibo(n-1) + calcFibo(n-2);
-        }
-    }
-}
-</code></pre></noscript></div>
-
+</div>
 </div>
 
 
         <footer>
-        <p class="meta text-muted">
-        
-  
-
-<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard">Posted by <span class="fn">_漏斗</span></span>
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-03-01T22:42:48+08:00" pubdate data-updated="true">Mar 1<span>st</span>, 2014</time>
-        
-
-<span class="glyphicon glyphicon-folder-open"></span>&nbsp;
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/java/'>java</a>
-  
-</span>
-
-
-        
-
-<br />
-<span class="glyphicon glyphicon-tags"></span>&nbsp;
-<span class="tags">
-    
-    <a class='tag' href='/tags/java/'>java</a>, <a class='tag' href='/tags/jstack/'>jstack</a>, <a class='tag' href='/tags/top/'>top</a>, <a class='tag' href='/tags/dui-zhan/'>堆栈</a>
-    
-</span>
-
-
-        </p>
-        
-        <nav class="pagination-link">
-            
-            <a class="prev" href="/blog/2014/02/18/lr-guan-lian-zhi-alfresco/"
-                title="Previous Post: LR 关联之 Alfresco">&laquo; LR 关联之 Alfresco</a>
-            
-            
-            <a class="next" href="/blog/2014/03/06/yong-awk-cha-kan-path-huan-jing-bian-liang/" title="Next Post: 用 awk 查看 PATH 环境变量">用 awk 查看 PATH 环境变量 &raquo;</a>
-            
-        </nav>
-        
-        
-        <div class="sharing">
+          
+          
+            <div class="sharing">
   
   
   
@@ -335,10 +184,9 @@ Date()/36e5)];</script>
 
 </div>
 
-        
+          
         </footer>
         </article>
-        
     </div>
 
     <div class="aside fn-clear">
@@ -396,16 +244,16 @@ Date()/36e5)];</script>
 <div class="box fn-clear">
     <h3 class="title">Tag Clouds</h3>
     <ul class="tag-cloud" style="padding-left:10px">
-        <a style="color:#d8d8d8;font-size: 100%" href="/tags/loadrunner/">LoadRunner</a>
-<a style="color:#d8d8d8;font-size: 100%" href="/tags/jian-kong/">监控</a>
-<a style="color:#d8d8d8;font-size: 245%" href="/tags/java/">java</a>
-<a style="color:#d8d8d8;font-size: 100%" href="/tags/yun-suan-fu/">运算符</a>
+        <a style="color:#d8d8d8;font-size: 100%" href="/tags/toc/">toc</a>
 <a style="color:#d8d8d8;font-size: 100%" href="/tags/jstack/">jstack</a>
-<a style="color:#d8d8d8;font-size: 100%" href="/tags/webdriver/">webdriver</a>
-<a style="color:#d8d8d8;font-size: 245%" href="/tags/shell/">shell</a>
-<a style="color:#d8d8d8;font-size: 100%" href="/tags/si-wei-dao-tu/">思维导图</a>
-<a style="color:#d8d8d8;font-size: 100%" href="/tags/awk/">awk</a>
-<a style="color:#d8d8d8;font-size: 100%" href="/tags/diff/">diff</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/jiao-ben-kai-fa/">脚本开发</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/jmeter/">Jmeter</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/jian-kong/">监控</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/nosql/">NoSQL</a>
+<a style="color:#d8d8d8;font-size: 172%" href="/tags/suan-fa/">算法</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/zhai-yao/">摘要</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/df/">df</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/guan-lian/">关联</a>
 
     </ul>
 </div>
