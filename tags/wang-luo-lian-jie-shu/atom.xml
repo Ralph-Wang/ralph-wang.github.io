@@ -4,7 +4,7 @@
   <title><![CDATA[标签: 网络连接数 | 挨踢夜归人]]></title>
   <link href="http://blog.loudou.info//tags/wang-luo-lian-jie-shu/atom.xml" rel="self"/>
   <link href="http://blog.loudou.info/"/>
-  <updated>2014-11-13T21:28:17+08:00</updated>
+  <updated>2014-12-08T14:57:22+08:00</updated>
   <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -36,8 +36,8 @@
 
 function echo_db_connect_count()
 {
-    current_date=`date '+%Y.%m.%d.%H.%M.%S'`
-    netstat -an |awk '{gsub(&quot;::ffff:&quot;,&quot;&quot;); print $5}'|grep &quot;$1&quot; |sort | uniq -c |sed &quot;s/^/$current_date/g&quot;
+    current_date=`date &#39;+%Y.%m.%d.%H.%M.%S&#39;`
+    netstat -an |awk &#39;{gsub(&quot;::ffff:&quot;,&quot;&quot;); print $5}&#39;|grep &quot;$1&quot; |sort | uniq -c |sed &quot;s/^/$current_date/g&quot;
 }
 
 port=${1:?&quot;port should be provide as the first argument&quot;}

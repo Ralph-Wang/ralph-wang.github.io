@@ -4,7 +4,7 @@
   <title><![CDATA[标签: 线程 | 挨踢夜归人]]></title>
   <link href="http://blog.loudou.info//tags/xian-cheng/atom.xml" rel="self"/>
   <link href="http://blog.loudou.info/"/>
-  <updated>2014-11-13T21:28:17+08:00</updated>
+  <updated>2014-12-08T14:57:22+08:00</updated>
   <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -246,8 +246,8 @@
         handler.start();
     }
 }/* output:
-I'm worker and using knife.
-I'm handler and using hammer.
+I&#39;m worker and using knife.
+I&#39;m handler and using hammer.
 *///:~
 
 class Worker extends Thread {
@@ -264,14 +264,14 @@ class Worker extends Thread {
     public void run() {
         synchronized(knife){
             try {
-                System.out.println(&quot;I'm &quot; + this.name + &quot; and using knife.&quot;);
+                System.out.println(&quot;I&#39;m &quot; + this.name + &quot; and using knife.&quot;);
                 Thread.sleep(2);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
             synchronized(hammer){
-                System.out.println(&quot;I'm &quot; + this.name + &quot;, I need hammer&quot;);
+                System.out.println(&quot;I&#39;m &quot; + this.name + &quot;, I need hammer&quot;);
             }
         }
     }
@@ -291,14 +291,14 @@ class Handler extends Thread {
     public void run() {
         synchronized(hammer){
             try {
-                System.out.println(&quot;I'm &quot; + this.name + &quot; and using hammer.&quot;);
+                System.out.println(&quot;I&#39;m &quot; + this.name + &quot; and using hammer.&quot;);
                 Thread.sleep(2);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
             synchronized(knife){
-                System.out.println(&quot;I'm &quot; + this.name + &quot;, I need knife&quot;);
+                System.out.println(&quot;I&#39;m &quot; + this.name + &quot;, I need knife&quot;);
             }
         }
     }
