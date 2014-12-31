@@ -4,7 +4,7 @@
   <title><![CDATA[挨踢夜归人]]></title>
   <link href="http://blog.loudou.info/atom.xml" rel="self"/>
   <link href="http://blog.loudou.info/"/>
-  <updated>2014-12-14T17:23:47+08:00</updated>
+  <updated>2014-12-31T23:13:48+08:00</updated>
   <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,136 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[BYE 2014]]></title>
+    <link href="http://blog.loudou.info/blog/2014/12/31/bye-2014/"/>
+    <updated>2014-12-31T15:14:19+08:00</updated>
+    <id>http://blog.loudou.info/blog/2014/12/31/bye-2014</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">2014再见</a>    <ul>
+      <li><a href="#section-1">搬砖</a></li>
+      <li><a href="#section-6">口琴</a></li>
+      <li><a href="#mooc">MOOC</a></li>
+      <li><a href="#section-7">败物</a></li>
+      <li><a href="#section-8">逗[哔]生活</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-9">2015你好</a></li>
+</ul>
+
+<h2 id="section">2014再见</h2>
+
+<h3 id="section-1">搬砖</h3>
+
+<h4 id="linux-">Linux 才是真爱</h4>
+
+<p>没啥好说的</p>
+
+<p>Linux 才是真爱. 终端才是真爱</p>
+
+<h4 id="section-2">工具转换</h4>
+
+<p>大概分三步</p>
+
+<ul>
+  <li>商业工具 LR: 方便好用, 报表美得很</li>
+  <li>开源工具 Jmeter + shell: 经济实惠, 集成美得很</li>
+  <li>懂原理了, 自己写工具: 妈蛋, 要多少坑有多少坑</li>
+</ul>
+
+<h4 id="section-3">玩了不少语言</h4>
+
+<p>基本都是浅尝辄止, 最后还是用 Python</p>
+
+<ul>
+  <li>nodejs, 重新看 OO</li>
+  <li>ruby, 嗯~ 语法上和 Python 相近, 但更灵活</li>
+  <li>Java, 静态语言必须死</li>
+  <li>Io, 卧槽, 这尼玛也可以</li>
+</ul>
+
+<h4 id="section-4">技术活动</h4>
+
+<p>参加了下面两个技术活动</p>
+
+<ul>
+  <li>MongoDB北京2014大会</li>
+  <li>SegmentFault D-Day</li>
+</ul>
+
+<p>技术活动也不是每次都有足够的干货.</p>
+
+<p>没事的时候去听听也无妨</p>
+
+<h4 id="section-5">一个开源项目</h4>
+
+<p><a href="https://github.com/Ralph-Wang/should">should</a></p>
+
+<p>把 travis + coveralls 用上. 集成测试/版本测试真心不是问题</p>
+
+<p>单元测试真心好用. 大刀阔斧上重构, 单元测试过就 ok.</p>
+
+<p>=,= 没有一起玩就自己给自己报 Bug, 再自己改 Bug. 反正还有一个挂着呢</p>
+
+<p>代码烂得一[哔]</p>
+
+<p>正在进行重写式重构.</p>
+
+<h3 id="section-6">口琴</h3>
+
+<p>妈蛋, 这是年初目标之一. 结果到 11 月才开始搞.</p>
+
+<p>而且到现在还是一个单音都吹不好的逗[哔]</p>
+
+<h3 id="mooc">MOOC</h3>
+
+<p>跟了不少课.</p>
+
+<p>但只完成了一门.</p>
+
+<h3 id="section-7">败物</h3>
+
+<p>懒人不拍照</p>
+
+<ul>
+  <li>MBP – 真TM贵, 真TM好用.</li>
+  <li>HHKB – 嗯, 机械盘退烧了</li>
+  <li>iPod Touch – 不能打电话的肾</li>
+  <li>肾6 – 好大</li>
+  <li>iQunix – 帅, 有[哔]格</li>
+</ul>
+
+<h3 id="section-8">逗[哔]生活</h3>
+
+<p>就一个关键词: 十万个冷笑话</p>
+
+<ul>
+  <li>首映时间发布会 - 全场节操满地, 福利满载, 寒舞满座</li>
+  <li>舞台剧 - 高还原, 笑到不行…妈蛋, 原作+主创声优都在现场, 为毛没带大师球</li>
+  <li>大电影 - 咦, 电影里居然有我</li>
+</ul>
+
+<p>反正节操是透支了, 也不打算还了…</p>
+
+<h2 id="section-9">2015你好</h2>
+
+<ul>
+  <li>
+    <p>嗯, 把 should 搞好点吧.. 没人用也要做好啊喂</p>
+  </li>
+  <li>
+    <p>多留点时间来读书啊喂. 2014 你根本就没读几本书啊</p>
+  </li>
+  <li>
+    <p>其实…今年有那么几个月, 我觉得已经在 2015了.</p>
+  </li>
+</ul>
+
+<hr />
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Python 名称空间对性能的影响]]></title>
@@ -2451,65 +2581,6 @@ output ** .  输出所有选中的行</p>
 <p>sample 所在的 git:</p>
 
 <p><a href="https://github.com/Ralph-Wang/page_object_sample">page_object_sample</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Jmeter 安装]]></title>
-    <link href="http://blog.loudou.info/blog/2014/04/06/jmeter-an-zhuang/"/>
-    <updated>2014-04-06T22:17:08+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/04/06/jmeter-an-zhuang</id>
-    <content type="html"><![CDATA[<p>跨平台工具赛高
-<!--more--></p>
-
-<h2 id="jdk">安装 jdk</h2>
-<p>去 oracle 官网<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载</a>相应版本的 jdk</p>
-
-<p>如果没有特别要求, 下载最新版就可以.</p>
-
-<p>完成安装后配置上相应的环境变量</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">JAVA_HOME</span><span class="o">=</span>/where/you/install/jdk
-</span><span class="line"><span class="nv">CLASSPATH</span><span class="o">=</span><span class="nv">$JAVA_HOME</span>/lib/dt.jar:<span class="nv">$JAVA_HOME</span>/lib/tools.jar
-</span></code></pre></div></figure></notextile></div>
-
-<p>可以用下面代码测试安装成功与否</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>Test.java</span></figcaption><div class="highlight"><pre><code class="java"><span class="line"><span class="kn">import</span> <span class="nn">java.util.Date</span><span class="o">;</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
-</span><span class="line">	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">new</span> <span class="n">Date</span><span class="o">());</span>
-</span><span class="line">	<span class="o">}</span>
-</span><span class="line"><span class="o">}</span>
-</span></code></pre></div></figure></notextile></div>
-
-<h2 id="jmeter">安装 Jmeter</h2>
-<p>去 Apache 官网<a href="http://jmeter.apache.org/download_jmeter.cgi">下载</a> Jmeter</p>
-
-<p>解压得到目录 <code>apache-jmeter-*.*</code> (*.* 为版本号)</p>
-
-<p>将 <code>apache-jmeter-*.*</code> 复制到任意你喜欢的目录</p>
-
-<p>下面这段其实完全不需要 ( 2014-05-07 更新 )</p>
-
-<blockquote>
-  <p>配置 Jmeter 环境变量</p>
-</blockquote>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">JMETER_HOME</span><span class="o">=</span>/where/you/put/apache-jmeter-*.*
-</span><span class="line"><span class="nv">CLASSPATH</span><span class="o">=</span><span class="nv">$CLASSPATH</span>:<span class="nv">$JMETER_HOME</span>/lib/logkit-2.0.jar:<span class="nv">$JMETER_HOME</span>/lib/jorphan.jar:<span class="nv">$JMETER_HOME</span>/lib/ext/ApacheJMeter_core.jar
-</span></code></pre></div></figure></notextile></div>
-
-<blockquote>
-  <p>其实就是在 <code>CLASSPATH</code> 中添加三个 jar 包: <em>(07-31更新: 可以不用配置)</em>
-$JMETER_HOME/lib/logkit-2.0.jar <br />
-$JMETER_HOME/lib/jorphan.jar <br />
-$JMETER_HOME/lib/ext/ApacheJMeter_core.jar</p>
-</blockquote>
-
-<h2 id="jmeter-1">启动 Jmeter</h2>
-<p>运行 $JMETER_HOME/bin 目录下的 jmeter (Windows 环境运行 jmeter.bat)</p>
 ]]></content>
   </entry>
   
