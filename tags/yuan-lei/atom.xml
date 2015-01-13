@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[标签: 元类 | 挨踢夜归人]]></title>
+  <link href="http://blog.loudou.info//tags/yuan-lei/atom.xml" rel="self"/>
+  <link href="http://blog.loudou.info/"/>
+  <updated>2015-01-13T10:48:26+08:00</updated>
+  <id>http://blog.loudou.info/</id>
+  <author>
+    <name><![CDATA[_漏斗]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Python 元类 DEF]]></title>
+    <link href="http://blog.loudou.info/blog/2015/01/12/python-yuan-lei-def/"/>
+    <updated>2015-01-12T20:13:16+08:00</updated>
+    <id>http://blog.loudou.info/blog/2015/01/12/python-yuan-lei-def</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">元类基础</a></li>
+  <li><a href="#section-1">2.* 和 3.* 的坑</a>    <ul>
+      <li><a href="#section-2">兼容写法</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="section">元类基础</h2>
+
+<p>Python 中一切事物都是类型的实例. </p>
+
+<p>数值是数字类型的实例, 字符串是字符串类型的实例, 对象是类-类型的实例</p>
+
+<p>同样的, 类(就是那个用 <code>class</code> 关键字创造出来的东西), 也是<em>某种</em>类型的实例</p>
+
+<p>这种类型就叫<code>元类</code>.</p>
+
+<p>如果说类是创建对象的模板, 那么<code>元类</code>就是创建类的模板</p>
+
+<p>下面的代码就创建了一个名为 <code>meta</code> 的元类, 当然, 这个元类什么都没定义</p>
+
+<p><code>python
+meta = type('meta', (object,), {})
+</code></p>
+
+<p>当然, 元类的定义还有其它方法, 还请自行 <a href="https://mygso.herokuapp.com/search?q=Python+%E5%85%83%E7%B1%BB">Google</a></p>
+
+<h2 id="section-1">2.* 和 3.* 的坑</h2>
+
+<p>因为元类可能复用, 而要创建的类也会有一些自己的属性.</p>
+
+<p>所以我们一般会这么写</p>
+
+<p><code>python
+class Cls(object):
+    __metaclass__ = meta
+    def method_of_cls(self):
+        pass
+</code></p>
+
+<p>但是这么写有一个问题 – <code>不兼容 3.*</code></p>
+
+<p>在 <code>3.*</code> 中, 元类语法不是上面这个样子</p>
+
+<p>而是:</p>
+
+<p><code>
+class Cls(metaclass=meta):
+    def method_of_cls(self):
+        pass
+</code></p>
+
+<p>而且, 两种写法完全不兼容(不像 print)</p>
+
+<h3 id="section-2">兼容写法</h3>
+
+<p>语法上不兼容就没撤了?</p>
+
+<p>如果真要兼容 <code>2.*</code> 和 <code>3.*</code>, 只能放弃 <code>class</code> 关键字, 直接使用 type 的返回值</p>
+
+<p><code>python
+Cls = meta
+</code></p>
+
+<p>有需要自定义的方法的情况, 将 type 的调用封装一下就可以了.</p>
+
+<p>```python
+def meta(name, parents, attrs):
+    # do sth with name/parents/attrs
+    return type(name, parents, attrs)</p>
+
+<p>Cls = meta(‘Cls1’, (object,), {})</p>
+
+<p>def method_of_cls2(self):
+    pass
+Clas = meta(‘Cls2’, (object,), {‘method_of_cls2’: method_of_cls2})
+```</p>
+
+<hr />
+]]></content>
+  </entry>
+  
+</feed>

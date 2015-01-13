@@ -4,7 +4,7 @@
   <title><![CDATA[挨踢夜归人]]></title>
   <link href="http://blog.loudou.info/atom.xml" rel="self"/>
   <link href="http://blog.loudou.info/"/>
-  <updated>2014-12-31T23:17:54+08:00</updated>
+  <updated>2015-01-13T10:48:26+08:00</updated>
   <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,90 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Python 元类 DEF]]></title>
+    <link href="http://blog.loudou.info/blog/2015/01/12/python-yuan-lei-def/"/>
+    <updated>2015-01-12T20:13:16+08:00</updated>
+    <id>http://blog.loudou.info/blog/2015/01/12/python-yuan-lei-def</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">元类基础</a></li>
+  <li><a href="#section-1">2.* 和 3.* 的坑</a>    <ul>
+      <li><a href="#section-2">兼容写法</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="section">元类基础</h2>
+
+<p>Python 中一切事物都是类型的实例. </p>
+
+<p>数值是数字类型的实例, 字符串是字符串类型的实例, 对象是类-类型的实例</p>
+
+<p>同样的, 类(就是那个用 <code>class</code> 关键字创造出来的东西), 也是<em>某种</em>类型的实例</p>
+
+<p>这种类型就叫<code>元类</code>.</p>
+
+<p>如果说类是创建对象的模板, 那么<code>元类</code>就是创建类的模板</p>
+
+<p>下面的代码就创建了一个名为 <code>meta</code> 的元类, 当然, 这个元类什么都没定义</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="n">meta</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;meta&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">object</span><span class="p">,),</span> <span class="p">{})</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>当然, 元类的定义还有其它方法, 还请自行 <a href="https://mygso.herokuapp.com/search?q=Python+%E5%85%83%E7%B1%BB">Google</a></p>
+
+<h2 id="section-1">2.* 和 3.* 的坑</h2>
+
+<p>因为元类可能复用, 而要创建的类也会有一些自己的属性.</p>
+
+<p>所以我们一般会这么写</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Cls</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+</span><span class="line">    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">meta</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">method_of_cls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">pass</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>但是这么写有一个问题 – <code>不兼容 3.*</code></p>
+
+<p>在 <code>3.*</code> 中, 元类语法不是上面这个样子</p>
+
+<p>而是:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Cls</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">meta</span><span class="p">):</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">method_of_cls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">pass</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>而且, 两种写法完全不兼容(不像 print)</p>
+
+<h3 id="section-2">兼容写法</h3>
+
+<p>语法上不兼容就没撤了?</p>
+
+<p>如果真要兼容 <code>2.*</code> 和 <code>3.*</code>, 只能放弃 <code>class</code> 关键字, 直接使用 type 的返回值</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="n">Cls</span> <span class="o">=</span> <span class="n">meta</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>有需要自定义的方法的情况, 将 type 的调用封装一下就可以了.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">meta</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">parents</span><span class="p">,</span> <span class="n">attrs</span><span class="p">):</span>
+</span><span class="line">    <span class="c"># do sth with name/parents/attrs</span>
+</span><span class="line">    <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">parents</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">Cls</span> <span class="o">=</span> <span class="n">meta</span><span class="p">(</span><span class="s">&#39;Cls1&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">object</span><span class="p">,),</span> <span class="p">{})</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">method_of_cls2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">    <span class="k">pass</span>
+</span><span class="line"><span class="n">Clas</span> <span class="o">=</span> <span class="n">meta</span><span class="p">(</span><span class="s">&#39;Cls2&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">object</span><span class="p">,),</span> <span class="p">{</span><span class="s">&#39;method_of_cls2&#39;</span><span class="p">:</span> <span class="n">method_of_cls2</span><span class="p">})</span>
+</span></code></pre></div></figure></notextile></div>
+
+<hr />
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[BYE 2014]]></title>
@@ -2455,132 +2539,6 @@ output ** .  输出所有选中的行</p>
 
 <p><code>-z</code> 以 0 作为行末</p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[WebDriver 之 Page Object 设计模式]]></title>
-    <link href="http://blog.loudou.info/blog/2014/04/11/webdriver-zhi-page-object-she-ji-mo-shi/"/>
-    <updated>2014-04-11T21:17:47+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/04/11/webdriver-zhi-page-object-she-ji-mo-shi</id>
-    <content type="html"><![CDATA[<p>使用 Selenium Webdriver 最常用的设计模式 Page Object 规划页面
-<!--more-->
-例子页面:</p>
-
-<p><a href="http://ralph-wang.github.io/sample/login_test.html">login_test.html</a></p>
-
-<p>用户名: test 密码: test</p>
-
-<h2 id="section">一般写法</h2>
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
-</span><span class="line">
-</span><span class="line"><span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">()</span>
-</span><span class="line">
-</span><span class="line"><span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;http://ralph-wang.github.io/sample/login_test.html&#39;</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="n">username</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span>
-</span><span class="line"><span class="n">pwd</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span>
-</span><span class="line">
-</span><span class="line"><span class="c"># 登录操作</span>
-</span><span class="line"><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&#39;username&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
-</span><span class="line"><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&#39;pwd&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">pwd</span><span class="p">)</span>
-</span><span class="line"><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&#39;ok&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-</span><span class="line">
-</span><span class="line"><span class="c"># 验证登录</span>
-</span><span class="line"><span class="n">alert</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">switch_to_alert</span><span class="p">()</span>
-</span><span class="line"><span class="k">assert</span> <span class="s">&#39;succ&#39;</span> <span class="ow">in</span> <span class="n">alert</span><span class="o">.</span><span class="n">text</span>
-</span></code></pre></div></figure></notextile></div>
-
-<p>这样的写法的代码复用和管理都会成为麻烦.</p>
-
-<p>一方面测试值的参数化不方便, 另一方面没有抽象出业务操作来, 可读性能差.</p>
-
-<p>如果需要自动化的页面只有一个时, 可以就这么写. 但业务多起来后代码的维护会非常痛苦</p>
-
-<p>下面就用 Page Object 来重构这个测试</p>
-
-<h2 id="page-object-">Page Object 设计模式</h2>
-
-<p>先需要两个基类: <code>BrowserContainer</code>, <code>BasePage</code></p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>Base.py</span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">BrowserContainer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-</span><span class="line">	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">se</span>	<span class="n">lf</span><span class="p">,</span> <span class="n">driver</span><span class="p">,</span> <span class="n">baseURL</span><span class="p">):</span>
-</span><span class="line">		<span class="bp">self</span><span class="o">.</span><span class="n">driver</span> <span class="o">=</span> <span class="n">driver</span>
-</span><span class="line">		<span class="bp">self</span><span class="o">.</span><span class="n">baseURL</span> <span class="o">=</span> <span class="n">baseURL</span>
-</span><span class="line">
-</span><span class="line"><span class="k">class</span> <span class="nc">BasePage</span><span class="p">(</span><span class="n">BrowserContainer</span><span class="p">):</span>
-</span><span class="line">	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driver</span><span class="p">,</span> <span class="n">baseURL</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
-</span><span class="line">		<span class="n">BrowserContainer</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driver</span><span class="p">,</span> <span class="n">baseURL</span><span class="p">)</span>
-</span><span class="line">		<span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="c">## 页面路径</span>
-</span><span class="line">	<span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">		<span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">baseURL</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
-</span></code></pre></div></figure></notextile></div>
-<p><code>BrowserContainer</code> 是一个抽象类, 用来存储 driver 和测试站点的 baseURL</p>
-
-<p><code>BasePage</code> 也是一个抽象类, 继承自 BrowserContainer, 后续所有测试页面都继承自它</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>Site.py</span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="kn">import</span> <span class="nn">page.Base</span>
-</span><span class="line">
-</span><span class="line"><span class="k">class</span> <span class="nc">Site</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">Base</span><span class="o">.</span><span class="n">BrowserContainer</span><span class="p">):</span>
-</span><span class="line">	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driver</span><span class="p">,</span> <span class="n">baseURL</span><span class="p">):</span>
-</span><span class="line">		<span class="n">page</span><span class="o">.</span><span class="n">Base</span><span class="o">.</span><span class="n">BrowserContainer</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driver</span><span class="p">,</span> <span class="n">baseURL</span><span class="p">)</span>
-</span><span class="line">	<span class="k">def</span> <span class="nf">getLoginPage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">		<span class="k">return</span> <span class="n">LoginPage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">baseURL</span><span class="p">,</span> <span class="s">&#39;/login_test.html&#39;</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line"><span class="k">class</span> <span class="nc">LoginPage</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">Base</span><span class="o">.</span><span class="n">BasePage</span><span class="p">):</span>
-</span><span class="line">	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driver</span><span class="p">,</span> <span class="n">baseURL</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
-</span><span class="line">		<span class="n">page</span><span class="o">.</span><span class="n">Base</span><span class="o">.</span><span class="n">BasePage</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driver</span><span class="p">,</span> <span class="n">baseURL</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line">	<span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">pwd</span><span class="p">):</span>
-</span><span class="line">		<span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&#39;username&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
-</span><span class="line">		<span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&#39;pwd&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">pwd</span><span class="p">)</span>
-</span><span class="line">		<span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&#39;ok&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-</span></code></pre></div></figure></notextile></div>
-<p><code>Site</code> 是一个工厂类, 用来取得各个测试页面的实例</p>
-
-<p><code>LoginPage</code> 就对应我们的测试页面 <code>/login_test.html</code></p>
-
-<p>这样, 我们可以把环境因素 baseURL 和 项目因素 path 分离, 这样更方便的实现多环境复用</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>case.py</span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="kn">import</span> <span class="nn">unittest</span>
-</span><span class="line"><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
-</span><span class="line">
-</span><span class="line"><span class="kn">import</span> <span class="nn">page.Site</span>
-</span><span class="line">
-</span><span class="line"><span class="k">class</span> <span class="nc">TestLogin</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-</span><span class="line">	<span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">		<span class="bp">self</span><span class="o">.</span><span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">()</span>
-</span><span class="line">		<span class="bp">self</span><span class="o">.</span><span class="n">site</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">Site</span><span class="o">.</span><span class="n">Site</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="p">,</span>\
-</span><span class="line">				<span class="s">&#39;http://ralph-github.io/sample&#39;</span><span class="p">)</span>
-</span><span class="line">		<span class="bp">self</span><span class="o">.</span><span class="n">loginPage</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">getLoginPage</span><span class="p">()</span>
-</span><span class="line">
-</span><span class="line">		<span class="k">def</span> <span class="nf">testLogin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">			<span class="bp">self</span><span class="o">.</span><span class="n">loginPage</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
-</span><span class="line">			<span class="bp">self</span><span class="o">.</span><span class="n">loginPage</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="s">&#39;test&#39;</span><span class="p">,</span> <span class="s">&#39;test&#39;</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line">			<span class="n">alert</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">switch_to_alert</span><span class="p">()</span>
-</span><span class="line">			<span class="k">assert</span> <span class="s">&#39;succ&#39;</span> <span class="ow">in</span> <span class="n">alert</span><span class="o">.</span><span class="n">text</span>
-</span><span class="line">			<span class="n">alert</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
-</span><span class="line">
-</span><span class="line">	<span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">		<span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-</span><span class="line">	<span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
-</span></code></pre></div></figure></notextile></div>
-<p>最后我们再用 <code>unittest</code> 模块组织我们的测试用例.</p>
-
-<p>这样我们增加了不少代码, 但用例部分的可读性提升了不少.</p>
-
-<p>并且我们的业务和页面是绑定在一起了, 管理起来也很方便</p>
-
-<p>如果再增加测试页面和测试业务, 我们只需要增加一个页面类并添加一个 Site 的工厂函数即可.</p>
-
-<p>sample 所在的 git:</p>
-
-<p><a href="https://github.com/Ralph-Wang/page_object_sample">page_object_sample</a></p>
 ]]></content>
   </entry>
   
