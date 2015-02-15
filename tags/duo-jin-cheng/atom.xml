@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[标签: 多进程 | 挨踢夜归人]]></title>
+  <link href="http://blog.loudou.info//tags/duo-jin-cheng/atom.xml" rel="self"/>
+  <link href="http://blog.loudou.info/"/>
+  <updated>2015-02-15T22:03:46+08:00</updated>
+  <id>http://blog.loudou.info/</id>
+  <author>
+    <name><![CDATA[_漏斗]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[装饰器与多进程以及Pickle]]></title>
+    <link href="http://blog.loudou.info/blog/2015/02/15/zhuang-shi-qi-yu-duo-jin-cheng-yi-ji-pickle/"/>
+    <updated>2015-02-15T21:39:08+08:00</updated>
+    <id>http://blog.loudou.info/blog/2015/02/15/zhuang-shi-qi-yu-duo-jin-cheng-yi-ji-pickle</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">缘起</a></li>
+  <li><a href="#section-1">解答</a></li>
+  <li><a href="#section-2">分析</a></li>
+</ul>
+
+<h2 id="section">缘起</h2>
+
+<p>因为需要并发请求同时计时, 写上如下代码:</p>
+
+<p>```python
+def timer(func):
+    def _wrap(<em>args):
+        start = time.time()
+        ret = func(</em>args)
+        return ret, time.time() - start
+    return _wrap</p>
+
+<p>@timer
+def get(url):
+    return requests.get(url)</p>
+
+<p>rets = []
+for i in xrange(10):
+    rets.append(pool.apply_async(get, (url,)))
+for ret in rets:
+    ret.get()
+```</p>
+
+<p>好的, 来执行脚本…</p>
+
+<p>得到了如下错误, WTF:</p>
+
+<p><code>
+PicklingError: Can't pickle &lt;type 'function'&gt;: attribute lookup __builtin__.function failed
+</code></p>
+
+<p>=,= 和 Pickle 有毛关系, 百思不得…</p>
+
+<h2 id="section-1">解答</h2>
+
+<p>这时候先上搜索引擎.</p>
+
+<p>在 SO 上得到了这样一对问答: <a href="http://stackoverflow.com/questions/9336646/python-decorator-with-multiprocessing-fails">戳这里</a></p>
+
+<p>简单总结一下:</p>
+
+<ul>
+  <li>进程间通信时, 对象(数据)的传输是需要序列化的.</li>
+  <li>Python 中对象序列化最常见的方法是 Pickle</li>
+  <li>不是所有的 Python 对象都可以用 Pickle 序列化</li>
+  <li>函数装饰器反回的函数对象就不在可 Pickle 对象之列</li>
+  <li>换成类装饰器就万事大吉</li>
+</ul>
+
+<p>好了, 先来结出类装饰器的版本:</p>
+
+<p>```python
+class timer(object):
+    def <strong>init</strong>(self, func):
+        self.func = func</p>
+
+<pre><code>def __call__(self, *args):
+    start = time.time()
+    ret = self.func(*args)
+    return ret, time.time() - start
+</code></pre>
+
+<p>@timer
+def get(url):
+    return requests.get(url)
+```</p>
+
+<h2 id="section-2">分析</h2>
+
+<p>现在, 来分析一下为什么类装饰器就可以序列化, 而函数装饰器就不可以</p>
+
+<p>先来看, 那些对象是可以序列化的. 参考<a href="https://docs.python.org/2/library/pickle.html#what-can-be-pickled-and-unpickle">官方文档</a></p>
+
+<p>把这个问题相关的简单翻译一下:</p>
+
+<ul>
+  <li>只含有可 Pickle 元素的<code>元组</code>/<code>列表</code>/<code>集合</code>/<code>字典</code></li>
+  <li>在模块顶层定义的<code>函数</code></li>
+  <li><code>__dict__</code> 属性或 <code>__getstarte__()</code> 函数的返回可以 Pickle 的<code>实例</code></li>
+</ul>
+
+<h4 id="section-3">函数装饰器</h4>
+
+<p><code>python
+def timer(func):
+    def _wrap(*args):
+        # 省略
+        return ret
+    return _wrap
+</code></p>
+
+<p>我们知道, 装饰器实际上是表达式 <code>get = timer(get)</code> 的语法糖.</p>
+
+<p>那么, 被装饰器包裹后的 <code>get</code> 实际上就是 <code>timer</code> 的返回值 =&gt; <code>_wrap</code> 函数.</p>
+
+<p>而这函数定义的位置是在 <code>timer</code> 内部. 并不满足 Pickle 的条件(模块顶层定义).</p>
+
+<p>所以会导致文章开始的那个错误.</p>
+
+<h4 id="section-4">类装饰器</h4>
+
+<p>```python
+class timer(object):
+    def <strong>init</strong>(self, func):
+        self.func = func</p>
+
+<pre><code>def __call__(self, *args):
+    # 省略 ```
+</code></pre>
+
+<p>在这里, 被装饰器包裹后的 <code>get</code> 就变成了 <code>timer</code> 类的实例.</p>
+
+<p>既然是实例, 再加上我们没有定义 <strong>getstate</strong> 方法, 就直接来看 <strong>dict</strong> 属性</p>
+
+<p>明显的, 这个实例的 <strong>dict</strong> 是字典 <code>{'func': &lt;function get at 0x*****&gt;}</code></p>
+
+<p>字典所包含的元素为原始的 <code>get</code> 函数, 这个函数是定义在模块顶层的.</p>
+
+<p>既然如此, 那么类装饰器的结果自然也就是可 Pickle 了:</p>
+
+<p><code>原 get 可 Pickle</code> =&gt; <code>__dict__ 可 Pickle</code> =&gt; <code>实例可 Pickle</code></p>
+
+<hr />
+]]></content>
+  </entry>
+  
+</feed>

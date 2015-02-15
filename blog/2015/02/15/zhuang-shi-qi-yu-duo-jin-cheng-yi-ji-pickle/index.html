@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>装饰器与多进程以及Pickle - 挨踢夜归人</title>
+  <meta name="author" content="_漏斗">
+
+  <meta name="description" content="装饰器与多进程的化学反应">
+  <meta name="keywords" content="pickle多进程装饰器序列化">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <!--<link rel="canonical" href="http://blog.loudou.info/blog/2015/02/15/zhuang-shi-qi-yu-duo-jin-cheng-yi-ji-pickle">-->
+  <link href="/favicon.png" type="image/png" rel="icon">
+  <link href="/atom.xml" rel="alternate" title="挨踢夜归人" type="application/atom+xml">
+
+  <link href="/css/style.css" rel="stylesheet" type="text/css">
+<link href="/stylesheets/screen.css" rel="stylesheet" type="text/css">
+
+
+</head>
+
+  <body   >
+    <div id="wrap">
+      <header role="banner">
+        <header class="head" role="navigation">
+<a style="position:relative" href="https://github.com/Ralph-Wang/" id="fork">
+    <img style="position:absolute" src="/imgs/fork_me.png" width=149 height=149 alt="Fork me on Github" /></a>
+<div class="header fn-clear">
+    <section class="header-cnt fn-clear">
+    <div class="logo">
+        <div class="logo-cnt">
+            <h1><a href="">挨踢夜归人</a></h1>
+            <h2>Write as a Doubi.  ╮(￣▽ ￣)╭</h2>
+        </div>
+    </div>
+    <nav class="nav">
+    <ul>
+        <li >
+        <a href="/">玄关</a>
+        </li>
+        <li >
+        <a href="/blog/archives">历史事件</a>
+        </li>
+        <li >
+        <a href="/about-me">这个逗[哔]</a>
+        </li>
+        <li >
+        <a href="/NotFound">404Help</a>
+        </li>
+        <li>
+        <a title="把这个链接拖到你的Chrome收藏夹工具栏中"
+            href='javascript:(function(){function c(){var
+            e=document.createElement("link");e.setAttribute("type","text/css");e.setAttribute("rel","stylesheet");e.setAttribute("href",f);e.setAttribute("class",l);document.body.appendChild(e)}function
+            h(){var e=document.getElementsByClassName(l);for(var
+            t=0;t<e.length;t++){document.body.removeChild(e[t])}}function
+            p(){var
+            e=document.createElement("div");e.setAttribute("class",a);document.body.appendChild(e);setTimeout(function(){document.body.removeChild(e)},100)}function
+            d(e){return{height:e.offsetHeight,width:e.offsetWidth}}function
+            v(i){var s=d(i);return
+            s.height>e&&s.height<n&&s.width>t&&s.width<r}function
+            m(e){var t=e;var
+            n=0;while(!!t){n+=t.offsetTop;t=t.offsetParent}return
+            n}function g(){var
+            e=document.documentElement;if(!!window.innerWidth){return
+            window.innerHeight}else if(e&&!isNaN(e.clientHeight)){return
+            e.clientHeight}return 0}function
+            y(){if(window.pageYOffset){return window.pageYOffset}return
+            Math.max(document.documentElement.scrollTop,document.body.scrollTop)}function
+            E(e){var t=m(e);return t>=w&&t<=b+w}function S(){var
+            e=document.createElement("audio");e.setAttribute("class",l);e.src=i;e.loop=false;e.addEventListener("canplay",function(){setTimeout(function(){x(k)},500);setTimeout(function(){N();p();for(var
+            e=0;e<O.length;e++){T(O[e])}},15500)},true);e.addEventListener("ended",function(){N();h()},true);e.innerHTML="
+            <p>If you are reading this, it is because your browser does
+            not support the audio element. We recommend that you get a
+            new browser.</p>
+            <p>";document.body.appendChild(e);e.play()}function
+            x(e){e.className+=" "+s+" "+o}function T(e){e.className+="
+            "+s+" "+u[Math.floor(Math.random()*u.length)]}function
+            N(){var e=document.getElementsByClassName(s);var t=new
+            RegExp("\\b"+s+"\\b");for(var
+            n=0;n<e.length;){e[n].className=e[n].className.replace(t,"")}}var
+            e=30;var t=30;var n=350;var r=350;var
+            i="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";var
+            s="mw-harlem_shake_me";var o="im_first";var
+            u=["im_drunk","im_baked","im_trippin","im_blown"];var
+            a="mw-strobe_light";var
+            f="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";var
+            l="mw_added_css";var b=g();var w=y();var
+            C=document.getElementsByTagName("*");var k=null;for(var
+            L=0;L<C.length;L++){var
+            A=C[L];if(v(A)){if(E(A)){k=A;break}}}if(A===null){console.warn("Could
+            not find a node of the right size. Please try a different
+            page.");return}c();S();var O=[];for(var
+            L=0;L<C.length;L++){var
+            A=C[L];if(v(A)){O.push(A)}}})()'>High一下!</a>
+        </li>
+    </ul>
+    </nav>
+    </section>
+</div>
+</header>
+
+
+      </header>
+      <div id="main" class="container">
+        <div id="content">
+          <section class="content">
+<div class="content-cnt fn-clear">
+    <div class="main fn-clear">
+        <article class="entry" role="article">
+        
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-02-15T21:39:08+08:00" pubdate data-updated="true">Feb 15<span>th</span>, 2015</time>
+        
+      </p>
+    
+    
+    <h1 class="entry-title">
+        装饰器与多进程以及Pickle
+        
+    </h1>
+    
+  </header>
+
+
+<div class="entry-content clearfix"><!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">缘起</a></li>
+  <li><a href="#section-1">解答</a></li>
+  <li><a href="#section-2">分析</a></li>
+</ul>
+
+<h2 id="section">缘起</h2>
+
+<p>因为需要并发请求同时计时, 写上如下代码:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">timer</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">_wrap</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+</span><span class="line">        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span><span class="line">        <span class="n">ret</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">ret</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">_wrap</span>
+</span><span class="line">
+</span><span class="line"><span class="nd">@timer</span>
+</span><span class="line"><span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">rets</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class="line"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+</span><span class="line">    <span class="n">rets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">get</span><span class="p">,</span> <span class="p">(</span><span class="n">url</span><span class="p">,)))</span>
+</span><span class="line"><span class="k">for</span> <span class="n">ret</span> <span class="ow">in</span> <span class="n">rets</span><span class="p">:</span>
+</span><span class="line">    <span class="n">ret</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>好的, 来执行脚本…</p>
+
+<p>得到了如下错误, WTF:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="n">PicklingError</span><span class="p">:</span> <span class="n">Can</span><span class="s">&#39;t pickle &lt;type &#39;</span><span class="n">function</span><span class="s">&#39;&gt;: attribute lookup __builtin__.function failed</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>=,= 和 Pickle 有毛关系, 百思不得…</p>
+
+<h2 id="section-1">解答</h2>
+
+<p>这时候先上搜索引擎.</p>
+
+<p>在 SO 上得到了这样一对问答: <a href="http://stackoverflow.com/questions/9336646/python-decorator-with-multiprocessing-fails">戳这里</a></p>
+
+<p>简单总结一下:</p>
+
+<ul>
+  <li>进程间通信时, 对象(数据)的传输是需要序列化的.</li>
+  <li>Python 中对象序列化最常见的方法是 Pickle</li>
+  <li>不是所有的 Python 对象都可以用 Pickle 序列化</li>
+  <li>函数装饰器反回的函数对象就不在可 Pickle 对象之列</li>
+  <li>换成类装饰器就万事大吉</li>
+</ul>
+
+<p>好了, 先来结出类装饰器的版本:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">timer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+</span><span class="line">        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span><span class="line">        <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">ret</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+</span><span class="line">
+</span><span class="line"><span class="nd">@timer</span>
+</span><span class="line"><span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span></code></pre></div></figure></notextile></div>
+
+<h2 id="section-2">分析</h2>
+
+<p>现在, 来分析一下为什么类装饰器就可以序列化, 而函数装饰器就不可以</p>
+
+<p>先来看, 那些对象是可以序列化的. 参考<a href="https://docs.python.org/2/library/pickle.html#what-can-be-pickled-and-unpickle">官方文档</a></p>
+
+<p>把这个问题相关的简单翻译一下:</p>
+
+<ul>
+  <li>只含有可 Pickle 元素的<code>元组</code>/<code>列表</code>/<code>集合</code>/<code>字典</code></li>
+  <li>在模块顶层定义的<code>函数</code></li>
+  <li><code>__dict__</code> 属性或 <code>__getstarte__()</code> 函数的返回可以 Pickle 的<code>实例</code></li>
+</ul>
+
+<h4 id="section-3">函数装饰器</h4>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">timer</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">_wrap</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+</span><span class="line">        <span class="c"># 省略</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">ret</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">_wrap</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>我们知道, 装饰器实际上是表达式 <code>get = timer(get)</code> 的语法糖.</p>
+
+<p>那么, 被装饰器包裹后的 <code>get</code> 实际上就是 <code>timer</code> 的返回值 =&gt; <code>_wrap</code> 函数.</p>
+
+<p>而这函数定义的位置是在 <code>timer</code> 内部. 并不满足 Pickle 的条件(模块顶层定义).</p>
+
+<p>所以会导致文章开始的那个错误.</p>
+
+<h4 id="section-4">类装饰器</h4>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">timer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+</span><span class="line">        <span class="c"># 省略</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>在这里, 被装饰器包裹后的 <code>get</code> 就变成了 <code>timer</code> 类的实例.</p>
+
+<p>既然是实例, 再加上我们没有定义 <strong>getstate</strong> 方法, 就直接来看 <strong>dict</strong> 属性</p>
+
+<p>明显的, 这个实例的 <strong>dict</strong> 是字典 <code>{'func': &lt;function get at 0x*****&gt;}</code></p>
+
+<p>字典所包含的元素为原始的 <code>get</code> 函数, 这个函数是定义在模块顶层的.</p>
+
+<p>既然如此, 那么类装饰器的结果自然也就是可 Pickle 了:</p>
+
+<p><code>原 get 可 Pickle</code> =&gt; <code>__dict__ 可 Pickle</code> =&gt; <code>实例可 Pickle</code></p>
+
+<hr />
+</div>
+
+
+        <footer>
+        <p class="meta text-muted">
+        
+  
+
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard">Posted by <span class="fn">_漏斗</span></span>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-02-15T21:39:08+08:00" pubdate data-updated="true">Feb 15<span>th</span>, 2015</time>
+        
+
+<span class="glyphicon glyphicon-folder-open"></span>&nbsp;
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/python/'>Python</a>
+  
+</span>
+
+
+        
+
+<br />
+<span class="glyphicon glyphicon-tags"></span>&nbsp;
+<span class="tags">
+    
+    <a class='tag' href='/tags/python/'>Python</a>, <a class='tag' href='/tags/pickle/'>pickle</a>, <a class='tag' href='/tags/duo-jin-cheng/'>多进程</a>, <a class='tag' href='/tags/xu-lie-hua/'>序列化</a>, <a class='tag' href='/tags/zhuang-shi-qi/'>装饰器</a>
+    
+</span>
+
+
+        </p>
+        
+        <nav class="pagination-link">
+            
+            <a class="prev" href="/blog/2015/01/12/python-yuan-lei-def/"
+                title="Previous Post: Python 元类 DEF">&laquo; Python 元类 DEF</a>
+            
+            
+        </nav>
+        
+        
+        <div class="sharing">
+  
+  
+  
+  
+<!-- Baidu Share BEGIN -->
+<div class="bdsharebuttonbox"><a href="#" class="bds_more"
+    data-cmd="more">分享到：</a><a href="#" class="bds_qzone"
+    data-cmd="qzone" title="分享到QQ空间">QQ空间</a><a href="#"
+    class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a><a
+    href="#" class="bds_tqq" data-cmd="tqq"
+    title="分享到腾讯微博">腾讯微博</a><a href="#" class="bds_renren"
+    data-cmd="renren" title="分享到人人网">人人网</a><a href="#"
+    class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new
+Date()/36e5)];</script>
+<!-- Baidu Share END -->
+
+
+
+</div>
+
+        
+        </footer>
+        </article>
+        
+    </div>
+
+    <div class="aside fn-clear">
+        
+        <aside>
+        
+        
+<iframe width="100%" height="420" class="share_self"  frameborder="0"
+    scrolling="no"
+    src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=420&fansRow=2&ptype=0&speed=0&skin=1&isTitle=0&noborder=1&isWeibo=1&isFans=0&uid=1854716251&verifier=375b89d6&dpc=1"></iframe>
+
+<section>
+<div class="box fn-clear">
+    <h3 class="title">Recent Posts</h3>
+    
+
+    
+    <ul>
+        <li>&#9830;<a href="/blog/2015/02/15/zhuang-shi-qi-yu-duo-jin-cheng-yi-ji-pickle/">装饰器与多进程以及Pickle</a></li>
+        
+    <ul>
+        <li>&#8227;<a href="/blog/2015/01/12/python-yuan-lei-def/">Python 元类 DEF</a></li>
+        
+    <ul>
+        <li>&#8227;<a href="/blog/2014/12/31/bye-2014/">BYE 2014</a></li>
+        
+    <ul>
+        <li>&#8227;<a href="/blog/2014/11/13/python-ming-cheng-kong-jian-dui-xing-neng-de-ying-xiang/">Python 名称空间对性能的影响</a></li>
+        
+    <ul>
+        <li>&#8227;<a href="/blog/2014/10/18/bash-te-bie-de-patch-ji-qiao/">BASH 特别的 Patch 技巧</a></li>
+        
+    </ul>
+</div>
+</section>
+<section class="panel panel-default">
+  <div class="box fn-clear">
+    <h3 class="title">Categories</h3>
+  <ul>
+      <li>&#8227<a class='list-group-item' href='/blog/categories/linux/'>Linux <span class='badge'>12</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/python/'>Python <span class='badge'>5</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/java/'>java <span class='badge'>4</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/leetcode/'>leetcode <span class='badge'>2</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/nodejs/'>nodejs <span class='badge'>1</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/octopress/'>octopress <span class='badge'>5</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/qi-ta/'>其它 <span class='badge'>3</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/shu-ju-ku/'>数据库 <span class='badge'>1</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/ce-shi-gong-ju/'>测试工具 <span class='badge'>3</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/cheng-xu-she-ji-yu-suan-fa/'>程序设计与算法 <span class='badge'>1</span></a></li>
+
+  </ul>
+  </div>
+</section>
+<section class="panel panel-default">
+<div class="box fn-clear">
+    <h3 class="title">Tag Clouds</h3>
+    <ul class="tag-cloud" style="padding-left:10px">
+        <a style="color:#d8d8d8;font-size: 100%" href="/tags/ming-cheng-kong-jian/">名称空间</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/linux/">linux</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/ji-zhun/">基准</a>
+<a style="color:#d8d8d8;font-size: 172%" href="/tags/jvm/">jvm</a>
+<a style="color:#d8d8d8;font-size: 172%" href="/tags/bian-lan/">边栏</a>
+<a style="color:#d8d8d8;font-size: 172%" href="/tags/mysql/">MySQL</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/zhuang-shi-qi/">装饰器</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/dsf/">DSF</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/liu-kong-zhi/">流控制</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/yuan-lei/">元类</a>
+
+    </ul>
+</div>
+</section>
+
+        
+        </aside>
+        
+    </div>
+</div>
+</section>
+
+        </div>
+      </div>
+    </div>
+    <footer role="contentinfo"><div class="foot-btn">
+    <div class="foot-btn-det">
+        <p class="copyright"> Copyright &copy; 2015 - _漏斗</p>
+<p class="author">Powered by <a href="http://octopress.org">Octopress</a>, Inspired by <a href="https://github.com/pizn/blogTheme/tree/master/BlackCubeTheme">BlackCube</a>.</p>
+
+    </div>
+</div>
+</footer>
+    <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+<script src="/js/smoothscroll.js"></script>
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47787507-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+  </body>
+</html>
