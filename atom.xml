@@ -4,7 +4,7 @@
   <title><![CDATA[挨踢夜归人]]></title>
   <link href="http://blog.loudou.info/atom.xml" rel="self"/>
   <link href="http://blog.loudou.info/"/>
-  <updated>2015-02-16T15:52:03+08:00</updated>
+  <updated>2015-06-08T11:57:57+08:00</updated>
   <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,199 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[用 Python 搞一个分布式系统玩?]]></title>
+    <link href="http://blog.loudou.info/blog/2015/06/05/yong-python-gao-yi-ge-fen-bu-shi-xi-tong-wan/"/>
+    <updated>2015-06-05T17:08:19+08:00</updated>
+    <id>http://blog.loudou.info/blog/2015/06/05/yong-python-gao-yi-ge-fen-bu-shi-xi-tong-wan</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">抽离队列</a></li>
+  <li><a href="#section-1">任务分配</a></li>
+  <li><a href="#section-2">任务处理</a></li>
+  <li><a href="#section-3">结果输出</a></li>
+  <li><a href="#section-4">一些思考</a></li>
+</ul>
+
+<p>最近在撸廖雪峰老师的 Python 教程. 算是对自己做一遍查缺补漏吧.</p>
+
+<p>看到分布式进程一节, 自己做了一些发散. 现在写下来, 算是补一补长达 4 个月的博文空白…</p>
+
+<p>基础的代码和结构见<a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431929340191970154d52b9d484b88a7b343708fcc60000">原教程</a></p>
+
+<h2 id="section">抽离队列</h2>
+
+<p>为了让任务的分配和执行更自由的启动和停止.
+我们必须把队列独立出来.</p>
+
+<p>另外, 因为访问队列的客户端是共用的, 也抽离出来</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>base.py</span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="c">#!/usr/bin/env python</span>
+</span><span class="line"><span class="c"># -*- coding: utf-8 -*-</span>
+</span><span class="line">
+</span><span class="line"><span class="kn">from</span> <span class="nn">multiprocessing.managers</span> <span class="kn">import</span> <span class="n">BaseManager</span>
+</span><span class="line">
+</span><span class="line"><span class="k">class</span> <span class="nc">_QueueManagerServer</span><span class="p">(</span><span class="n">BaseManager</span><span class="p">):</span>
+</span><span class="line">    <span class="k">pass</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">QueueManagerServer</span><span class="p">(</span><span class="n">task_queue</span><span class="p">,</span> <span class="n">result_queue</span><span class="p">):</span>
+</span><span class="line">    <span class="n">_QueueManagerServer</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&#39;get_task_queue&#39;</span><span class="p">,</span> <span class="nb">callable</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">task_queue</span><span class="p">)</span>
+</span><span class="line">    <span class="n">_QueueManagerServer</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&#39;get_result_queue&#39;</span><span class="p">,</span> <span class="nb">callable</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">result_queue</span><span class="p">)</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">_QueueManagerServer</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">class</span> <span class="nc">_QueueManagerClient</span><span class="p">(</span><span class="n">BaseManager</span><span class="p">):</span>
+</span><span class="line">    <span class="k">pass</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">QueueManagerClient</span><span class="p">():</span>
+</span><span class="line">    <span class="n">_QueueManagerClient</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&#39;get_task_queue&#39;</span><span class="p">)</span>
+</span><span class="line">    <span class="n">_QueueManagerClient</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&#39;get_result_queue&#39;</span><span class="p">)</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">_QueueManagerClient</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>因为具体的队列是在 <code>q.py</code> 中创建的, 所以这里 <code>base.py</code> 只提供一个函数.</p>
+
+<p>客户端虽然不需要在使用时绑定具体队列, 但为了接口调用的一致, 仍然封装到一个函数</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>q.py</span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="c">#!/usr/bin/env python</span>
+</span><span class="line"><span class="c"># -*- coding: utf-8 -*-</span>
+</span><span class="line">
+</span><span class="line"><span class="kn">from</span> <span class="nn">base</span> <span class="kn">import</span> <span class="n">QueueManagerServer</span>
+</span><span class="line"><span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Queue</span>
+</span><span class="line">
+</span><span class="line"><span class="n">task_queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+</span><span class="line"><span class="n">result_queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+</span><span class="line">
+</span><span class="line"><span class="n">Server</span> <span class="o">=</span> <span class="n">QueueManagerServer</span><span class="p">(</span><span class="n">task_queue</span><span class="p">,</span> <span class="n">result_queue</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">manager</span> <span class="o">=</span> <span class="n">Server</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="mi">5000</span><span class="p">),</span> <span class="n">authkey</span><span class="o">=</span><span class="n">b</span><span class="s">&#39;secret&#39;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">manager</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</span><span class="line">
+</span><span class="line"><span class="n">manager</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>这里最后一定要调用 join 来防止程序直接退出.</p>
+
+<h2 id="section-1">任务分配</h2>
+
+<p>这里我们让处理器”分布式”的向某个 webserver 发请求.</p>
+
+<p>因为只是一个示例, 我们就直接向队列里输入要请求的 url.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>dispatcher.py</span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="c">#!/usr/bin/env python</span>
+</span><span class="line"><span class="c"># -*- coding: utf-8 -*-</span>
+</span><span class="line">
+</span><span class="line"><span class="kn">from</span> <span class="nn">base</span> <span class="kn">import</span> <span class="n">QueueManagerClient</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="n">client</span> <span class="o">=</span> <span class="n">QueueManagerClient</span><span class="p">()(</span><span class="n">address</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="mi">5000</span><span class="p">),</span> <span class="n">authkey</span><span class="o">=</span><span class="n">b</span><span class="s">&#39;secret&#39;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">client</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+</span><span class="line">
+</span><span class="line"><span class="n">task</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_task_queue</span><span class="p">()</span>
+</span><span class="line">
+</span><span class="line"><span class="n">n</span> <span class="o">=</span> <span class="mi">1000000</span>
+</span><span class="line"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span><span class="line">    <span class="n">task</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s">&#39;http://localhost:8888/?q={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+</span></code></pre></div></figure></notextile></div>
+
+<h2 id="section-2">任务处理</h2>
+
+<p>因为不太喜欢依赖 <code>try...except</code>, 所以在取数据前加上一队列空的检查</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>worker.py</span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="c">#!/usr/bin/env python</span>
+</span><span class="line"><span class="c"># -*- coding: utf-8 -*-</span>
+</span><span class="line">
+</span><span class="line"><span class="kn">from</span> <span class="nn">base</span> <span class="kn">import</span> <span class="n">QueueManagerClient</span>
+</span><span class="line"><span class="kn">import</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">random</span>
+</span><span class="line"><span class="kn">import</span> <span class="nn">requests</span>
+</span><span class="line">
+</span><span class="line"><span class="n">client</span> <span class="o">=</span> <span class="n">QueueManagerClient</span><span class="p">()(</span><span class="n">address</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="mi">5000</span><span class="p">),</span> <span class="n">authkey</span><span class="o">=</span><span class="n">b</span><span class="s">&#39;secret&#39;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&#39;connect to queue...&#39;</span>
+</span><span class="line"><span class="n">client</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="n">task</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_task_queue</span><span class="p">()</span>
+</span><span class="line"><span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_result_queue</span><span class="p">()</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+</span><span class="line">    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span><span class="line">    <span class="k">try</span><span class="p">:</span>
+</span><span class="line">        <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span><span class="line">    <span class="k">except</span><span class="p">:</span>
+</span><span class="line">        <span class="n">ok</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class="line">    <span class="k">else</span><span class="p">:</span>
+</span><span class="line">        <span class="n">ok</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class="line">    <span class="k">finally</span><span class="p">:</span>
+</span><span class="line">        <span class="n">rt</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+</span><span class="line">        <span class="k">return</span> <span class="p">{</span><span class="s">&#39;ok&#39;</span><span class="p">:</span> <span class="n">ok</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">:</span> <span class="n">rt</span><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+</span><span class="line">    <span class="k">if</span> <span class="n">task</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&#39;no task yet, wait 5s...&#39;</span>
+</span><span class="line">        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span class="line">        <span class="k">continue</span>
+</span><span class="line">    <span class="k">try</span><span class="p">:</span>
+</span><span class="line">        <span class="n">i</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&#39;get {0}...&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&#39;request...&#39;</span>
+</span><span class="line">        <span class="n">o</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span><span class="line">        <span class="n">result</span><span class="o">.</span><span class="n">put</span><span class="p">({</span><span class="s">&#39;i&#39;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span> <span class="s">&#39;o&#39;</span><span class="p">:</span> <span class="n">o</span><span class="p">})</span>
+</span><span class="line">    <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&#39;Error: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</span></code></pre></div></figure></notextile></div>
+
+<h2 id="section-3">结果输出</h2>
+
+<p>这里我把结果输出也抽离出来了.</p>
+
+<p>实际上应该根据应用来决定是放到 <code>dispatcher.py</code> 里, 还是抽离出来</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>output.py</span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="c">#!/usr/bin/env python</span>
+</span><span class="line"><span class="c"># -*- coding: utf-8 -*-</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="kn">from</span> <span class="nn">base</span> <span class="kn">import</span> <span class="n">QueueManagerClient</span>
+</span><span class="line"><span class="kn">import</span> <span class="nn">time</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="n">client</span> <span class="o">=</span> <span class="n">QueueManagerClient</span><span class="p">()(</span><span class="n">address</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="mi">5000</span><span class="p">),</span> <span class="n">authkey</span><span class="o">=</span><span class="n">b</span><span class="s">&#39;secret&#39;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">client</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+</span><span class="line">
+</span><span class="line"><span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_result_queue</span><span class="p">()</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+</span><span class="line">    <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&#39;no result yet, wait 5s&#39;</span>
+</span><span class="line">        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span class="line">        <span class="k">continue</span>
+</span><span class="line">    <span class="k">try</span><span class="p">:</span>
+</span><span class="line">        <span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</span><span class="line">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&#39;Error: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</span></code></pre></div></figure></notextile></div>
+
+<h2 id="section-4">一些思考</h2>
+
+<p>实际上因为 QueueManager 的协议对开发者并不透明,
+这样的<strong>分布式</strong>系统只能完全由 <code>Python</code> 来构建.</p>
+
+<p>如果某部分需要更换语言会变得比较吃力.</p>
+
+<p>相对的, 如果将队列更换成其它透明的队列服务(如, <code>memcacheq</code>), 
+再定义好队列的数据格式. 便可以很容易的实现跨语言的<strong>分布式</strong>系统</p>
+
+<p>P.S. 你们城里人真会玩…概念</p>
+
+<hr />
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[装饰器与多进程以及Pickle]]></title>
@@ -2546,72 +2739,6 @@ FILE2</code> 用来比较两个文件修改时间</p>
 </span></code></pre></div></figure></notextile></div>
 
 <p>这样脚本化之后, 增加了可读性, 而且也不限于统计前 10.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[迂回的监控数据库连接数]]></title>
-    <link href="http://blog.loudou.info/blog/2014/05/09/yu-hui-de-jian-kong-shu-ju-ku-lian-jie-shu/"/>
-    <updated>2014-05-09T09:45:51+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/05/09/yu-hui-de-jian-kong-shu-ju-ku-lian-jie-shu</id>
-    <content type="html"><![CDATA[<p>不能通过数据库工具监控到连接数时可用的迂回监控方法
-<!--more-->
-## 原理
-数据库连接底层使用的也是 TCP 协议.</p>
-
-<p>所以当连接到数据库时, 在本地也有打开一个 TCP 端口. 可以通过 nestat 查看</p>
-
-<p>并且每有一个连接, 就会产有一个端口.</p>
-
-<p>所以, 我们只需要数一下 netstat 中打印出来连接到数据库的端口即可</p>
-
-<h2 id="section">代码</h2>
-
-<div><script src="https://gist.github.com/2c5f64d45de600237f1c.js"></script>
-<noscript><pre><code>#!/bin/sh
-
-function echo_db_connect_count()
-{
-    current_date=`date &#39;+%Y.%m.%d.%H.%M.%S&#39;`
-    netstat -an |awk &#39;{gsub(&quot;::ffff:&quot;,&quot;&quot;); print $5}&#39;|grep &quot;$1&quot; |sort | uniq -c |sed &quot;s/^/$current_date/g&quot;
-}
-
-port=${1:?&quot;port should be provide as the first argument&quot;}
-step=${2:=1}
-
-
-while true
-do
-    echo_db_connect_count $port
-    sleep $step
-done
-</code></pre></noscript></div>
-
-<h2 id="section-1">命令分析</h2>
-
-<p>核心就一行, 摘出来看看:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line">netstat -an |awk <span class="s1">&#39;{gsub(&quot;::ffff:&quot;,&quot;&quot;); print $5}&#39;</span>|grep <span class="s2">&quot;$port&quot;</span> |sort | uniq -c
-</span><span class="line">|sed <span class="s2">&quot;s/^/$current_date/g&quot;</span>
-</span></code></pre></div></figure></notextile></div>
-
-<p>各个命令在干什么: </p>
-
-<p><code>netstat</code> 不多说, 打印出所有打开着的端口</p>
-
-<p><code>awk</code> 在这里做一步初步处理, gsub(“::ffff:”, “”), 是为了去除 ipv6 格式的 ip 地址.</p>
-
-<p><code>grep</code> 就是为了过滤出想监控的端口号</p>
-
-<p><code>sort</code> 让所有打印出来的远程连接排序, 为下一步 uniq 作铺垫</p>
-
-<p><code>uniq</code> 去重, <code>-c</code> 计算重复的项. 这样就得到连接的总数了</p>
-
-<p><code>sed</code> 既然是监控, 在行首添加上时间.</p>
-
-<p>执行结果的样例:</p>
-
-<p><img src="http://blog.loudou.info/blogimgs/net_watch.png" alt="net_watch" /></p>
 ]]></content>
   </entry>
   
