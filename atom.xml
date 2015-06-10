@@ -4,7 +4,7 @@
   <title><![CDATA[挨踢夜归人]]></title>
   <link href="http://blog.loudou.info/atom.xml" rel="self"/>
   <link href="http://blog.loudou.info/"/>
-  <updated>2015-06-08T11:57:57+08:00</updated>
+  <updated>2015-06-10T10:05:49+08:00</updated>
   <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -199,8 +199,6 @@
 
 <p>相对的, 如果将队列更换成其它透明的队列服务(如, <code>memcacheq</code>), 
 再定义好队列的数据格式. 便可以很容易的实现跨语言的<strong>分布式</strong>系统</p>
-
-<p>P.S. 你们城里人真会玩…概念</p>
 
 <hr />
 ]]></content>
