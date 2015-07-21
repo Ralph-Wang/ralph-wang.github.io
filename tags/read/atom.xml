@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[标签: read | 挨踢夜归人]]></title>
+  <link href="http://blog.loudou.info//tags/read/atom.xml" rel="self"/>
+  <link href="http://blog.loudou.info/"/>
+  <updated>2015-07-21T11:33:01+08:00</updated>
+  <id>http://blog.loudou.info/</id>
+  <author>
+    <name><![CDATA[_漏斗]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[使用生成器进行惰性读取]]></title>
+    <link href="http://blog.loudou.info/blog/2015/07/21/shi-yong-sheng-cheng-qi-jin-xing-duo-xing-du-qu/"/>
+    <updated>2015-07-21T10:47:10+08:00</updated>
+    <id>http://blog.loudou.info/blog/2015/07/21/shi-yong-sheng-cheng-qi-jin-xing-duo-xing-du-qu</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">需求</a></li>
+  <li><a href="#section-1">错误的实现</a></li>
+  <li><a href="#section-2">正确的实现</a></li>
+  <li><a href="#tips">tips</a></li>
+</ul>
+
+<h2 id="section">需求</h2>
+
+<p>完成一个函数, 从文件中读取数据并按行解析</p>
+
+<h2 id="section-1">错误的实现</h2>
+
+<p><code>python
+def items(file_name):
+    l = []
+    for line in open(file_name):
+        l.append(parse(line))
+    return l
+</code></p>
+
+<p>这样实现会将文件全部读入内存后才能返回所有解析好的数据列表,
+在处理大文件时会变得非常慢,非常慢,非常慢</p>
+
+<h2 id="section-2">正确的实现</h2>
+
+<p><code>
+def items(file_name):
+    for line in open(file_name):
+        yield parse(line)
+</code></p>
+
+<p>使用生成器的方式, 可以保留 open 提供的惰性读取特性, 使得内存占用很小</p>
+
+<h2 id="tips">tips</h2>
+
+<p>当需要同时读取两个文件时, 不要使用 <code>for i, j in zip(a, b)</code> 去处理, 因为 zip
+需要把 a, b 全部读入, 这样破坏了惰性读取的特性.</p>
+
+<p>正确的做法:</p>
+
+<p><code>
+f1 = items(file_name1)
+f2 = items(file_name2)
+while True:
+    try:
+        i = f1.next()
+        j = f2.next()
+    except StopIteration:
+        break
+</code></p>
+
+<p>主动调用生成器的 next 方法可以在使用多个生成器时保留其惰性.</p>
+
+<hr />
+]]></content>
+  </entry>
+  
+</feed>

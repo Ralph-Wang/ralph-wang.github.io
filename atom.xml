@@ -4,7 +4,7 @@
   <title><![CDATA[挨踢夜归人]]></title>
   <link href="http://blog.loudou.info/atom.xml" rel="self"/>
   <link href="http://blog.loudou.info/"/>
-  <updated>2015-06-12T11:06:34+08:00</updated>
+  <updated>2015-07-21T11:33:01+08:00</updated>
   <id>http://blog.loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,67 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[使用生成器进行惰性读取]]></title>
+    <link href="http://blog.loudou.info/blog/2015/07/21/shi-yong-sheng-cheng-qi-jin-xing-duo-xing-du-qu/"/>
+    <updated>2015-07-21T10:47:10+08:00</updated>
+    <id>http://blog.loudou.info/blog/2015/07/21/shi-yong-sheng-cheng-qi-jin-xing-duo-xing-du-qu</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">需求</a></li>
+  <li><a href="#section-1">错误的实现</a></li>
+  <li><a href="#section-2">正确的实现</a></li>
+  <li><a href="#tips">tips</a></li>
+</ul>
+
+<h2 id="section">需求</h2>
+
+<p>完成一个函数, 从文件中读取数据并按行解析</p>
+
+<h2 id="section-1">错误的实现</h2>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
+</span><span class="line">    <span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
+</span><span class="line">        <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parse</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">l</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>这样实现会将文件全部读入内存后才能返回所有解析好的数据列表,
+在处理大文件时会变得非常慢,非常慢,非常慢</p>
+
+<h2 id="section-2">正确的实现</h2>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
+</span><span class="line">        <span class="k">yield</span> <span class="n">parse</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>使用生成器的方式, 可以保留 open 提供的惰性读取特性, 使得内存占用很小</p>
+
+<h2 id="tips">tips</h2>
+
+<p>当需要同时读取两个文件时, 不要使用 <code>for i, j in zip(a, b)</code> 去处理, 因为 zip
+需要把 a, b 全部读入, 这样破坏了惰性读取的特性.</p>
+
+<p>正确的做法:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="n">f1</span> <span class="o">=</span> <span class="n">items</span><span class="p">(</span><span class="n">file_name1</span><span class="p">)</span>
+</span><span class="line"><span class="n">f2</span> <span class="o">=</span> <span class="n">items</span><span class="p">(</span><span class="n">file_name2</span><span class="p">)</span>
+</span><span class="line"><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+</span><span class="line">    <span class="k">try</span><span class="p">:</span>
+</span><span class="line">        <span class="n">i</span> <span class="o">=</span> <span class="n">f1</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+</span><span class="line">        <span class="n">j</span> <span class="o">=</span> <span class="n">f2</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+</span><span class="line">    <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+</span><span class="line">        <span class="k">break</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>主动调用生成器的 next 方法可以在使用多个生成器时保留其惰性.</p>
+
+<hr />
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[用 Python 搞一个分布式系统玩?]]></title>
@@ -64,7 +125,7 @@
 </span><span class="line">    <span class="k">return</span> <span class="n">_QueueManagerClient</span>
 </span></code></pre></div></figure></notextile></div>
 
-<p>因为具体的队列是在 <code>q.py</code> 中创建的, 所以这里 <code>base.py</code> 只提供一个函数.</p>
+<p>因为具体的队列是在<strong>队列程序</strong>(<code>q.py</code>)中创建的, 所以这里 <code>base.py</code> 只提供一个函数.</p>
 
 <p>客户端虽然不需要在使用时绑定具体队列, 但为了接口调用的一致, 仍然封装到一个函数</p>
 
@@ -2611,132 +2672,6 @@ FILE2</code> 用来比较两个文件修改时间</p>
 </span><span class="line">	<span class="nb">echo</span> <span class="k">${</span><span class="nv">path</span><span class="p">#*:</span><span class="k">}</span>
 </span><span class="line"><span class="k">done</span>
 </span></code></pre></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning The Bash Shell 笔记-变量]]></title>
-    <link href="http://blog.loudou.info/blog/2014/05/15/learning-the-bash-shell-du-shu-bi-ji-bian-liang/"/>
-    <updated>2014-05-15T09:35:19+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/05/15/learning-the-bash-shell-du-shu-bi-ji-bian-liang</id>
-    <content type="html"><![CDATA[<!--more-->
-
-<h2 id="section">$* 和 $@</h2>
-<p>这两个变量都可以得到脚本运行得到的所有参数.</p>
-
-<p>默认情况下, 这两个变量没有区别</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>sample.sh</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/bash</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">echo</span> <span class="nv">$*</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">echo</span> <span class="nv">$@</span>
-</span></code></pre></div></figure></notextile></div>
-
-<p>运行上面的脚本, 传入多个参数. 得到的两行输出结果是一样的.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$.</span>/sample.sh 1 2 3
-</span><span class="line">1 2 3
-</span><span class="line">1 2 3
-</span></code></pre></div></figure></notextile></div>
-
-<p>但是, 当给变量 IFS(internal field sperator) 赋上值并用双引号将 <code>$*</code> 和 <code>$@</code>
-括起来, 情况就不一样了.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>sample2.sh</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/bash</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">IFS</span><span class="o">=</span>,
-</span><span class="line">
-</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;$*&quot;</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;$@&quot;</span>
-</span></code></pre></div></figure></notextile></div>
-
-<p>这时候, 在 <code>$*</code> 中不再是以空格分割所有参数, 而是由 IFS 的值 (当前脚本中为逗号)来分割</p>
-
-<p>而 <code>$@</code> 则保持原样</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$.</span>/sample2.sh 1 2 3
-</span><span class="line">1,2,3
-</span><span class="line">1 2 3
-</span></code></pre></div></figure></notextile></div>
-
-<p>当用双引号括起来以后, <code>"$*"</code> 等价于 <code>"$1$IFS$2$IFS$3...$IFS$N"</code></p>
-
-<p>而 <code>"$@"</code> 等价于 <code>"$1" "$2" "$3"... "$N"</code></p>
-
-<h2 id="string-operator">String Operator</h2>
-
-<p>对于 shell 变量, 还有一些操作符可以让脚本变得更活</p>
-
-<ul>
-  <li>
-    <p><code>${var:-word}</code>: 如果 var 变量不存在或为 null, 则返回 word. var 变量仍然不存在或为 null</p>
-  </li>
-  <li>
-    <p><code>${var:=word}</code>: 如果 var 变量不存在或为 null, 则将 word 赋值给 var, 并返回 var 的新值(word)</p>
-  </li>
-  <li>
-    <p><code>${var:?msg}</code>: 如果 var 变量不存在或为 null, 则停止脚本, 并输出信息 <strong>var: msg</strong></p>
-  </li>
-  <li>
-    <p><code>${var:+word}</code>: 如果 var 变量存在并不为 null, 则返回 word. 否则, 返回 null</p>
-  </li>
-  <li>
-    <p><code>${var:offset:length}</code> 截取变量 var 从 offset 开始长度为 length 的字符串.  offset 从 0 开始. length 为 null 截取剩余全部.</p>
-  </li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>sample3.sh</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/bash</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">echo</span> <span class="k">${</span><span class="nv">var</span><span class="k">:-</span><span class="s2">&quot;minus&quot;</span><span class="k">}</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">echo</span> <span class="k">${</span><span class="nv">var</span><span class="k">}</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">echo</span> <span class="k">${</span><span class="nv">var</span><span class="p">:=</span><span class="s2">&quot;equals&quot;</span><span class="k">}</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">echo</span> <span class="k">${</span><span class="nv">var</span><span class="k">}</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">echo</span> <span class="k">${</span><span class="nv">var</span><span class="p">:+</span><span class="s2">&quot;plus&quot;</span><span class="k">}</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">echo</span> <span class="k">${</span><span class="nv">var</span><span class="p">:</span><span class="nv">2</span><span class="p">:</span><span class="nv">2</span><span class="k">}</span> <span class="c">#output ua</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">echo</span> <span class="k">${</span><span class="nv">theVar</span><span class="p">:?</span><span class="s2">&quot;should not be empty&quot;</span><span class="k">}</span>
-</span></code></pre></div></figure></notextile></div>
-
-<p>输出:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>sample3.sh</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line">minus
-</span><span class="line">
-</span><span class="line">equals
-</span><span class="line">equals
-</span><span class="line">plus
-</span><span class="line">ua
-</span><span class="line">sample3.sh: line 15: theVar: should not be empty
-</span></code></pre></div></figure></notextile></div>
-
-<h2 id="section-1">一个练习</h2>
-<p>你收集了一专辑, 并已经统计出了不同歌手的专辑数量, 现在需要找出收集数量前 10 的歌手. 文件格式如下:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>file</span></figcaption><div class="highlight"><pre><code class="text"><span class="line">5 Depeche Mode
-</span><span class="line">2 Split Enz
-</span><span class="line">3 Simple Minds
-</span><span class="line">1 Vivaldi, Antonio
-</span></code></pre></div></figure></notextile></div>
-
-<p>ok, 实现代码很简单 <code>sort -nr file | head -n 10</code></p>
-
-<p>不过, 书中的解答不得不说更好</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/bash</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">filename</span><span class="o">=</span><span class="k">${</span><span class="nv">1</span><span class="p">:?</span><span class="s2">&quot;filename missing&quot;</span><span class="k">}</span>
-</span><span class="line"><span class="nv">howmany</span><span class="o">=</span><span class="k">${</span><span class="nv">2</span><span class="k">:-</span><span class="nv">10</span><span class="k">}</span>
-</span><span class="line">
-</span><span class="line">sort -nr <span class="nv">$filename</span> | head -n <span class="nv">$howmany</span>
-</span></code></pre></div></figure></notextile></div>
-
-<p>这样脚本化之后, 增加了可读性, 而且也不限于统计前 10.</p>
 ]]></content>
   </entry>
   
