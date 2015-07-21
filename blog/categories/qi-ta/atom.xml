@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[分类: 其它 | 挨踢夜归人]]></title>
-  <link href="http://blog.loudou.info//blog/categories/qi-ta/atom.xml" rel="self"/>
-  <link href="http://blog.loudou.info/"/>
-  <updated>2015-07-21T11:33:01+08:00</updated>
-  <id>http://blog.loudou.info/</id>
+  <link href="http://loudou.info//blog/categories/qi-ta/atom.xml" rel="self"/>
+  <link href="http://loudou.info/"/>
+  <updated>2015-07-21T11:58:18+08:00</updated>
+  <id>http://loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[BYE 2014]]></title>
-    <link href="http://blog.loudou.info/blog/2014/12/31/bye-2014/"/>
+    <link href="http://loudou.info/blog/2014/12/31/bye-2014/"/>
     <updated>2014-12-31T15:14:19+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/12/31/bye-2014</id>
+    <id>http://loudou.info/blog/2014/12/31/bye-2014</id>
     <content type="html"><![CDATA[<!--more-->
 <ul id="markdown-toc">
   <li><a href="#section">2014再见</a>    <ul>
@@ -145,9 +145,9 @@
   
   <entry>
     <title type="html"><![CDATA[面试技术问题解答]]></title>
-    <link href="http://blog.loudou.info/blog/2014/03/25/mian-shi-wen-ti-jie-da/"/>
+    <link href="http://loudou.info/blog/2014/03/25/mian-shi-wen-ti-jie-da/"/>
     <updated>2014-03-25T19:49:37+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/03/25/mian-shi-wen-ti-jie-da</id>
+    <id>http://loudou.info/blog/2014/03/25/mian-shi-wen-ti-jie-da</id>
     <content type="html"><![CDATA[<p>面试时没有完全回答上或有存疑的问题
 <!--more-->
 Linux
@@ -406,9 +406,9 @@ import java.util.*;</p>
   
   <entry>
     <title type="html"><![CDATA[联想接龙]]></title>
-    <link href="http://blog.loudou.info/blog/2014/02/11/lian-xiang-jie-long/"/>
+    <link href="http://loudou.info/blog/2014/02/11/lian-xiang-jie-long/"/>
     <updated>2014-02-11T23:18:09+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/02/11/lian-xiang-jie-long</id>
+    <id>http://loudou.info/blog/2014/02/11/lian-xiang-jie-long</id>
     <content type="html"><![CDATA[<p><code>你的第一本思维导图操作书</code>中<code>自由联想练习</code>的第一个练习方法
 <!--more--></p>
 

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: Buffer | 挨踢夜归人]]></title>
-  <link href="http://blog.loudou.info//tags/buffer/atom.xml" rel="self"/>
-  <link href="http://blog.loudou.info/"/>
-  <updated>2015-07-21T11:33:01+08:00</updated>
-  <id>http://blog.loudou.info/</id>
+  <link href="http://loudou.info//tags/buffer/atom.xml" rel="self"/>
+  <link href="http://loudou.info/"/>
+  <updated>2015-07-21T11:58:18+08:00</updated>
+  <id>http://loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[nodejs Buffer性能优势]]></title>
-    <link href="http://blog.loudou.info/blog/2014/03/15/nodejs-bufferxing-neng-you-shi/"/>
+    <link href="http://loudou.info/blog/2014/03/15/nodejs-bufferxing-neng-you-shi/"/>
     <updated>2014-03-15T21:24:23+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/03/15/nodejs-bufferxing-neng-you-shi</id>
+    <id>http://loudou.info/blog/2014/03/15/nodejs-bufferxing-neng-you-shi</id>
     <content type="html"><![CDATA[<p>最近在读朴大神的 <code>深入浅出 Nodejs</code>, 其中不乏性能相关话题.</p>
 
 <p>这里选一个出来做个测试

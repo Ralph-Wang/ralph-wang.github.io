@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[挨踢夜归人]]></title>
-  <link href="http://blog.loudou.info/atom.xml" rel="self"/>
-  <link href="http://blog.loudou.info/"/>
-  <updated>2015-07-21T11:33:01+08:00</updated>
-  <id>http://blog.loudou.info/</id>
+  <link href="http://loudou.info/atom.xml" rel="self"/>
+  <link href="http://loudou.info/"/>
+  <updated>2015-07-21T11:58:18+08:00</updated>
+  <id>http://loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[使用生成器进行惰性读取]]></title>
-    <link href="http://blog.loudou.info/blog/2015/07/21/shi-yong-sheng-cheng-qi-jin-xing-duo-xing-du-qu/"/>
+    <link href="http://loudou.info/blog/2015/07/21/shi-yong-sheng-cheng-qi-jin-xing-duo-xing-du-qu/"/>
     <updated>2015-07-21T10:47:10+08:00</updated>
-    <id>http://blog.loudou.info/blog/2015/07/21/shi-yong-sheng-cheng-qi-jin-xing-duo-xing-du-qu</id>
+    <id>http://loudou.info/blog/2015/07/21/shi-yong-sheng-cheng-qi-jin-xing-duo-xing-du-qu</id>
     <content type="html"><![CDATA[<!--more-->
 <ul id="markdown-toc">
   <li><a href="#section">需求</a></li>
@@ -76,9 +76,9 @@
   
   <entry>
     <title type="html"><![CDATA[用 Python 搞一个分布式系统玩?]]></title>
-    <link href="http://blog.loudou.info/blog/2015/06/05/yong-python-gao-yi-ge-fen-bu-shi-xi-tong-wan/"/>
+    <link href="http://loudou.info/blog/2015/06/05/yong-python-gao-yi-ge-fen-bu-shi-xi-tong-wan/"/>
     <updated>2015-06-05T17:08:19+08:00</updated>
-    <id>http://blog.loudou.info/blog/2015/06/05/yong-python-gao-yi-ge-fen-bu-shi-xi-tong-wan</id>
+    <id>http://loudou.info/blog/2015/06/05/yong-python-gao-yi-ge-fen-bu-shi-xi-tong-wan</id>
     <content type="html"><![CDATA[<!--more-->
 <ul id="markdown-toc">
   <li><a href="#section">抽离队列</a></li>
@@ -267,9 +267,9 @@
   
   <entry>
     <title type="html"><![CDATA[装饰器与多进程以及Pickle]]></title>
-    <link href="http://blog.loudou.info/blog/2015/02/15/zhuang-shi-qi-yu-duo-jin-cheng-yi-ji-pickle/"/>
+    <link href="http://loudou.info/blog/2015/02/15/zhuang-shi-qi-yu-duo-jin-cheng-yi-ji-pickle/"/>
     <updated>2015-02-15T21:39:08+08:00</updated>
-    <id>http://blog.loudou.info/blog/2015/02/15/zhuang-shi-qi-yu-duo-jin-cheng-yi-ji-pickle</id>
+    <id>http://loudou.info/blog/2015/02/15/zhuang-shi-qi-yu-duo-jin-cheng-yi-ji-pickle</id>
     <content type="html"><![CDATA[<!--more-->
 <ul id="markdown-toc">
   <li><a href="#section">缘起</a></li>
@@ -399,9 +399,9 @@
   
   <entry>
     <title type="html"><![CDATA[Python 元类 DEF]]></title>
-    <link href="http://blog.loudou.info/blog/2015/01/12/python-yuan-lei-def/"/>
+    <link href="http://loudou.info/blog/2015/01/12/python-yuan-lei-def/"/>
     <updated>2015-01-12T20:13:16+08:00</updated>
-    <id>http://blog.loudou.info/blog/2015/01/12/python-yuan-lei-def</id>
+    <id>http://loudou.info/blog/2015/01/12/python-yuan-lei-def</id>
     <content type="html"><![CDATA[<!--more-->
 <ul id="markdown-toc">
   <li><a href="#section">元类基础</a></li>
@@ -483,9 +483,9 @@
   
   <entry>
     <title type="html"><![CDATA[BYE 2014]]></title>
-    <link href="http://blog.loudou.info/blog/2014/12/31/bye-2014/"/>
+    <link href="http://loudou.info/blog/2014/12/31/bye-2014/"/>
     <updated>2014-12-31T15:14:19+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/12/31/bye-2014</id>
+    <id>http://loudou.info/blog/2014/12/31/bye-2014</id>
     <content type="html"><![CDATA[<!--more-->
 <ul id="markdown-toc">
   <li><a href="#section">2014再见</a>    <ul>
@@ -613,9 +613,9 @@
   
   <entry>
     <title type="html"><![CDATA[Python 名称空间对性能的影响]]></title>
-    <link href="http://blog.loudou.info/blog/2014/11/13/python-ming-cheng-kong-jian-dui-xing-neng-de-ying-xiang/"/>
+    <link href="http://loudou.info/blog/2014/11/13/python-ming-cheng-kong-jian-dui-xing-neng-de-ying-xiang/"/>
     <updated>2014-11-13T20:03:05+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/11/13/python-ming-cheng-kong-jian-dui-xing-neng-de-ying-xiang</id>
+    <id>http://loudou.info/blog/2014/11/13/python-ming-cheng-kong-jian-dui-xing-neng-de-ying-xiang</id>
     <content type="html"><![CDATA[<!--more-->
 <ul id="markdown-toc">
   <li><a href="#section">名称空间</a></li>
@@ -765,9 +765,9 @@
   
   <entry>
     <title type="html"><![CDATA[BASH 特别的 Patch 技巧]]></title>
-    <link href="http://blog.loudou.info/blog/2014/10/18/bash-te-bie-de-patch-ji-qiao/"/>
+    <link href="http://loudou.info/blog/2014/10/18/bash-te-bie-de-patch-ji-qiao/"/>
     <updated>2014-10-18T21:43:24+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/10/18/bash-te-bie-de-patch-ji-qiao</id>
+    <id>http://loudou.info/blog/2014/10/18/bash-te-bie-de-patch-ji-qiao</id>
     <content type="html"><![CDATA[<!--more-->
 <ul id="markdown-toc">
   <li><a href="#section">问题</a></li>
@@ -853,9 +853,9 @@
   
   <entry>
     <title type="html"><![CDATA[count += 1 不是原子级的]]></title>
-    <link href="http://blog.loudou.info/blog/2014/10/10/count-plus-equals-1-bu-shi-yuan-zi-ji-de/"/>
+    <link href="http://loudou.info/blog/2014/10/10/count-plus-equals-1-bu-shi-yuan-zi-ji-de/"/>
     <updated>2014-10-10T12:04:09+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/10/10/count-plus-equals-1-bu-shi-yuan-zi-ji-de</id>
+    <id>http://loudou.info/blog/2014/10/10/count-plus-equals-1-bu-shi-yuan-zi-ji-de</id>
     <content type="html"><![CDATA[<!--more-->
 <ul id="markdown-toc">
   <li><a href="#section">怀疑</a></li>
@@ -957,9 +957,9 @@
   
   <entry>
     <title type="html"><![CDATA[BASH 中 的正则表达式(误)]]></title>
-    <link href="http://blog.loudou.info/blog/2014/10/09/bash-zhong-de-zheng-ze-biao-da-shi-wu/"/>
+    <link href="http://loudou.info/blog/2014/10/09/bash-zhong-de-zheng-ze-biao-da-shi-wu/"/>
     <updated>2014-10-09T14:45:30+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/10/09/bash-zhong-de-zheng-ze-biao-da-shi-wu</id>
+    <id>http://loudou.info/blog/2014/10/09/bash-zhong-de-zheng-ze-biao-da-shi-wu</id>
     <content type="html"><![CDATA[<!--more-->
 <ul id="markdown-toc">
   <li><a href="#section">源</a></li>
@@ -1054,9 +1054,9 @@ Ok, 测试下:</p>
   
   <entry>
     <title type="html"><![CDATA[python 中的三元运算符]]></title>
-    <link href="http://blog.loudou.info/blog/2014/09/05/python-zhong-de-san-yuan-yun-suan-fu/"/>
+    <link href="http://loudou.info/blog/2014/09/05/python-zhong-de-san-yuan-yun-suan-fu/"/>
     <updated>2014-09-05T11:08:30+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/09/05/python-zhong-de-san-yuan-yun-suan-fu</id>
+    <id>http://loudou.info/blog/2014/09/05/python-zhong-de-san-yuan-yun-suan-fu</id>
     <content type="html"><![CDATA[<!--more-->
 <ul id="markdown-toc">
   <li><a href="#section">方法介绍</a>    <ul>
@@ -1290,9 +1290,9 @@ Ok, 测试下:</p>
   
   <entry>
     <title type="html"><![CDATA[blockdev 命令及相关概念]]></title>
-    <link href="http://blog.loudou.info/blog/2014/08/20/blockdev-ming-ling-ji-xiang-guan-gai-nian/"/>
+    <link href="http://loudou.info/blog/2014/08/20/blockdev-ming-ling-ji-xiang-guan-gai-nian/"/>
     <updated>2014-08-20T23:36:02+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/08/20/blockdev-ming-ling-ji-xiang-guan-gai-nian</id>
+    <id>http://loudou.info/blog/2014/08/20/blockdev-ming-ling-ji-xiang-guan-gai-nian</id>
     <content type="html"><![CDATA[<ul id="markdown-toc">
   <li><a href="#section">命令本身</a></li>
   <li><a href="#report-">report 的内容</a></li>
@@ -1425,9 +1425,9 @@ Ok, 测试下:</p>
   
   <entry>
     <title type="html"><![CDATA[Linux bash 的 C-s]]></title>
-    <link href="http://blog.loudou.info/blog/2014/08/13/linux-bash-de-c-s/"/>
+    <link href="http://loudou.info/blog/2014/08/13/linux-bash-de-c-s/"/>
     <updated>2014-08-13T22:22:02+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/08/13/linux-bash-de-c-s</id>
+    <id>http://loudou.info/blog/2014/08/13/linux-bash-de-c-s</id>
     <content type="html"><![CDATA[<p>putty 莫名不响应问题…</p>
 
 <!--more-->
@@ -1495,9 +1495,9 @@ Ok, 测试下:</p>
   
   <entry>
     <title type="html"><![CDATA[Binary Tree Preorder Traversal]]></title>
-    <link href="http://blog.loudou.info/blog/2014/08/07/binary-tree-preorder-traversal/"/>
+    <link href="http://loudou.info/blog/2014/08/07/binary-tree-preorder-traversal/"/>
     <updated>2014-08-07T00:50:19+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/08/07/binary-tree-preorder-traversal</id>
+    <id>http://loudou.info/blog/2014/08/07/binary-tree-preorder-traversal</id>
     <content type="html"><![CDATA[<p>算法倒是没犯错. 坑在 Python 的一个赋值语法上了</p>
 
 <!--more-->
@@ -1631,9 +1631,9 @@ Given binary tree {1,#,2,3},</p>
   
   <entry>
     <title type="html"><![CDATA[Single Number]]></title>
-    <link href="http://blog.loudou.info/blog/2014/08/06/single-number/"/>
+    <link href="http://loudou.info/blog/2014/08/06/single-number/"/>
     <updated>2014-08-06T16:44:56+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/08/06/single-number</id>
+    <id>http://loudou.info/blog/2014/08/06/single-number</id>
     <content type="html"><![CDATA[<p>最近开始撸算法相关的东西. 于是在 LeetCode 上找一些题来练习</p>
 
 <!--more-->
@@ -1749,9 +1749,9 @@ Given binary tree {1,#,2,3},</p>
   
   <entry>
     <title type="html"><![CDATA[df 与 du 结果不匹配问题]]></title>
-    <link href="http://blog.loudou.info/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti/"/>
+    <link href="http://loudou.info/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti/"/>
     <updated>2014-08-04T22:03:28+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti</id>
+    <id>http://loudou.info/blog/2014/08/04/df-yu-du-jie-guo-bu-pi-pei-wen-ti</id>
     <content type="html"><![CDATA[<p>du 与 df 与 文件描述符不得不说的故事</p>
 
 <!--more-->
@@ -1891,9 +1891,9 @@ Given binary tree {1,#,2,3},</p>
   
   <entry>
     <title type="html"><![CDATA[为 octopress 添加 TOC]]></title>
-    <link href="http://blog.loudou.info/blog/2014/08/01/wei-octopress-tian-jia-toc/"/>
+    <link href="http://loudou.info/blog/2014/08/01/wei-octopress-tian-jia-toc/"/>
     <updated>2014-08-01T00:52:13+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/08/01/wei-octopress-tian-jia-toc</id>
+    <id>http://loudou.info/blog/2014/08/01/wei-octopress-tian-jia-toc</id>
     <content type="html"><![CDATA[<p>添加一个 TOC 方便阅读</p>
 
 <!--more-->
@@ -1995,9 +1995,9 @@ Given binary tree {1,#,2,3},</p>
   
   <entry>
     <title type="html"><![CDATA[无节操地重新认识多态和IoC]]></title>
-    <link href="http://blog.loudou.info/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/"/>
+    <link href="http://loudou.info/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/"/>
     <updated>2014-07-27T23:41:34+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc</id>
+    <id>http://loudou.info/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc</id>
     <content type="html"><![CDATA[<h2 id="section">起源</h2>
 
 <p>源自一则微博:</p>
@@ -2091,9 +2091,9 @@ Given binary tree {1,#,2,3},</p>
   
   <entry>
     <title type="html"><![CDATA[Learning the Bash Shell 笔记-Debug]]></title>
-    <link href="http://blog.loudou.info/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/"/>
+    <link href="http://loudou.info/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/"/>
     <updated>2014-06-11T10:40:33+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug</id>
+    <id>http://loudou.info/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug</id>
     <content type="html"><![CDATA[<p>任何开发测试工作都离不开的话题 – Debug. </p>
 
 <p>bash 脚本自然也不能免俗
@@ -2434,9 +2434,9 @@ Given binary tree {1,#,2,3},</p>
   
   <entry>
     <title type="html"><![CDATA[Learning the Bash Shell 笔记-杂项]]></title>
-    <link href="http://blog.loudou.info/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/"/>
+    <link href="http://loudou.info/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/"/>
     <updated>2014-06-05T09:49:16+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang</id>
+    <id>http://loudou.info/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang</id>
     <content type="html"><![CDATA[<p>一些零散的内容
 <!--more-->
 ## getopts
@@ -2528,9 +2528,9 @@ FILE2</code> 用来比较两个文件修改时间</p>
   
   <entry>
     <title type="html"><![CDATA[Learning the Bash Shell 笔记-流控制]]></title>
-    <link href="http://blog.loudou.info/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi/"/>
+    <link href="http://loudou.info/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi/"/>
     <updated>2014-05-22T21:19:21+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi</id>
+    <id>http://loudou.info/blog/2014/05/22/learning-the-bash-shell-bi-ji-liu-kong-zhi</id>
     <content type="html"><![CDATA[<p>但凡是代码就逃不开的流控制话题
 <!--more--></p>
 

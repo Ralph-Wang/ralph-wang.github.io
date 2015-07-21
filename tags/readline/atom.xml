@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: readline | 挨踢夜归人]]></title>
-  <link href="http://blog.loudou.info//tags/readline/atom.xml" rel="self"/>
-  <link href="http://blog.loudou.info/"/>
-  <updated>2015-07-21T11:33:01+08:00</updated>
-  <id>http://blog.loudou.info/</id>
+  <link href="http://loudou.info//tags/readline/atom.xml" rel="self"/>
+  <link href="http://loudou.info/"/>
+  <updated>2015-07-21T11:58:18+08:00</updated>
+  <id>http://loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Linux bash 的 C-s]]></title>
-    <link href="http://blog.loudou.info/blog/2014/08/13/linux-bash-de-c-s/"/>
+    <link href="http://loudou.info/blog/2014/08/13/linux-bash-de-c-s/"/>
     <updated>2014-08-13T22:22:02+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/08/13/linux-bash-de-c-s</id>
+    <id>http://loudou.info/blog/2014/08/13/linux-bash-de-c-s</id>
     <content type="html"><![CDATA[<p>putty 莫名不响应问题…</p>
 
 <!--more-->

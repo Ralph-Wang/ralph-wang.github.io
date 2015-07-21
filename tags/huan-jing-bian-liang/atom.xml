@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: 环境变量 | 挨踢夜归人]]></title>
-  <link href="http://blog.loudou.info//tags/huan-jing-bian-liang/atom.xml" rel="self"/>
-  <link href="http://blog.loudou.info/"/>
-  <updated>2015-07-21T11:33:01+08:00</updated>
-  <id>http://blog.loudou.info/</id>
+  <link href="http://loudou.info//tags/huan-jing-bian-liang/atom.xml" rel="self"/>
+  <link href="http://loudou.info/"/>
+  <updated>2015-07-21T11:58:18+08:00</updated>
+  <id>http://loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[用 awk 查看 PATH 环境变量]]></title>
-    <link href="http://blog.loudou.info/blog/2014/03/06/yong-awk-cha-kan-path-huan-jing-bian-liang/"/>
+    <link href="http://loudou.info/blog/2014/03/06/yong-awk-cha-kan-path-huan-jing-bian-liang/"/>
     <updated>2014-03-06T14:18:22+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/03/06/yong-awk-cha-kan-path-huan-jing-bian-liang</id>
+    <id>http://loudou.info/blog/2014/03/06/yong-awk-cha-kan-path-huan-jing-bian-liang</id>
     <content type="html"><![CDATA[<!--more-->
 <p>查看 PATH 环境变量是件痛苦的事情.</p>
 

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[分类: 程序设计与算法 | 挨踢夜归人]]></title>
-  <link href="http://blog.loudou.info//blog/categories/cheng-xu-she-ji-yu-suan-fa/atom.xml" rel="self"/>
-  <link href="http://blog.loudou.info/"/>
-  <updated>2015-07-21T11:33:01+08:00</updated>
-  <id>http://blog.loudou.info/</id>
+  <link href="http://loudou.info//blog/categories/cheng-xu-she-ji-yu-suan-fa/atom.xml" rel="self"/>
+  <link href="http://loudou.info/"/>
+  <updated>2015-07-21T11:58:18+08:00</updated>
+  <id>http://loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[无节操地重新认识多态和IoC]]></title>
-    <link href="http://blog.loudou.info/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/"/>
+    <link href="http://loudou.info/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/"/>
     <updated>2014-07-27T23:41:34+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc</id>
+    <id>http://loudou.info/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc</id>
     <content type="html"><![CDATA[<h2 id="section">起源</h2>
 
 <p>源自一则微博:</p>

@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://blog.loudou.info/sitemap.xml 
+Sitemap: http://loudou.info/sitemap.xml 

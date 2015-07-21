@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: bash | 挨踢夜归人]]></title>
-  <link href="http://blog.loudou.info//tags/bash/atom.xml" rel="self"/>
-  <link href="http://blog.loudou.info/"/>
-  <updated>2015-07-21T11:33:01+08:00</updated>
-  <id>http://blog.loudou.info/</id>
+  <link href="http://loudou.info//tags/bash/atom.xml" rel="self"/>
+  <link href="http://loudou.info/"/>
+  <updated>2015-07-21T11:58:18+08:00</updated>
+  <id>http://loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[BASH 特别的 Patch 技巧]]></title>
-    <link href="http://blog.loudou.info/blog/2014/10/18/bash-te-bie-de-patch-ji-qiao/"/>
+    <link href="http://loudou.info/blog/2014/10/18/bash-te-bie-de-patch-ji-qiao/"/>
     <updated>2014-10-18T21:43:24+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/10/18/bash-te-bie-de-patch-ji-qiao</id>
+    <id>http://loudou.info/blog/2014/10/18/bash-te-bie-de-patch-ji-qiao</id>
     <content type="html"><![CDATA[<!--more-->
 <ul id="markdown-toc">
   <li><a href="#section">问题</a></li>
@@ -108,9 +108,9 @@ env X='() { (a)=&gt;\' bash -c "echo date"; cat echo}
   
   <entry>
     <title type="html"><![CDATA[BASH 中 的正则表达式(误)]]></title>
-    <link href="http://blog.loudou.info/blog/2014/10/09/bash-zhong-de-zheng-ze-biao-da-shi-wu/"/>
+    <link href="http://loudou.info/blog/2014/10/09/bash-zhong-de-zheng-ze-biao-da-shi-wu/"/>
     <updated>2014-10-09T14:45:30+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/10/09/bash-zhong-de-zheng-ze-biao-da-shi-wu</id>
+    <id>http://loudou.info/blog/2014/10/09/bash-zhong-de-zheng-ze-biao-da-shi-wu</id>
     <content type="html"><![CDATA[<!--more-->
 <ul id="markdown-toc">
   <li><a href="#section">源</a></li>
@@ -211,9 +211,9 @@ if [[ 12 = * ]];then echo 0;fi
   
   <entry>
     <title type="html"><![CDATA[Linux bash 的 C-s]]></title>
-    <link href="http://blog.loudou.info/blog/2014/08/13/linux-bash-de-c-s/"/>
+    <link href="http://loudou.info/blog/2014/08/13/linux-bash-de-c-s/"/>
     <updated>2014-08-13T22:22:02+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/08/13/linux-bash-de-c-s</id>
+    <id>http://loudou.info/blog/2014/08/13/linux-bash-de-c-s</id>
     <content type="html"><![CDATA[<p>putty 莫名不响应问题…</p>
 
 <!--more-->
@@ -281,9 +281,9 @@ if [[ 12 = * ]];then echo 0;fi
   
   <entry>
     <title type="html"><![CDATA[Learning the Bash Shell 笔记-Debug]]></title>
-    <link href="http://blog.loudou.info/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/"/>
+    <link href="http://loudou.info/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/"/>
     <updated>2014-06-11T10:40:33+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug</id>
+    <id>http://loudou.info/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug</id>
     <content type="html"><![CDATA[<p>任何开发测试工作都离不开的话题 – Debug. </p>
 
 <p>bash 脚本自然也不能免俗
@@ -637,9 +637,9 @@ done }
   
   <entry>
     <title type="html"><![CDATA[Learning the Bash Shell 笔记-杂项]]></title>
-    <link href="http://blog.loudou.info/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/"/>
+    <link href="http://loudou.info/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/"/>
     <updated>2014-06-05T09:49:16+08:00</updated>
-    <id>http://blog.loudou.info/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang</id>
+    <id>http://loudou.info/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang</id>
     <content type="html"><![CDATA[<p>一些零散的内容
 <!--more-->
 ## getopts
