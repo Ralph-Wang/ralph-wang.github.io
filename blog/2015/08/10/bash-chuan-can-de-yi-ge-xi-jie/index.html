@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>bash 传参的一个细节 - 挨踢夜归人</title>
+  <meta name="author" content="_漏斗">
+
+  
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <!--<link rel="canonical" href="http://loudou.info/blog/2015/08/10/bash-chuan-can-de-yi-ge-xi-jie">-->
+  <link href="/favicon.png" type="image/png" rel="icon">
+  <link href="/atom.xml" rel="alternate" title="挨踢夜归人" type="application/atom+xml">
+
+  <link href="/css/style.css" rel="stylesheet" type="text/css">
+<link href="/stylesheets/screen.css" rel="stylesheet" type="text/css">
+<link href="/css/auto-toc.css" rel="stylesheet" type="text/css">
+
+
+</head>
+
+  <body   >
+    <div id="wrap">
+      <header role="banner">
+        <header class="head" role="navigation">
+<a style="position:relative" href="https://github.com/Ralph-Wang/" id="fork">
+    <img style="position:absolute" src="/imgs/fork_me.png" width=149 height=149 alt="Fork me on Github" /></a>
+<div class="header fn-clear">
+    <section class="header-cnt fn-clear">
+    <div class="logo">
+        <div class="logo-cnt">
+            <h1><a href="">挨踢夜归人</a></h1>
+            <h2>Write as a Doubi.  ╮(￣▽ ￣)╭</h2>
+        </div>
+    </div>
+    <nav class="nav">
+    <ul>
+        <li >
+        <a href="/">玄关</a>
+        </li>
+        <li >
+        <a href="/blog/archives">历史事件</a>
+        </li>
+        <li >
+        <a href="/about-me">这个逗[哔]</a>
+        </li>
+        <li >
+        <a href="/NotFound">404Help</a>
+        </li>
+        <li>
+        <a title="把这个链接拖到你的Chrome收藏夹工具栏中"
+            href='javascript:(function(){function c(){var
+            e=document.createElement("link");e.setAttribute("type","text/css");e.setAttribute("rel","stylesheet");e.setAttribute("href",f);e.setAttribute("class",l);document.body.appendChild(e)}function
+            h(){var e=document.getElementsByClassName(l);for(var
+            t=0;t<e.length;t++){document.body.removeChild(e[t])}}function
+            p(){var
+            e=document.createElement("div");e.setAttribute("class",a);document.body.appendChild(e);setTimeout(function(){document.body.removeChild(e)},100)}function
+            d(e){return{height:e.offsetHeight,width:e.offsetWidth}}function
+            v(i){var s=d(i);return
+            s.height>e&&s.height<n&&s.width>t&&s.width<r}function
+            m(e){var t=e;var
+            n=0;while(!!t){n+=t.offsetTop;t=t.offsetParent}return
+            n}function g(){var
+            e=document.documentElement;if(!!window.innerWidth){return
+            window.innerHeight}else if(e&&!isNaN(e.clientHeight)){return
+            e.clientHeight}return 0}function
+            y(){if(window.pageYOffset){return window.pageYOffset}return
+            Math.max(document.documentElement.scrollTop,document.body.scrollTop)}function
+            E(e){var t=m(e);return t>=w&&t<=b+w}function S(){var
+            e=document.createElement("audio");e.setAttribute("class",l);e.src=i;e.loop=false;e.addEventListener("canplay",function(){setTimeout(function(){x(k)},500);setTimeout(function(){N();p();for(var
+            e=0;e<O.length;e++){T(O[e])}},15500)},true);e.addEventListener("ended",function(){N();h()},true);e.innerHTML="
+            <p>If you are reading this, it is because your browser does
+            not support the audio element. We recommend that you get a
+            new browser.</p>
+            <p>";document.body.appendChild(e);e.play()}function
+            x(e){e.className+=" "+s+" "+o}function T(e){e.className+="
+            "+s+" "+u[Math.floor(Math.random()*u.length)]}function
+            N(){var e=document.getElementsByClassName(s);var t=new
+            RegExp("\\b"+s+"\\b");for(var
+            n=0;n<e.length;){e[n].className=e[n].className.replace(t,"")}}var
+            e=30;var t=30;var n=350;var r=350;var
+            i="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";var
+            s="mw-harlem_shake_me";var o="im_first";var
+            u=["im_drunk","im_baked","im_trippin","im_blown"];var
+            a="mw-strobe_light";var
+            f="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";var
+            l="mw_added_css";var b=g();var w=y();var
+            C=document.getElementsByTagName("*");var k=null;for(var
+            L=0;L<C.length;L++){var
+            A=C[L];if(v(A)){if(E(A)){k=A;break}}}if(A===null){console.warn("Could
+            not find a node of the right size. Please try a different
+            page.");return}c();S();var O=[];for(var
+            L=0;L<C.length;L++){var
+            A=C[L];if(v(A)){O.push(A)}}})()'>High一下!</a>
+        </li>
+    </ul>
+    </nav>
+    </section>
+</div>
+</header>
+
+
+      </header>
+      <div id="main" class="container">
+        <div id="content">
+          <section class="content">
+<div class="content-cnt fn-clear">
+    <div class="main fn-clear">
+        <article class="entry" role="article">
+        
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-08-10T18:04:59+08:00" pubdate data-updated="true">Aug 10<span>th</span>, 2015</time>
+        
+      </p>
+    
+    
+    <h1 class="entry-title">
+        Bash 传参的一个细节
+        
+    </h1>
+    
+  </header>
+
+
+<div class="entry-content clearfix"><!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">你四不四傻</a></li>
+  <li><a href="#section-1">捉虫</a></li>
+  <li><a href="#section-2">小结</a></li>
+</ul>
+
+<h2 id="section">你四不四傻</h2>
+
+<p>写了个小函数如下:</p>
+
+<ul>
+  <li>接收两个参数</li>
+  <li>如果第一个参数为空字符串, 直接 echo 第二个</li>
+  <li>否则, 用逗号(,)连接两个字符串</li>
+</ul>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line">append_str<span class="o">()</span> <span class="o">{</span>
+</span><span class="line">    <span class="k">if</span> <span class="o">[</span> -n <span class="s2">&quot;$1&quot;</span> <span class="o">]</span>;<span class="k">then</span>
+</span><span class="line"><span class="k">        </span><span class="nb">echo</span> <span class="nv">$2</span>
+</span><span class="line">    <span class="k">else</span>
+</span><span class="line"><span class="k">        </span><span class="nb">echo</span> <span class="nv">$1</span>,<span class="nv">$2</span>
+</span><span class="line">    <span class="k">fi</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>然后, 在调用时却总是不能进行到前一个分支..</p>
+
+<p>调用如下:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="k">for </span>i in <span class="k">$(</span>some list<span class="k">)</span>;<span class="k">do</span>
+</span><span class="line">    <span class="nv">$a</span><span class="o">=</span><span class="k">$(</span>append_str <span class="nv">$a</span> <span class="nv">$i</span><span class="k">)</span>
+</span><span class="line"><span class="k">done</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>得到总是类似如下结果</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line">a,,b,c,d
+</span></code></pre></div></figure></notextile></div>
+
+<h2 id="section-1">捉虫</h2>
+
+<p>添加 <code>set -x</code> 查看命令具体执行</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line">append_str a
+</span><span class="line">append_str a, b
+</span><span class="line">append_str a,,b c
+</span><span class="line">append_str a,,b,c d
+</span></code></pre></div></figure></notextile></div>
+
+<p>等等</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line">append_str a
+</span></code></pre></div></figure></notextile></div>
+
+<p>第一个参数应该是个空字符串啊, 被吃啦!!</p>
+
+<p>等等, bash 中变量好像是直接展开, 而非传值的.</p>
+
+<p>嗯, 这样就说通了. 因为第一次调用 $a 还是空, 展开后等同于没有传值给函数</p>
+
+<p>于是, 改个调用</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="k">for </span>i in <span class="k">$(</span>some list<span class="k">)</span>;<span class="k">do</span>
+</span><span class="line">    <span class="nv">$a</span><span class="o">=</span><span class="k">$(</span>append_str <span class="s2">&quot;$a&quot;</span> <span class="s2">&quot;$b&quot;</span><span class="k">)</span>
+</span><span class="line"><span class="k">done</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>工作正常! Good Job.</p>
+
+<h2 id="section-2">小结</h2>
+
+<ul>
+  <li>bash 里参数如果用变量并不是直接传值, 而是先要展开</li>
+  <li>使用时, 给变量包一层双引号是个好习惯</li>
+</ul>
+
+<hr />
+</div>
+
+
+        <footer>
+        <p class="meta text-muted">
+        
+  
+
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard">Posted by <span class="fn">_漏斗</span></span>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-08-10T18:04:59+08:00" pubdate data-updated="true">Aug 10<span>th</span>, 2015</time>
+        
+
+
+        
+
+
+        </p>
+        
+        <nav class="pagination-link">
+            
+            <a class="prev" href="/blog/2015/07/21/shi-yong-sheng-cheng-qi-jin-xing-duo-xing-du-qu/"
+                title="Previous Post: 使用生成器进行惰性读取">&laquo; 使用生成器进行惰性读取</a>
+            
+            
+        </nav>
+        
+        
+        <div class="sharing">
+  
+  
+  
+  
+<!-- Baidu Share BEGIN -->
+<div class="bdsharebuttonbox"><a href="#" class="bds_more"
+    data-cmd="more">分享到：</a><a href="#" class="bds_qzone"
+    data-cmd="qzone" title="分享到QQ空间">QQ空间</a><a href="#"
+    class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a><a
+    href="#" class="bds_tqq" data-cmd="tqq"
+    title="分享到腾讯微博">腾讯微博</a><a href="#" class="bds_renren"
+    data-cmd="renren" title="分享到人人网">人人网</a><a href="#"
+    class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new
+Date()/36e5)];</script>
+<!-- Baidu Share END -->
+
+
+
+<!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="2015-08-10 18:04:59 +0800"
+  data-title="bash 传参的一个细节" data-url="http://loudou.info/blog/2015/08/10/bash-chuan-can-de-yi-ge-xi-jie/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"ralph-wang"};
+(function() {
+ var ds = document.createElement('script');
+ ds.type = 'text/javascript';ds.async = true;
+ ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+ ds.charset = 'UTF-8';
+ (document.getElementsByTagName('head')[0] 
+  ||
+  document.getElementsByTagName('body')[0]).appendChild(ds);
+ })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+</div>
+
+        
+        </footer>
+        </article>
+        
+    </div>
+
+    <div class="aside fn-clear">
+        
+        <aside>
+        
+        
+<iframe width="100%" height="420" class="share_self"  frameborder="0"
+    scrolling="no"
+    src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=420&fansRow=2&ptype=0&speed=0&skin=1&isTitle=0&noborder=1&isWeibo=1&isFans=0&uid=1854716251&verifier=375b89d6&dpc=1"></iframe>
+
+<section>
+<div class="box fn-clear">
+    <h3 class="title">Recent Posts</h3>
+    
+
+    
+    <ul>
+        <li>&#9830;<a href="/blog/2015/08/10/bash-chuan-can-de-yi-ge-xi-jie/">Bash 传参的一个细节</a></li>
+        
+    <ul>
+        <li>&#8227;<a href="/blog/2015/07/21/shi-yong-sheng-cheng-qi-jin-xing-duo-xing-du-qu/">使用生成器进行惰性读取</a></li>
+        
+    <ul>
+        <li>&#8227;<a href="/blog/2015/06/05/yong-python-gao-yi-ge-fen-bu-shi-xi-tong-wan/">用 Python 搞一个分布式系统玩?</a></li>
+        
+    <ul>
+        <li>&#8227;<a href="/blog/2015/02/15/zhuang-shi-qi-yu-duo-jin-cheng-yi-ji-pickle/">装饰器与多进程以及Pickle</a></li>
+        
+    <ul>
+        <li>&#8227;<a href="/blog/2015/01/12/python-yuan-lei-def/">Python 元类 DEF</a></li>
+        
+    </ul>
+</div>
+</section>
+<section class="panel panel-default">
+  <div class="box fn-clear">
+    <h3 class="title">Categories</h3>
+  <ul>
+      <li>&#8227<a class='list-group-item' href='/blog/categories/linux/'>Linux <span class='badge'>12</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/python/'>Python <span class='badge'>6</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/java/'>java <span class='badge'>4</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/leetcode/'>leetcode <span class='badge'>2</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/nodejs/'>nodejs <span class='badge'>1</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/octopress/'>octopress <span class='badge'>5</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/qi-ta/'>其它 <span class='badge'>3</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/shu-ju-ku/'>数据库 <span class='badge'>1</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/ce-shi-gong-ju/'>测试工具 <span class='badge'>3</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/cheng-xu-she-ji-yu-suan-fa/'>程序设计与算法 <span class='badge'>1</span></a></li>
+
+  </ul>
+  </div>
+</section>
+<section class="panel panel-default">
+<div class="box fn-clear">
+    <h3 class="title">Tag Clouds</h3>
+    <ul class="tag-cloud" style="padding-left:10px">
+        <a style="color:#d8d8d8;font-size: 100%" href="/tags/mongodb/">MongoDB</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/ji-zhun/">基准</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/toc/">toc</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/guan-lian/">关联</a>
+<a style="color:#d8d8d8;font-size: 172%" href="/tags/suan-fa/">算法</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/si-wei-xun-lian/">思维训练</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/liu-kong-zhi/">流控制</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/linux/">linux</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/patch/">patch</a>
+<a style="color:#d8d8d8;font-size: 303%" href="/tags/bash/">bash</a>
+
+    </ul>
+</div>
+</section>
+
+        
+        </aside>
+        
+    </div>
+</div>
+</section>
+
+        </div>
+      </div>
+    </div>
+    <footer role="contentinfo"><div class="foot-btn">
+    <div class="foot-btn-det">
+        <p class="copyright"> Copyright &copy; 2015 - _漏斗</p>
+<p class="author">Powered by <a href="http://octopress.org">Octopress</a>, Inspired by <a href="https://github.com/pizn/blogTheme/tree/master/BlackCubeTheme">BlackCube</a>.</p>
+
+    </div>
+</div>
+</footer>
+    <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+<script src="/js/smoothscroll.js"></script>
+<script src="/js/auto-toc.js" type="text/javascript"></script>
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47787507-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+  </body>
+</html>
