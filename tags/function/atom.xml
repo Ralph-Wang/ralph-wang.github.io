@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[标签: function | 挨踢夜归人]]></title>
+  <link href="http://loudou.info//tags/function/atom.xml" rel="self"/>
+  <link href="http://loudou.info/"/>
+  <updated>2015-08-10T18:30:27+08:00</updated>
+  <id>http://loudou.info/</id>
+  <author>
+    <name><![CDATA[_漏斗]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[bash 传参的一个细节]]></title>
+    <link href="http://loudou.info/blog/2015/08/10/bash-chuan-can-de-yi-ge-xi-jie/"/>
+    <updated>2015-08-10T18:04:59+08:00</updated>
+    <id>http://loudou.info/blog/2015/08/10/bash-chuan-can-de-yi-ge-xi-jie</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">你四不四傻</a></li>
+  <li><a href="#section-1">捉虫</a></li>
+  <li><a href="#section-2">小结</a></li>
+</ul>
+
+<h2 id="section">你四不四傻</h2>
+
+<p>写了个小函数如下:</p>
+
+<ul>
+  <li>接收两个参数</li>
+  <li>如果第一个参数为空字符串, 直接 echo 第二个</li>
+  <li>否则, 用逗号(,)连接两个字符串</li>
+</ul>
+
+<p><code>bash
+append_str() {
+    if [ -n "$1" ];then
+        echo $2
+    else
+        echo $1,$2
+    fi
+}
+</code></p>
+
+<p>然后, 在调用时却总是不能进行到前一个分支..</p>
+
+<p>调用如下:</p>
+
+<p><code>bash
+for i in $(some list);do
+    $a=$(append_str $a $i)
+done
+</code></p>
+
+<p>得到总是类似如下结果</p>
+
+<p><code>
+a,,b,c,d
+</code></p>
+
+<h2 id="section-1">捉虫</h2>
+
+<p>添加 <code>set -x</code> 查看命令具体执行</p>
+
+<p><code>
+append_str a
+append_str a, b
+append_str a,,b c
+append_str a,,b,c d
+</code></p>
+
+<p>等等</p>
+
+<p><code>
+append_str a
+</code></p>
+
+<p>第一个参数应该是个空字符串啊, 被吃啦!!</p>
+
+<p>等等, bash 中变量好像是直接展开, 而非传值的.</p>
+
+<p>嗯, 这样就说通了. 因为第一次调用 $a 还是空, 展开后等同于没有传值给函数</p>
+
+<p>于是, 改个调用</p>
+
+<p><code>
+for i in $(some list);do
+    $a=$(append_str "$a" "$b")
+done
+</code></p>
+
+<p>工作正常! Good Job.</p>
+
+<h2 id="section-2">小结</h2>
+
+<ul>
+  <li>bash 里参数如果用变量并不是直接传值, 而是先要展开</li>
+  <li>使用时, 给变量包一层双引号是个好习惯</li>
+</ul>
+
+<hr />
+]]></content>
+  </entry>
+  
+</feed>
