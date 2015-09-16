@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[标签: jsonpath | 挨踢夜归人]]></title>
+  <link href="http://loudou.info//tags/jsonpath/atom.xml" rel="self"/>
+  <link href="http://loudou.info/"/>
+  <updated>2015-09-16T20:51:45+08:00</updated>
+  <id>http://loudou.info/</id>
+  <author>
+    <name><![CDATA[_漏斗]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[jsonpath 和 jsonpath-rw]]></title>
+    <link href="http://loudou.info/blog/2015/09/16/jsonpath-he-jsonpath-rw/"/>
+    <updated>2015-09-16T18:53:48+08:00</updated>
+    <id>http://loudou.info/blog/2015/09/16/jsonpath-he-jsonpath-rw</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#jsonpath">jsonpath</a></li>
+  <li><a href="#python-">python 的模块</a>    <ul>
+      <li><a href="#section">比较</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-6">小结</a></li>
+</ul>
+
+<h2 id="jsonpath">jsonpath</h2>
+
+<p>关于什么是 <code>jsonpath</code>: <a href="http://goessner.net/articles/JsonPath/">出门左转</a></p>
+
+<h2 id="python-">python 的模块</h2>
+
+<p>python 中用于 jsonpath 解析的库有以下两个.</p>
+
+<ul>
+  <li><a href="https://pypi.python.org/pypi/jsonpath-rw/1.4.0">jsonpath-rw-ext</a></li>
+  <li><a href="https://pypi.python.org/pypi/jsonpath/0.54">jsonpath</a></li>
+</ul>
+
+<p>从下载量来看, <code>jsonpath-rw-ext</code> 的使用人数更多.</p>
+
+<p>但因为历史原因<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>, 我选择使用了 <code>jsonpath</code> 模块</p>
+
+<h3 id="section">比较</h3>
+
+<h4 id="section-1">依赖</h4>
+<p><strong>jsonpath</strong> 是一个完全独立的库, 并且只有一个文件, 不依赖外部库</p>
+
+<p><strong>jsonpath-rw-ext</strong> 依赖 <code>jsonpath-rw</code>, <code>Babel</code>, <code>pytz</code>, <code>pbr</code>, <code>ply</code>, <code>six</code>, <code>decorator</code> 多个外部库</p>
+
+<h4 id="section-2">语法</h4>
+<p><strong>jsonpath</strong></p>
+
+<ul>
+  <li>支持 http://goessner.net/articles/JsonPath/ 提到的所有语法</li>
+  <li>扩展点号语法, 支持直接使用数组索引, 类示 <code>$.key.idx</code>.</li>
+</ul>
+
+<p><strong>jsonpath-rw-ext</strong></p>
+
+<ul>
+  <li>
+    <p>同样支持文档中的所有语法</p>
+  </li>
+  <li>
+    <p>没有扩展点号语法, 如果是数组要明确使用 <code>$.key[idx]</code></p>
+  </li>
+  <li>
+    <p>扩展了类似 <code>this</code> 这样的反引号关键词</p>
+  </li>
+</ul>
+
+<h4 id="section-3">安装</h4>
+<p><strong>jsonapth</strong> </p>
+
+<ul>
+  <li>虽然在 <a href="http://pypi.python.org">pypi</a> 上有索引, 但是并没有提供下载包, 需要自己手动下载并放入项目</li>
+</ul>
+
+<p><strong>jsonapth-rw</strong></p>
+
+<ul>
+  <li>可以直接用 <code>pip</code> 进行安装, 包括所有依赖</li>
+  <li>使用 <code>pip</code> 需要能连接到的 pypi 服务, 一般来说需要外网</li>
+</ul>
+
+<h4 id="section-4">易用</h4>
+<p><strong>jsonpath</strong> 只暴露了一个接口</p>
+
+<p><code>python
+import jsonpath
+jsonpath.jsonpath(path, dict)
+</code></p>
+
+<p><strong>jsonpath-rw-ext</strong> 需要使用如下代码进行解析</p>
+
+<p><code>python
+from jsonpath_rw_ext import parse
+jsonpath_expr = parse('foo[*].baz')
+[match.value for match in jsonpath_expr.find({'foo': [{'baz': 1}, {'baz': 2}]})]
+</code></p>
+
+<h4 id="section-5">维护</h4>
+
+<p><strong>jsonpath</strong> 的作者已经不再维护这个项目</p>
+
+<p><strong>jsonpath-rw-ext</strong> 的作者仍在维护, 最新一次更新代码在上个月</p>
+
+<h2 id="section-6">小结</h2>
+
+<p>机器能上外网, 或者能搞个本地 pypi 镜像的情况, 还是建议用 <code>jsonpath-rw-ext</code></p>
+
+<p>不能上外网又不想为这么个模块就做个 pypi 镜像, 那就用 <code>jsonpath</code></p>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>测试机不能访问外网, 当时也不懂自己搞个 pypi 本地镜象<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
+  
+</feed>

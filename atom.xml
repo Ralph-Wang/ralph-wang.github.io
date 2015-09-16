@@ -4,7 +4,7 @@
   <title><![CDATA[挨踢夜归人]]></title>
   <link href="http://loudou.info/atom.xml" rel="self"/>
   <link href="http://loudou.info/"/>
-  <updated>2015-08-10T18:30:27+08:00</updated>
+  <updated>2015-09-16T20:51:45+08:00</updated>
   <id>http://loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,119 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[jsonpath 和 jsonpath-rw]]></title>
+    <link href="http://loudou.info/blog/2015/09/16/jsonpath-he-jsonpath-rw/"/>
+    <updated>2015-09-16T18:53:48+08:00</updated>
+    <id>http://loudou.info/blog/2015/09/16/jsonpath-he-jsonpath-rw</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#jsonpath">jsonpath</a></li>
+  <li><a href="#python-">python 的模块</a>    <ul>
+      <li><a href="#section">比较</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-6">小结</a></li>
+</ul>
+
+<h2 id="jsonpath">jsonpath</h2>
+
+<p>关于什么是 <code>jsonpath</code>: <a href="http://goessner.net/articles/JsonPath/">出门左转</a></p>
+
+<h2 id="python-">python 的模块</h2>
+
+<p>python 中用于 jsonpath 解析的库有以下两个.</p>
+
+<ul>
+  <li><a href="https://pypi.python.org/pypi/jsonpath-rw/1.4.0">jsonpath-rw-ext</a></li>
+  <li><a href="https://pypi.python.org/pypi/jsonpath/0.54">jsonpath</a></li>
+</ul>
+
+<p>从下载量来看, <code>jsonpath-rw-ext</code> 的使用人数更多.</p>
+
+<p>但因为历史原因<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>, 我选择使用了 <code>jsonpath</code> 模块</p>
+
+<h3 id="section">比较</h3>
+
+<h4 id="section-1">依赖</h4>
+<p><strong>jsonpath</strong> 是一个完全独立的库, 并且只有一个文件, 不依赖外部库</p>
+
+<p><strong>jsonpath-rw-ext</strong> 依赖 <code>jsonpath-rw</code>, <code>Babel</code>, <code>pytz</code>, <code>pbr</code>, <code>ply</code>, <code>six</code>, <code>decorator</code> 多个外部库</p>
+
+<h4 id="section-2">语法</h4>
+<p><strong>jsonpath</strong></p>
+
+<ul>
+  <li>支持 http://goessner.net/articles/JsonPath/ 提到的所有语法</li>
+  <li>扩展点号语法, 支持直接使用数组索引, 类示 <code>$.key.idx</code>.</li>
+</ul>
+
+<p><strong>jsonpath-rw-ext</strong></p>
+
+<ul>
+  <li>
+    <p>同样支持文档中的所有语法</p>
+  </li>
+  <li>
+    <p>没有扩展点号语法, 如果是数组要明确使用 <code>$.key[idx]</code></p>
+  </li>
+  <li>
+    <p>扩展了类似 <code>this</code> 这样的反引号关键词</p>
+  </li>
+</ul>
+
+<h4 id="section-3">安装</h4>
+<p><strong>jsonapth</strong> </p>
+
+<ul>
+  <li>虽然在 <a href="http://pypi.python.org">pypi</a> 上有索引, 但是并没有提供下载包, 需要自己手动下载并放入项目</li>
+</ul>
+
+<p><strong>jsonapth-rw</strong></p>
+
+<ul>
+  <li>可以直接用 <code>pip</code> 进行安装, 包括所有依赖</li>
+  <li>使用 <code>pip</code> 需要能连接到的 pypi 服务, 一般来说需要外网</li>
+</ul>
+
+<h4 id="section-4">易用</h4>
+<p><strong>jsonpath</strong> 只暴露了一个接口</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="kn">import</span> <span class="nn">jsonpath</span>
+</span><span class="line"><span class="n">jsonpath</span><span class="o">.</span><span class="n">jsonpath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p><strong>jsonpath-rw-ext</strong> 需要使用如下代码进行解析</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="kn">from</span> <span class="nn">jsonpath_rw_ext</span> <span class="kn">import</span> <span class="n">parse</span>
+</span><span class="line"><span class="n">jsonpath_expr</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="s">&#39;foo[*].baz&#39;</span><span class="p">)</span>
+</span><span class="line"><span class="p">[</span><span class="n">match</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">jsonpath_expr</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s">&#39;foo&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;baz&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;baz&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}]})]</span>
+</span></code></pre></div></figure></notextile></div>
+
+<h4 id="section-5">维护</h4>
+
+<p><strong>jsonpath</strong> 的作者已经不再维护这个项目</p>
+
+<p><strong>jsonpath-rw-ext</strong> 的作者仍在维护, 最新一次更新代码在上个月</p>
+
+<h2 id="section-6">小结</h2>
+
+<p>机器能上外网, 或者能搞个本地 pypi 镜像的情况, 还是建议用 <code>jsonpath-rw-ext</code></p>
+
+<p>不能上外网又不想为这么个模块就做个 pypi 镜像, 那就用 <code>jsonpath</code></p>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>测试机不能访问外网, 当时也不懂自己搞个 pypi 本地镜象<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[bash 传参的一个细节]]></title>
@@ -2515,100 +2628,6 @@ Given binary tree {1,#,2,3},</p>
 </span><span class="line">
 </span><span class="line"><span class="c">## 其它函数这里省略</span>
 </span></code></pre></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning the Bash Shell 笔记-杂项]]></title>
-    <link href="http://loudou.info/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/"/>
-    <updated>2014-06-05T09:49:16+08:00</updated>
-    <id>http://loudou.info/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang</id>
-    <content type="html"><![CDATA[<p>一些零散的内容
-<!--more-->
-## getopts
-getopts 主要用来定义和解析脚本支持的命令行选项.</p>
-
-<p>简单用法如下:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="k">while </span><span class="nb">getopts</span> <span class="s2">&quot;:ab:c&quot;</span> opt
-</span><span class="line"><span class="k">do</span>
-</span><span class="line"><span class="k">	case</span> <span class="nv">$opt</span> in
-</span><span class="line">		a <span class="o">)</span>
-</span><span class="line">			statements <span class="k">for</span> -a
-</span><span class="line">			;;
-</span><span class="line">		b <span class="o">)</span>
-</span><span class="line">			<span class="nv">$OPTARG</span> is the argument value of -b
-</span><span class="line">			statements <span class="k">for</span> -b
-</span><span class="line">			;;
-</span><span class="line">		c <span class="o">)</span>
-</span><span class="line">			statements <span class="k">for</span> -c
-</span><span class="line">			;;
-</span><span class="line">		<span class="se">\?</span> <span class="o">)</span>
-</span><span class="line">			other
-</span><span class="line">	<span class="k">esac</span>
-</span><span class="line"><span class="k">done</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">shift</span> <span class="k">$((</span><span class="nv">$OPTIND</span> <span class="o">-</span> <span class="m">1</span><span class="k">))</span>
-</span><span class="line">
-</span><span class="line">main scripts
-</span></code></pre></div></figure></notextile></div>
-
-<ul>
-  <li>
-    <p>getopts 第一个字符串中声明支持的选项名 (只能单字符);
-如果字符后面加有冒号(:)则表示该选项有对应的选项参数,
-参数值会保存到变量<code>OPTARG</code>中</p>
-  </li>
-  <li>
-    <p>执行过 getopt 后, 会在变量<code>OPTIND</code>中保存 (选项+选项参数) 的总个数. 用 shift $(($OPTIND - 1)) 来确保后续代码不受实际选项个数影响</p>
-  </li>
-  <li>
-    <p>在声明所支持的选项时, 如果以冒号(:)开头, 可以忽略传入不合法的选项</p>
-  </li>
-</ul>
-
-<h2 id="shell--make">shell 实现极简 make</h2>
-<p>没有变量支持什么, 只是解释命令和依赖</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
-</span><span class="line">
-</span><span class="line"><span class="c">#set -o verbose</span>
-</span><span class="line">
-</span><span class="line">makecmd<span class="o">()</span>
-</span><span class="line"><span class="o">{</span>
-</span><span class="line">    <span class="nb">read </span>target colon sources
-</span><span class="line">    <span class="k">for </span>src in <span class="nv">$sources</span>
-</span><span class="line">    <span class="k">do</span>
-</span><span class="line"><span class="k">        if</span> <span class="o">[</span> <span class="nv">$src</span> -nt <span class="nv">$target</span> <span class="o">]</span>
-</span><span class="line">        <span class="k">then</span>
-</span><span class="line"><span class="k">            while </span><span class="nb">read </span>cmd
-</span><span class="line">            <span class="k">do</span>
-</span><span class="line"><span class="k">                </span><span class="nb">echo</span> <span class="s2">&quot;$cmd&quot;</span>
-</span><span class="line">                <span class="nb">eval</span> <span class="k">${</span><span class="nv">cmd</span><span class="p">#\t</span><span class="k">}</span>
-</span><span class="line">            <span class="k">done</span>
-</span><span class="line"><span class="k">            </span><span class="nb">break</span>
-</span><span class="line"><span class="nb">        </span><span class="k">fi</span>
-</span><span class="line"><span class="k">    done</span>
-</span><span class="line"><span class="o">}</span>
-</span><span class="line">
-</span><span class="line">makecmd &lt; Makefile
-</span></code></pre></div></figure></notextile></div>
-
-<ul>
-  <li>
-    <p>只能处理一个命令, 不支持变量什么的</p>
-  </li>
-  <li>
-    <p>用 read 从标准输入中读取 target colon sources</p>
-  </li>
-  <li>
-    <p>循环判断 sources 中各依赖与 target 修改日期; <code>FILE1 -nt FIlE2</code>, <code>FILE1 -ot
-FILE2</code> 用来比较两个文件修改时间</p>
-  </li>
-  <li>
-    <p>eval “string” 将 string 作为 bash 命令解析</p>
-  </li>
-</ul>
 ]]></content>
   </entry>
   
