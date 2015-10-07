@@ -4,7 +4,7 @@
   <title><![CDATA[挨踢夜归人]]></title>
   <link href="http://loudou.info/atom.xml" rel="self"/>
   <link href="http://loudou.info/"/>
-  <updated>2015-09-16T20:51:45+08:00</updated>
+  <updated>2015-10-07T08:44:06+08:00</updated>
   <id>http://loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,150 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[几个排序算法(一)]]></title>
+    <link href="http://loudou.info/blog/2015/10/06/ji-ge-pai-xu-suan-fa-yi/"/>
+    <updated>2015-10-06T20:51:23+08:00</updated>
+    <id>http://loudou.info/blog/2015/10/06/ji-ge-pai-xu-suan-fa-yi</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">插入排序</a>    <ul>
+      <li><a href="#section-1">原理</a></li>
+      <li><a href="#section-2">原地化</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-3">选择排序</a>    <ul>
+      <li><a href="#section-4">原理</a></li>
+      <li><a href="#section-5">原地化</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-6">冒泡排序</a>    <ul>
+      <li><a href="#section-7">原理</a></li>
+      <li><a href="#section-8">减少循环</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="section">插入排序</h2>
+
+<h3 id="section-1">原理</h3>
+
+<ol>
+  <li>列表 A 是待排序列表, 列表 B 是空列表</li>
+  <li>从列表 A 读数, 并插入列表 B. 插入时, 将元素放在顺序正确的位置</li>
+  <li>当元素从列表 A 完全转移到列表 B 时, 排序完成</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">insert_sort</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span><span class="line">    <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
+</span><span class="line">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ret</span><span class="p">)):</span>
+</span><span class="line">            <span class="k">if</span> <span class="n">ret</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">i</span><span class="p">:</span>
+</span><span class="line">                <span class="n">ret</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</span><span class="line">        <span class="k">else</span><span class="p">:</span>
+</span><span class="line">            <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">ret</span>
+</span></code></pre></div></figure></notextile></div>
+
+<h3 id="section-2">原地化</h3>
+
+<p>因为列表 A 和列表 B 中元素总和是一定的.
+可以利用原始列表的已访问部分作为列表 B, 进而完成原地<sup id="fnref:inplace"><a href="#fn:inplace" rel="footnote">1</a></sup>的排序.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">insert_sort</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)):</span>
+</span><span class="line">        <span class="n">key</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</span><span class="line">        <span class="c"># 下面整个循环都是在完成插入合适的位置</span>
+</span><span class="line">        <span class="c"># 因为是原地插入, 所以需要一边搜索一边交换</span>
+</span><span class="line">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+</span><span class="line">            <span class="k">if</span> <span class="n">key</span> <span class="o">&lt;</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+</span><span class="line">                <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+</span><span class="line">                <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span>
+</span><span class="line">            <span class="k">else</span><span class="p">:</span>
+</span><span class="line">                <span class="k">break</span>
+</span></code></pre></div></figure></notextile></div>
+
+<h2 id="section-3">选择排序</h2>
+
+<h3 id="section-4">原理</h3>
+
+<ol>
+  <li>类似于插入排序, 不同的是, 不再是按顺序从列表 A 从选择元素, 而是选择最大/最小值再插入.</li>
+  <li>插入到列表 B 时不再涉及位置问题, 最大值总是插入列表头, 最小值总是插入列表尾</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">select_sort</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span><span class="line">    <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class="line">    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span><span class="line">        <span class="n">x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+</span><span class="line">        <span class="n">lst</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span><span class="line">        <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">ret</span>
+</span></code></pre></div></figure></notextile></div>
+
+<h3 id="section-5">原地化</h3>
+
+<p>把列表前半部分看作空列表, 同样可以把<code>选择排序</code>原地化</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">select_sort</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span><span class="line">    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span><span class="line">        <span class="n">min_idx</span> <span class="o">=</span> <span class="n">lst</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">:]))</span>
+</span><span class="line">        <span class="k">if</span> <span class="n">min_idx</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span> <span class="c"># 最小值在 i 位置时位置正确, 不交换</span>
+</span><span class="line">            <span class="n">lst</span><span class="p">[</span><span class="n">min_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^</span> <span class="n">lst</span><span class="p">[</span><span class="n">min_idx</span><span class="p">]</span>
+</span><span class="line">            <span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^</span> <span class="n">lst</span><span class="p">[</span><span class="n">min_idx</span><span class="p">]</span>
+</span><span class="line">            <span class="n">lst</span><span class="p">[</span><span class="n">min_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^</span> <span class="n">lst</span><span class="p">[</span><span class="n">min_idx</span><span class="p">]</span>
+</span></code></pre></div></figure></notextile></div>
+
+<h2 id="section-6">冒泡排序</h2>
+
+<h3 id="section-7">原理</h3>
+
+<p><code>冒泡排序</code>和前两个排序的不同在于它一开始就是原地的.</p>
+
+<ol>
+  <li>它遍历所有索引, 每次都判断当前索引的值与后一索引顺序是否正确. 不正确则进行交换.</li>
+  <li>进行等同数组长度次数的遍历后, 排序完成</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">bubble_sort</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span><span class="line">    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span><span class="line">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+</span><span class="line">            <span class="k">if</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
+</span><span class="line">                <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">^</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+</span><span class="line">                <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">^</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+</span><span class="line">                <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">^</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+</span></code></pre></div></figure></notextile></div>
+
+<h3 id="section-8">减少循环</h3>
+
+<p>因为冒泡排序的特定, 经过 N 次遍历后, 数组后面的 N 项顺序是正确的.
+不需要进行再遍历.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">bubble_sort</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span><span class="line">    <span class="n">n</span> <span class="o">=</span> <span class="n">lst</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span><span class="line">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+</span><span class="line">            <span class="k">if</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
+</span><span class="line">                <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">^</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+</span><span class="line">                <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">^</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+</span><span class="line">                <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">^</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+</span></code></pre></div></figure></notextile></div>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:inplace">
+      <p>英文术语是<em>in-place</em>, 没太注意正式的中译名.<a href="#fnref:inplace" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[jsonpath 和 jsonpath-rw]]></title>
@@ -2285,349 +2429,6 @@ Given binary tree {1,#,2,3},</p>
     </li>
   </ol>
 </div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning the Bash Shell 笔记-Debug]]></title>
-    <link href="http://loudou.info/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug/"/>
-    <updated>2014-06-11T10:40:33+08:00</updated>
-    <id>http://loudou.info/blog/2014/06/11/learning-the-bash-shell-bi-ji-debug</id>
-    <content type="html"><![CDATA[<p>任何开发测试工作都离不开的话题 – Debug. </p>
-
-<p>bash 脚本自然也不能免俗
-<!--more--></p>
-
-<h2 id="section">显示每一步执行的命令</h2>
-
-<p>默认情况下, bash 脚本执行时不会像 Windows 的 bat 一样显示每一次执行的命令.
-虽然说这功能在执行时比较难看, 但在 Debug
-时可以帮助我们查看脚本是执行到哪一行出现的问题</p>
-
-<p>如果想让 bash 脚本运行时显示每行命令, 则需要在脚本开始添加如下命令:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nb">set</span> -o <span class="o">[</span>noexec|verbose|xtrace<span class="o">]</span>
-</span></code></pre></div></figure></notextile></div>
-
-<p>参数说明:</p>
-
-<ul>
-  <li>
-    <p><code>noexec</code>	不执行脚本, 只检查语法错误</p>
-  </li>
-  <li>
-    <p><code>verbose</code>	显示每一行命令 (开启这个功能后 bash 就和 bat 很像了)</p>
-  </li>
-  <li>
-    <p><code>xtrace</code>	比 verbose 更详细的显示, 具体显示信息由 <code>PS4</code> 变量配置</p>
-  </li>
-</ul>
-
-<h2 id="fake-signal">几个 fake signal</h2>
-
-<h3 id="exit">EXIT</h3>
-
-<p>在脚本退出时会触发该信号</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>exit.sh</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">trap</span> <span class="s1">&#39;echo exiting the script&#39;</span> EXIT
-</span><span class="line">
-</span><span class="line"><span class="nb">echo</span> <span class="s1">&#39;starting the script&#39;</span>
-</span></code></pre></div></figure></notextile></div>
-
-<p>执行结果:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$.</span>/exit.sh
-</span><span class="line">starting the script
-</span><span class="line">exiting the script
-</span></code></pre></div></figure></notextile></div>
-
-<h3 id="debug">DEBUG</h3>
-
-<p>每一行命令执行前都会触发这个信号, 开启 <code>set -o functrace</code> 后函数内部也会触发</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>debug.sh</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">trap</span> <span class="s1">&#39;echo execute $LINENO&#39;</span> DEBUG
-</span><span class="line">
-</span><span class="line"><span class="k">for</span> <span class="o">((</span><span class="nv">_i</span><span class="o">=</span>0;_i&lt;2;_i++<span class="o">))</span>
-</span><span class="line"><span class="k">do</span>
-</span><span class="line"><span class="nb">echo</span> <span class="nv">$_i</span>
-</span><span class="line"><span class="k">done</span>
-</span></code></pre></div></figure></notextile></div>
-
-<p>执行结果:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$.</span>/debug.sh
-</span><span class="line">execute 5
-</span><span class="line">execute 5
-</span><span class="line">execute 7
-</span><span class="line">0
-</span><span class="line">execute 5
-</span><span class="line">execute 5
-</span><span class="line">execute 7
-</span><span class="line">1
-</span><span class="line">execute 5
-</span><span class="line">execute 5
-</span></code></pre></div></figure></notextile></div>
-
-<h3 id="err">ERR</h3>
-<p>当有命令执行后的返回值不是 0 时触发该信号</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>err.sh</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">trap</span> <span class="s1">&#39;echo Error with status $?&#39;</span> ERR
-</span><span class="line">
-</span><span class="line"><span class="k">function </span>bad
-</span><span class="line"><span class="o">{</span>
-</span><span class="line">	<span class="k">return </span>111
-</span><span class="line"><span class="o">}</span>
-</span><span class="line">
-</span><span class="line">bad
-</span></code></pre></div></figure></notextile></div>
-
-<p>执行结果</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nv">$.</span>/err.sh
-</span><span class="line">Error with status 111
-</span></code></pre></div></figure></notextile></div>
-
-<h3 id="return">RETURN</h3>
-<p>当用 <code>source</code> 执行脚本返回后触发该信号</p>
-
-<p>若执行 <code>set -o functrace</code>, 则函数返回后也能触发该信号</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>x.sh</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="nb">echo</span> <span class="s2">&quot;Hello World&quot;</span>
-</span></code></pre></div></figure></notextile></div>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>return.sh</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
-</span><span class="line"><span class="nb">trap</span> <span class="s1">&#39;echo debug occured&#39;</span> DEBUG
-</span><span class="line"><span class="nb">trap</span> <span class="s1">&#39;echo return occured&#39;</span> RETURN
-</span><span class="line">
-</span><span class="line"><span class="nb">source</span> ./x.sh
-</span></code></pre></div></figure></notextile></div>
-
-<p>执行结果</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="bash"><span class="line">debug occured
-</span><span class="line">Hello World
-</span><span class="line"><span class="k">return </span>occured
-</span></code></pre></div></figure></notextile></div>
-
-<h2 id="debugger">一个简易的 Debugger</h2>
-
-<p>一个 Debugger 需要的功能点:</p>
-
-<ul>
-  <li>
-    <p>断点</p>
-  </li>
-  <li>
-    <p>逐步执行</p>
-  </li>
-  <li>
-    <p>变量监视</p>
-  </li>
-  <li>
-    <p>显示当前执行位置和断点位置</p>
-  </li>
-  <li>
-    <p>不需要改动源码即可进行 Debug</p>
-  </li>
-</ul>
-
-<h2 id="section-1">实现原理:</h2>
-<p>利用 <code>DEBUG</code> 信号中断执行. 进而进入 debug 命令行</p>
-
-<h2 id="section-2">核心数组:</h2>
-<ul>
-  <li>
-    <p><code>_lines</code> 用来存储所有 Debug 脚本的代码</p>
-  </li>
-  <li>
-    <p><code>_linebp</code> 用来存储断点行号</p>
-  </li>
-</ul>
-
-<p>文件结构:</p>
-
-<blockquote>
-  <p>bashdb  # 主脚本, 即驱动器</p>
-</blockquote>
-
-<blockquote>
-  <p>bashdb.pre # 添加到原脚本头的部分</p>
-</blockquote>
-
-<blockquote>
-  <p>bashdb.fns # 定义的函数们</p>
-</blockquote>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bashdb</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">_dbname</span><span class="o">=</span><span class="k">${</span><span class="nv">0</span><span class="p">##*/</span><span class="k">}</span>
-</span><span class="line"><span class="nb">echo</span> <span class="s1">&#39;Bash Debugger Version 1.0&#39;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">if</span> <span class="o">((</span> <span class="nv">$# </span>&lt; 1 <span class="o">))</span>
-</span><span class="line"><span class="k">then</span>
-</span><span class="line"><span class="k">	</span><span class="nb">echo</span> <span class="s2">&quot;$_dbname Usage: $_dbname filename.&quot;</span> &gt;&amp;2
-</span><span class="line">	<span class="nb">exit </span>1
-</span><span class="line"><span class="k">fi</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">_guineapig</span><span class="o">=</span><span class="nv">$1</span>
-</span><span class="line">
-</span><span class="line"><span class="k">if</span> <span class="o">[</span> -r <span class="nv">$_guineapig</span> <span class="o">]</span>
-</span><span class="line"><span class="k">then</span>
-</span><span class="line"><span class="k">	</span><span class="nb">echo</span> <span class="s2">&quot;$_dbname: file &#39;$1&#39; is not readable.&quot;</span> &gt;&amp;2
-</span><span class="line">	<span class="nb">exit </span>1
-</span><span class="line"><span class="k">fi</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">shift</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">_tmpdir</span><span class="o">=</span>/tmp
-</span><span class="line"><span class="nv">_libdir</span><span class="o">=</span>.
-</span><span class="line"><span class="nv">_debugfile</span><span class="o">=</span><span class="nv">$_tmpdir</span>/bashdb.<span class="nv">$$</span> <span class="c"># tmp file for script debugged</span>
-</span><span class="line">
-</span><span class="line">cat <span class="nv">$_libdir</span>/bashdb.pre <span class="nv">$_guineapig</span> &gt; <span class="nv">$_debugfile</span>
-</span><span class="line"><span class="nb">exec </span>bash <span class="nv">$_debugfile</span> <span class="nv">$_guineapig</span> <span class="nv">$_tmpdir</span> <span class="nv">$_libdir</span> <span class="s2">&quot;$@&quot;</span>
-</span></code></pre></div></figure></notextile></div>
-
-<blockquote>
-  <p>关于 <code>exec</code> 命令
-&gt; 执行其参数, 用其并替代当前进程. 脚本中在 <code>exec</code> 后的命令都不会执行
-&gt; 在 cli 中执行 exec 后… 当前 shell 会直接退出</p>
-</blockquote>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bashdb.pre</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">_debugfile</span><span class="o">=</span><span class="nv">$0</span>
-</span><span class="line"><span class="nv">_guineapig</span><span class="o">=</span><span class="nv">$1</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">_tmpdir</span><span class="o">=</span><span class="nv">$2</span>
-</span><span class="line"><span class="nv">_libdir</span><span class="o">=</span><span class="nv">$3</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">shift </span>3
-</span><span class="line">
-</span><span class="line"><span class="c"># 将所有函数加载进来</span>
-</span><span class="line"><span class="nb">source</span> <span class="nv">$_libdir</span>/bashdb.fns
-</span><span class="line">
-</span><span class="line"><span class="nv">_linebp</span><span class="o">=</span>
-</span><span class="line"><span class="nb">let </span><span class="nv">_trace</span><span class="o">=</span>0
-</span><span class="line"><span class="nb">let </span><span class="nv">_i</span><span class="o">=</span>0
-</span><span class="line">
-</span><span class="line"><span class="o">{</span>
-</span><span class="line">	<span class="k">while </span><span class="nb">read</span>
-</span><span class="line"><span class="nb">	</span><span class="k">do</span>
-</span><span class="line"><span class="k">		</span>_line<span class="o">[</span><span class="nv">$_i</span><span class="o">]=</span><span class="nv">$REPLY</span>
-</span><span class="line">		<span class="nb">let </span><span class="nv">_i</span><span class="o">=</span><span class="nv">$_i</span>+1
-</span><span class="line">	<span class="k">done</span>
-</span><span class="line"><span class="o">}</span> &lt; <span class="nv">$_guineapig</span>
-</span><span class="line">
-</span><span class="line"><span class="c"># 退出时清除临时文件</span>
-</span><span class="line"><span class="nb">trap </span>_cleanup EXIT
-</span><span class="line">
-</span><span class="line"><span class="nb">let </span><span class="nv">_steps</span><span class="o">=</span>1
-</span><span class="line">
-</span><span class="line"><span class="c"># 减掉 bashdb.pre 的行数</span>
-</span><span class="line"><span class="nb">trap</span> <span class="s1">&#39;_steptrap $(($LINENO - 32))&#39;</span> DEBUG
-</span></code></pre></div></figure></notextile></div>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bashdb.fns</span></figcaption><div class="highlight"><pre><code class="bash"><span class="line"><span class="c">#!/bin/sh</span>
-</span><span class="line">
-</span><span class="line"><span class="c"># Debugger 的主要函数 _steptrap</span>
-</span><span class="line"><span class="c"># 每一行代码执行前, 这个函数都会被调用</span>
-</span><span class="line">
-</span><span class="line"><span class="k">function </span>_steptrap
-</span><span class="line"><span class="o">{</span>
-</span><span class="line">	<span class="nv">_curlline</span><span class="o">=</span><span class="nv">$1</span>
-</span><span class="line">	<span class="o">((</span> <span class="nv">$trace</span> <span class="o">))</span> <span class="o">&amp;&amp;</span> _msg <span class="s2">&quot;Line $_curlline: ${_lines[$_curlline]}&quot;</span>
-</span><span class="line">
-</span><span class="line">	<span class="k">if</span> <span class="o">((</span> <span class="nv">$_steps</span> &gt;<span class="o">=</span> 0 <span class="o">))</span>
-</span><span class="line">	<span class="k">then</span>
-</span><span class="line"><span class="k">		</span><span class="nb">let </span><span class="nv">_steps</span><span class="o">=</span><span class="nv">$_steps</span>-1
-</span><span class="line">	<span class="k">fi</span>
-</span><span class="line">
-</span><span class="line">	<span class="c"># check if there is a breakpoint</span>
-</span><span class="line">	<span class="k">if </span>_at_linenumbp
-</span><span class="line">	<span class="k">then</span>
-</span><span class="line"><span class="k">		</span>_msg <span class="s2">&quot;Reached breakpoint at $_curlline&quot;</span>
-</span><span class="line">		_cmdloop
-</span><span class="line">	<span class="k">fi</span>
-</span><span class="line">
-</span><span class="line">	<span class="c"># check if there is a break condition</span>
-</span><span class="line">	<span class="k">if</span> <span class="o">[</span> -n <span class="s2">&quot;$_brcond&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">eval</span> <span class="nv">$_brcond</span>
-</span><span class="line">	<span class="k">then</span>
-</span><span class="line"><span class="k">		</span>_msg <span class="s2">&quot;Break condition $_brcond true at line $_curlline&quot;</span>
-</span><span class="line">		_cmdloop
-</span><span class="line">	
-</span><span class="line">	<span class="c"># check if there are no more steps</span>
-</span><span class="line">	<span class="k">if</span> <span class="o">((</span> <span class="nv">$_steps</span> <span class="o">==</span> 0 <span class="o">))</span>
-</span><span class="line">	<span class="k">then</span>
-</span><span class="line"><span class="k">		</span>_msg <span class="s2">&quot;Stopped at line $_curlline&quot;</span>
-</span><span class="line">		_cmdloop
-</span><span class="line">	<span class="k">fi</span>
-</span><span class="line"><span class="o">}</span>
-</span><span class="line">
-</span><span class="line"><span class="c"># 命令处理函数 _cmdloop</span>
-</span><span class="line">
-</span><span class="line"><span class="k">function </span>_cmdloop
-</span><span class="line"><span class="o">{</span>
-</span><span class="line">	<span class="nb">local </span>cmd args
-</span><span class="line">
-</span><span class="line">	<span class="k">while </span><span class="nb">read</span> -e -p <span class="s2">&quot;bash&gt; &quot;</span> cmd args
-</span><span class="line">	<span class="k">do</span>
-</span><span class="line"><span class="k">		case</span> <span class="nv">$cmd</span> in
-</span><span class="line">			<span class="se">\?</span>|h <span class="o">)</span> <span class="c"># 显示命令菜单</span>
-</span><span class="line">				_menu ;;
-</span><span class="line">			bc <span class="o">)</span> <span class="c"># 设置中断条件</span>
-</span><span class="line">				_setbc <span class="nv">$args</span> ;;
-</span><span class="line">			bp <span class="o">)</span> <span class="c"># 设置断点</span>
-</span><span class="line">				_setbp <span class="nv">$args</span> ;;
-</span><span class="line">			cb <span class="o">)</span> <span class="c"># 清除一个或全部断点</span>
-</span><span class="line">				_clearbp <span class="nv">$args</span> ;;
-</span><span class="line">			ds <span class="o">)</span> <span class="c"># 显示脚本和断点</span>
-</span><span class="line">				_displayscript ;;
-</span><span class="line">			g <span class="o">)</span> <span class="c"># 运行脚本直到断点</span>
-</span><span class="line">				<span class="k">return</span> ;;
-</span><span class="line">			q <span class="o">)</span> <span class="c"># 退出</span>
-</span><span class="line">				<span class="nb">exit</span> ;;
-</span><span class="line">			s <span class="o">)</span> <span class="c"># 执行 N 行, 默认 1 行</span>
-</span><span class="line">				<span class="nb">let </span><span class="nv">_steps</span><span class="o">=</span><span class="k">${</span><span class="nv">args</span><span class="k">:-</span><span class="nv">1</span><span class="k">}</span>
-</span><span class="line">			x <span class="o">)</span> <span class="c"># 开关显示所在行</span>
-</span><span class="line">				_xtrace ;;
-</span><span class="line">			!* <span class="o">)</span> <span class="c"># 执行 shell 命令</span>
-</span><span class="line">				<span class="nb">eval</span> <span class="k">${</span><span class="nv">cmd</span><span class="p">#!</span><span class="k">}</span> <span class="nv">$args</span>;;
-</span><span class="line">			* <span class="o">)</span>
-</span><span class="line">				_msg <span class="s2">&quot;Invalid command: &#39;$cmd&#39;&quot;</span> ;;
-</span><span class="line">		<span class="k">esac</span>
-</span><span class="line"><span class="k">	done</span>
-</span><span class="line"><span class="o">}</span>
-</span><span class="line">
-</span><span class="line"><span class="c"># 设置断点命令对应函数 _setbp</span>
-</span><span class="line">
-</span><span class="line">functrace _setbp
-</span><span class="line"><span class="o">{</span>
-</span><span class="line">	<span class="c"># 没有参数就显示断点信息</span>
-</span><span class="line">	<span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;$1&quot;</span> <span class="o">]</span>
-</span><span class="line">	<span class="k">then</span>
-</span><span class="line"><span class="k">		</span>_listbp
-</span><span class="line">	<span class="k">elif</span> <span class="o">[</span> <span class="k">$(</span><span class="nb">echo</span> <span class="nv">$1</span> | grep <span class="s1">&#39;^[0-9]*&#39;</span><span class="k">)</span> <span class="o">]</span>
-</span><span class="line">	<span class="k">then</span>
-</span><span class="line"><span class="k">		if</span> <span class="o">[</span> -n <span class="s2">&quot;${list[$1]&quot;</span> <span class="o">]</span>
-</span><span class="line">		<span class="k">then</span> <span class="c"># 将新断点与旧断点重新排序放入 _linebp</span>
-</span><span class="line">			<span class="nv">_linebp</span><span class="o">=(</span><span class="k">$(</span><span class="nb">echo</span> <span class="k">$(</span> <span class="o">(</span><span class="k">for </span>i in <span class="k">${</span><span class="nv">_linebp</span><span class="p">[@]</span><span class="k">}</span> <span class="nv">$1</span>;<span class="k">do</span>
-</span><span class="line"><span class="k">			</span><span class="nb">echo</span> <span class="nv">$i</span>; <span class="k">done)</span> | sort -n<span class="k">)</span> <span class="o">))</span>
-</span><span class="line">		<span class="k">else</span> <span class="c"># 空行不能设置断点</span>
-</span><span class="line">			_msg <span class="s2">&quot;Breakpoints can only be set on non-blank lines&quot;</span>
-</span><span class="line">		<span class="k">fi</span>
-</span><span class="line"><span class="k">	else</span>
-</span><span class="line"><span class="k">		</span>_msg <span class="s2">&quot;Please specify a numeric line number&quot;</span>
-</span><span class="line">	<span class="k">fi</span>
-</span><span class="line"><span class="o">}</span>
-</span><span class="line">
-</span><span class="line"><span class="c">## 其它函数这里省略</span>
-</span></code></pre></div></figure></notextile></div>
 ]]></content>
   </entry>
   

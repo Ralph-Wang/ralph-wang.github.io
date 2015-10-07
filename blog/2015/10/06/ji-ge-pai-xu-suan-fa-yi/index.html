@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>几个排序算法(一) - 挨踢夜归人</title>
+  <meta name="author" content="_漏斗">
+
+  <meta name="description" content="几个排序算法的个人理解及 Python 实现">
+  <meta name="keywords" content="排序Python算法">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <!--<link rel="canonical" href="http://loudou.info/blog/2015/10/06/ji-ge-pai-xu-suan-fa-yi">-->
+  <link href="/favicon.png" type="image/png" rel="icon">
+  <link href="/atom.xml" rel="alternate" title="挨踢夜归人" type="application/atom+xml">
+
+  <link href="/css/style.css" rel="stylesheet" type="text/css">
+<link href="/stylesheets/screen.css" rel="stylesheet" type="text/css">
+<link href="/css/auto-toc.css" rel="stylesheet" type="text/css">
+
+
+</head>
+
+  <body   >
+    <div id="wrap">
+      <header role="banner">
+        <header class="head" role="navigation">
+<a style="position:relative" href="https://github.com/Ralph-Wang/" id="fork">
+    <img style="position:absolute" src="/imgs/fork_me.png" width=149 height=149 alt="Fork me on Github" /></a>
+<div class="header fn-clear">
+    <section class="header-cnt fn-clear">
+    <div class="logo">
+        <div class="logo-cnt">
+            <h1><a href="">挨踢夜归人</a></h1>
+            <h2>Write as a Doubi.  ╮(￣▽ ￣)╭</h2>
+        </div>
+    </div>
+    <nav class="nav">
+    <ul>
+        <li >
+        <a href="/">玄关</a>
+        </li>
+        <li >
+        <a href="/blog/archives">历史事件</a>
+        </li>
+        <li >
+        <a href="/about-me">这个逗[哔]</a>
+        </li>
+        <li >
+        <a href="/NotFound">404Help</a>
+        </li>
+        <li>
+        <a title="把这个链接拖到你的Chrome收藏夹工具栏中"
+            href='javascript:(function(){function c(){var
+            e=document.createElement("link");e.setAttribute("type","text/css");e.setAttribute("rel","stylesheet");e.setAttribute("href",f);e.setAttribute("class",l);document.body.appendChild(e)}function
+            h(){var e=document.getElementsByClassName(l);for(var
+            t=0;t<e.length;t++){document.body.removeChild(e[t])}}function
+            p(){var
+            e=document.createElement("div");e.setAttribute("class",a);document.body.appendChild(e);setTimeout(function(){document.body.removeChild(e)},100)}function
+            d(e){return{height:e.offsetHeight,width:e.offsetWidth}}function
+            v(i){var s=d(i);return
+            s.height>e&&s.height<n&&s.width>t&&s.width<r}function
+            m(e){var t=e;var
+            n=0;while(!!t){n+=t.offsetTop;t=t.offsetParent}return
+            n}function g(){var
+            e=document.documentElement;if(!!window.innerWidth){return
+            window.innerHeight}else if(e&&!isNaN(e.clientHeight)){return
+            e.clientHeight}return 0}function
+            y(){if(window.pageYOffset){return window.pageYOffset}return
+            Math.max(document.documentElement.scrollTop,document.body.scrollTop)}function
+            E(e){var t=m(e);return t>=w&&t<=b+w}function S(){var
+            e=document.createElement("audio");e.setAttribute("class",l);e.src=i;e.loop=false;e.addEventListener("canplay",function(){setTimeout(function(){x(k)},500);setTimeout(function(){N();p();for(var
+            e=0;e<O.length;e++){T(O[e])}},15500)},true);e.addEventListener("ended",function(){N();h()},true);e.innerHTML="
+            <p>If you are reading this, it is because your browser does
+            not support the audio element. We recommend that you get a
+            new browser.</p>
+            <p>";document.body.appendChild(e);e.play()}function
+            x(e){e.className+=" "+s+" "+o}function T(e){e.className+="
+            "+s+" "+u[Math.floor(Math.random()*u.length)]}function
+            N(){var e=document.getElementsByClassName(s);var t=new
+            RegExp("\\b"+s+"\\b");for(var
+            n=0;n<e.length;){e[n].className=e[n].className.replace(t,"")}}var
+            e=30;var t=30;var n=350;var r=350;var
+            i="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";var
+            s="mw-harlem_shake_me";var o="im_first";var
+            u=["im_drunk","im_baked","im_trippin","im_blown"];var
+            a="mw-strobe_light";var
+            f="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";var
+            l="mw_added_css";var b=g();var w=y();var
+            C=document.getElementsByTagName("*");var k=null;for(var
+            L=0;L<C.length;L++){var
+            A=C[L];if(v(A)){if(E(A)){k=A;break}}}if(A===null){console.warn("Could
+            not find a node of the right size. Please try a different
+            page.");return}c();S();var O=[];for(var
+            L=0;L<C.length;L++){var
+            A=C[L];if(v(A)){O.push(A)}}})()'>High一下!</a>
+        </li>
+    </ul>
+    </nav>
+    </section>
+</div>
+</header>
+
+
+      </header>
+      <div id="main" class="container">
+        <div id="content">
+          <section class="content">
+<div class="content-cnt fn-clear">
+    <div class="main fn-clear">
+        <article class="entry" role="article">
+        
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-10-06T20:51:23+08:00" pubdate data-updated="true">Oct 6<span>th</span>, 2015</time>
+        
+      </p>
+    
+    
+    <h1 class="entry-title">
+        几个排序算法(一)
+        
+    </h1>
+    
+  </header>
+
+
+<div class="entry-content clearfix"><!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">插入排序</a>    <ul>
+      <li><a href="#section-1">原理</a></li>
+      <li><a href="#section-2">原地化</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-3">选择排序</a>    <ul>
+      <li><a href="#section-4">原理</a></li>
+      <li><a href="#section-5">原地化</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-6">冒泡排序</a>    <ul>
+      <li><a href="#section-7">原理</a></li>
+      <li><a href="#section-8">减少循环</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="section">插入排序</h2>
+
+<h3 id="section-1">原理</h3>
+
+<ol>
+  <li>列表 A 是待排序列表, 列表 B 是空列表</li>
+  <li>从列表 A 读数, 并插入列表 B. 插入时, 将元素放在顺序正确的位置</li>
+  <li>当元素从列表 A 完全转移到列表 B 时, 排序完成</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">insert_sort</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span><span class="line">    <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
+</span><span class="line">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ret</span><span class="p">)):</span>
+</span><span class="line">            <span class="k">if</span> <span class="n">ret</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">i</span><span class="p">:</span>
+</span><span class="line">                <span class="n">ret</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</span><span class="line">        <span class="k">else</span><span class="p">:</span>
+</span><span class="line">            <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">ret</span>
+</span></code></pre></div></figure></notextile></div>
+
+<h3 id="section-2">原地化</h3>
+
+<p>因为列表 A 和列表 B 中元素总和是一定的.
+可以利用原始列表的已访问部分作为列表 B, 进而完成原地<sup id="fnref:inplace"><a href="#fn:inplace" rel="footnote">1</a></sup>的排序.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">insert_sort</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)):</span>
+</span><span class="line">        <span class="n">key</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</span><span class="line">        <span class="c"># 下面整个循环都是在完成插入合适的位置</span>
+</span><span class="line">        <span class="c"># 因为是原地插入, 所以需要一边搜索一边交换</span>
+</span><span class="line">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+</span><span class="line">            <span class="k">if</span> <span class="n">key</span> <span class="o">&lt;</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+</span><span class="line">                <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+</span><span class="line">                <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span>
+</span><span class="line">            <span class="k">else</span><span class="p">:</span>
+</span><span class="line">                <span class="k">break</span>
+</span></code></pre></div></figure></notextile></div>
+
+<h2 id="section-3">选择排序</h2>
+
+<h3 id="section-4">原理</h3>
+
+<ol>
+  <li>类似于插入排序, 不同的是, 不再是按顺序从列表 A 从选择元素, 而是选择最大/最小值再插入.</li>
+  <li>插入到列表 B 时不再涉及位置问题, 最大值总是插入列表头, 最小值总是插入列表尾</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">select_sort</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span><span class="line">    <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class="line">    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span><span class="line">        <span class="n">x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+</span><span class="line">        <span class="n">lst</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span><span class="line">        <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">ret</span>
+</span></code></pre></div></figure></notextile></div>
+
+<h3 id="section-5">原地化</h3>
+
+<p>把列表前半部分看作空列表, 同样可以把<code>选择排序</code>原地化</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">select_sort</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span><span class="line">    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span><span class="line">        <span class="n">min_idx</span> <span class="o">=</span> <span class="n">lst</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">:]))</span>
+</span><span class="line">        <span class="k">if</span> <span class="n">min_idx</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span> <span class="c"># 最小值在 i 位置时位置正确, 不交换</span>
+</span><span class="line">            <span class="n">lst</span><span class="p">[</span><span class="n">min_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^</span> <span class="n">lst</span><span class="p">[</span><span class="n">min_idx</span><span class="p">]</span>
+</span><span class="line">            <span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^</span> <span class="n">lst</span><span class="p">[</span><span class="n">min_idx</span><span class="p">]</span>
+</span><span class="line">            <span class="n">lst</span><span class="p">[</span><span class="n">min_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^</span> <span class="n">lst</span><span class="p">[</span><span class="n">min_idx</span><span class="p">]</span>
+</span></code></pre></div></figure></notextile></div>
+
+<h2 id="section-6">冒泡排序</h2>
+
+<h3 id="section-7">原理</h3>
+
+<p><code>冒泡排序</code>和前两个排序的不同在于它一开始就是原地的.</p>
+
+<ol>
+  <li>它遍历所有索引, 每次都判断当前索引的值与后一索引顺序是否正确. 不正确则进行交换.</li>
+  <li>进行等同数组长度次数的遍历后, 排序完成</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">bubble_sort</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span><span class="line">    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span><span class="line">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+</span><span class="line">            <span class="k">if</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
+</span><span class="line">                <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">^</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+</span><span class="line">                <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">^</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+</span><span class="line">                <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">^</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+</span></code></pre></div></figure></notextile></div>
+
+<h3 id="section-8">减少循环</h3>
+
+<p>因为冒泡排序的特定, 经过 N 次遍历后, 数组后面的 N 项顺序是正确的.
+不需要进行再遍历.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">bubble_sort</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span><span class="line">    <span class="n">n</span> <span class="o">=</span> <span class="n">lst</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span><span class="line">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+</span><span class="line">            <span class="k">if</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
+</span><span class="line">                <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">^</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+</span><span class="line">                <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">^</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+</span><span class="line">                <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">^</span> <span class="n">lst</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+</span></code></pre></div></figure></notextile></div>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:inplace">
+      <p>英文术语是<em>in-place</em>, 没太注意正式的中译名.<a href="#fnref:inplace" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+</div>
+
+
+        <footer>
+        <p class="meta text-muted">
+        
+  
+
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard">Posted by <span class="fn">_漏斗</span></span>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-10-06T20:51:23+08:00" pubdate data-updated="true">Oct 6<span>th</span>, 2015</time>
+        
+
+<span class="glyphicon glyphicon-folder-open"></span>&nbsp;
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/python/'>Python</a>
+  
+</span>
+
+
+        
+
+<br />
+<span class="glyphicon glyphicon-tags"></span>&nbsp;
+<span class="tags">
+    
+    <a class='tag' href='/tags/python/'>Python</a>, <a class='tag' href='/tags/pai-xu/'>排序</a>, <a class='tag' href='/tags/suan-fa/'>算法</a>
+    
+</span>
+
+
+        </p>
+        
+        <nav class="pagination-link">
+            
+            <a class="prev" href="/blog/2015/09/16/jsonpath-he-jsonpath-rw/"
+                title="Previous Post: jsonpath 和 jsonpath-rw">&laquo; jsonpath 和 jsonpath-rw</a>
+            
+            
+        </nav>
+        
+        
+        <div class="sharing">
+  
+  
+  
+  
+<!-- Baidu Share BEGIN -->
+<div class="bdsharebuttonbox"><a href="#" class="bds_more"
+    data-cmd="more">分享到：</a><a href="#" class="bds_qzone"
+    data-cmd="qzone" title="分享到QQ空间">QQ空间</a><a href="#"
+    class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a><a
+    href="#" class="bds_tqq" data-cmd="tqq"
+    title="分享到腾讯微博">腾讯微博</a><a href="#" class="bds_renren"
+    data-cmd="renren" title="分享到人人网">人人网</a><a href="#"
+    class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new
+Date()/36e5)];</script>
+<!-- Baidu Share END -->
+
+
+
+<!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="2015-10-06 20:51:23 +0800"
+  data-title="几个排序算法(一)" data-url="http://loudou.info/blog/2015/10/06/ji-ge-pai-xu-suan-fa-yi/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"ralph-wang"};
+(function() {
+ var ds = document.createElement('script');
+ ds.type = 'text/javascript';ds.async = true;
+ ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+ ds.charset = 'UTF-8';
+ (document.getElementsByTagName('head')[0] 
+  ||
+  document.getElementsByTagName('body')[0]).appendChild(ds);
+ })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+</div>
+
+        
+        </footer>
+        </article>
+        
+    </div>
+
+    <div class="aside fn-clear">
+        
+        <aside>
+        
+        
+<iframe width="100%" height="420" class="share_self"  frameborder="0"
+    scrolling="no"
+    src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=420&fansRow=2&ptype=0&speed=0&skin=1&isTitle=0&noborder=1&isWeibo=1&isFans=0&uid=1854716251&verifier=375b89d6&dpc=1"></iframe>
+
+<section>
+<div class="box fn-clear">
+    <h3 class="title">Recent Posts</h3>
+    
+
+    
+    <ul>
+        <li>&#9830;<a href="/blog/2015/10/06/ji-ge-pai-xu-suan-fa-yi/">几个排序算法(一)</a></li>
+        
+    <ul>
+        <li>&#8227;<a href="/blog/2015/09/16/jsonpath-he-jsonpath-rw/">Jsonpath 和 Jsonpath-rw</a></li>
+        
+    <ul>
+        <li>&#8227;<a href="/blog/2015/08/10/bash-chuan-can-de-yi-ge-xi-jie/">Bash 传参的一个细节</a></li>
+        
+    <ul>
+        <li>&#8227;<a href="/blog/2015/07/21/shi-yong-sheng-cheng-qi-jin-xing-duo-xing-du-qu/">使用生成器进行惰性读取</a></li>
+        
+    <ul>
+        <li>&#8227;<a href="/blog/2015/06/05/yong-python-gao-yi-ge-fen-bu-shi-xi-tong-wan/">用 Python 搞一个分布式系统玩?</a></li>
+        
+    </ul>
+</div>
+</section>
+<section class="panel panel-default">
+  <div class="box fn-clear">
+    <h3 class="title">Categories</h3>
+  <ul>
+      <li>&#8227<a class='list-group-item' href='/blog/categories/linux/'>Linux <span class='badge'>13</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/python/'>Python <span class='badge'>8</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/java/'>java <span class='badge'>4</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/leetcode/'>leetcode <span class='badge'>2</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/nodejs/'>nodejs <span class='badge'>1</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/octopress/'>octopress <span class='badge'>5</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/qi-ta/'>其它 <span class='badge'>3</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/shu-ju-ku/'>数据库 <span class='badge'>1</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/ce-shi-gong-ju/'>测试工具 <span class='badge'>3</span></a></li>
+<li>&#8227<a class='list-group-item' href='/blog/categories/cheng-xu-she-ji-yu-suan-fa/'>程序设计与算法 <span class='badge'>1</span></a></li>
+
+  </ul>
+  </div>
+</section>
+<section class="panel panel-default">
+<div class="box fn-clear">
+    <h3 class="title">Tag Clouds</h3>
+    <ul class="tag-cloud" style="padding-left:10px">
+        <a style="color:#d8d8d8;font-size: 100%" href="/tags/df/">df</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/dsf/">DSF</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/file/">file</a>
+<a style="color:#d8d8d8;font-size: 350%" href="/tags/linux/">Linux</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/chai-xiang/">拆箱</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/json/">json</a>
+<a style="color:#d8d8d8;font-size: 211%" href="/tags/suan-fa/">算法</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/xing-neng-you-hua/">性能优化</a>
+<a style="color:#d8d8d8;font-size: 309%" href="/tags/bash/">bash</a>
+<a style="color:#d8d8d8;font-size: 100%" href="/tags/wen-jian-miao-shu-fu/">文件描述符</a>
+
+    </ul>
+</div>
+</section>
+
+        
+        </aside>
+        
+    </div>
+</div>
+</section>
+
+        </div>
+      </div>
+    </div>
+    <footer role="contentinfo"><div class="foot-btn">
+    <div class="foot-btn-det">
+        <p class="copyright"> Copyright &copy; 2015 - _漏斗</p>
+<p class="author">Powered by <a href="http://octopress.org">Octopress</a>, Inspired by <a href="https://github.com/pizn/blogTheme/tree/master/BlackCubeTheme">BlackCube</a>.</p>
+
+    </div>
+</div>
+</footer>
+    <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+<script src="/js/smoothscroll.js"></script>
+<script src="/js/auto-toc.js" type="text/javascript"></script>
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47787507-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+  </body>
+</html>

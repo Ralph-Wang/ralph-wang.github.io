@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[标签: 排序 | 挨踢夜归人]]></title>
+  <link href="http://loudou.info//tags/pai-xu/atom.xml" rel="self"/>
+  <link href="http://loudou.info/"/>
+  <updated>2015-10-07T08:44:06+08:00</updated>
+  <id>http://loudou.info/</id>
+  <author>
+    <name><![CDATA[_漏斗]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[几个排序算法(一)]]></title>
+    <link href="http://loudou.info/blog/2015/10/06/ji-ge-pai-xu-suan-fa-yi/"/>
+    <updated>2015-10-06T20:51:23+08:00</updated>
+    <id>http://loudou.info/blog/2015/10/06/ji-ge-pai-xu-suan-fa-yi</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">插入排序</a>    <ul>
+      <li><a href="#section-1">原理</a></li>
+      <li><a href="#section-2">原地化</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-3">选择排序</a>    <ul>
+      <li><a href="#section-4">原理</a></li>
+      <li><a href="#section-5">原地化</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-6">冒泡排序</a>    <ul>
+      <li><a href="#section-7">原理</a></li>
+      <li><a href="#section-8">减少循环</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="section">插入排序</h2>
+
+<h3 id="section-1">原理</h3>
+
+<ol>
+  <li>列表 A 是待排序列表, 列表 B 是空列表</li>
+  <li>从列表 A 读数, 并插入列表 B. 插入时, 将元素放在顺序正确的位置</li>
+  <li>当元素从列表 A 完全转移到列表 B 时, 排序完成</li>
+</ol>
+
+<p><code>python
+def insert_sort(lst):
+    ret = []
+    for i in lst:
+        for j in xrange(len(ret)):
+            if ret[j] &gt; i:
+                ret.insert(j, i)
+        else:
+            ret.append(i)
+    return ret
+</code></p>
+
+<h3 id="section-2">原地化</h3>
+
+<p>因为列表 A 和列表 B 中元素总和是一定的.
+可以利用原始列表的已访问部分作为列表 B, 进而完成原地<sup id="fnref:inplace"><a href="#fn:inplace" rel="footnote">1</a></sup>的排序.</p>
+
+<p><code>
+def insert_sort(lst):
+    for i in xrange(len(lst)):
+        key = lst[i]
+        # 下面整个循环都是在完成插入合适的位置
+        # 因为是原地插入, 所以需要一边搜索一边交换
+        for j in xrange(i-1, -1, -1):
+            if key &lt; lst[j]:
+                lst[j+1] = lst[j]
+                lst[j] = key
+            else:
+                break
+</code></p>
+
+<h2 id="section-3">选择排序</h2>
+
+<h3 id="section-4">原理</h3>
+
+<ol>
+  <li>类似于插入排序, 不同的是, 不再是按顺序从列表 A 从选择元素, 而是选择最大/最小值再插入.</li>
+  <li>插入到列表 B 时不再涉及位置问题, 最大值总是插入列表头, 最小值总是插入列表尾</li>
+</ol>
+
+<p><code>python
+def select_sort(lst):
+    ret = []
+    n = len(lst)
+    for _ in xrange(lst):
+        x = min(lst)
+        lst.remove(x)
+        ret.append(x)
+    return ret
+</code></p>
+
+<h3 id="section-5">原地化</h3>
+
+<p>把列表前半部分看作空列表, 同样可以把<code>选择排序</code>原地化</p>
+
+<p><code>python
+def select_sort(lst):
+    n = len(lst)
+    for i in xrange(lst):
+        min_idx = lst.index(min(lst[i:]))
+        if min_idx != i: # 最小值在 i 位置时位置正确, 不交换
+            lst[min_idx] = lst[i] ^ lst[min_idx]
+            lst[i] = lst[i] ^ lst[min_idx]
+            lst[min_idx] = lst[i] ^ lst[min_idx]
+</code></p>
+
+<h2 id="section-6">冒泡排序</h2>
+
+<h3 id="section-7">原理</h3>
+
+<p><code>冒泡排序</code>和前两个排序的不同在于它一开始就是原地的.</p>
+
+<ol>
+  <li>它遍历所有索引, 每次都判断当前索引的值与后一索引顺序是否正确. 不正确则进行交换.</li>
+  <li>进行等同数组长度次数的遍历后, 排序完成</li>
+</ol>
+
+<p><code>
+def bubble_sort(lst):
+    n = len(lst)
+    for i in xrange(n):
+        for j in xrange(n-1):
+            if lst[j] &gt; lst[j+1]:
+                lst[j] = lst[j] ^ lst[j+1]
+                lst[j+1] = lst[j] ^ lst[j+1]
+                lst[j] = lst[j] ^ lst[j+1]
+</code></p>
+
+<h3 id="section-8">减少循环</h3>
+
+<p>因为冒泡排序的特定, 经过 N 次遍历后, 数组后面的 N 项顺序是正确的.
+不需要进行再遍历.</p>
+
+<p><code>
+def bubble_sort(lst):
+    n = lst(lst)
+    for i in xrange(n):
+        for j in xrange(n-1):
+            if lst[j] &gt; lst[j+1]:
+                lst[j] = lst[j] ^ lst[j+1]
+                lst[j+1] = lst[j] ^ lst[j+1]
+                lst[j] = lst[j] ^ lst[j+1]
+</code></p>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:inplace">
+      <p>英文术语是<em>in-place</em>, 没太注意正式的中译名.<a href="#fnref:inplace" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
+  
+</feed>
