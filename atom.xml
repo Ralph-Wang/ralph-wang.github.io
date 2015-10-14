@@ -4,7 +4,7 @@
   <title><![CDATA[挨踢夜归人]]></title>
   <link href="http://loudou.info/atom.xml" rel="self"/>
   <link href="http://loudou.info/"/>
-  <updated>2015-10-07T08:44:06+08:00</updated>
+  <updated>2015-10-14T17:52:53+08:00</updated>
   <id>http://loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,113 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[几个排序算法(二)]]></title>
+    <link href="http://loudou.info/blog/2015/10/14/ji-ge-pai-xu-suan-fa-er/"/>
+    <updated>2015-10-14T17:21:15+08:00</updated>
+    <id>http://loudou.info/blog/2015/10/14/ji-ge-pai-xu-suan-fa-er</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">归并排序</a></li>
+  <li><a href="#section-1">原理</a></li>
+  <li><a href="#section-4">快速排序</a>    <ul>
+      <li><a href="#section-5">原理</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="section">归并排序</h2>
+
+<h2 id="section-1">原理</h2>
+
+<p><code>归并排序</code>的根基在于递归.</p>
+
+<h4 id="section-2">初始状态</h4>
+
+<p>两个数排序只需要将较小的那个放到前面就可以了.</p>
+
+<p>那么, 对于两个列表而言, 当列表内只有一个数时. 可以很容易的合并成一个有序的列表</p>
+
+<h4 id="section-3">基本推导</h4>
+
+<p>两个有序的列表, 合并时总是从两个列表头取较小的值,
+可以将两个有序列表合并成一个有序列表.</p>
+
+<p>对于一个无序的列表, 可以将它不断分割, 直到得到初始状态中的<code>列表中只有一个数</code>
+再逐次向止运算, 即可得到最终的排序结果</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">merge_sort</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span><span class="line">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">lst</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+</span><span class="line">    <span class="n">left</span> <span class="o">=</span> <span class="n">merge_sort</span><span class="p">(</span><span class="n">lst</span><span class="p">[:</span><span class="n">m</span><span class="p">])</span>
+</span><span class="line">    <span class="n">right</span> <span class="o">=</span> <span class="n">merge_sort</span><span class="p">(</span><span class="n">lst</span><span class="p">[</span><span class="n">m</span><span class="p">:])</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">merged</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class="line">    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class="line">    <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class="line">    <span class="n">p</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">left</span><span class="p">)</span>
+</span><span class="line">    <span class="n">q</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">right</span><span class="p">)</span>
+</span><span class="line">    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">p</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">q</span><span class="p">:</span>
+</span><span class="line">        <span class="k">if</span> <span class="n">left</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+</span><span class="line">            <span class="n">merged</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">left</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span><span class="line">            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class="line">        <span class="k">else</span><span class="p">:</span>
+</span><span class="line">            <span class="n">merged</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">right</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+</span><span class="line">            <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">:</span>
+</span><span class="line">        <span class="n">merged</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">left</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span><span class="line">        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class="line">    <span class="k">while</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">q</span><span class="p">:</span>
+</span><span class="line">        <span class="n">merged</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">right</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+</span><span class="line">        <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">merged</span>
+</span></code></pre></div></figure></notextile></div>
+
+<h2 id="section-4">快速排序</h2>
+
+<h3 id="section-5">原理</h3>
+
+<p><code>快速排序</code> 每一步都在找某一个特定元素的最终位置.<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+
+<p>具体方法就是, 选定一个特定的数. 将比它大的放到其右边. 比它小的放到其左边.</p>
+
+<p>然后再分别对左边和右边做同样的事.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">quick_sort</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span><span class="line">    <span class="sd">&quot;&quot;&quot;  sort</span>
+</span><span class="line">
+</span><span class="line"><span class="sd">    :type lst: list</span>
+</span><span class="line"><span class="sd">    :returns: list</span>
+</span><span class="line">
+</span><span class="line"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span class="line">    <span class="k">if</span> <span class="n">lst</span> <span class="o">==</span> <span class="p">[]:</span>
+</span><span class="line">        <span class="k">return</span> <span class="p">[]</span>
+</span><span class="line">    <span class="n">pivot</span> <span class="o">=</span> <span class="n">lst</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span><span class="line">    <span class="n">left</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class="line">    <span class="n">right</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class="line">    <span class="k">while</span> <span class="n">lst</span><span class="p">:</span>
+</span><span class="line">        <span class="n">x</span> <span class="o">=</span> <span class="n">lst</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span><span class="line">        <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">pivot</span><span class="p">:</span>
+</span><span class="line">            <span class="n">left</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span><span class="line">        <span class="k">else</span><span class="p">:</span>
+</span><span class="line">            <span class="n">right</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">quick_sort</span><span class="p">(</span><span class="n">left</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">pivot</span><span class="p">]</span> <span class="o">+</span> <span class="n">quick_sort</span><span class="p">(</span><span class="n">right</span><span class="p">)</span>
+</span></code></pre></div></figure></notextile></div>
+
+<hr />
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>这是它被用来找第 N 大的数的原因<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[几个排序算法(一)]]></title>
@@ -2330,102 +2437,6 @@ Given binary tree {1,#,2,3},</p>
   <ol>
     <li id="fn:1">
       <p>呃, 为一个 TOC 做到这样. 我也算蛮拼的…<a href="#fnref:1" rel="reference">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[无节操地重新认识多态和IoC]]></title>
-    <link href="http://loudou.info/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/"/>
-    <updated>2014-07-27T23:41:34+08:00</updated>
-    <id>http://loudou.info/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc</id>
-    <content type="html"><![CDATA[<h2 id="section">起源</h2>
-
-<p>源自一则微博:</p>
-
-<p>详情戳<a href="http://weibo.com/1854716251/BfnE2jSR9">这里</a></p>
-
-<!--more-->
-
-<ul id="markdown-toc">
-  <li><a href="#section">起源</a></li>
-  <li><a href="#ioc-">IoC 简介</a></li>
-  <li><a href="#section-1">无节操的例子</a></li>
-</ul>
-
-<p>刚转这篇微博的时候, 确实只意识到它用了多态特性.</p>
-
-<p>在自己尝试写一个 Python 版的时候, 才意识到其实这里面更多的在表达 IoC 的设计思路</p>
-
-<h2 id="ioc-">IoC 简介</h2>
-
-<p><code>IoC</code> 的全称是 <code>Inversion of Control</code> 译过来就是控制返转.</p>
-
-<p><a href="http://coolshell.cn/articles/9949.html" title="酷壳">酷壳</a>有一个比较好的例子, 我这里就不重复造轮子了.</p>
-
-<h2 id="section-1">无节操的例子</h2>
-
-<p>这里我们详细谈一下<a href="http://weibo.com/1854716251/BfnE2jSR9" title="PHP版">起源</a>里的例子是怎么回事:</p>
-
-<p>妹子与汉子约会, 会因为汉子的种类(高富帅或diaosi)采取不同行动.</p>
-
-<p>一般的理解思路就是<code>妹子在做选择</code>, 也就是控制权在妹子手里.</p>
-
-<p>这样如果用代码表示的话可能就是下面这样</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">meet</span><span class="p">(</span><span class="n">hanzi</span><span class="p">):</span>
-</span><span class="line">   <span class="n">hanzi</span><span class="o">.</span><span class="n">flower</span><span class="p">()</span>
-</span><span class="line">   <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hanzi</span><span class="p">,</span> <span class="n">GFS</span><span class="p">):</span>
-</span><span class="line">       <span class="k">print</span> <span class="s">&#39;啪啪啪啪啪啪啪啪&#39;</span>
-</span><span class="line">   <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hanzi</span><span class="p">,</span> <span class="n">DS</span><span class="p">):</span>
-</span><span class="line">       <span class="k">print</span> <span class="s">&#39;啪&#39;</span>
-</span></code></pre></div></figure></notextile></div>
-
-<p>而 IoC 的理解思路却是这样的:</p>
-
-<blockquote>
-  <p><em>控制权其实在 <code>hanzi</code> 这边, 妹子对汉子的表达是相同的, 但因为 <code>hanzi</code> 的不同而产生了不同结果而已</em></p>
-</blockquote>
-
-<p>用代码来表达就是这样</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Meizi</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-</span><span class="line">    <span class="k">def</span> <span class="nf">meet</span><span class="p">(</span><span class="n">hanzi</span><span class="p">):</span>
-</span><span class="line">        <span class="n">hanzi</span><span class="o">.</span><span class="n">flower</span><span class="p">()</span>
-</span><span class="line">        <span class="n">hanzi</span><span class="o">.</span><span class="n">chu</span><span class="p">()</span>
-</span></code></pre></div></figure></notextile></div>
-
-<p><code>Meizi</code> 这边的代码是不是就变得非常干净了, 那汉子在 chu 之后的结果就不在妹子这里控制了.</p>
-
-<p>至于发生了什么, 我们来看一下 <code>Hanzi</code> 们的具体实现</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Hanzi</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-</span><span class="line">    <span class="s">&#39;Abstract class Hanzi&#39;</span>
-</span><span class="line">    <span class="k">def</span> <span class="nf">flower</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">        <span class="k">print</span> <span class="s">&#39;妹子笑了...&#39;</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">def</span> <span class="nf">chu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&#39;Abstract Method chu not implemented yet&#39;</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="k">class</span> <span class="nc">GFS</span><span class="p">(</span><span class="n">Hanzi</span><span class="p">):</span>
-</span><span class="line">    <span class="k">def</span> <span class="nf">chu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">        <span class="k">print</span> <span class="s">&#39;啪啪啪啪啪啪啪啪&#39;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">class</span> <span class="nc">DS</span><span class="p">(</span><span class="n">Hanzi</span><span class="p">):</span>
-</span><span class="line">    <span class="k">def</span> <span class="nf">chu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">        <span class="k">print</span> <span class="s">&#39;啪&#39;</span>
-</span></code></pre></div></figure></notextile></div>
-
-<p><strong>看, 结果的不同是因为 <code>Hanzi</code> 自己的属性, 而不是妹子的选择.</strong></p>
-
-<p>这就是 IoC 的本质了<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.</p>
-
-<div class="footnotes">
-  <ol>
-    <li id="fn:1">
-      <p>其实是把妹的本质吧, 喂!!<a href="#fnref:1" rel="reference">&#8617;</a></p>
     </li>
   </ol>
 </div>

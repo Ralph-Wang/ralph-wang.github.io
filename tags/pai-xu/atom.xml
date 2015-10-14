@@ -4,7 +4,7 @@
   <title><![CDATA[标签: 排序 | 挨踢夜归人]]></title>
   <link href="http://loudou.info//tags/pai-xu/atom.xml" rel="self"/>
   <link href="http://loudou.info/"/>
-  <updated>2015-10-07T08:44:06+08:00</updated>
+  <updated>2015-10-14T17:52:53+08:00</updated>
   <id>http://loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,117 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[几个排序算法(二)]]></title>
+    <link href="http://loudou.info/blog/2015/10/14/ji-ge-pai-xu-suan-fa-er/"/>
+    <updated>2015-10-14T17:21:15+08:00</updated>
+    <id>http://loudou.info/blog/2015/10/14/ji-ge-pai-xu-suan-fa-er</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#section">归并排序</a></li>
+  <li><a href="#section-1">原理</a></li>
+  <li><a href="#section-4">快速排序</a>    <ul>
+      <li><a href="#section-5">原理</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="section">归并排序</h2>
+
+<h2 id="section-1">原理</h2>
+
+<p><code>归并排序</code>的根基在于递归.</p>
+
+<h4 id="section-2">初始状态</h4>
+
+<p>两个数排序只需要将较小的那个放到前面就可以了.</p>
+
+<p>那么, 对于两个列表而言, 当列表内只有一个数时. 可以很容易的合并成一个有序的列表</p>
+
+<h4 id="section-3">基本推导</h4>
+
+<p>两个有序的列表, 合并时总是从两个列表头取较小的值,
+可以将两个有序列表合并成一个有序列表.</p>
+
+<p>对于一个无序的列表, 可以将它不断分割, 直到得到初始状态中的<code>列表中只有一个数</code>
+再逐次向止运算, 即可得到最终的排序结果</p>
+
+<p>```python
+def merge_sort(lst):
+    if len(lst) == 1:
+        return lst</p>
+
+<pre><code>m = len(lst) / 2
+left = merge_sort(lst[:m])
+right = merge_sort(lst[m:])
+
+merged = []
+i = 0
+j = 0
+p = len(left)
+q = len(right)
+while i &lt; p and j &lt; q:
+    if left[i] &lt; right[j]:
+        merged.append(left[i])
+        i += 1
+    else:
+        merged.append(right[j])
+        j += 1
+
+while i &lt; p:
+    merged.append(left[i])
+    i += 1
+while j &lt; q:
+    merged.append(right[j])
+    j += 1
+return merged ```
+</code></pre>
+
+<h2 id="section-4">快速排序</h2>
+
+<h3 id="section-5">原理</h3>
+
+<p><code>快速排序</code> 每一步都在找某一个特定元素的最终位置.<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+
+<p>具体方法就是, 选定一个特定的数. 将比它大的放到其右边. 比它小的放到其左边.</p>
+
+<p>然后再分别对左边和右边做同样的事.</p>
+
+<p>```python
+def quick_sort(lst):
+    “””  sort</p>
+
+<pre><code>:type lst: list
+:returns: list
+
+"""
+if lst == []:
+    return []
+pivot = lst.pop()
+left = []
+right = []
+while lst:
+    x = lst.pop()
+    if x &lt; pivot:
+        left.append(x)
+    else:
+        right.append(x)
+return quick_sort(left) + [pivot] + quick_sort(right)
+</code></pre>
+
+<p>```</p>
+
+<hr />
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>这是它被用来找第 N 大的数的原因<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[几个排序算法(一)]]></title>
