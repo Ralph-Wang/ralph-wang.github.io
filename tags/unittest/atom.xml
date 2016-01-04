@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[标签: unittest | 挨踢夜归人]]></title>
+  <link href="http://loudou.info//tags/unittest/atom.xml" rel="self"/>
+  <link href="http://loudou.info/"/>
+  <updated>2016-01-04T11:44:08+08:00</updated>
+  <id>http://loudou.info/</id>
+  <author>
+    <name><![CDATA[_漏斗]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[mock.patch 用装饰器来回避缩进地狱]]></title>
+    <link href="http://loudou.info/blog/2016/01/04/mock-dot-patch-yong-zhuang-shi-qi-lai-hui-bi-suo-jin-di-yu/"/>
+    <updated>2016-01-04T10:54:44+08:00</updated>
+    <id>http://loudou.info/blog/2016/01/04/mock-dot-patch-yong-zhuang-shi-qi-lai-hui-bi-suo-jin-di-yu</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#mock">关于 mock</a></li>
+  <li><a href="#patch--with-">patch 的 with 用法</a></li>
+  <li><a href="#section">用装饰器用法</a></li>
+</ul>
+
+<h2 id="mock">关于 mock</h2>
+
+<p>在测试中间模块时, 由于其会对底层模块有依赖, 或者对系统函数有依赖.
+为了保证测试的自闭性, 需要用测试方的模块来代替原有模块. 这类技术就叫做 mock<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+
+<p>在 Python 中有一个叫<code>mock</code>的模块, 就是用来做这件事的. 在 3.3 以上的版本中, mock
+集成到了 <code>unittest.mock</code> 模块, 而对于之前的版本需要自行安装.</p>
+
+<p>至于 <code>mock</code> 的具体用法, 请参考<a href="https://docs.python.org/3.5/library/unittest.mock.html">官方文档</a></p>
+
+<h2 id="patch--with-">patch 的 with 用法</h2>
+
+<p>这个是最早接触的时候学到的关于 patch 的用法. 我们直接上代码示例</p>
+
+<p><code>python
+def test_cases(self):
+    with patch("codecs.open", return_value=io.StringIO(self.mock_string)):
+        cases = {}
+        for query, cards in case.Cases("any"):
+            cases[query] = cards
+        it(cases).should.have.key(u"case1").which.should.contain(u'a', u'b', u'c')
+        it(cases).should.have.key(u"case2").which.should.contain(u'1', u'2', u'3')
+</code></p>
+
+<p>这里面, patch 的关键字参数用于定义生成的 MagicMock 对象的相关属性</p>
+
+<p>很显然, 当我们需要 mock 的模块比较多时, 缩进会变成一个大灾难. 像这样:</p>
+
+<p><code>python
+def test_sth(self):
+    with patch("moduleA.methodA"):
+        with patch("moduleB.methodB"):
+            do your test
+</code></p>
+
+<p>从上面的示例看到, 仅仅是做了两个 mock, 测试代码的缩进就已经非常影响代码的可读性了. 更不用说三个或都更多了.</p>
+
+<h2 id="section">用装饰器用法</h2>
+
+<p>为了回避这样的缩进问题, 可以使用 <code>patch</code> 的装饰器用法, 如下</p>
+
+<p>```python
+@patch(“codecs.open”)
+def test_cases(self, mock_open):
+    mock_open.return_value = io.StringIO(self.mock_string)</p>
+
+<pre><code>cases = {}
+for query, cards in case.Cases("any"):
+    cases[query] = cards
+it(cases).should.have.key(u"case1").which.should.contain(u'a', u'b', u'c')
+it(cases).should.have.key(u"case2").which.should.contain(u'1', u'2', u'3') ```
+</code></pre>
+
+<p>这样, 将 patch 过程放到装饰器去, 测试代码主体便可以节省下缩进,
+进而可以提升代码的可读性.</p>
+
+<p>多层的示例</p>
+
+<p><code>python
+@patch("moduleA.methodA")
+@patch("moduleB.methodB")
+def test_sth(self, mocked_methodB, mocked_methodA):
+    do your test
+</code></p>
+
+<p>对于装饰器用法, 需要注意的是有两条:</p>
+
+<ol>
+  <li>patch 后的 mock 对象需要作为参数传给测试函数</li>
+  <li>当有多层 patch 时, 测试函数的参数和 patch 的顺序是相反的.</li>
+</ol>
+
+<hr />
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>有的地方叫插桩<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
+  
+</feed>

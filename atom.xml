@@ -4,7 +4,7 @@
   <title><![CDATA[挨踢夜归人]]></title>
   <link href="http://loudou.info/atom.xml" rel="self"/>
   <link href="http://loudou.info/"/>
-  <updated>2015-10-28T10:51:14+08:00</updated>
+  <updated>2016-01-04T11:44:08+08:00</updated>
   <id>http://loudou.info/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
@@ -12,6 +12,97 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[mock.patch 用装饰器来回避缩进地狱]]></title>
+    <link href="http://loudou.info/blog/2016/01/04/mock-dot-patch-yong-zhuang-shi-qi-lai-hui-bi-suo-jin-di-yu/"/>
+    <updated>2016-01-04T10:54:44+08:00</updated>
+    <id>http://loudou.info/blog/2016/01/04/mock-dot-patch-yong-zhuang-shi-qi-lai-hui-bi-suo-jin-di-yu</id>
+    <content type="html"><![CDATA[<!--more-->
+<ul id="markdown-toc">
+  <li><a href="#mock">关于 mock</a></li>
+  <li><a href="#patch--with-">patch 的 with 用法</a></li>
+  <li><a href="#section">用装饰器用法</a></li>
+</ul>
+
+<h2 id="mock">关于 mock</h2>
+
+<p>在测试中间模块时, 由于其会对底层模块有依赖, 或者对系统函数有依赖.
+为了保证测试的自闭性, 需要用测试方的模块来代替原有模块. 这类技术就叫做 mock<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+
+<p>在 Python 中有一个叫<code>mock</code>的模块, 就是用来做这件事的. 在 3.3 以上的版本中, mock
+集成到了 <code>unittest.mock</code> 模块, 而对于之前的版本需要自行安装.</p>
+
+<p>至于 <code>mock</code> 的具体用法, 请参考<a href="https://docs.python.org/3.5/library/unittest.mock.html">官方文档</a></p>
+
+<h2 id="patch--with-">patch 的 with 用法</h2>
+
+<p>这个是最早接触的时候学到的关于 patch 的用法. 我们直接上代码示例</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">test_cases</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">    <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s">&quot;codecs.open&quot;</span><span class="p">,</span> <span class="n">return_value</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mock_string</span><span class="p">)):</span>
+</span><span class="line">        <span class="n">cases</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class="line">        <span class="k">for</span> <span class="n">query</span><span class="p">,</span> <span class="n">cards</span> <span class="ow">in</span> <span class="n">case</span><span class="o">.</span><span class="n">Cases</span><span class="p">(</span><span class="s">&quot;any&quot;</span><span class="p">):</span>
+</span><span class="line">            <span class="n">cases</span><span class="p">[</span><span class="n">query</span><span class="p">]</span> <span class="o">=</span> <span class="n">cards</span>
+</span><span class="line">        <span class="n">it</span><span class="p">(</span><span class="n">cases</span><span class="p">)</span><span class="o">.</span><span class="n">should</span><span class="o">.</span><span class="n">have</span><span class="o">.</span><span class="n">key</span><span class="p">(</span><span class="s">u&quot;case1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">which</span><span class="o">.</span><span class="n">should</span><span class="o">.</span><span class="n">contain</span><span class="p">(</span><span class="s">u&#39;a&#39;</span><span class="p">,</span> <span class="s">u&#39;b&#39;</span><span class="p">,</span> <span class="s">u&#39;c&#39;</span><span class="p">)</span>
+</span><span class="line">        <span class="n">it</span><span class="p">(</span><span class="n">cases</span><span class="p">)</span><span class="o">.</span><span class="n">should</span><span class="o">.</span><span class="n">have</span><span class="o">.</span><span class="n">key</span><span class="p">(</span><span class="s">u&quot;case2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">which</span><span class="o">.</span><span class="n">should</span><span class="o">.</span><span class="n">contain</span><span class="p">(</span><span class="s">u&#39;1&#39;</span><span class="p">,</span> <span class="s">u&#39;2&#39;</span><span class="p">,</span> <span class="s">u&#39;3&#39;</span><span class="p">)</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>这里面, patch 的关键字参数用于定义生成的 MagicMock 对象的相关属性</p>
+
+<p>很显然, 当我们需要 mock 的模块比较多时, 缩进会变成一个大灾难. 像这样:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">test_sth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">    <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s">&quot;moduleA.methodA&quot;</span><span class="p">):</span>
+</span><span class="line">        <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s">&quot;moduleB.methodB&quot;</span><span class="p">):</span>
+</span><span class="line">            <span class="n">do</span> <span class="n">your</span> <span class="n">test</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>从上面的示例看到, 仅仅是做了两个 mock, 测试代码的缩进就已经非常影响代码的可读性了. 更不用说三个或都更多了.</p>
+
+<h2 id="section">用装饰器用法</h2>
+
+<p>为了回避这样的缩进问题, 可以使用 <code>patch</code> 的装饰器用法, 如下</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="nd">@patch</span><span class="p">(</span><span class="s">&quot;codecs.open&quot;</span><span class="p">)</span>
+</span><span class="line"><span class="k">def</span> <span class="nf">test_cases</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mock_open</span><span class="p">):</span>
+</span><span class="line">    <span class="n">mock_open</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mock_string</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">cases</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">query</span><span class="p">,</span> <span class="n">cards</span> <span class="ow">in</span> <span class="n">case</span><span class="o">.</span><span class="n">Cases</span><span class="p">(</span><span class="s">&quot;any&quot;</span><span class="p">):</span>
+</span><span class="line">        <span class="n">cases</span><span class="p">[</span><span class="n">query</span><span class="p">]</span> <span class="o">=</span> <span class="n">cards</span>
+</span><span class="line">    <span class="n">it</span><span class="p">(</span><span class="n">cases</span><span class="p">)</span><span class="o">.</span><span class="n">should</span><span class="o">.</span><span class="n">have</span><span class="o">.</span><span class="n">key</span><span class="p">(</span><span class="s">u&quot;case1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">which</span><span class="o">.</span><span class="n">should</span><span class="o">.</span><span class="n">contain</span><span class="p">(</span><span class="s">u&#39;a&#39;</span><span class="p">,</span> <span class="s">u&#39;b&#39;</span><span class="p">,</span> <span class="s">u&#39;c&#39;</span><span class="p">)</span>
+</span><span class="line">    <span class="n">it</span><span class="p">(</span><span class="n">cases</span><span class="p">)</span><span class="o">.</span><span class="n">should</span><span class="o">.</span><span class="n">have</span><span class="o">.</span><span class="n">key</span><span class="p">(</span><span class="s">u&quot;case2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">which</span><span class="o">.</span><span class="n">should</span><span class="o">.</span><span class="n">contain</span><span class="p">(</span><span class="s">u&#39;1&#39;</span><span class="p">,</span> <span class="s">u&#39;2&#39;</span><span class="p">,</span> <span class="s">u&#39;3&#39;</span><span class="p">)</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>这样, 将 patch 过程放到装饰器去, 测试代码主体便可以节省下缩进,
+进而可以提升代码的可读性.</p>
+
+<p>多层的示例</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="python"><span class="line"><span class="nd">@patch</span><span class="p">(</span><span class="s">&quot;moduleA.methodA&quot;</span><span class="p">)</span>
+</span><span class="line"><span class="nd">@patch</span><span class="p">(</span><span class="s">&quot;moduleB.methodB&quot;</span><span class="p">)</span>
+</span><span class="line"><span class="k">def</span> <span class="nf">test_sth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mocked_methodB</span><span class="p">,</span> <span class="n">mocked_methodA</span><span class="p">):</span>
+</span><span class="line">    <span class="n">do</span> <span class="n">your</span> <span class="n">test</span>
+</span></code></pre></div></figure></notextile></div>
+
+<p>对于装饰器用法, 需要注意的是有两条:</p>
+
+<ol>
+  <li>patch 后的 mock 对象需要作为参数传给测试函数</li>
+  <li>当有多层 patch 时, 测试函数的参数和 patch 的顺序是相反的.</li>
+</ol>
+
+<hr />
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>有的地方叫插桩<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[几个排序算法(二)]]></title>
@@ -2336,110 +2427,6 @@ Given binary tree {1,#,2,3},</p>
 
 <p>死循环的目的都是为了模拟文件描述符占用</p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[为 octopress 添加 TOC]]></title>
-    <link href="http://loudou.info/blog/2014/08/01/wei-octopress-tian-jia-toc/"/>
-    <updated>2014-08-01T00:52:13+08:00</updated>
-    <id>http://loudou.info/blog/2014/08/01/wei-octopress-tian-jia-toc</id>
-    <content type="html"><![CDATA[<p>添加一个 TOC 方便阅读</p>
-
-<!--more-->
-
-<ul id="markdown-toc">
-  <li><a href="#section">尝试</a></li>
-  <li><a href="#kramdown-">kramdown 配置</a></li>
-  <li><a href="#section-1">在文章中使用</a></li>
-  <li><a href="#toc-">让 TOC 飘起来</a></li>
-  <li><a href="#section-2">问题什么的</a></li>
-</ul>
-
-<h2 id="section">尝试</h2>
-
-<p>开始时尝试了使用默认引擎 <code>rdiscount</code> 的扩展 <code>generate_toc</code>, 但效果并不好.
-生成的目录不能进行点击跳转</p>
-
-<p>切换为 <code>kramdown</code> 引擎后, TOC 解析正常.</p>
-
-<h2 id="kramdown-">kramdown 配置</h2>
-
-<p>要切换 <code>kramdown</code>, 只需要修改 <code>_config.yml</code> 文件中的 <code>markdown</code> 属性</p>
-
-<p>如下:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>_config.yml</span></figcaption><div class="highlight"><pre><code class="yaml"><span class="line"><span class="l-Scalar-Plain">markdown</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">kramdown</span>
-</span><span class="line">  <span class="l-Scalar-Plain">toc_levels</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">2..3</span>
-</span></code></pre></div></figure></notextile></div>
-
-<p>其中, <code>toc_levels</code> 是用来指定那些标题会进入目录.</p>
-
-<p>因为写作习惯, 我这里就只配置为 h2, h3 进入目录.</p>
-
-<h2 id="section-1">在文章中使用</h2>
-
-<p>完成配置后, 在文章中需要的地方添加以下两行</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>_config.yml</span></figcaption><div class="highlight"><pre><code class="yaml"><span class="line"><span class="err">*</span> <span class="l-Scalar-Plain">any list</span>
-</span><span class="line"><span class="l-Scalar-Plain">{:toc}</span>
-</span></code></pre></div></figure></notextile></div>
-
-<p><code>kramdown</code> 引擎会帮我们把上面两行按配置解析成 toc, 也就是目录了.</p>
-
-<blockquote>
-  <p>如果没有第一行的列表标识的话, kramdown 是不会进行正确的 toc 解析的</p>
-</blockquote>
-
-<h2 id="toc-">让 TOC 飘起来</h2>
-
-<p>为了让 TOC 更在阅读的时候更方便, 我们需要修改一下样式</p>
-
-<p>kramdown 解析出来的 TOC 的 id 为 <code>markdown-toc</code>. 所以我们修改样式如下</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><pre><code class="css"><span class="line"><span class="nf">#markdown</span><span class="nd">:before</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">content</span><span class="o">:</span> <span class="s2">&quot;目录&quot;</span><span class="p">;</span>
-</span><span class="line">    <span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line"><span class="nt">ul</span><span class="nf">#markdown-toc</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">list-style</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span>
-</span><span class="line">    <span class="k">position</span><span class="o">:</span> <span class="k">fixed</span><span class="p">;</span>
-</span><span class="line">    <span class="k">padding</span><span class="o">:</span> <span class="m">0px</span><span class="p">;</span>
-</span><span class="line">    <span class="k">left</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
-</span><span class="line">    <span class="k">bottom</span><span class="o">:</span> <span class="m">200px</span><span class="p">;</span>
-</span><span class="line">    <span class="k">border</span><span class="o">-</span><span class="n">radius</span><span class="o">:</span> <span class="m">0.3em</span><span class="p">;</span>
-</span><span class="line">    <span class="n">box</span><span class="o">-</span><span class="n">shadow</span><span class="o">:</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">.</span><span class="m">15</span><span class="p">)</span> <span class="m">0</span> <span class="m">1px</span> <span class="m">4px</span><span class="p">;</span>
-</span><span class="line">    <span class="n">box</span><span class="o">-</span><span class="n">sizing</span><span class="o">:</span> <span class="k">border</span><span class="o">-</span><span class="n">box</span><span class="p">;</span>
-</span><span class="line">    <span class="k">border</span><span class="o">:</span> <span class="m">#fff</span> <span class="m">0.5em</span> <span class="k">solid</span><span class="p">;</span>
-</span><span class="line">    <span class="k">background-color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></div></figure></notextile></div>
-
-<p>这样一个在文章左边悬停的 TOC 就做了好</p>
-
-<h2 id="section-2">问题什么的<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></h2>
-
-<ul>
-  <li>
-    <p>kramdown 与 rdiscount 在对 markdown 的部分细节处理上有所不同. 以前的文章也要做调整</p>
-  </li>
-  <li>
-    <p>TOC 的锚, 在跳转时因为 navbar-fixed-top 的问题, 调整 h1~h6 的样式为 {margin-top:-70px;padding-top:70px}.</p>
-  </li>
-  <li>
-    <p>小标题能太长.. 要不会盖到文章正文</p>
-  </li>
-</ul>
-
-<hr />
-
-<div class="footnotes">
-  <ol>
-    <li id="fn:1">
-      <p>呃, 为一个 TOC 做到这样. 我也算蛮拼的…<a href="#fnref:1" rel="reference">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
 ]]></content>
   </entry>
   
