@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: getopts | 挨踢夜归人]]></title>
-  <link href="http://loudou.info//tags/getopts/atom.xml" rel="self"/>
-  <link href="http://loudou.info/"/>
-  <updated>2016-03-27T22:38:48+08:00</updated>
-  <id>http://loudou.info/</id>
+  <link href="http://ralph-wang.github.io//tags/getopts/atom.xml" rel="self"/>
+  <link href="http://ralph-wang.github.io/"/>
+  <updated>2016-10-08T11:06:16+08:00</updated>
+  <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Learning the Bash Shell 笔记-杂项]]></title>
-    <link href="http://loudou.info/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang/"/>
     <updated>2014-06-05T09:49:16+08:00</updated>
-    <id>http://loudou.info/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang</id>
+    <id>http://ralph-wang.github.io/blog/2014/06/05/learning-the-bash-shell-bi-ji-za-xiang</id>
     <content type="html"><![CDATA[<p>一些零散的内容
 <!--more-->
 ## getopts

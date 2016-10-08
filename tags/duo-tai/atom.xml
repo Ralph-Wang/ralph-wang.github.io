@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: 多态 | 挨踢夜归人]]></title>
-  <link href="http://loudou.info//tags/duo-tai/atom.xml" rel="self"/>
-  <link href="http://loudou.info/"/>
-  <updated>2016-03-27T22:38:48+08:00</updated>
-  <id>http://loudou.info/</id>
+  <link href="http://ralph-wang.github.io//tags/duo-tai/atom.xml" rel="self"/>
+  <link href="http://ralph-wang.github.io/"/>
+  <updated>2016-10-08T11:06:16+08:00</updated>
+  <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[无节操地重新认识多态和IoC]]></title>
-    <link href="http://loudou.info/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc/"/>
     <updated>2014-07-27T23:41:34+08:00</updated>
-    <id>http://loudou.info/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc</id>
+    <id>http://ralph-wang.github.io/blog/2014/07/27/zhong-xin-ren-shi-duo-tai-he-ioc</id>
     <content type="html"><![CDATA[<h2 id="section">起源</h2>
 
 <p>源自一则微博:</p>

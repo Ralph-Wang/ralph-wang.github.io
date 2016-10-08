@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: 关联 | 挨踢夜归人]]></title>
-  <link href="http://loudou.info//tags/guan-lian/atom.xml" rel="self"/>
-  <link href="http://loudou.info/"/>
-  <updated>2016-03-27T22:38:48+08:00</updated>
-  <id>http://loudou.info/</id>
+  <link href="http://ralph-wang.github.io//tags/guan-lian/atom.xml" rel="self"/>
+  <link href="http://ralph-wang.github.io/"/>
+  <updated>2016-10-08T11:06:16+08:00</updated>
+  <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[LR 关联之 Alfresco]]></title>
-    <link href="http://loudou.info/blog/2014/02/18/lr-guan-lian-zhi-alfresco/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/02/18/lr-guan-lian-zhi-alfresco/"/>
     <updated>2014-02-18T00:39:11+08:00</updated>
-    <id>http://loudou.info/blog/2014/02/18/lr-guan-lian-zhi-alfresco</id>
+    <id>http://ralph-wang.github.io/blog/2014/02/18/lr-guan-lian-zhi-alfresco</id>
     <content type="html"><![CDATA[<p>遇到一个比较特别的关联的例子. 
 <!--more-->
 项目是 <strong>Alfresco</strong>

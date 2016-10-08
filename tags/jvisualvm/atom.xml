@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: jvisualvm | 挨踢夜归人]]></title>
-  <link href="http://loudou.info//tags/jvisualvm/atom.xml" rel="self"/>
-  <link href="http://loudou.info/"/>
-  <updated>2016-03-27T22:38:48+08:00</updated>
-  <id>http://loudou.info/</id>
+  <link href="http://ralph-wang.github.io//tags/jvisualvm/atom.xml" rel="self"/>
+  <link href="http://ralph-wang.github.io/"/>
+  <updated>2016-10-08T11:06:16+08:00</updated>
+  <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[java线程状态]]></title>
-    <link href="http://loudou.info/blog/2014/02/08/javaxian-cheng-zhuang-tai/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/02/08/javaxian-cheng-zhuang-tai/"/>
     <updated>2014-02-08T11:07:52+08:00</updated>
-    <id>http://loudou.info/blog/2014/02/08/javaxian-cheng-zhuang-tai</id>
+    <id>http://ralph-wang.github.io/blog/2014/02/08/javaxian-cheng-zhuang-tai</id>
     <content type="html"><![CDATA[<p>监控 Java 线程时，首先要关注的就是线程的运行状态。</p>
 
 <!--more-->
@@ -321,9 +321,9 @@ class Hammer {
   
   <entry>
     <title type="html"><![CDATA[用jvisualvm监控远程java进程]]></title>
-    <link href="http://loudou.info/blog/2014/02/06/yong-jvisualvmjian-kong-yuan-cheng-javajin-cheng/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/02/06/yong-jvisualvmjian-kong-yuan-cheng-javajin-cheng/"/>
     <updated>2014-02-06T21:48:26+08:00</updated>
-    <id>http://loudou.info/blog/2014/02/06/yong-jvisualvmjian-kong-yuan-cheng-javajin-cheng</id>
+    <id>http://ralph-wang.github.io/blog/2014/02/06/yong-jvisualvmjian-kong-yuan-cheng-javajin-cheng</id>
     <content type="html"><![CDATA[<p><strong>jvisualvm</strong>是从<strong>jdk1.6</strong>开始添加到JDK包中的图形化监控工具。</p>
 
 <!--more-->

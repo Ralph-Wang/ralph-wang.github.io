@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: 命令 | 挨踢夜归人]]></title>
-  <link href="http://loudou.info//tags/ming-ling/atom.xml" rel="self"/>
-  <link href="http://loudou.info/"/>
-  <updated>2016-03-27T22:38:48+08:00</updated>
-  <id>http://loudou.info/</id>
+  <link href="http://ralph-wang.github.io//tags/ming-ling/atom.xml" rel="self"/>
+  <link href="http://ralph-wang.github.io/"/>
+  <updated>2016-10-08T11:06:16+08:00</updated>
+  <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[分析一个 Linux 命令]]></title>
-    <link href="http://loudou.info/blog/2014/04/14/fen-xi-yi-ge-linux-ming-ling/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/04/14/fen-xi-yi-ge-linux-ming-ling/"/>
     <updated>2014-04-14T22:44:14+08:00</updated>
-    <id>http://loudou.info/blog/2014/04/14/fen-xi-yi-ge-linux-ming-ling</id>
+    <id>http://ralph-wang.github.io/blog/2014/04/14/fen-xi-yi-ge-linux-ming-ling</id>
     <content type="html"><![CDATA[<p>通过拆解查看 CPU 信息的组合命令, 来学习每个独立命令
 <!--more--></p>
 

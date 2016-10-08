@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: 总结, | 挨踢夜归人]]></title>
-  <link href="http://loudou.info//tags/zong-jie/atom.xml" rel="self"/>
-  <link href="http://loudou.info/"/>
-  <updated>2016-03-27T22:38:48+08:00</updated>
-  <id>http://loudou.info/</id>
+  <link href="http://ralph-wang.github.io//tags/zong-jie/atom.xml" rel="self"/>
+  <link href="http://ralph-wang.github.io/"/>
+  <updated>2016-10-08T11:06:16+08:00</updated>
+  <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[BYE 2014]]></title>
-    <link href="http://loudou.info/blog/2014/12/31/bye-2014/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/12/31/bye-2014/"/>
     <updated>2014-12-31T15:14:19+08:00</updated>
-    <id>http://loudou.info/blog/2014/12/31/bye-2014</id>
+    <id>http://ralph-wang.github.io/blog/2014/12/31/bye-2014</id>
     <content type="html"><![CDATA[<!--more-->
 <ul id="markdown-toc">
   <li><a href="#section">2014再见</a>    <ul>

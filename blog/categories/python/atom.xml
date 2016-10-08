@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[分类: Python | 挨踢夜归人]]></title>
-  <link href="http://loudou.info//blog/categories/python/atom.xml" rel="self"/>
-  <link href="http://loudou.info/"/>
-  <updated>2016-03-27T22:38:48+08:00</updated>
-  <id>http://loudou.info/</id>
+  <link href="http://ralph-wang.github.io//blog/categories/python/atom.xml" rel="self"/>
+  <link href="http://ralph-wang.github.io/"/>
+  <updated>2016-10-08T11:06:16+08:00</updated>
+  <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[mock.patch 用装饰器来回避缩进地狱]]></title>
-    <link href="http://loudou.info/blog/2016/01/04/mock-dot-patch-yong-zhuang-shi-qi-lai-hui-bi-suo-jin-di-yu/"/>
+    <link href="http://ralph-wang.github.io/blog/2016/01/04/mock-dot-patch-yong-zhuang-shi-qi-lai-hui-bi-suo-jin-di-yu/"/>
     <updated>2016-01-04T10:54:44+08:00</updated>
-    <id>http://loudou.info/blog/2016/01/04/mock-dot-patch-yong-zhuang-shi-qi-lai-hui-bi-suo-jin-di-yu</id>
+    <id>http://ralph-wang.github.io/blog/2016/01/04/mock-dot-patch-yong-zhuang-shi-qi-lai-hui-bi-suo-jin-di-yu</id>
     <content type="html"><![CDATA[<!--more-->
 <ul id="markdown-toc">
   <li><a href="#mock">关于 mock</a></li>
@@ -110,9 +110,9 @@ def test_sth(self, mocked_methodB, mocked_methodA):
   
   <entry>
     <title type="html"><![CDATA[几个排序算法(二)]]></title>
-    <link href="http://loudou.info/blog/2015/10/14/ji-ge-pai-xu-suan-fa-er/"/>
+    <link href="http://ralph-wang.github.io/blog/2015/10/14/ji-ge-pai-xu-suan-fa-er/"/>
     <updated>2015-10-14T17:21:15+08:00</updated>
-    <id>http://loudou.info/blog/2015/10/14/ji-ge-pai-xu-suan-fa-er</id>
+    <id>http://ralph-wang.github.io/blog/2015/10/14/ji-ge-pai-xu-suan-fa-er</id>
     <content type="html"><![CDATA[<!--more-->
 <ul id="markdown-toc">
   <li><a href="#section">归并排序</a></li>
@@ -221,9 +221,9 @@ return quick_sort(left) + [pivot] + quick_sort(right)
   
   <entry>
     <title type="html"><![CDATA[几个排序算法(一)]]></title>
-    <link href="http://loudou.info/blog/2015/10/06/ji-ge-pai-xu-suan-fa-yi/"/>
+    <link href="http://ralph-wang.github.io/blog/2015/10/06/ji-ge-pai-xu-suan-fa-yi/"/>
     <updated>2015-10-06T20:51:23+08:00</updated>
-    <id>http://loudou.info/blog/2015/10/06/ji-ge-pai-xu-suan-fa-yi</id>
+    <id>http://ralph-wang.github.io/blog/2015/10/06/ji-ge-pai-xu-suan-fa-yi</id>
     <content type="html"><![CDATA[<!--more-->
 <ul id="markdown-toc">
   <li><a href="#section">插入排序</a>    <ul>
@@ -371,9 +371,9 @@ def bubble_sort(lst):
   
   <entry>
     <title type="html"><![CDATA[jsonpath 和 jsonpath-rw]]></title>
-    <link href="http://loudou.info/blog/2015/09/16/jsonpath-he-jsonpath-rw/"/>
+    <link href="http://ralph-wang.github.io/blog/2015/09/16/jsonpath-he-jsonpath-rw/"/>
     <updated>2015-09-16T18:53:48+08:00</updated>
-    <id>http://loudou.info/blog/2015/09/16/jsonpath-he-jsonpath-rw</id>
+    <id>http://ralph-wang.github.io/blog/2015/09/16/jsonpath-he-jsonpath-rw</id>
     <content type="html"><![CDATA[<!--more-->
 <ul id="markdown-toc">
   <li><a href="#jsonpath">jsonpath</a></li>
@@ -486,9 +486,9 @@ jsonpath_expr = parse('foo[*].baz')
   
   <entry>
     <title type="html"><![CDATA[使用生成器进行惰性读取]]></title>
-    <link href="http://loudou.info/blog/2015/07/21/shi-yong-sheng-cheng-qi-jin-xing-duo-xing-du-qu/"/>
+    <link href="http://ralph-wang.github.io/blog/2015/07/21/shi-yong-sheng-cheng-qi-jin-xing-duo-xing-du-qu/"/>
     <updated>2015-07-21T10:47:10+08:00</updated>
-    <id>http://loudou.info/blog/2015/07/21/shi-yong-sheng-cheng-qi-jin-xing-duo-xing-du-qu</id>
+    <id>http://ralph-wang.github.io/blog/2015/07/21/shi-yong-sheng-cheng-qi-jin-xing-duo-xing-du-qu</id>
     <content type="html"><![CDATA[<!--more-->
 <ul id="markdown-toc">
   <li><a href="#section">需求</a></li>

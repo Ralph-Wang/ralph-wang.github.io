@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://loudou.info/sitemap.xml 
+Sitemap: http://ralph-wang.github.io/sitemap.xml 

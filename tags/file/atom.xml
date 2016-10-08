@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: file | 挨踢夜归人]]></title>
-  <link href="http://loudou.info//tags/file/atom.xml" rel="self"/>
-  <link href="http://loudou.info/"/>
-  <updated>2016-03-27T22:38:48+08:00</updated>
-  <id>http://loudou.info/</id>
+  <link href="http://ralph-wang.github.io//tags/file/atom.xml" rel="self"/>
+  <link href="http://ralph-wang.github.io/"/>
+  <updated>2016-10-08T11:06:16+08:00</updated>
+  <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[使用生成器进行惰性读取]]></title>
-    <link href="http://loudou.info/blog/2015/07/21/shi-yong-sheng-cheng-qi-jin-xing-duo-xing-du-qu/"/>
+    <link href="http://ralph-wang.github.io/blog/2015/07/21/shi-yong-sheng-cheng-qi-jin-xing-duo-xing-du-qu/"/>
     <updated>2015-07-21T10:47:10+08:00</updated>
-    <id>http://loudou.info/blog/2015/07/21/shi-yong-sheng-cheng-qi-jin-xing-duo-xing-du-qu</id>
+    <id>http://ralph-wang.github.io/blog/2015/07/21/shi-yong-sheng-cheng-qi-jin-xing-duo-xing-du-qu</id>
     <content type="html"><![CDATA[<!--more-->
 <ul id="markdown-toc">
   <li><a href="#section">需求</a></li>

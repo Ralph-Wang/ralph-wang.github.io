@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: mock | 挨踢夜归人]]></title>
-  <link href="http://loudou.info//tags/mock/atom.xml" rel="self"/>
-  <link href="http://loudou.info/"/>
-  <updated>2016-03-27T22:38:48+08:00</updated>
-  <id>http://loudou.info/</id>
+  <link href="http://ralph-wang.github.io//tags/mock/atom.xml" rel="self"/>
+  <link href="http://ralph-wang.github.io/"/>
+  <updated>2016-10-08T11:06:16+08:00</updated>
+  <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[mock.patch 用装饰器来回避缩进地狱]]></title>
-    <link href="http://loudou.info/blog/2016/01/04/mock-dot-patch-yong-zhuang-shi-qi-lai-hui-bi-suo-jin-di-yu/"/>
+    <link href="http://ralph-wang.github.io/blog/2016/01/04/mock-dot-patch-yong-zhuang-shi-qi-lai-hui-bi-suo-jin-di-yu/"/>
     <updated>2016-01-04T10:54:44+08:00</updated>
-    <id>http://loudou.info/blog/2016/01/04/mock-dot-patch-yong-zhuang-shi-qi-lai-hui-bi-suo-jin-di-yu</id>
+    <id>http://ralph-wang.github.io/blog/2016/01/04/mock-dot-patch-yong-zhuang-shi-qi-lai-hui-bi-suo-jin-di-yu</id>
     <content type="html"><![CDATA[<!--more-->
 <ul id="markdown-toc">
   <li><a href="#mock">关于 mock</a></li>

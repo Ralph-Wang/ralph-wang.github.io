@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[标签: Java | 挨踢夜归人]]></title>
-  <link href="http://loudou.info//tags/java/atom.xml" rel="self"/>
-  <link href="http://loudou.info/"/>
-  <updated>2016-03-27T22:38:48+08:00</updated>
-  <id>http://loudou.info/</id>
+  <link href="http://ralph-wang.github.io//tags/java/atom.xml" rel="self"/>
+  <link href="http://ralph-wang.github.io/"/>
+  <updated>2016-10-08T11:06:16+08:00</updated>
+  <id>http://ralph-wang.github.io/</id>
   <author>
     <name><![CDATA[_漏斗]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[面试技术问题解答]]></title>
-    <link href="http://loudou.info/blog/2014/03/25/mian-shi-wen-ti-jie-da/"/>
+    <link href="http://ralph-wang.github.io/blog/2014/03/25/mian-shi-wen-ti-jie-da/"/>
     <updated>2014-03-25T19:49:37+08:00</updated>
-    <id>http://loudou.info/blog/2014/03/25/mian-shi-wen-ti-jie-da</id>
+    <id>http://ralph-wang.github.io/blog/2014/03/25/mian-shi-wen-ti-jie-da</id>
     <content type="html"><![CDATA[<p>面试时没有完全回答上或有存疑的问题
 <!--more-->
 Linux
